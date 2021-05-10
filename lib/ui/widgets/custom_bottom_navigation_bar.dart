@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class CustomBottomNavigationBar extends HookWidget {
-  final duration = const Duration(milliseconds: 200);
+  final duration = const Duration(milliseconds: 300);
 
   const CustomBottomNavigationBar({
     Key? key,
@@ -47,6 +47,8 @@ class CustomBottomNavigationBar extends HookWidget {
             isSelected: currentIndex.value == 0,
             image: 'assets/images/bottom_bar/home.png',
             onTap: () async {
+              // pageController.jumpToPage(0);
+
               await pageController.animateToPage(
                 0,
                 duration: duration,
@@ -60,6 +62,8 @@ class CustomBottomNavigationBar extends HookWidget {
             isSelected: currentIndex.value == 1,
             image: 'assets/images/bottom_bar/cart.png',
             onTap: () async {
+              // pageController.jumpToPage(1);
+
               await pageController.animateToPage(
                 1,
                 duration: duration,
@@ -73,6 +77,8 @@ class CustomBottomNavigationBar extends HookWidget {
             isSelected: currentIndex.value == 2,
             image: 'assets/images/bottom_bar/history.png',
             onTap: () async {
+              // pageController.jumpToPage(2);
+
               await pageController.animateToPage(
                 2,
                 duration: duration,
@@ -86,6 +92,8 @@ class CustomBottomNavigationBar extends HookWidget {
             isSelected: currentIndex.value == 3,
             image: 'assets/images/bottom_bar/profile.png',
             onTap: () async {
+              // pageController.jumpToPage(3);
+
               await pageController.animateToPage(
                 3,
                 duration: duration,

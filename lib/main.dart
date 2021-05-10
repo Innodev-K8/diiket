@@ -1,3 +1,4 @@
+import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main_page.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey: Utils.appNav,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: ColorPallete.primaryColor,
+        accentColor: ColorPallete.accentColor,
+        textTheme: kTextTheme,
       ),
       home: MainPage(),
     );

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SafeArea(
       child: Text('Ini Profile Page'),
     );
   }

@@ -5,17 +5,19 @@ class ColorPallete {
   static final primaryColor = const Color(0xFFFF8527);
   static final secondaryColor = const Color(0xFF009EBA);
   static final accentColor = const Color(0xFF003046);
+  static final deadColor = const Color(0xFF636773);
+  static final categoryColor = const Color(0xFFFFB945);
 }
 
 final kTextTheme = TextTheme(
   headline1: GoogleFonts.poppins(
-    fontSize: 93,
-    fontWeight: FontWeight.w300,
+    fontSize: 32,
+    fontWeight: FontWeight.w600,
     letterSpacing: -1.5,
   ),
   headline2: GoogleFonts.poppins(
-    fontSize: 58,
-    fontWeight: FontWeight.w300,
+    fontSize: 24,
+    fontWeight: FontWeight.w500,
     letterSpacing: -0.5,
   ),
   headline3: GoogleFonts.poppins(fontSize: 46, fontWeight: FontWeight.w400),

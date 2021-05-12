@@ -1,3 +1,4 @@
+import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -128,7 +129,7 @@ class BottomBarButton extends StatelessWidget {
       width: 54.0,
       height: 54.0,
       decoration: BoxDecoration(
-        color: isSelected ? Color(0xFFFF8527) : Colors.transparent,
+        color: isSelected ? ColorPallete.primaryColor : Colors.transparent,
         shape: BoxShape.circle,
       ),
       child: InkWell(
@@ -137,7 +138,7 @@ class BottomBarButton extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Image.asset(
             image,
-            color: isSelected ? Colors.white : Color(0xFF636773),
+            color: isSelected ? Colors.white : ColorPallete.deadColor,
           ),
         ),
       ),

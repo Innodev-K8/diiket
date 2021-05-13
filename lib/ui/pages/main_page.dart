@@ -1,4 +1,5 @@
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/cart/cart_page.dart';
 import 'package:diiket/ui/pages/history/history_page.dart';
 import 'package:diiket/ui/pages/home/home_page.dart';
@@ -29,13 +30,25 @@ class MainPage extends HookWidget {
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-        body: WillPopScope(
-          onWillPop: () async {
-            return _doubleBackCheck(currentBackPressTime, context);
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).unfocus();
           },
-          child: PageView(
-            controller: pageController,
-            children: pages,
+          child: WillPopScope(
+            onWillPop: () async {
+              if (Utils.homeNav.currentState != null &&
+                  Utils.homeNav.currentState!.canPop()) {
+                return true;
+              }
+
+              return _doubleBackCheck(currentBackPressTime, context);
+            },
+            child: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: pageController,
+              children: pages,
+            ),
           ),
         ),
         bottomNavigationBar: CustomBottomNavigationBar(
@@ -54,6 +67,7 @@ class MainPage extends HookWidget {
     if (currentBackPressTime.value == null ||
         now.difference(currentBackPressTime.value!) > Duration(seconds: 2)) {
       currentBackPressTime.value = now;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Tekan lagi untuk kembali'),
@@ -61,6 +75,7 @@ class MainPage extends HookWidget {
           backgroundColor: ColorPallete.accentColor,
         ),
       );
+
       return false;
     }
 

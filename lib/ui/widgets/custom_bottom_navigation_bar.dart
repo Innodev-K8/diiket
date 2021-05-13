@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class CustomBottomNavigationBar extends HookWidget {
-  final duration = const Duration(milliseconds: 300);
+  final duration = const Duration(milliseconds: 250);
+  final curves = Curves.easeInOutSine;
 
   const CustomBottomNavigationBar({
     Key? key,
@@ -15,19 +16,7 @@ class CustomBottomNavigationBar extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = useState(0);
-
-    useEffect(() {
-      void onPageChange() {
-        currentIndex.value = pageController.page?.toInt() ?? 0;
-      }
-
-      pageController.addListener(onPageChange);
-
-      return () {
-        pageController.removeListener(onPageChange);
-      };
-    }, const []);
+    final selectedIndex = useState(0);
 
     return Container(
       padding: const EdgeInsets.all(18.0),
@@ -45,60 +34,68 @@ class CustomBottomNavigationBar extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           BottomBarButton(
-            isSelected: currentIndex.value == 0,
+            isSelected: selectedIndex.value == 0,
             image: 'assets/images/bottom_bar/home.png',
             onTap: () async {
               // pageController.jumpToPage(0);
 
+              selectedIndex.value = 0;
+
               await pageController.animateToPage(
                 0,
                 duration: duration,
-                curve: Curves.easeInOut,
+                curve: curves,
               );
 
               Utils.resetHomeNavigation();
             },
           ),
           BottomBarButton(
-            isSelected: currentIndex.value == 1,
+            isSelected: selectedIndex.value == 1,
             image: 'assets/images/bottom_bar/cart.png',
             onTap: () async {
               // pageController.jumpToPage(1);
 
+              selectedIndex.value = 1;
+
               await pageController.animateToPage(
                 1,
                 duration: duration,
-                curve: Curves.easeInOut,
+                curve: curves,
               );
 
               Utils.resetHomeNavigation();
             },
           ),
           BottomBarButton(
-            isSelected: currentIndex.value == 2,
+            isSelected: selectedIndex.value == 2,
             image: 'assets/images/bottom_bar/history.png',
             onTap: () async {
               // pageController.jumpToPage(2);
 
+              selectedIndex.value = 2;
+
               await pageController.animateToPage(
                 2,
                 duration: duration,
-                curve: Curves.easeInOut,
+                curve: curves,
               );
 
               Utils.resetHomeNavigation();
             },
           ),
           BottomBarButton(
-            isSelected: currentIndex.value == 3,
+            isSelected: selectedIndex.value == 3,
             image: 'assets/images/bottom_bar/profile.png',
             onTap: () async {
               // pageController.jumpToPage(3);
 
+              selectedIndex.value = 3;
+
               await pageController.animateToPage(
                 3,
                 duration: duration,
-                curve: Curves.easeInOut,
+                curve: curves,
               );
 
               Utils.resetHomeNavigation();

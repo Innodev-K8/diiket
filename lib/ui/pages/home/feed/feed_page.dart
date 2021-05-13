@@ -1,100 +1,64 @@
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/widgets/category_button.dart';
+import 'package:diiket/ui/widgets/category_menu.dart';
+import 'package:diiket/ui/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 
 class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Pasar',
-                  style: kTextTheme.headline1,
-                ),
-                CircleAvatar(
-                  radius: 22,
-                ),
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Pasar',
+                    style: kTextTheme.headline1,
+                  ),
+                  CircleAvatar(
+                    radius: 22,
+                  ),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: GestureDetector(
+                onTap: () => Utils.homeNav.currentState!.pushNamed(
+                  '/home/search',
+                  arguments: {
+                    'search_autofocus': true,
+                  },
                 ),
-                fillColor: Color(0xFFF2F3F4),
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                labelText: 'Bumbu, Daging Sapi',
-                suffixIcon: Icon(
-                  Icons.search,
-                  color: ColorPallete.deadColor,
+                child: Hero(
+                  tag: 'search-field',
+                  child: SearchField(
+                    enabled: false,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-            child: Text(
-              'Kategori',
-              style: kTextTheme.headline2,
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 24,
+                right: 24,
+                top: 24,
+                bottom: 14,
+              ),
+              child: Text(
+                'Kategori',
+                style: kTextTheme.headline2,
+              ),
             ),
-          ),
-          Container(
-            child: GridView.count(
-              crossAxisCount: 4,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                CategoryButton(
-                  fileName: 'rice',
-                  text: 'Beras',
-                ),
-                CategoryButton(
-                  fileName: 'bread',
-                  text: 'Roti',
-                ),
-                CategoryButton(
-                  fileName: 'rice',
-                  text: 'Beras',
-                ),
-                CategoryButton(
-                  fileName: 'fish',
-                  text: 'Ikan',
-                ),
-                CategoryButton(
-                  fileName: 'meat',
-                  text: 'Daging',
-                ),
-                CategoryButton(
-                  fileName: 'vegetable',
-                  text: 'Sayur',
-                ),
-                CategoryButton(
-                  fileName: 'fruit',
-                  text: 'Buah',
-                ),
-                CategoryButton(
-                  fileName: 'season',
-                  text: 'Bumbu',
-                ),
-              ],
-            ),
-          ),
-        ],
+            CategoryMenu(),
+          ],
+        ),
       ),
     );
   }

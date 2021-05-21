@@ -1,9 +1,10 @@
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/pages/home/feed/feed_page.dart';
-import 'package:diiket/ui/pages/home/search/search_page.dart';
-import 'package:diiket/ui/pages/home/stall/stall_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+
+import 'feed/feed_page.dart';
+import 'search/search_page.dart';
+import 'stall/stall_page.dart';
 
 class HomePage extends StatefulWidget {
   @override

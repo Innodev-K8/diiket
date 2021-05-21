@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "3508386265",
+    "project_id": "diiket",
+    "storage_bucket": "diiket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3508386265:android:3ee368374b6e2f40fe81c8",
+        "android_client_info": {
+          "package_name": "id.innodev.diiket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "3508386265-fb7vl7bqr5fi601078sgrc45un5100vk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.innodev.diiket",
+            "certificate_hash": "193a4bdc5b6f5f790a8625d36c1344714b2da688"
+          }
+        },
+        {
+          "client_id": "3508386265-np545jkghdufrvcr9jplpa2cltgnd3gg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIoWk_BNs-jNNnSVDfBTKP1cRCftje-Mg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3508386265-np545jkghdufrvcr9jplpa2cltgnd3gg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

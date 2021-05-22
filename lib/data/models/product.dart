@@ -10,12 +10,12 @@ part 'product.g.dart';
 abstract class Product with _$Product {
   const factory Product({
     int? id,
-    int? stallId,
+    int? stall_id,
     Stall? stall,
     String? name,
     String? description,
     String? image,
-    String? quantityUnit,
+    String? quantity_unit,
     int? weight,
     int? price,
     int? stocks,

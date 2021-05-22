@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'package:diiket/data/models/seller.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';

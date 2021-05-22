@@ -22,24 +22,24 @@ class _$ProductTearOff {
 
   _Product call(
       {int? id,
-      int? stallId,
+      int? stall_id,
       Stall? stall,
       String? name,
       String? description,
       String? image,
-      String? quantityUnit,
+      String? quantity_unit,
       int? weight,
       int? price,
       int? stocks,
       List<ProductCategory>? categories}) {
     return _Product(
       id: id,
-      stallId: stallId,
+      stall_id: stall_id,
       stall: stall,
       name: name,
       description: description,
       image: image,
-      quantityUnit: quantityUnit,
+      quantity_unit: quantity_unit,
       weight: weight,
       price: price,
       stocks: stocks,
@@ -58,12 +58,12 @@ const $Product = _$ProductTearOff();
 /// @nodoc
 mixin _$Product {
   int? get id => throw _privateConstructorUsedError;
-  int? get stallId => throw _privateConstructorUsedError;
+  int? get stall_id => throw _privateConstructorUsedError;
   Stall? get stall => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
-  String? get quantityUnit => throw _privateConstructorUsedError;
+  String? get quantity_unit => throw _privateConstructorUsedError;
   int? get weight => throw _privateConstructorUsedError;
   int? get price => throw _privateConstructorUsedError;
   int? get stocks => throw _privateConstructorUsedError;
@@ -80,12 +80,12 @@ abstract class $ProductCopyWith<$Res> {
       _$ProductCopyWithImpl<$Res>;
   $Res call(
       {int? id,
-      int? stallId,
+      int? stall_id,
       Stall? stall,
       String? name,
       String? description,
       String? image,
-      String? quantityUnit,
+      String? quantity_unit,
       int? weight,
       int? price,
       int? stocks,
@@ -105,12 +105,12 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? stallId = freezed,
+    Object? stall_id = freezed,
     Object? stall = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? image = freezed,
-    Object? quantityUnit = freezed,
+    Object? quantity_unit = freezed,
     Object? weight = freezed,
     Object? price = freezed,
     Object? stocks = freezed,
@@ -121,9 +121,9 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      stallId: stallId == freezed
-          ? _value.stallId
-          : stallId // ignore: cast_nullable_to_non_nullable
+      stall_id: stall_id == freezed
+          ? _value.stall_id
+          : stall_id // ignore: cast_nullable_to_non_nullable
               as int?,
       stall: stall == freezed
           ? _value.stall
@@ -141,9 +141,9 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
-      quantityUnit: quantityUnit == freezed
-          ? _value.quantityUnit
-          : quantityUnit // ignore: cast_nullable_to_non_nullable
+      quantity_unit: quantity_unit == freezed
+          ? _value.quantity_unit
+          : quantity_unit // ignore: cast_nullable_to_non_nullable
               as String?,
       weight: weight == freezed
           ? _value.weight
@@ -183,12 +183,12 @@ abstract class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
   @override
   $Res call(
       {int? id,
-      int? stallId,
+      int? stall_id,
       Stall? stall,
       String? name,
       String? description,
       String? image,
-      String? quantityUnit,
+      String? quantity_unit,
       int? weight,
       int? price,
       int? stocks,
@@ -210,12 +210,12 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? stallId = freezed,
+    Object? stall_id = freezed,
     Object? stall = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? image = freezed,
-    Object? quantityUnit = freezed,
+    Object? quantity_unit = freezed,
     Object? weight = freezed,
     Object? price = freezed,
     Object? stocks = freezed,
@@ -226,9 +226,9 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      stallId: stallId == freezed
-          ? _value.stallId
-          : stallId // ignore: cast_nullable_to_non_nullable
+      stall_id: stall_id == freezed
+          ? _value.stall_id
+          : stall_id // ignore: cast_nullable_to_non_nullable
               as int?,
       stall: stall == freezed
           ? _value.stall
@@ -246,9 +246,9 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
-      quantityUnit: quantityUnit == freezed
-          ? _value.quantityUnit
-          : quantityUnit // ignore: cast_nullable_to_non_nullable
+      quantity_unit: quantity_unit == freezed
+          ? _value.quantity_unit
+          : quantity_unit // ignore: cast_nullable_to_non_nullable
               as String?,
       weight: weight == freezed
           ? _value.weight
@@ -275,12 +275,12 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
 class _$_Product implements _Product {
   const _$_Product(
       {this.id,
-      this.stallId,
+      this.stall_id,
       this.stall,
       this.name,
       this.description,
       this.image,
-      this.quantityUnit,
+      this.quantity_unit,
       this.weight,
       this.price,
       this.stocks,
@@ -292,7 +292,7 @@ class _$_Product implements _Product {
   @override
   final int? id;
   @override
-  final int? stallId;
+  final int? stall_id;
   @override
   final Stall? stall;
   @override
@@ -302,7 +302,7 @@ class _$_Product implements _Product {
   @override
   final String? image;
   @override
-  final String? quantityUnit;
+  final String? quantity_unit;
   @override
   final int? weight;
   @override
@@ -314,7 +314,7 @@ class _$_Product implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, stallId: $stallId, stall: $stall, name: $name, description: $description, image: $image, quantityUnit: $quantityUnit, weight: $weight, price: $price, stocks: $stocks, categories: $categories)';
+    return 'Product(id: $id, stall_id: $stall_id, stall: $stall, name: $name, description: $description, image: $image, quantity_unit: $quantity_unit, weight: $weight, price: $price, stocks: $stocks, categories: $categories)';
   }
 
   @override
@@ -323,9 +323,9 @@ class _$_Product implements _Product {
         (other is _Product &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.stallId, stallId) ||
+            (identical(other.stall_id, stall_id) ||
                 const DeepCollectionEquality()
-                    .equals(other.stallId, stallId)) &&
+                    .equals(other.stall_id, stall_id)) &&
             (identical(other.stall, stall) ||
                 const DeepCollectionEquality().equals(other.stall, stall)) &&
             (identical(other.name, name) ||
@@ -335,9 +335,9 @@ class _$_Product implements _Product {
                     .equals(other.description, description)) &&
             (identical(other.image, image) ||
                 const DeepCollectionEquality().equals(other.image, image)) &&
-            (identical(other.quantityUnit, quantityUnit) ||
+            (identical(other.quantity_unit, quantity_unit) ||
                 const DeepCollectionEquality()
-                    .equals(other.quantityUnit, quantityUnit)) &&
+                    .equals(other.quantity_unit, quantity_unit)) &&
             (identical(other.weight, weight) ||
                 const DeepCollectionEquality().equals(other.weight, weight)) &&
             (identical(other.price, price) ||
@@ -353,12 +353,12 @@ class _$_Product implements _Product {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(stallId) ^
+      const DeepCollectionEquality().hash(stall_id) ^
       const DeepCollectionEquality().hash(stall) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(image) ^
-      const DeepCollectionEquality().hash(quantityUnit) ^
+      const DeepCollectionEquality().hash(quantity_unit) ^
       const DeepCollectionEquality().hash(weight) ^
       const DeepCollectionEquality().hash(price) ^
       const DeepCollectionEquality().hash(stocks) ^
@@ -378,12 +378,12 @@ class _$_Product implements _Product {
 abstract class _Product implements Product {
   const factory _Product(
       {int? id,
-      int? stallId,
+      int? stall_id,
       Stall? stall,
       String? name,
       String? description,
       String? image,
-      String? quantityUnit,
+      String? quantity_unit,
       int? weight,
       int? price,
       int? stocks,
@@ -394,7 +394,7 @@ abstract class _Product implements Product {
   @override
   int? get id => throw _privateConstructorUsedError;
   @override
-  int? get stallId => throw _privateConstructorUsedError;
+  int? get stall_id => throw _privateConstructorUsedError;
   @override
   Stall? get stall => throw _privateConstructorUsedError;
   @override
@@ -404,7 +404,7 @@ abstract class _Product implements Product {
   @override
   String? get image => throw _privateConstructorUsedError;
   @override
-  String? get quantityUnit => throw _privateConstructorUsedError;
+  String? get quantity_unit => throw _privateConstructorUsedError;
   @override
   int? get weight => throw _privateConstructorUsedError;
   @override

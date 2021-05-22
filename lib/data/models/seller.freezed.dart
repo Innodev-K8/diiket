@@ -25,19 +25,19 @@ class _$SellerTearOff {
       String? name,
       String? email,
       String? address,
-      String? phoneNumber,
+      String? phone_number,
       String? type,
-      String? profilePicture,
-      String? profilePictureUrl}) {
+      String? profile_picture,
+      String? profile_picture_url}) {
     return _Seller(
       id: id,
       name: name,
       email: email,
       address: address,
-      phoneNumber: phoneNumber,
+      phone_number: phone_number,
       type: type,
-      profilePicture: profilePicture,
-      profilePictureUrl: profilePictureUrl,
+      profile_picture: profile_picture,
+      profile_picture_url: profile_picture_url,
     );
   }
 
@@ -55,10 +55,10 @@ mixin _$Seller {
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
-  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get phone_number => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
-  String? get profilePicture => throw _privateConstructorUsedError;
-  String? get profilePictureUrl => throw _privateConstructorUsedError;
+  String? get profile_picture => throw _privateConstructorUsedError;
+  String? get profile_picture_url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -74,10 +74,10 @@ abstract class $SellerCopyWith<$Res> {
       String? name,
       String? email,
       String? address,
-      String? phoneNumber,
+      String? phone_number,
       String? type,
-      String? profilePicture,
-      String? profilePictureUrl});
+      String? profile_picture,
+      String? profile_picture_url});
 }
 
 /// @nodoc
@@ -94,10 +94,10 @@ class _$SellerCopyWithImpl<$Res> implements $SellerCopyWith<$Res> {
     Object? name = freezed,
     Object? email = freezed,
     Object? address = freezed,
-    Object? phoneNumber = freezed,
+    Object? phone_number = freezed,
     Object? type = freezed,
-    Object? profilePicture = freezed,
-    Object? profilePictureUrl = freezed,
+    Object? profile_picture = freezed,
+    Object? profile_picture_url = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -116,21 +116,21 @@ class _$SellerCopyWithImpl<$Res> implements $SellerCopyWith<$Res> {
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
-      phoneNumber: phoneNumber == freezed
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
+      phone_number: phone_number == freezed
+          ? _value.phone_number
+          : phone_number // ignore: cast_nullable_to_non_nullable
               as String?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      profilePicture: profilePicture == freezed
-          ? _value.profilePicture
-          : profilePicture // ignore: cast_nullable_to_non_nullable
+      profile_picture: profile_picture == freezed
+          ? _value.profile_picture
+          : profile_picture // ignore: cast_nullable_to_non_nullable
               as String?,
-      profilePictureUrl: profilePictureUrl == freezed
-          ? _value.profilePictureUrl
-          : profilePictureUrl // ignore: cast_nullable_to_non_nullable
+      profile_picture_url: profile_picture_url == freezed
+          ? _value.profile_picture_url
+          : profile_picture_url // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -146,10 +146,10 @@ abstract class _$SellerCopyWith<$Res> implements $SellerCopyWith<$Res> {
       String? name,
       String? email,
       String? address,
-      String? phoneNumber,
+      String? phone_number,
       String? type,
-      String? profilePicture,
-      String? profilePictureUrl});
+      String? profile_picture,
+      String? profile_picture_url});
 }
 
 /// @nodoc
@@ -167,10 +167,10 @@ class __$SellerCopyWithImpl<$Res> extends _$SellerCopyWithImpl<$Res>
     Object? name = freezed,
     Object? email = freezed,
     Object? address = freezed,
-    Object? phoneNumber = freezed,
+    Object? phone_number = freezed,
     Object? type = freezed,
-    Object? profilePicture = freezed,
-    Object? profilePictureUrl = freezed,
+    Object? profile_picture = freezed,
+    Object? profile_picture_url = freezed,
   }) {
     return _then(_Seller(
       id: id == freezed
@@ -189,21 +189,21 @@ class __$SellerCopyWithImpl<$Res> extends _$SellerCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
-      phoneNumber: phoneNumber == freezed
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
+      phone_number: phone_number == freezed
+          ? _value.phone_number
+          : phone_number // ignore: cast_nullable_to_non_nullable
               as String?,
       type: type == freezed
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      profilePicture: profilePicture == freezed
-          ? _value.profilePicture
-          : profilePicture // ignore: cast_nullable_to_non_nullable
+      profile_picture: profile_picture == freezed
+          ? _value.profile_picture
+          : profile_picture // ignore: cast_nullable_to_non_nullable
               as String?,
-      profilePictureUrl: profilePictureUrl == freezed
-          ? _value.profilePictureUrl
-          : profilePictureUrl // ignore: cast_nullable_to_non_nullable
+      profile_picture_url: profile_picture_url == freezed
+          ? _value.profile_picture_url
+          : profile_picture_url // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -217,10 +217,10 @@ class _$_Seller implements _Seller {
       this.name,
       this.email,
       this.address,
-      this.phoneNumber,
+      this.phone_number,
       this.type,
-      this.profilePicture,
-      this.profilePictureUrl});
+      this.profile_picture,
+      this.profile_picture_url});
 
   factory _$_Seller.fromJson(Map<String, dynamic> json) =>
       _$_$_SellerFromJson(json);
@@ -234,17 +234,17 @@ class _$_Seller implements _Seller {
   @override
   final String? address;
   @override
-  final String? phoneNumber;
+  final String? phone_number;
   @override
   final String? type;
   @override
-  final String? profilePicture;
+  final String? profile_picture;
   @override
-  final String? profilePictureUrl;
+  final String? profile_picture_url;
 
   @override
   String toString() {
-    return 'Seller(id: $id, name: $name, email: $email, address: $address, phoneNumber: $phoneNumber, type: $type, profilePicture: $profilePicture, profilePictureUrl: $profilePictureUrl)';
+    return 'Seller(id: $id, name: $name, email: $email, address: $address, phone_number: $phone_number, type: $type, profile_picture: $profile_picture, profile_picture_url: $profile_picture_url)';
   }
 
   @override
@@ -260,17 +260,17 @@ class _$_Seller implements _Seller {
             (identical(other.address, address) ||
                 const DeepCollectionEquality()
                     .equals(other.address, address)) &&
-            (identical(other.phoneNumber, phoneNumber) ||
+            (identical(other.phone_number, phone_number) ||
                 const DeepCollectionEquality()
-                    .equals(other.phoneNumber, phoneNumber)) &&
+                    .equals(other.phone_number, phone_number)) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
-            (identical(other.profilePicture, profilePicture) ||
+            (identical(other.profile_picture, profile_picture) ||
                 const DeepCollectionEquality()
-                    .equals(other.profilePicture, profilePicture)) &&
-            (identical(other.profilePictureUrl, profilePictureUrl) ||
+                    .equals(other.profile_picture, profile_picture)) &&
+            (identical(other.profile_picture_url, profile_picture_url) ||
                 const DeepCollectionEquality()
-                    .equals(other.profilePictureUrl, profilePictureUrl)));
+                    .equals(other.profile_picture_url, profile_picture_url)));
   }
 
   @override
@@ -280,10 +280,10 @@ class _$_Seller implements _Seller {
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(address) ^
-      const DeepCollectionEquality().hash(phoneNumber) ^
+      const DeepCollectionEquality().hash(phone_number) ^
       const DeepCollectionEquality().hash(type) ^
-      const DeepCollectionEquality().hash(profilePicture) ^
-      const DeepCollectionEquality().hash(profilePictureUrl);
+      const DeepCollectionEquality().hash(profile_picture) ^
+      const DeepCollectionEquality().hash(profile_picture_url);
 
   @JsonKey(ignore: true)
   @override
@@ -302,10 +302,10 @@ abstract class _Seller implements Seller {
       String? name,
       String? email,
       String? address,
-      String? phoneNumber,
+      String? phone_number,
       String? type,
-      String? profilePicture,
-      String? profilePictureUrl}) = _$_Seller;
+      String? profile_picture,
+      String? profile_picture_url}) = _$_Seller;
 
   factory _Seller.fromJson(Map<String, dynamic> json) = _$_Seller.fromJson;
 
@@ -318,13 +318,13 @@ abstract class _Seller implements Seller {
   @override
   String? get address => throw _privateConstructorUsedError;
   @override
-  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get phone_number => throw _privateConstructorUsedError;
   @override
   String? get type => throw _privateConstructorUsedError;
   @override
-  String? get profilePicture => throw _privateConstructorUsedError;
+  String? get profile_picture => throw _privateConstructorUsedError;
   @override
-  String? get profilePictureUrl => throw _privateConstructorUsedError;
+  String? get profile_picture_url => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$SellerCopyWith<_Seller> get copyWith => throw _privateConstructorUsedError;

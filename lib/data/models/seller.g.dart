@@ -12,10 +12,10 @@ _$_Seller _$_$_SellerFromJson(Map<String, dynamic> json) {
     name: json['name'] as String?,
     email: json['email'] as String?,
     address: json['address'] as String?,
-    phoneNumber: json['phoneNumber'] as String?,
+    phone_number: json['phone_number'] as String?,
     type: json['type'] as String?,
-    profilePicture: json['profilePicture'] as String?,
-    profilePictureUrl: json['profilePictureUrl'] as String?,
+    profile_picture: json['profile_picture'] as String?,
+    profile_picture_url: json['profile_picture_url'] as String?,
   );
 }
 
@@ -24,8 +24,8 @@ Map<String, dynamic> _$_$_SellerToJson(_$_Seller instance) => <String, dynamic>{
       'name': instance.name,
       'email': instance.email,
       'address': instance.address,
-      'phoneNumber': instance.phoneNumber,
+      'phone_number': instance.phone_number,
       'type': instance.type,
-      'profilePicture': instance.profilePicture,
-      'profilePictureUrl': instance.profilePictureUrl,
+      'profile_picture': instance.profile_picture,
+      'profile_picture_url': instance.profile_picture_url,
     };

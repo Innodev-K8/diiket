@@ -10,10 +10,10 @@ abstract class Seller with _$Seller {
     String? name,
     String? email,
     String? address,
-    String? phoneNumber,
+    String? phone_number,
     String? type,
-    String? profilePicture,
-    String? profilePictureUrl,
+    String? profile_picture,
+    String? profile_picture_url,
   }) = _Seller;
 
   factory Seller.fromJson(Map<String, dynamic> json) => _$SellerFromJson(json);

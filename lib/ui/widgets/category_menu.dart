@@ -1,4 +1,3 @@
-import 'package:diiket/ui/common/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'category_button.dart';

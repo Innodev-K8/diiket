@@ -1,3 +1,5 @@
+import 'package:diiket/data/custom_exception.dart';
+import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/helpers/validation_helper.dart';
 import 'package:diiket/ui/common/styles.dart';
@@ -234,17 +236,10 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     try {
-      // ini dihandle di provider, listen ke authStateChanges, login ke laravel tiap itu berubah
-      final user = await context
-          .read(firebaseAuthProvider)
-          .signInWithCredential(phoneAuthCredential);
-
-      print('FIREBASE AUTH SUCCESS');
-      // TODO: use this token to acquire user information in laravel
-      print(await user.user?.getIdToken());
-    } on FirebaseAuthException catch (error) {
-      print('FIREBASE AUTH ERROR');
-      print(error.message);
+      context
+          .read(authProvider.notifier)
+          .signInWithPhoneCredential(phoneAuthCredential);
+    } on CustomException catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -254,11 +249,6 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     } finally {
       setState(() {
-        // if (verificationId != null)
-        //   curentState = MobileVerificationState.SHOW_OTP_FORM;
-        // else
-        //   curentState = MobileVerificationState.SHOW_PHONE_FORM;
-
         isLoading = false;
       });
     }
@@ -266,7 +256,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
-    print("DISPOSING");
     phoneNumberField.dispose();
     otpCodeField.dispose();
 

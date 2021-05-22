@@ -1,5 +1,6 @@
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
+import 'package:diiket/data/providers/products/popular_products_provider.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class ProfilePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final User? user = useProvider(authProvider);
+    final productsState = useProvider(productProvider('test'));
 
     return SafeArea(
       child: Column(
@@ -31,6 +33,19 @@ class ProfilePage extends HookWidget {
               },
               child: Text('Login'),
             ),
+          ElevatedButton(
+            onPressed: () {
+              context.read(productProvider('test').notifier).loadProducts();
+            },
+            child: Text('Fetch Product'),
+          ),
+          productsState.when(
+            data: (value) => Text(value.first.toString()),
+            loading: () => Text('loading'),
+            error: (error, stackTrace) => Text(
+              error.toString(),
+            ),
+          ),
         ],
       ),
     );

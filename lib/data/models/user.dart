@@ -7,6 +7,7 @@ part 'user.g.dart';
 class User with _$User {
   factory User({
     int? id,
+    String? firebase_uid,
     String? name,
     String? email,
     String? address,

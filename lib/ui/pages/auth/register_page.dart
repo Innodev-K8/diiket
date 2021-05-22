@@ -1,7 +1,6 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
-import 'package:diiket/helpers/validation_helper.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

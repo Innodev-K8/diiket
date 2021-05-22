@@ -7,6 +7,8 @@ class ColorPallete {
   static final accentColor = const Color(0xFF003046);
   static final deadColor = const Color(0xFF636773);
   static final categoryColor = const Color(0xFFFFB945);
+
+  static final successColor = const Color(0xFF00B894);
 }
 
 final kTextTheme = TextTheme(

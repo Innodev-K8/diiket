@@ -2,6 +2,7 @@ import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/common/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +21,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  // state ini digunakan untuk menentukan user memasukan no-telp atau kode otp
   MobileVerificationState curentState = MobileVerificationState.SHOW_PHONE_FORM;
 
   final GlobalKey<FormState> phoneFormKey = GlobalKey<FormState>();
@@ -235,9 +237,11 @@ class _RegisterPageState extends State<RegisterPage> {
     });
 
     try {
-      context
+      await context
           .read(authProvider.notifier)
           .signInWithPhoneCredential(phoneAuthCredential);
+
+      Utils.appNav.currentState?.pop();
     } on CustomException catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

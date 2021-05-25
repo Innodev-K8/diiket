@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'api_service.dart';
 
-final productServiceProvider = Provider<ProductService>((ref) {
+final productServiceProvider = StateProvider<ProductService>((ref) {
   final Market currentMarket = ref.watch(currentMarketProvider).state;
 
   return ProductService(ref.read(apiProvider), currentMarket.id ?? 1);

@@ -2,47 +2,64 @@ import 'package:dio/src/dio_error.dart';
 
 class CustomException implements Exception {
   final String? message;
+  final int code;
 
-  const CustomException({this.message = 'Terjadi kesalahan!'});
+  const CustomException({
+    this.message = 'Terjadi kesalahan!',
+    this.code = 0,
+  });
 
   @override
   String toString() {
-    return "CustomException { message: $message }";
+    return "CustomException { message: $message, code: $code }";
   }
 
   factory CustomException.fromDioError(DioError error) {
+    String message = 'Terjadi kesalahan';
+
     switch (error.type) {
       case DioErrorType.connectTimeout:
-        return CustomException(message: 'Waktu koneksi ke server habis.');
+        message = 'Waktu koneksi ke server habis.';
+        break;
       case DioErrorType.sendTimeout:
-        return CustomException(message: 'Waktu koneksi ke server habis.');
+        message = 'Waktu pengiriman ke server habis.';
+        break;
       case DioErrorType.receiveTimeout:
-        return CustomException(message: 'Waktu koneksi ke server habis.');
+        message = 'Waktu penerimaan ke server habis.';
+        break;
       case DioErrorType.cancel:
-        return CustomException(message: 'Permintaan ke server dibatalkan.');
+        message = 'Permintaan ke server dibatalkan.';
+        break;
       case DioErrorType.response:
         switch (error.response!.statusCode) {
           case 401:
-            return CustomException(message: 'Permintaan tidak terautentikasi.');
+            message = 'Permintaan tidak terautentikasi.';
+            break;
           case 403:
-            return CustomException(message: 'Permintaan tidak terautorisasi.');
+            message = 'Permintaan tidak terautorisasi.';
+            break;
           case 404:
-            return CustomException(message: 'Permintaan tidak ditemukan.');
+            message = 'Permintaan tidak ditemukan.';
+            break;
           case 500:
-            return CustomException(message: 'Terdapat kesalahan pada server.');
+            message = 'Terdapat kesalahan pada server.';
+            break;
           case 503:
-            return CustomException(
-              message: 'Server sedang dalam pemeliharaan.',
-            );
+            message = 'Server sedang dalam pemeliharaan.';
+            break;
           default:
-            return CustomException(
-              message: error.message,
-            );
+            message = error.message;
+            break;
         }
+        break;
       case DioErrorType.other:
-        return CustomException(
-          message: error.message,
-        );
+        message = error.message;
+        break;
     }
+
+    return CustomException(
+      message: message,
+      code: error.response!.statusCode ?? 0,
+    );
   }
 }

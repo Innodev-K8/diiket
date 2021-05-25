@@ -1,6 +1,7 @@
+import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
-import 'package:diiket/data/providers/products/popular_products_provider.dart';
+import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class ProfilePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final User? user = useProvider(authProvider);
-    final productsState = useProvider(productProvider('test'));
+    final activeOrderState = useProvider(activeOrderProvider);
 
     return SafeArea(
       child: Column(
@@ -19,6 +20,10 @@ class ProfilePage extends HookWidget {
         children: [
           Text('Ini Profile Page'),
           if (user != null) Text('Logged as ${user.name}'),
+          if (user != null)
+            CircleAvatar(
+              backgroundImage: NetworkImage(user.profile_picture_url ?? ''),
+            ),
           if (user != null)
             ElevatedButton(
               onPressed: () {
@@ -35,12 +40,22 @@ class ProfilePage extends HookWidget {
             ),
           ElevatedButton(
             onPressed: () {
-              context.read(productProvider('test').notifier).loadProducts();
+              context.read(activeOrderProvider.notifier).retrieveActiveOrder();
             },
-            child: Text('Fetch Product'),
+            child: Text('Fetch Active Order'),
           ),
-          productsState.when(
-            data: (value) => Text(value.first.toString()),
+          ElevatedButton(
+            onPressed: () {
+              context.read(activeOrderProvider.notifier).placeOrderItem(
+                    Product(id: 1),
+                    2,
+                    'Yang banyak pak kuahnya...',
+                  );
+            },
+            child: Text('Place Order'),
+          ),
+          activeOrderState.when(
+            data: (order) => Text(order.toString()),
             loading: () => Text('loading'),
             error: (error, stackTrace) => Text(
               error.toString(),

@@ -31,5 +31,11 @@ class AuthService {
     }
   }
 
-  // TODO: signOut service
+  Future<void> logout() async {
+    try {
+      await _dio.post(_('logout'));
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
 }

@@ -6,7 +6,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final productProvider = StateNotifierProvider.family<ProductState,
     AsyncValue<List<Product>>, String>(
   (ref, category) {
-    return ProductState(ref.watch(productServiceProvider), category);
+    // perlu watch karena productService bergantung ke active Market
+    return ProductState(ref.watch(productServiceProvider).state, category);
   },
 );
 

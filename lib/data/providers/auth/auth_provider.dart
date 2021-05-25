@@ -8,7 +8,6 @@ import 'package:diiket/data/providers/auth/token_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:diiket/data/repositories/firebase_auth_repository.dart';
-import 'package:logger/logger.dart';
 
 final authProvider = StateNotifierProvider<AuthState, User?>((ref) {
   return AuthState(
@@ -65,8 +64,6 @@ class AuthState extends StateNotifier<User?> {
       if (response.token != null && response.user != null) {
         await _read(tokenProvider.notifier).setToken(response.token!);
 
-        Logger().d(response.toString());
-
         state = response.user;
       } else {
         await _signOutAll();
@@ -77,7 +74,12 @@ class AuthState extends StateNotifier<User?> {
   }
 
   Future<void> _signOutAll() async {
-    await _read(tokenProvider.notifier).clearToken();
-    state = null;
+    try {
+      await _authService.logout().onError((error, stackTrace) => null);
+      await _read(tokenProvider.notifier).clearToken();
+      state = null;
+    } on CustomException catch (error) {
+      _read(authExceptionProvider).state = error;
+    }
   }
 }

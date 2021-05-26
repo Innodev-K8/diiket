@@ -14,7 +14,7 @@ void main() {
   });
 
   test('Stall Service should get all stalls', () async {
-    final result = await stallService.getAllStalls();
+    final result = await stallService.getStalls();
 
     expect(result, isNotEmpty);
     expect(result, isA<List<Stall>>());

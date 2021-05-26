@@ -17,6 +17,7 @@ _$_Stall _$_$_StallFromJson(Map<String, dynamic> json) {
     name: json['name'] as String?,
     description: json['description'] as String?,
     photo: json['photo'] as String?,
+    photo_url: json['photo_url'] as String?,
     products: (json['products'] as List<dynamic>?)
         ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
         .toList(),
@@ -38,6 +39,7 @@ Map<String, dynamic> _$_$_StallToJson(_$_Stall instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'photo': instance.photo,
+      'photo_url': instance.photo_url,
       'products': instance.products,
       'location_block': instance.location_block,
       'location_number': instance.location_number,

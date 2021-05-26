@@ -1,7 +1,6 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/paginated/paginated_products.dart';
-import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

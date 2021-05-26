@@ -16,6 +16,7 @@ abstract class Stall with _$Stall {
     String? name,
     String? description,
     String? photo,
+    String? photo_url,
     List<Product>? products,
     String? location_block,
     String? location_number,

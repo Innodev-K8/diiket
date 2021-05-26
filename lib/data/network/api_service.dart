@@ -15,8 +15,8 @@ class ApiService {
   static Dio create() {
     final dio = Dio(
       BaseOptions(
-        baseUrl: kReleaseMode ? productionUrl : debuggingUrl,
-        // baseUrl: productionUrl,
+        // baseUrl: kReleaseMode ? productionUrl : debuggingUrl,
+        baseUrl: productionUrl,
         headers: {
           'Accept': 'application/json',
         },

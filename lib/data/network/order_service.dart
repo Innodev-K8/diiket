@@ -4,11 +4,15 @@ import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/network/api_service.dart';
+import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final orderServiceProvider = StateProvider<OrderService>((ref) {
+  // rebuild order service whenever user state changes
+  ref.watch(authProvider);
+
   final Market currentMarket = ref.watch(currentMarketProvider).state;
 
   return OrderService(ref.read(apiProvider), currentMarket.id ?? 1);

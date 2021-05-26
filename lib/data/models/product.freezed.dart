@@ -26,7 +26,8 @@ class _$ProductTearOff {
       Stall? stall,
       String? name,
       String? description,
-      String? image,
+      String? photo,
+      String? photo_url,
       String? quantity_unit,
       int? weight,
       int? price,
@@ -38,7 +39,8 @@ class _$ProductTearOff {
       stall: stall,
       name: name,
       description: description,
-      image: image,
+      photo: photo,
+      photo_url: photo_url,
       quantity_unit: quantity_unit,
       weight: weight,
       price: price,
@@ -62,7 +64,8 @@ mixin _$Product {
   Stall? get stall => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  String? get image => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
+  String? get photo_url => throw _privateConstructorUsedError;
   String? get quantity_unit => throw _privateConstructorUsedError;
   int? get weight => throw _privateConstructorUsedError;
   int? get price => throw _privateConstructorUsedError;
@@ -84,7 +87,8 @@ abstract class $ProductCopyWith<$Res> {
       Stall? stall,
       String? name,
       String? description,
-      String? image,
+      String? photo,
+      String? photo_url,
       String? quantity_unit,
       int? weight,
       int? price,
@@ -109,7 +113,8 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
     Object? stall = freezed,
     Object? name = freezed,
     Object? description = freezed,
-    Object? image = freezed,
+    Object? photo = freezed,
+    Object? photo_url = freezed,
     Object? quantity_unit = freezed,
     Object? weight = freezed,
     Object? price = freezed,
@@ -137,9 +142,13 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: image == freezed
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      photo: photo == freezed
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo_url: photo_url == freezed
+          ? _value.photo_url
+          : photo_url // ignore: cast_nullable_to_non_nullable
               as String?,
       quantity_unit: quantity_unit == freezed
           ? _value.quantity_unit
@@ -187,7 +196,8 @@ abstract class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
       Stall? stall,
       String? name,
       String? description,
-      String? image,
+      String? photo,
+      String? photo_url,
       String? quantity_unit,
       int? weight,
       int? price,
@@ -214,7 +224,8 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
     Object? stall = freezed,
     Object? name = freezed,
     Object? description = freezed,
-    Object? image = freezed,
+    Object? photo = freezed,
+    Object? photo_url = freezed,
     Object? quantity_unit = freezed,
     Object? weight = freezed,
     Object? price = freezed,
@@ -242,9 +253,13 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: image == freezed
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      photo: photo == freezed
+          ? _value.photo
+          : photo // ignore: cast_nullable_to_non_nullable
+              as String?,
+      photo_url: photo_url == freezed
+          ? _value.photo_url
+          : photo_url // ignore: cast_nullable_to_non_nullable
               as String?,
       quantity_unit: quantity_unit == freezed
           ? _value.quantity_unit
@@ -279,7 +294,8 @@ class _$_Product implements _Product {
       this.stall,
       this.name,
       this.description,
-      this.image,
+      this.photo,
+      this.photo_url,
       this.quantity_unit,
       this.weight,
       this.price,
@@ -300,7 +316,9 @@ class _$_Product implements _Product {
   @override
   final String? description;
   @override
-  final String? image;
+  final String? photo;
+  @override
+  final String? photo_url;
   @override
   final String? quantity_unit;
   @override
@@ -314,7 +332,7 @@ class _$_Product implements _Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, stall_id: $stall_id, stall: $stall, name: $name, description: $description, image: $image, quantity_unit: $quantity_unit, weight: $weight, price: $price, stocks: $stocks, categories: $categories)';
+    return 'Product(id: $id, stall_id: $stall_id, stall: $stall, name: $name, description: $description, photo: $photo, photo_url: $photo_url, quantity_unit: $quantity_unit, weight: $weight, price: $price, stocks: $stocks, categories: $categories)';
   }
 
   @override
@@ -333,8 +351,11 @@ class _$_Product implements _Product {
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
                     .equals(other.description, description)) &&
-            (identical(other.image, image) ||
-                const DeepCollectionEquality().equals(other.image, image)) &&
+            (identical(other.photo, photo) ||
+                const DeepCollectionEquality().equals(other.photo, photo)) &&
+            (identical(other.photo_url, photo_url) ||
+                const DeepCollectionEquality()
+                    .equals(other.photo_url, photo_url)) &&
             (identical(other.quantity_unit, quantity_unit) ||
                 const DeepCollectionEquality()
                     .equals(other.quantity_unit, quantity_unit)) &&
@@ -357,7 +378,8 @@ class _$_Product implements _Product {
       const DeepCollectionEquality().hash(stall) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(image) ^
+      const DeepCollectionEquality().hash(photo) ^
+      const DeepCollectionEquality().hash(photo_url) ^
       const DeepCollectionEquality().hash(quantity_unit) ^
       const DeepCollectionEquality().hash(weight) ^
       const DeepCollectionEquality().hash(price) ^
@@ -382,7 +404,8 @@ abstract class _Product implements Product {
       Stall? stall,
       String? name,
       String? description,
-      String? image,
+      String? photo,
+      String? photo_url,
       String? quantity_unit,
       int? weight,
       int? price,
@@ -402,7 +425,9 @@ abstract class _Product implements Product {
   @override
   String? get description => throw _privateConstructorUsedError;
   @override
-  String? get image => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
+  @override
+  String? get photo_url => throw _privateConstructorUsedError;
   @override
   String? get quantity_unit => throw _privateConstructorUsedError;
   @override

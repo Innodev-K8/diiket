@@ -6,9 +6,12 @@ import 'package:diiket/data/network/order_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final activeOrderProvider =
-    StateNotifierProvider<ActiveOrderState, AsyncValue<Order?>>((ref) {
-  return ActiveOrderState(ref.watch(orderServiceProvider).state);
-});
+    StateNotifierProvider<ActiveOrderState, AsyncValue<Order?>>(
+  (ref) {
+    // orderServiceProvider already watching market and auth state
+    return ActiveOrderState(ref.watch(orderServiceProvider).state);
+  },
+);
 
 class ActiveOrderState extends StateNotifier<AsyncValue<Order?>> {
   OrderService _orderService;
@@ -48,6 +51,9 @@ class ActiveOrderState extends StateNotifier<AsyncValue<Order?>> {
         await retrieveActiveOrder();
       }
     } on CustomException catch (error) {
+      // ignore if item already in order list
+      if (error.code == 403) return;
+
       state = AsyncValue.error(error);
     }
   }

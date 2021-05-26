@@ -1,5 +1,6 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/market.dart';
+import 'package:diiket/data/models/paginated/paginated_products.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:dio/dio.dart';
@@ -19,19 +20,52 @@ class ProductService {
 
   ProductService(this._dio, this._marketId);
 
-  String _(Object path) => '/user/markets/${_marketId}/$path';
+  String _(Object path) => '/user/markets/${_marketId}/products/$path';
 
-  Future<List<Product>> getAllProducts() async {
+  Future<PaginatedProducts> getAllProducts(
+      [int page = 1, String? category]) async {
     try {
-      final response = await _dio.get(_('products'));
+      final response = await _dio.get(
+        _(''),
+        queryParameters: {
+          'page': page,
+          if (category != null) 'category': category,
+        },
+      );
 
-      List<dynamic> results = response.data['data'];
-
-      return results.map((json) => Product.fromJson(json)).toList();
+      return PaginatedProducts.fromJson(response.data);
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }
   }
 
-  // TODO: add getPopularProducts, etc...
+  Future<PaginatedProducts> getPopularProducts([int page = 1]) async {
+    try {
+      final response = await _dio.get(
+        _('popular'),
+        queryParameters: {
+          'page': page,
+        },
+      );
+
+      return PaginatedProducts.fromJson(response.data);
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
+
+  Future<PaginatedProducts> getRandomProducts([int page = 1]) async {
+    try {
+      final response = await _dio.get(
+        _('random'),
+        queryParameters: {
+          'page': page,
+        },
+      );
+
+      return PaginatedProducts.fromJson(response.data);
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
 }

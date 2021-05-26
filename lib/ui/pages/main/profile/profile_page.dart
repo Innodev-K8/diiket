@@ -2,6 +2,8 @@ import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
+import 'package:diiket/data/providers/products/products_provider.dart';
+import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
@@ -12,55 +14,104 @@ class ProfilePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final User? user = useProvider(authProvider);
-    final activeOrderState = useProvider(activeOrderProvider);
+
+    final String productCategory = ProductFamily.all;
+
+    // final activeOrderState = useProvider(activeOrderProvider);
+    final productsState = useProvider(productProvider(productCategory));
 
     return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Ini Profile Page'),
+            if (user != null) Text('Logged as ${user.name}'),
+            if (user != null)
+              CircleAvatar(
+                backgroundImage: NetworkImage(user.profile_picture_url ?? ''),
+              ),
+            if (user != null)
+              ElevatedButton(
+                onPressed: () {
+                  context.read(authProvider.notifier).signOut();
+                },
+                child: Text('Sign Out'),
+              )
+            else
+              ElevatedButton(
+                onPressed: () {
+                  Utils.appNav.currentState?.pushNamed(RegisterPage.route);
+                },
+                child: Text('Login'),
+              ),
+            ElevatedButton(
+              onPressed: () {
+                context
+                    .read(productProvider(productCategory).notifier)
+                    .loadProducts();
+              },
+              child: Text('Fetch All Products'),
+            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     context.read(activeOrderProvider.notifier).placeOrderItem(
+            //           Product(id: 1),
+            //           2,
+            //           'Yang banyak pak kuahnya...',
+            //         );
+            //   },
+            //   child: Text('Place Order'),
+            // ),
+            ElevatedButton(
+              onPressed: () {
+                context
+                    .read(productProvider(productCategory).notifier)
+                    .loadMore();
+              },
+              child: Text('Load More'),
+            ),
+            productsState.when(
+              data: (value) => Column(
+                children:
+                    value.data?.map((p) => _buildProductItem(p)).toList() ?? [],
+              ),
+              loading: () => Text('loading'),
+              error: (error, stackTrace) => Text(
+                error.toString(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container _buildProductItem(Product p) {
+    final String? category = p.categories?.map((e) => e.name).join(', ');
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Ini Profile Page'),
-          if (user != null) Text('Logged as ${user.name}'),
-          if (user != null)
-            CircleAvatar(
-              backgroundImage: NetworkImage(user.profile_picture_url ?? ''),
-            ),
-          if (user != null)
-            ElevatedButton(
-              onPressed: () {
-                context.read(authProvider.notifier).signOut();
-              },
-              child: Text('Sign Out'),
-            )
-          else
-            ElevatedButton(
-              onPressed: () {
-                Utils.appNav.currentState?.pushNamed(RegisterPage.route);
-              },
-              child: Text('Login'),
-            ),
-          ElevatedButton(
-            onPressed: () {
-              context.read(activeOrderProvider.notifier).retrieveActiveOrder();
-            },
-            child: Text('Fetch Active Order'),
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage(p.photo_url ?? ''),
+              ),
+              SizedBox(width: 4),
+              Text(
+                p.name ?? '-',
+                style: kTextTheme.headline6,
+              ),
+            ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              context.read(activeOrderProvider.notifier).placeOrderItem(
-                    Product(id: 1),
-                    2,
-                    'Yang banyak pak kuahnya...',
-                  );
-            },
-            child: Text('Place Order'),
-          ),
-          activeOrderState.when(
-            data: (order) => Text(order.toString()),
-            loading: () => Text('loading'),
-            error: (error, stackTrace) => Text(
-              error.toString(),
-            ),
-          ),
+          Text(p.description ?? '-'),
+          Text('${p.price}/${p.quantity_unit}'),
+          Text('Pedagang: ${p.stall?.seller?.name} - ${p.stall?.name}'),
+          Text('Kategori: ${category}'),
         ],
       ),
     );

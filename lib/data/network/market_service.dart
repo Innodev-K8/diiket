@@ -1,6 +1,13 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:dio/dio.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'api_service.dart';
+
+final marketServiceProvider = Provider<MarketService>((ref) {
+  return MarketService(ref.read(apiProvider));
+});
 
 class MarketService {
   Dio _dio;

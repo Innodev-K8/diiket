@@ -1,5 +1,7 @@
 import 'package:diiket/ui/common/helper.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:flutter/material.dart';
 
@@ -34,9 +36,16 @@ class FeedHeader extends StatelessWidget {
               radius: 22,
               backgroundImage: NetworkImage(user.profile_picture_url ?? ''),
             ),
-            guest: ElevatedButton(
-              onPressed: () {},
-              child: Text('Masuk'),
+            guest: OutlinedButton(
+              onPressed: () {
+                Utils.appNav.currentState?.pushNamed(RegisterPage.route);
+              },
+              child: Text(
+                'Masuk',
+                style: kTextTheme.button!.copyWith(
+                  color: ColorPallete.primaryColor,
+                ),
+              ),
             ),
           ),
         ],

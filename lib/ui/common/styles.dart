@@ -55,7 +55,7 @@ final kTextTheme = TextTheme(
   ),
   button: GoogleFonts.poppins(
     fontSize: 13,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     letterSpacing: 1.25,
   ),
   caption: GoogleFonts.poppins(

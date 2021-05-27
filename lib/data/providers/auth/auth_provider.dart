@@ -53,7 +53,27 @@ class AuthState extends StateNotifier<User?> {
     await _firebaseAuthRepository.signOut();
   }
 
+  Future<void> updateUserName(String name) async {
+    try {
+      await _authService.updateProfile({
+        'name': name,
+      });
+
+      await refreshProfile();
+    } on CustomException catch (error) {
+      _read(authExceptionProvider).state = error;
+    }
+  }
+
   // Komunikasi ke laravel
+  Future<void> refreshProfile() async {
+    try {
+      state = await _authService.me();
+    } on CustomException catch (error) {
+      _read(authExceptionProvider).state = error;
+    }
+  }
+
   Future<void> _signInWithFirebaseUser(FirebaseUser user) async {
     try {
       final String firebaseToken = await user.getIdToken();

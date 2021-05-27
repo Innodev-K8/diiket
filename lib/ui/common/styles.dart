@@ -5,7 +5,7 @@ class ColorPallete {
   static final primaryColor = const Color(0xFFFF8527);
   static final secondaryColor = const Color(0xFF009EBA);
   static final accentColor = const Color(0xFF003046);
-  static final deadColor = const Color(0xFF636773);
+  static final deadColor = const Color(0xFFb8b9ba);
   static final categoryColor = const Color(0xFFFFB945);
 
   static final successColor = const Color(0xFF00B894);

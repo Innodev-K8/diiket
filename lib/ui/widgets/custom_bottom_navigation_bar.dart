@@ -19,26 +19,25 @@ class CustomBottomNavigationBar extends HookWidget {
     final selectedIndex = useState(0);
 
     return Container(
-      padding: const EdgeInsets.all(18.0),
+      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      height: 70.0,
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 2),
-              blurRadius: 7.0,
-              color: Colors.black.withOpacity(0.24),
-            )
-          ]),
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(
+            color: ColorPallete.deadColor.withOpacity(0.5),
+            width: 1.0,
+          ),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           BottomBarButton(
             isSelected: selectedIndex.value == 0,
             image: 'assets/images/bottom_bar/home.png',
+            title: 'Pasar',
             onTap: () async {
-              // pageController.jumpToPage(0);
-
               selectedIndex.value = 0;
 
               await pageController.animateToPage(
@@ -53,9 +52,8 @@ class CustomBottomNavigationBar extends HookWidget {
           BottomBarButton(
             isSelected: selectedIndex.value == 1,
             image: 'assets/images/bottom_bar/cart.png',
+            title: 'Keranjang',
             onTap: () async {
-              // pageController.jumpToPage(1);
-
               selectedIndex.value = 1;
 
               await pageController.animateToPage(
@@ -70,9 +68,8 @@ class CustomBottomNavigationBar extends HookWidget {
           BottomBarButton(
             isSelected: selectedIndex.value == 2,
             image: 'assets/images/bottom_bar/history.png',
+            title: 'Riwayat',
             onTap: () async {
-              // pageController.jumpToPage(2);
-
               selectedIndex.value = 2;
 
               await pageController.animateToPage(
@@ -87,9 +84,8 @@ class CustomBottomNavigationBar extends HookWidget {
           BottomBarButton(
             isSelected: selectedIndex.value == 3,
             image: 'assets/images/bottom_bar/profile.png',
+            title: 'Profil',
             onTap: () async {
-              // pageController.jumpToPage(3);
-
               selectedIndex.value = 3;
 
               await pageController.animateToPage(
@@ -111,32 +107,47 @@ class BottomBarButton extends StatelessWidget {
   final bool isSelected;
   final Function() onTap;
   final String image;
+  final String title;
 
   const BottomBarButton({
     Key? key,
     required this.isSelected,
     required this.onTap,
     required this.image,
+    required this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 100),
-      width: 54.0,
-      height: 54.0,
-      decoration: BoxDecoration(
-        color: isSelected ? ColorPallete.primaryColor : Colors.transparent,
-        shape: BoxShape.circle,
-      ),
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Image.asset(
-            image,
-            color: isSelected ? Colors.white : ColorPallete.deadColor,
-          ),
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              image,
+              color: isSelected
+                  ? ColorPallete.primaryColor
+                  : ColorPallete.deadColor,
+              width: 24,
+              height: 24,
+            ),
+            Text(
+              title,
+              style: isSelected
+                  ? TextStyle(
+                      color: ColorPallete.primaryColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12.0,
+                    )
+                  : TextStyle(
+                      color: ColorPallete.deadColor,
+                      fontSize: 12.0,
+                    ),
+            ),
+          ],
         ),
       ),
     );

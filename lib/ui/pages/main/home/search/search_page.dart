@@ -12,26 +12,29 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 24,
-                right: 24,
-                top: 30,
-                bottom: 24,
-              ),
-              child: Hero(
-                tag: 'search-field',
-                child: SearchField(
-                  autofocus: autofocus,
+      child: Container(
+        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 24,
+                  right: 24,
+                  top: 30,
+                  bottom: 24,
+                ),
+                child: Hero(
+                  tag: 'search-field',
+                  child: SearchField(
+                    autofocus: autofocus,
+                  ),
                 ),
               ),
-            ),
-            Text('Ini search page'),
-          ],
+              Text('Ini search page'),
+            ],
+          ),
         ),
       ),
     );

@@ -29,8 +29,8 @@ final kTextTheme = TextTheme(
   ),
   headline5: GoogleFonts.poppins(fontSize: 23, fontWeight: FontWeight.w400),
   headline6: GoogleFonts.poppins(
-    fontSize: 19,
-    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
     letterSpacing: 0.15,
   ),
   subtitle1: GoogleFonts.poppins(
@@ -40,7 +40,7 @@ final kTextTheme = TextTheme(
   ),
   subtitle2: GoogleFonts.poppins(
     fontSize: 13,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w400,
     letterSpacing: 0.1,
   ),
   bodyText1: GoogleFonts.poppins(
@@ -60,8 +60,9 @@ final kTextTheme = TextTheme(
   ),
   caption: GoogleFonts.poppins(
     fontSize: 12,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     letterSpacing: 0.4,
+    color: ColorPallete.deadColor,
   ),
   overline: GoogleFonts.poppins(
     fontSize: 10,

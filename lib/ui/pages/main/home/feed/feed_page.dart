@@ -1,6 +1,8 @@
+import 'package:diiket/data/providers/products/products_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/category_menu.dart';
+import 'package:diiket/ui/widgets/products/product_list_section.dart';
 import 'package:diiket/ui/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +36,14 @@ class FeedPage extends StatelessWidget {
             ),
             _buildSectionTitle('Atau butuh sesuatu?'),
             CategoryMenu(),
+            ProductListSection(
+              label: 'Produk',
+              category: ProductFamily.all,
+            ),
+            ProductListSection(
+              label: 'Terlaris',
+              category: ProductFamily.popular,
+            ),
           ],
         ),
       ),
@@ -49,9 +59,9 @@ class FeedPage extends StatelessWidget {
         bottom: 14,
       ),
       child: Text(
-              text,
+        text,
         style: kTextTheme.headline2,
       ),
-          );
+    );
   }
 }

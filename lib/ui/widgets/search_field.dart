@@ -25,19 +25,26 @@ class SearchField extends StatelessWidget {
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: ColorPallete.deadColor,
+          ),
         ),
-        fillColor: Color(0xFFF2F3F4),
-        filled: true,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            width: 2.0,
+            color: ColorPallete.primaryColor,
+          ),
+        ),
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelText: 'Bumbu, Daging Sapi',
         suffixIconConstraints: BoxConstraints(
           minHeight: 24,
           minWidth: 24,
         ),
-        suffixIcon: Padding(
-          padding: const EdgeInsets.only(right: 16.0),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(12.0),
           child: Image.asset(
             'assets/images/categories/search.png',
             width: 24,

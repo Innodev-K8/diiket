@@ -202,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
             pinTheme: PinTheme(
               shape: PinCodeFieldShape.underline,
               borderRadius: BorderRadius.circular(4),
-              inactiveColor: ColorPallete.deadColor,
+              inactiveColor: ColorPallete.lightGray,
               inactiveFillColor: ColorPallete.backgroundColor,
               activeColor: ColorPallete.successColor,
               activeFillColor: ColorPallete.backgroundColor,

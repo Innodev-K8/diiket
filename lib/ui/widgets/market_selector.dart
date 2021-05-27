@@ -40,7 +40,7 @@ class MarketSelector extends HookWidget {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: ColorPallete.deadColor.withOpacity(0.5),
+                color: ColorPallete.lightGray.withOpacity(0.5),
               ),
             ),
             focusedBorder: OutlineInputBorder(

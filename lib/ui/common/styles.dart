@@ -5,7 +5,8 @@ class ColorPallete {
   static final primaryColor = const Color(0xFFFF8527);
   static final secondaryColor = const Color(0xFF009EBA);
   static final accentColor = const Color(0xFF003046);
-  static final deadColor = const Color(0xFFb8b9ba);
+  static final darkGray = const Color(0xFF636773);
+  static final lightGray = const Color(0xFFb8b9ba);
   static final backgroundColor = Colors.white;
 
   static final successColor = const Color(0xFF00B894);
@@ -63,7 +64,7 @@ final kTextTheme = TextTheme(
     fontSize: 12,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.4,
-    color: ColorPallete.deadColor,
+    color: ColorPallete.lightGray,
   ),
   overline: GoogleFonts.poppins(
     fontSize: 10,

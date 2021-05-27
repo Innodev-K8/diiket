@@ -38,6 +38,22 @@ class ProductService {
     }
   }
 
+   Future<PaginatedProducts> searchProducs([int page = 1, String? query]) async {
+    try {
+      final response = await _dio.get(
+        _(''),
+        queryParameters: {
+          'page': page,
+          if (query != null && query != '') 'q': query,
+        },
+      );
+
+      return PaginatedProducts.fromJson(response.data);
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
+
   Future<PaginatedProducts> getPopularProducts([int page = 1]) async {
     try {
       final response = await _dio.get(

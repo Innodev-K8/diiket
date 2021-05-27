@@ -25,7 +25,7 @@ class CustomBottomNavigationBar extends HookWidget {
         color: ColorPallete.backgroundColor,
         border: Border(
           top: BorderSide(
-            color: ColorPallete.deadColor.withOpacity(0.5),
+            color: ColorPallete.lightGray.withOpacity(0.5),
             width: 1.0,
           ),
         ),
@@ -130,7 +130,7 @@ class BottomBarButton extends StatelessWidget {
               image,
               color: isSelected
                   ? ColorPallete.primaryColor
-                  : ColorPallete.deadColor,
+                  : ColorPallete.lightGray,
               width: 24,
               height: 24,
             ),
@@ -143,7 +143,7 @@ class BottomBarButton extends StatelessWidget {
                       fontSize: 12.0,
                     )
                   : TextStyle(
-                      color: ColorPallete.deadColor,
+                      color: ColorPallete.lightGray,
                       fontSize: 12.0,
                     ),
             ),

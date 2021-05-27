@@ -48,7 +48,7 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
     try {
       PaginatedProducts products = await _getProductAtPage(1);
 
-      state = AsyncValue.data(products);
+      if (mounted) state = AsyncValue.data(products);
     } on CustomException catch (error) {
       state = AsyncValue.error(error);
     }

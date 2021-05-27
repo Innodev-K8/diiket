@@ -19,7 +19,7 @@ class MediumProductItem extends StatelessWidget {
         // color: Colors.white,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: ColorPallete.deadColor.withOpacity(0.5),
+          color: ColorPallete.lightGray.withOpacity(0.5),
         ),
       ),
       child: InkWell(

@@ -52,7 +52,7 @@ class FeedPage extends StatelessWidget {
                 bottom: 14,
               ),
               child: Text(
-                'Kategori',
+                'Atau butuh sesuatu?',
                 style: kTextTheme.headline2,
               ),
             ),

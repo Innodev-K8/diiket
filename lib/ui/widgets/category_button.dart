@@ -15,27 +15,36 @@ class CategoryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(8),
-        onTap: onTap,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        InkWell(
+          borderRadius: BorderRadius.circular(10.0),
+          onTap: onTap,
+          child: Container(
+            height: 72.0,
+            width: 72.0,
+            padding: const EdgeInsets.all(24.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              border: Border.all(
+                color: ColorPallete.deadColor.withOpacity(0.5),
+              ),
+            ),
+            child: Image.asset(
               'assets/images/categories/$fileName.png',
               width: 24,
               height: 24,
               color: ColorPallete.categoryColor,
             ),
-            SizedBox(
-              height: 12,
-            ),
-            Text(text),
-          ],
+          ),
         ),
-      ),
+        SizedBox(height: 8),
+        Text(
+          text,
+          style: TextStyle(fontSize: 12.0),
+        ),
+      ],
     );
   }
 }

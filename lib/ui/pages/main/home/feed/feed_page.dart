@@ -12,13 +12,17 @@ class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FeedHeader(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(child: FeedHeader()),
+          SliverAppBar(
+            backgroundColor: ColorPallete.backgroundColor,
+            elevation: 1,
+            pinned: true,
+            toolbarHeight: 45 + 16,
+            automaticallyImplyLeading: false,
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
               child: GestureDetector(
                 onTap: () => Utils.homeNav.currentState!.pushNamed(
                   '/home/search',
@@ -34,19 +38,26 @@ class FeedPage extends StatelessWidget {
                 ),
               ),
             ),
-            _buildSectionTitle('Atau butuh sesuatu?'),
-            CategoryMenu(),
-            // MarketSelector(),
-            ProductListSection(
-              label: 'Produk',
-              category: ProductFamily.all,
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildSectionTitle('Atau butuh sesuatu?'),
+                CategoryMenu(),
+                // MarketSelector(),
+                ProductListSection(
+                  label: 'Produk',
+                  category: ProductFamily.all,
+                ),
+                ProductListSection(
+                  label: 'Terlaris',
+                  category: ProductFamily.popular,
+                ),
+              ],
             ),
-            ProductListSection(
-              label: 'Terlaris',
-              category: ProductFamily.popular,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

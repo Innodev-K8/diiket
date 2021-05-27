@@ -1,3 +1,4 @@
+import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        color: Colors.white,
+        color: ColorPallete.backgroundColor,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -33,6 +33,7 @@ class MainPage extends HookWidget {
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
+        backgroundColor: ColorPallete.backgroundColor,
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {

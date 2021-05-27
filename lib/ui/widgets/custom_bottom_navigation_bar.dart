@@ -22,7 +22,7 @@ class CustomBottomNavigationBar extends HookWidget {
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       height: 70.0,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ColorPallete.backgroundColor,
         border: Border(
           top: BorderSide(
             color: ColorPallete.deadColor.withOpacity(0.5),

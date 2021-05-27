@@ -4,6 +4,8 @@ import 'package:diiket/ui/widgets/category_menu.dart';
 import 'package:diiket/ui/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 
+import 'feed_header.dart';
+
 class FeedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,21 +14,7 @@ class FeedPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Pasar',
-                    style: kTextTheme.headline1,
-                  ),
-                  CircleAvatar(
-                    radius: 22,
-                  ),
-                ],
-              ),
-            ),
+            FeedHeader(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: GestureDetector(
@@ -44,22 +32,26 @@ class FeedPage extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 24,
-                right: 24,
-                top: 24,
-                bottom: 14,
-              ),
-              child: Text(
-                'Atau butuh sesuatu?',
-                style: kTextTheme.headline2,
-              ),
-            ),
+            _buildSectionTitle('Atau butuh sesuatu?'),
             CategoryMenu(),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildSectionTitle(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 24,
+        right: 24,
+        top: 24,
+        bottom: 14,
+      ),
+      child: Text(
+              text,
+        style: kTextTheme.headline2,
+      ),
+          );
   }
 }

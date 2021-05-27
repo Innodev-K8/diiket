@@ -35,7 +35,7 @@ class CategoryButton extends StatelessWidget {
               'assets/images/categories/$fileName.png',
               width: 24,
               height: 24,
-              color: ColorPallete.categoryColor,
+              color: ColorPallete.primaryColor,
             ),
           ),
         ),

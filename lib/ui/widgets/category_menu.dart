@@ -9,6 +9,21 @@ class CategoryMenu extends StatelessWidget {
 
   final _categories = [
     CategoryButton(
+      fileName: 'meat',
+      text: 'Daging',
+      onTap: () {},
+    ),
+    CategoryButton(
+      fileName: 'fish',
+      text: 'Ikan',
+      onTap: () {},
+    ),
+    CategoryButton(
+      fileName: 'season',
+      text: 'Bumbu',
+      onTap: () {},
+    ),
+    CategoryButton(
       fileName: 'rice',
       text: 'Beras',
       onTap: () {
@@ -21,21 +36,6 @@ class CategoryMenu extends StatelessWidget {
       onTap: () {},
     ),
     CategoryButton(
-      fileName: 'rice',
-      text: 'Beras',
-      onTap: () {},
-    ),
-    CategoryButton(
-      fileName: 'fish',
-      text: 'Ikan',
-      onTap: () {},
-    ),
-    CategoryButton(
-      fileName: 'meat',
-      text: 'Daging',
-      onTap: () {},
-    ),
-    CategoryButton(
       fileName: 'vegetable',
       text: 'Sayur',
       onTap: () {},
@@ -43,11 +43,6 @@ class CategoryMenu extends StatelessWidget {
     CategoryButton(
       fileName: 'fruit',
       text: 'Buah',
-      onTap: () {},
-    ),
-    CategoryButton(
-      fileName: 'season',
-      text: 'Bumbu',
       onTap: () {},
     ),
   ];
@@ -59,6 +54,7 @@ class CategoryMenu extends StatelessWidget {
       child: ListView.separated(
         itemCount: _categories.length,
         scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         itemBuilder: (context, index) => _categories[index],
         separatorBuilder: (context, index) => SizedBox(width: 10),

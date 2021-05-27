@@ -4,6 +4,7 @@ import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
+import 'package:diiket/data/providers/products/products_provider.dart';
 import 'package:diiket/data/providers/stall/stalls_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
@@ -17,11 +18,11 @@ class ProfilePage extends HookWidget {
   Widget build(BuildContext context) {
     final User? user = useProvider(authProvider);
 
-    // final String productCategory = ProductFamily.all;
+    final String productCategory = ProductFamily.all;
 
     // final activeOrderState = useProvider(activeOrderProvider);
-    // final productsState = useProvider(productProvider(productCategory));
-    final stallState = useProvider(stallProvider);
+    final productsState = useProvider(productProvider(productCategory));
+    // final stallState = useProvider(stallProvider);
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -51,7 +52,8 @@ class ProfilePage extends HookWidget {
             ElevatedButton(
               onPressed: () {
                 context
-                    .read(stallProvider.notifier).loadStalls();
+                    .read(productProvider(productCategory).notifier)
+                    .loadProducts();
               },
               child: Text('Refresh'),
             ),
@@ -80,15 +82,15 @@ class ProfilePage extends HookWidget {
             ElevatedButton(
               onPressed: () {
                 context
-                    .read(stallProvider.notifier)
+                    .read(productProvider(productCategory).notifier)
                     .loadMore();
               },
               child: Text('Load More'),
             ),
-            stallState.when(
+            productsState.when(
               data: (value) => Column(
                 children:
-                    value.data?.map((p) => _buildStallItem(p)).toList() ?? [],
+                    value.data?.map((p) => _buildProductItem(p)).toList() ?? [],
               ),
               loading: () => Text('loading'),
               error: (error, stackTrace) => Text(

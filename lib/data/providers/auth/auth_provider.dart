@@ -75,8 +75,11 @@ class AuthState extends StateNotifier<User?> {
 
   Future<void> _signOutAll() async {
     try {
-      await _authService.logout().onError((error, stackTrace) => null);
-      await _read(tokenProvider.notifier).clearToken();
+      if (_read(tokenProvider) != null) {
+        await _authService.logout().onError((error, stackTrace) => null);
+        await _read(tokenProvider.notifier).clearToken();
+      }
+
       state = null;
     } on CustomException catch (error) {
       _read(authExceptionProvider).state = error;

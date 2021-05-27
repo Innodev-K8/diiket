@@ -32,6 +32,7 @@ class OrderService {
 
       return Order.fromJson(response.data['data']);
     } on DioError catch (error) {
+      // 404 berarti ndak ada active order
       if (error.response?.statusCode == 404) {
         return null;
       }

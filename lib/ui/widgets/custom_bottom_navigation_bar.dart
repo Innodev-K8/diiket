@@ -60,7 +60,7 @@ class CustomBottomNavigationBar extends HookWidget {
 
             return Stack(
               children: [
-                  BottomBarButton(
+                BottomBarButton(
                   isSelected: selectedIndex.value == 1,
                   image: 'assets/images/bottom_bar/cart.png',
                   title: 'Keranjang',
@@ -76,7 +76,7 @@ class CustomBottomNavigationBar extends HookWidget {
                     Utils.resetHomeNavigation();
                   },
                 ),
-                  if (itemCount > 0)
+                if (itemCount > 0)
                   Positioned(
                     top: 8,
                     right: 24,

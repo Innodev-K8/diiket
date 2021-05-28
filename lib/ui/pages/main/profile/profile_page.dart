@@ -105,7 +105,6 @@ class ProfilePage extends HookWidget {
     );
   }
 
-
   // ignore: unused_element
   Widget _buildProductItem(Product p) {
     final String? category = p.categories?.map((e) => e.name).join(', ');

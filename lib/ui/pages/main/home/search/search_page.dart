@@ -142,7 +142,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 }
 
-
 class SearchResults extends HookWidget {
   @override
   Widget build(BuildContext context) {

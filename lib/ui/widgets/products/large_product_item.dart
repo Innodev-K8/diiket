@@ -3,6 +3,7 @@ import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/login_to_continue_button.dart';
 import 'package:diiket/ui/widgets/number_spinner.dart';
@@ -26,71 +27,81 @@ class LargeProductItem extends StatelessWidget {
 
     return AbsorbPointer(
       absorbing: !isStoreOpen,
-      child: Container(
-        height: 138.0,
-        padding: const EdgeInsets.all(14.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: ColorPallete.lightGray.withOpacity(0.5),
+      child: InkWell(
+        onTap: () {
+          Utils.homeNav.currentState!.pushNamed(
+            '/home/stall',
+            arguments: {
+              'stall_id': product.stall_id,
+            },
+          );
+        },
+        child: Container(
+          height: 138.0,
+          padding: const EdgeInsets.all(14.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: ColorPallete.lightGray.withOpacity(0.5),
+            ),
           ),
-        ),
-        child: Stack(
-          children: [
-            Opacity(
-              opacity: isStoreOpen ? 1 : 0.5,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: CachedNetworkImage(
-                        imageUrl: product.photo_url ?? '',
-                        fit: BoxFit.fitHeight,
-                        height: double.infinity,
+          child: Stack(
+            children: [
+              Opacity(
+                opacity: isStoreOpen ? 1 : 0.5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: CachedNetworkImage(
+                          imageUrl: product.photo_url ?? '',
+                          fit: BoxFit.fitHeight,
+                          height: double.infinity,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    flex: 4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.name ?? '-',
-                          style: kTextTheme.headline6,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                        Text(
-                          '${product.stall?.name}, ${product.stall?.seller?.name}',
-                          style: kTextTheme.overline!.copyWith(
-                            // fontWeight: FontWeight.bold,
-                            color: ColorPallete.darkGray,
+                    SizedBox(width: 10),
+                    Expanded(
+                      flex: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.name ?? '-',
+                            style: kTextTheme.headline6,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Spacer(flex: 1),
-                        ProductPiceText(product: product),
-                        Spacer(flex: 4),
-                        AuthWrapper(
-                          auth: (_) => _buildAction(),
-                          guest: Align(
-                            alignment: Alignment.bottomRight,
-                            child: LoginToContinueButton(),
+                          Text(
+                            '${product.stall?.name}, ${product.stall?.seller?.name}',
+                            style: kTextTheme.overline!.copyWith(
+                              // fontWeight: FontWeight.bold,
+                              color: ColorPallete.darkGray,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                      ],
+                          Spacer(flex: 1),
+                          ProductPiceText(product: product),
+                          Spacer(flex: 4),
+                          AuthWrapper(
+                            auth: (_) => _buildAction(),
+                            guest: Align(
+                              alignment: Alignment.bottomRight,
+                              child: LoginToContinueButton(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            if (!isStoreOpen) _buildStoreClosedBanner()
-          ],
+              if (!isStoreOpen) _buildStoreClosedBanner()
+            ],
+          ),
         ),
       ),
     );

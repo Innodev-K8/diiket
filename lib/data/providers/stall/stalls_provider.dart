@@ -3,18 +3,18 @@ import 'package:diiket/data/models/paginated/paginated_stalls.dart';
 import 'package:diiket/data/network/stall_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final stallProvider =
-    StateNotifierProvider<StallState, AsyncValue<PaginatedStalls>>(
+final stallsProvider =
+    StateNotifierProvider<StallsState, AsyncValue<PaginatedStalls>>(
   (ref) {
     // perlu watch karena stallServiceProvider bergantung ke active Market
-    return StallState(ref.watch(stallServiceProvider).state);
+    return StallsState(ref.watch(stallServiceProvider).state);
   },
 );
 
-class StallState extends StateNotifier<AsyncValue<PaginatedStalls>> {
+class StallsState extends StateNotifier<AsyncValue<PaginatedStalls>> {
   final StallService _stallService;
 
-  StallState(this._stallService) : super(AsyncValue.loading()) {
+  StallsState(this._stallService) : super(AsyncValue.loading()) {
     loadStalls();
   }
 

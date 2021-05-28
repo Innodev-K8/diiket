@@ -27,7 +27,11 @@ final kTextTheme = TextTheme(
     fontWeight: FontWeight.w600,
     letterSpacing: 1,
   ),
-  headline3: GoogleFonts.poppins(fontSize: 46, fontWeight: FontWeight.w400),
+  headline3: GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 1,
+  ),
   headline4: GoogleFonts.poppins(
     fontSize: 33,
     fontWeight: FontWeight.w400,

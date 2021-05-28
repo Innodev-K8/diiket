@@ -38,7 +38,7 @@ class ProductService {
     }
   }
 
-   Future<PaginatedProducts> searchProducs([int page = 1, String? query]) async {
+  Future<PaginatedProducts> searchProducs([int page = 1, String? query]) async {
     try {
       final response = await _dio.get(
         _(''),

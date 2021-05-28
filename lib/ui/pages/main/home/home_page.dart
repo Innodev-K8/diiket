@@ -39,7 +39,9 @@ class _HomePageState extends State<HomePage> {
 
           switch (settings.name) {
             case '/home/stall':
-              page = StallPage();
+              page = StallPage(
+                stallId: arguments?['stall_id'] ?? 0,
+              );
               break;
             case '/home/search':
               page = SearchPage(

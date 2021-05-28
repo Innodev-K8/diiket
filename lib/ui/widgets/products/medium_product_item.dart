@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,14 @@ class MediumProductItem extends StatelessWidget {
         ),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Utils.homeNav.currentState!.pushNamed(
+            '/home/stall',
+            arguments: {
+              'stall_id': product.stall_id,
+            },
+          );
+        },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

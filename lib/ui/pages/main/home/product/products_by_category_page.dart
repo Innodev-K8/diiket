@@ -78,7 +78,7 @@ class ProductsByCategoryPage extends HookWidget {
             onPressed: () {
               Utils.homeNav.currentState?.pop();
             },
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             icon: Icon(
               Icons.chevron_left_rounded,
               color: ColorPallete.darkGray,

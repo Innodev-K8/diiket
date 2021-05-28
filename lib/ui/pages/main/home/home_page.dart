@@ -1,4 +1,5 @@
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -43,6 +44,12 @@ class _HomePageState extends State<HomePage> {
             case '/home/search':
               page = SearchPage(
                 autofocus: arguments?['search_autofocus'] ?? false,
+              );
+              break;
+            case '/home/products/category':
+              page = ProductsByCategoryPage(
+                category: arguments?['category'] ?? '',
+                label: arguments?['label'],
               );
               break;
             case '/home':

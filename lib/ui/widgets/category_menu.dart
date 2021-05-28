@@ -1,3 +1,4 @@
+import 'package:diiket/ui/common/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'category_button.dart';
@@ -11,39 +12,93 @@ class CategoryMenu extends StatelessWidget {
     CategoryButton(
       fileName: 'meat',
       text: 'Daging',
-      onTap: () {},
+      onTap: () {
+        Utils.homeNav.currentState!.pushNamed(
+          '/home/products/category',
+          arguments: {
+            'category': 'daging',
+            'label': 'Daging Segar',
+          },
+        );
+      },
     ),
     CategoryButton(
       fileName: 'fish',
       text: 'Ikan',
-      onTap: () {},
+      onTap: () {
+        Utils.homeNav.currentState!.pushNamed(
+          '/home/products/category',
+          arguments: {
+            'category': 'ikan',
+            'label': 'Ikan Segar',
+          },
+        );
+      },
     ),
     CategoryButton(
       fileName: 'season',
       text: 'Bumbu',
-      onTap: () {},
+      onTap: () {
+        Utils.homeNav.currentState!.pushNamed(
+          '/home/products/category',
+          arguments: {
+            'category': 'bumbu',
+            'label': 'Bumbu Dapur',
+          },
+        );
+      },
     ),
     CategoryButton(
       fileName: 'rice',
       text: 'Beras',
       onTap: () {
-        // Utils.homeNav.currentState!.pushNamed('/home/search');
+        Utils.homeNav.currentState!.pushNamed(
+          '/home/products/category',
+          arguments: {
+            'category': 'beras',
+            'label': 'Beras',
+          },
+        );
       },
     ),
     CategoryButton(
       fileName: 'bread',
       text: 'Roti',
-      onTap: () {},
+      onTap: () {
+        Utils.homeNav.currentState!.pushNamed(
+          '/home/products/category',
+          arguments: {
+            'category': 'roti',
+            'label': 'Roti',
+          },
+        );
+      },
     ),
     CategoryButton(
       fileName: 'vegetable',
       text: 'Sayur',
-      onTap: () {},
+      onTap: () {
+        Utils.homeNav.currentState!.pushNamed(
+          '/home/products/category',
+          arguments: {
+            'category': 'sayur',
+            'label': 'Sayuran Segar',
+          },
+        );
+      },
     ),
     CategoryButton(
       fileName: 'fruit',
       text: 'Buah',
-      onTap: () {},
+      onTap: () {
+        Utils.homeNav.currentState!.pushNamed(
+          '/home/products/category',
+          arguments: {
+            'category': 'buah',
+            'label': 'Buah-buahan',
+          },
+        );
+      },
     ),
   ];
 

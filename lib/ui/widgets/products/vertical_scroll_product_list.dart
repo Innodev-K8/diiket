@@ -22,6 +22,11 @@ class VerticalScrollProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (products.isEmpty)
+      return Center(
+        child: Text('Tidak ada produk yang dapat ditampilkan'),
+      );
+
     return ListView.separated(
       padding: padding,
       shrinkWrap: shrinkWrap,
@@ -38,7 +43,7 @@ class VerticalScrollProductList extends StatelessWidget {
         }
 
         return Entry.scale(
-          delay: Duration(milliseconds: 50 * index),
+          delay: Duration(milliseconds: 25 * index),
           child: LargeProductItem(
             product: products[index],
           ),

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: Utils.appNav,
       theme: ThemeData(
         primaryColor: ColorPallete.primaryColor,
-        accentColor: ColorPallete.accentColor,
+        accentColor: ColorPallete.secondaryColor,
         textTheme: kTextTheme,
       ),
       initialRoute: MainPage.route,

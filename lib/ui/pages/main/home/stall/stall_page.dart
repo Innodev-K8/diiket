@@ -46,7 +46,9 @@ class StallPage extends HookWidget {
           ],
         ),
         loading: () => Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: ColorPallete.secondaryColor,
+          ),
         ),
         error: (error, stackTrace) => CustomExceptionMessage(error),
       ),

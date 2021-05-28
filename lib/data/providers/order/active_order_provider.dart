@@ -44,6 +44,8 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
       Order? activeOrder = state;
 
+      print('Placing ${product}');
+
       if (activeOrder != null) {
         state = activeOrder.copyWith(
           order_items: [

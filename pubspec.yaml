@@ -26,6 +26,7 @@ dependencies:
   cached_network_image: ^3.0.0
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
+  dotted_line: ^3.0.0
   dropdown_search: ^0.6.1
   easy_debounce: ^2.0.0
   entry: ^0.0.4

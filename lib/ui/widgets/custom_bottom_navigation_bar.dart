@@ -1,7 +1,10 @@
+import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CustomBottomNavigationBar extends HookWidget {
   final duration = const Duration(milliseconds: 250);
@@ -49,22 +52,58 @@ class CustomBottomNavigationBar extends HookWidget {
               Utils.resetHomeNavigation();
             },
           ),
-          BottomBarButton(
-            isSelected: selectedIndex.value == 1,
-            image: 'assets/images/bottom_bar/cart.png',
-            title: 'Keranjang',
-            onTap: () async {
-              selectedIndex.value = 1;
+          Consumer(builder: (context, watch, child) {
+            watch(activeOrderProvider);
 
-              await pageController.animateToPage(
-                1,
-                duration: duration,
-                curve: curves,
-              );
+            final int itemCount =
+                context.read(activeOrderProvider.notifier).orderCount;
 
-              Utils.resetHomeNavigation();
-            },
-          ),
+            return Stack(
+              children: [
+                  BottomBarButton(
+                  isSelected: selectedIndex.value == 1,
+                  image: 'assets/images/bottom_bar/cart.png',
+                  title: 'Keranjang',
+                  onTap: () async {
+                    selectedIndex.value = 1;
+
+                    await pageController.animateToPage(
+                      1,
+                      duration: duration,
+                      curve: curves,
+                    );
+
+                    Utils.resetHomeNavigation();
+                  },
+                ),
+                  if (itemCount > 0)
+                  Positioned(
+                    top: 8,
+                    right: 24,
+                    child: Entry.scale(
+                      child: Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          color: ColorPallete.secondaryColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '$itemCount',
+                            textAlign: TextAlign.center,
+                            style: kTextTheme.caption!.copyWith(
+                              color: ColorPallete.backgroundColor,
+                              fontSize: 8.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+              ],
+            );
+          }),
           BottomBarButton(
             isSelected: selectedIndex.value == 2,
             image: 'assets/images/bottom_bar/history.png',

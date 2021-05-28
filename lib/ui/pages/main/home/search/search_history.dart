@@ -15,8 +15,9 @@ class SearchHistory extends HookWidget {
 
     if (searchHistories.isEmpty) return SizedBox.shrink();
 
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
       child: Column(
         children: [
           Row(

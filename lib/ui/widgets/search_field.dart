@@ -69,7 +69,7 @@ class SearchField extends HookWidget {
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             width: 2.0,
-            color: ColorPallete.primaryColor,
+            color: ColorPallete.secondaryColor,
           ),
         ),
         floatingLabelBehavior: FloatingLabelBehavior.never,

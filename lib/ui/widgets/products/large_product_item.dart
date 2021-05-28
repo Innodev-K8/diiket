@@ -21,68 +21,116 @@ class LargeProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 138.0,
-      padding: const EdgeInsets.all(14.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          color: ColorPallete.lightGray.withOpacity(0.5),
+    final isStoreOpen = product.stall?.is_open == true;
+
+    return AbsorbPointer(
+      absorbing: !isStoreOpen,
+      child: Container(
+        height: 138.0,
+        padding: const EdgeInsets.all(14.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(
+            color: ColorPallete.lightGray.withOpacity(0.5),
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(5),
-              child: CachedNetworkImage(
-                imageUrl: product.photo_url ?? '',
-                fit: BoxFit.fitHeight,
-                height: double.infinity,
+        child: Stack(
+          children: [
+            Opacity(
+              opacity: isStoreOpen ? 1 : 0.5,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: CachedNetworkImage(
+                        imageUrl: product.photo_url ?? '',
+                        fit: BoxFit.fitHeight,
+                        height: double.infinity,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              product.name ?? '-',
+                              style: kTextTheme.headline6,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                          ],
+                        ),
+                        Text(
+                          'Rp ${product.price}/${product.quantity_unit}',
+                          style: kTextTheme.subtitle2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Spacer(),
+                        Text(
+                          '${product.stall?.name}, ${product.stall?.seller?.name}',
+                          style: kTextTheme.caption,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Spacer(),
+                        AuthWrapper(
+                          auth: (_) => _buildAction(),
+                          guest: Align(
+                            alignment: Alignment.bottomRight,
+                            child: LoginToContinueButton(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
+            if (!isStoreOpen) _buildStoreClosedBanner()
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStoreClosedBanner() {
+    return Center(
+      child: Container(
+        width: 136,
+        decoration: BoxDecoration(
+          color: ColorPallete.blueishGray,
+          border: Border.all(
+            color: ColorPallete.secondaryColor,
+            width: 1.0,
           ),
-          SizedBox(width: 10),
-          Expanded(
-            flex: 4,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      product.name ?? '-',
-                      style: kTextTheme.headline6,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  ],
-                ),
-                Text(
-                  'Rp ${product.price}/${product.quantity_unit}',
-                  style: kTextTheme.subtitle2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Spacer(),
-                Text(
-                  '${product.stall?.name}, ${product.stall?.seller?.name}',
-                  style: kTextTheme.caption,
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Spacer(),
-                AuthWrapper(
-                  auth: (_) => _buildAction(),
-                  guest: Align(
-                    alignment: Alignment.bottomRight,
-                    child: LoginToContinueButton(),
-                  ),
-                ),
-              ],
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        padding: const EdgeInsets.all(6.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.info_rounded,
+              color: ColorPallete.secondaryColor,
+              size: 12,
             ),
-          ),
-        ],
+            SizedBox(width: 6),
+            Text(
+              'Toko Tutup',
+              style: kTextTheme.button!.copyWith(
+                color: ColorPallete.secondaryColor,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -170,7 +218,9 @@ class LargeProductItem extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.only(right: 8.0, left: 8.0),
             elevation: 0,
-            primary: ColorPallete.primaryColor,
+            primary: product.stall?.is_open == true
+                ? ColorPallete.primaryColor
+                : ColorPallete.lightGray,
           ),
           icon: Icon(
             Icons.add_rounded,
@@ -187,4 +237,3 @@ class LargeProductItem extends StatelessWidget {
     );
   }
 }
-

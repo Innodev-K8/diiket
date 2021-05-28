@@ -1,10 +1,10 @@
-import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/products/search_products_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/search/search_history.dart';
 import 'package:diiket/ui/widgets/custom_exception_message.dart';
-import 'package:diiket/ui/widgets/products/large_product_item.dart';
+import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
+import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:diiket/ui/widgets/search_field.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
@@ -45,33 +45,33 @@ class _SearchPageState extends State<SearchPage> {
           children: [
             _buildAppBar(),
             if (!_showResult)
-              Entry.opacity(
-                delay: Duration(milliseconds: 500),
-                child: SearchHistory(
-                  onSelect: (text) {
-                    FocusScope.of(context).unfocus();
+              Expanded(
+                child: Entry.opacity(
+                  delay: Duration(milliseconds: 500),
+                  child: SearchHistory(
+                    onSelect: (text) {
+                      FocusScope.of(context).unfocus();
 
-                    context
-                        .read(searchProductsProvider.notifier)
-                        .searchProducts(text);
+                      context
+                          .read(searchProductsProvider.notifier)
+                          .searchProducts(text);
 
-                    setState(
-                      () {
-                        _controller.text = text;
-                        _searchQuery = text;
-                        _showResult = true;
-                      },
-                    );
-                  },
+                      setState(
+                        () {
+                          _controller.text = text;
+                          _searchQuery = text;
+                          _showResult = true;
+                        },
+                      );
+                    },
+                  ),
                 ),
+              )
+            else
+              Expanded(
+                child: SearchResults(),
               ),
-            Expanded(
-              child: _showResult ? SearchResults() : SizedBox.shrink(),
-              // child: Opacity(
-              //   opacity: isQueryEmpty ? 0 : 1,
-              //   child: _buildSearchResults(),
-              // ),
-            ),
+            OrderPreviewPanel(),
           ],
         ),
       ),
@@ -142,6 +142,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 }
 
+
 class SearchResults extends HookWidget {
   @override
   Widget build(BuildContext context) {
@@ -155,56 +156,12 @@ class SearchResults extends HookWidget {
             color: ColorPallete.darkGray,
           ),
         ),
+        physics: BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
         products: products.data ?? [],
       ),
       loading: () => Text('mencari'),
       error: (error, stackTrace) => CustomExceptionMessage(error),
-    );
-  }
-}
-
-class VerticalScrollProductList extends StatelessWidget {
-  final List<Product> products;
-
-  final EdgeInsetsGeometry? padding;
-  final bool shrinkWrap;
-  final ScrollPhysics? physics;
-  final Widget? header;
-
-  const VerticalScrollProductList({
-    Key? key,
-    required this.products,
-    this.padding,
-    this.shrinkWrap = false,
-    this.physics,
-    this.header,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: padding,
-      shrinkWrap: shrinkWrap,
-      physics: physics,
-      itemCount: header == null ? products.length : products.length + 1,
-      separatorBuilder: (context, index) => SizedBox(height: 10),
-      itemBuilder: (context, index) {
-        if (header != null) {
-          if (index == 0) {
-            return header!;
-          }
-
-          index -= 1;
-        }
-
-        return Entry.scale(
-          delay: Duration(milliseconds: 50 * index),
-          child: LargeProductItem(
-            product: products[index],
-          ),
-        );
-      },
     );
   }
 }

@@ -12,6 +12,7 @@ class ColorPallete {
 
   static final numberSpinnerColor = const Color(0xFFFFB945);
 
+  static final infoColor = const Color(0xFF0D6EFD);
   static final successColor = const Color(0xFF00B894);
 }
 

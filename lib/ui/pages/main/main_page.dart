@@ -34,6 +34,7 @@ class MainPage extends HookWidget {
       ),
       child: Scaffold(
         backgroundColor: ColorPallete.backgroundColor,
+        resizeToAvoidBottomInset: false,
         body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {

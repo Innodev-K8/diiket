@@ -30,7 +30,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   Future<void> retrieveActiveOrder() async {
     try {
-      state = await _orderService.getActiveOrder();
+      if (mounted) state = await _orderService.getActiveOrder();
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
     }
@@ -167,5 +167,28 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   bool isProductInOrder(Product product) {
     return getOrderItemByProduct(product) != null;
+  }
+
+  // some useful getters
+  int get orderCount {
+    int sum = 0;
+
+    state?.order_items?.forEach((item) => sum += item.quantity ?? 0);
+
+    return sum;
+  }
+
+  int get totalProductPrice {
+    // sebenernya di model Order udah ada, tapi ini karena update sendiri, harus gini
+    int sum = 0;
+
+    state?.order_items?.forEach((item) {
+      final int price = item.product?.price ?? 0;
+      final int quantity = item.quantity ?? 0;
+
+      sum += price * quantity;
+    });
+
+    return sum;
   }
 }

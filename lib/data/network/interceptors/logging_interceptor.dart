@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
 class LoggingInterceptors extends Interceptor {
-  final _log = Logger();
+  final _log = Logger(
+      // printer: PrettyPrinter(lineLength: 0),
+      );
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {

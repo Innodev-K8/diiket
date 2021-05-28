@@ -5,28 +5,34 @@ import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/network/order_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final activeOrderProvider =
-    StateNotifierProvider<ActiveOrderState, AsyncValue<Order?>>(
+final activeOrderProvider = StateNotifierProvider<ActiveOrderState, Order?>(
   (ref) {
     // orderServiceProvider already watching market and auth state
-    return ActiveOrderState(ref.watch(orderServiceProvider).state);
+    return ActiveOrderState(ref.watch(orderServiceProvider).state, ref.read);
   },
 );
 
-class ActiveOrderState extends StateNotifier<AsyncValue<Order?>> {
-  OrderService _orderService;
+final activeOrderErrorProvider = StateProvider<CustomException?>((ref) {
+  return null;
+});
 
-  ActiveOrderState(this._orderService) : super(AsyncValue.loading()) {
+// CATATANN! KATA 'ORDER' DI SINI BUKAN BERARTI URUTAN, NAMUN PESANAN
+// CONTOHNYA isProductInOrder BUKAN BERARTI product SUDAH URUT, NAMUN APAKAH
+// PRODUK ADA DALAM PESANAN
+
+class ActiveOrderState extends StateNotifier<Order?> {
+  OrderService _orderService;
+  Reader _read;
+
+  ActiveOrderState(this._orderService, this._read) : super(null) {
     retrieveActiveOrder();
   }
 
   Future<void> retrieveActiveOrder() async {
     try {
-      Order? order = await _orderService.getActiveOrder();
-
-      state = AsyncValue.data(order);
+      state = await _orderService.getActiveOrder();
     } on CustomException catch (error) {
-      state = AsyncValue.error(error);
+      _read(activeOrderErrorProvider).state = error;
     }
   }
 
@@ -36,16 +42,14 @@ class ActiveOrderState extends StateNotifier<AsyncValue<Order?>> {
       OrderItem orderItem =
           await _orderService.placeOrderItem(product, quantity, notes);
 
-      Order? activeOrder = state.maybeWhen(orElse: () => null);
+      Order? activeOrder = state;
 
       if (activeOrder != null) {
-        state = AsyncValue.data(
-          activeOrder.copyWith(
-            order_items: [
-              ...?activeOrder.order_items,
-              orderItem,
-            ],
-          ),
+        state = activeOrder.copyWith(
+          order_items: [
+            ...?activeOrder.order_items,
+            orderItem,
+          ],
         );
       } else {
         await retrieveActiveOrder();
@@ -54,7 +58,7 @@ class ActiveOrderState extends StateNotifier<AsyncValue<Order?>> {
       // ignore if item already in order list
       if (error.code == 403) return;
 
-      state = AsyncValue.error(error);
+      await retrieveActiveOrder();
     }
   }
 
@@ -64,40 +68,104 @@ class ActiveOrderState extends StateNotifier<AsyncValue<Order?>> {
     String? notes,
   }) async {
     try {
-      OrderItem updatedOrderItem = await _orderService.updateOrderItem(
+      final updatedOrderItem = orderItem.copyWith(
+        quantity: quantity ?? orderItem.quantity,
+        notes: notes ?? orderItem.notes,
+      );
+
+      Order? activeOrder = state;
+
+      if (activeOrder != null) {
+        // change current state biar kenceng nggak nunggu network request
+        state = activeOrder.copyWith(
+          order_items: activeOrder.order_items?.map((item) {
+            if (updatedOrderItem.id == item.id) {
+              return updatedOrderItem;
+            } else {
+              return item;
+            }
+          }).toList(),
+        );
+      }
+
+      await _orderService.updateOrderItem(
         orderItem,
         quantity: quantity,
         notes: notes,
       );
 
-      Order? activeOrder = state.maybeWhen(orElse: () => null);
-
-      if (activeOrder != null) {
-        state = AsyncValue.data(
-          activeOrder.copyWith(
-            order_items: activeOrder.order_items?.map((item) {
-              if (updatedOrderItem.id == item.id) {
-                return updatedOrderItem;
-              } else {
-                return item;
-              }
-            }).toList(),
-          ),
-        );
-      } else {
+      if (activeOrder == null) {
         await retrieveActiveOrder();
       }
-    } on CustomException catch (error) {
-      state = AsyncValue.error(error);
+    } on CustomException catch (_) {
+      await retrieveActiveOrder();
     }
   }
 
-  bool isProductInOrder(Product product) {
-    List<Product> orderProducts = state.data?.value?.order_items
-            ?.map((OrderItem item) => item.product!)
+  Future<void> deleteOrderItem(OrderItem orderItem) async {
+    try {
+      Order? activeOrder = state;
+
+      if (activeOrder != null) {
+        // change current state biar kenceng nggak nunggu network request
+        state = activeOrder.copyWith(
+          order_items: activeOrder.order_items
+            ?..removeWhere((item) => item.id == orderItem.id),
+        );
+      }
+
+      await _orderService.deleteOrderItem(orderItem);
+
+      if (activeOrder == null) {
+        await retrieveActiveOrder();
+      }
+    } on CustomException catch (_) {
+      await retrieveActiveOrder();
+    }
+  }
+
+  Future<void> updateOrderItemByProduct(
+    Product product, {
+    int? quantity,
+    String? notes,
+  }) async {
+    try {
+      OrderItem? orderItem = getOrderItemByProduct(product);
+
+      if (orderItem == null) return;
+
+      await updateOrderItem(
+        orderItem,
+        quantity: quantity,
+        notes: notes,
+      );
+    } on CustomException catch (error) {
+      _read(activeOrderErrorProvider).state = error;
+    }
+  }
+
+  Future<void> deleteOrderItemByProduct(Product product) async {
+    try {
+      OrderItem? orderItem = getOrderItemByProduct(product);
+
+      if (orderItem == null) return;
+
+      await deleteOrderItem(orderItem);
+    } on CustomException catch (error) {
+      _read(activeOrderErrorProvider).state = error;
+    }
+  }
+
+  OrderItem? getOrderItemByProduct(Product product) {
+    List<OrderItem> orderProducts = state?.order_items
+            ?.where((OrderItem item) => item.product?.id! == product.id!)
             .toList() ??
         [];
 
-    return orderProducts.contains(product);
+    return orderProducts.isNotEmpty ? orderProducts.first : null;
+  }
+
+  bool isProductInOrder(Product product) {
+    return getOrderItemByProduct(product) != null;
   }
 }

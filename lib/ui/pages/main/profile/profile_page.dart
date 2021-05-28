@@ -1,6 +1,5 @@
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/product.dart';
-import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/products/products_provider.dart';
@@ -106,35 +105,6 @@ class ProfilePage extends HookWidget {
     );
   }
 
-  Widget _buildStallItem(Stall s) {
-    // final String? category = p.categories?.map((e) => e.name).join(', ');
-
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(s.photo_url ?? ''),
-              ),
-              SizedBox(width: 4),
-              Text(
-                s.name ?? '-',
-                style: kTextTheme.headline6,
-              ),
-            ],
-          ),
-          Text(s.description ?? '-'),
-          Text('isOpen? : ${s.is_open}'),
-          Text('Pedagang: ${s.seller?.name} - ${s.seller?.email}'),
-          // Text('Kategori: ${category}'),
-        ],
-      ),
-    );
-  }
 
   // ignore: unused_element
   Widget _buildProductItem(Product p) {

@@ -1,6 +1,5 @@
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/ui/common/styles.dart';
-import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 
 import 'medium_product_item.dart';
@@ -78,11 +77,8 @@ class _HorizontalScrollProductListState
           separatorBuilder: (context, index) => SizedBox(width: 15.0),
           itemBuilder: (context, index) => index == widget.products.length
               ? _buildLoading()
-              : Entry.scale(
-                  delay: Duration(milliseconds: 25 * index),
-                  child: MediumProductItem(
-                    product: widget.products[index],
-                  ),
+              : MediumProductItem(
+                  product: widget.products[index],
                 ),
         ),
       ),

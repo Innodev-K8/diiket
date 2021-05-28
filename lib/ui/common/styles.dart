@@ -7,7 +7,10 @@ class ColorPallete {
   static final accentColor = const Color(0xFF003046);
   static final darkGray = const Color(0xFF636773);
   static final lightGray = const Color(0xFFb8b9ba);
+  static final blueishGray = const Color(0xFFF2F3F4);
   static final backgroundColor = Colors.white;
+
+  static final numberSpinnerColor = const Color(0xFFFFB945);
 
   static final successColor = const Color(0xFF00B894);
 }

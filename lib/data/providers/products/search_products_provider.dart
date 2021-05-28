@@ -4,8 +4,9 @@ import 'package:diiket/data/network/product_service.dart';
 import 'package:diiket/data/providers/products/products_search_history_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final searchProductsProvider = StateNotifierProvider.autoDispose<
-    SearchProductsState, AsyncValue<PaginatedProducts>>((ref) {
+final searchProductsProvider =
+    StateNotifierProvider<SearchProductsState, AsyncValue<PaginatedProducts>>(
+        (ref) {
   return SearchProductsState(ref.watch(productServiceProvider).state, ref.read);
 });
 
@@ -19,6 +20,10 @@ class SearchProductsState extends StateNotifier<AsyncValue<PaginatedProducts>> {
       : super(
           AsyncValue.data(PaginatedProducts(data: [])),
         );
+
+  void clear() {
+    state = AsyncValue.data(PaginatedProducts(data: []));
+  }
 
   Future<void> searchProducts(String? q) async {
     state = AsyncValue.loading();

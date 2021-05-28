@@ -83,4 +83,22 @@ class OrderService {
       throw CustomException.fromDioError(error);
     }
   }
+
+  Future<void> deleteOrderItem(OrderItem orderItem) async {
+    try {
+      await _dio.delete(_('items/${orderItem.id}'));
+    } on DioError catch (error) {
+      // 404 berarti ndak ada itemnya
+      if (error.response?.statusCode == 404) {
+        return null;
+      }
+
+      // ini buat ngehandle server yang ngawur, sukses kok 403
+      if (error.response?.statusCode == 403) {
+        return null;
+      }
+
+      throw CustomException.fromDioError(error);
+    }
+  }
 }

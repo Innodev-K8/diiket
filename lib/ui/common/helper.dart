@@ -1,4 +1,12 @@
+import 'package:intl/intl.dart';
+
 abstract class Helper {
+  static NumberFormat currencyFormatter = NumberFormat.currency(
+    locale: 'id_ID',
+    symbol: '',
+    decimalDigits: 0,
+  );
+
   static String greeting() {
     var hour = DateTime.now().hour;
 
@@ -11,5 +19,9 @@ abstract class Helper {
     }
 
     return 'Selamat Malam';
+  }
+
+  static String fmtPrice([int? price = 0]) {
+    return currencyFormatter.format(price);
   }
 }

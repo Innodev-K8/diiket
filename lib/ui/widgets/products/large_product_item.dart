@@ -6,6 +6,7 @@ import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/login_to_continue_button.dart';
 import 'package:diiket/ui/widgets/number_spinner.dart';
+import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:diiket/ui/widgets/simple_button.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -57,29 +58,24 @@ class LargeProductItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              product.name ?? '-',
-                              style: kTextTheme.headline6,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ],
-                        ),
                         Text(
-                          'Rp ${product.price}/${product.quantity_unit}',
-                          style: kTextTheme.subtitle2,
+                          product.name ?? '-',
+                          style: kTextTheme.headline6,
                           overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
-                        Spacer(),
                         Text(
                           '${product.stall?.name}, ${product.stall?.seller?.name}',
-                          style: kTextTheme.caption,
+                          style: kTextTheme.overline!.copyWith(
+                            // fontWeight: FontWeight.bold,
+                            color: ColorPallete.darkGray,
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        Spacer(),
+                        Spacer(flex: 1),
+                        ProductPiceText(product: product),
+                        Spacer(flex: 4),
                         AuthWrapper(
                           auth: (_) => _buildAction(),
                           guest: Align(

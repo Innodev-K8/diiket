@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:flutter/material.dart';
 
 class MediumProductItem extends StatelessWidget {
@@ -51,11 +52,7 @@ class MediumProductItem extends StatelessWidget {
                       maxLines: 2,
                     ),
                     Spacer(flex: 3),
-                    Text(
-                      '${product.price}/${product.quantity_unit}',
-                      style: kTextTheme.subtitle2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    ProductPiceText(product: product),
                     Spacer(flex: 1),
                     Text(
                       product.stall?.name ?? '-',

@@ -1,4 +1,5 @@
 import 'package:diiket/data/providers/order/active_order_provider.dart';
+import 'package:diiket/ui/common/helper.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ class OrderPreviewPanel extends HookWidget {
                   ),
                 ),
                 Text(
-                  'Rp. ${activeOrderNotifier.totalProductPrice}',
+                  'Rp. ${Helper.fmtPrice(activeOrderNotifier.totalProductPrice)}',
                   style: kTextTheme.subtitle1!.copyWith(
                     color: ColorPallete.secondaryColor,
                     fontSize: 18.0,

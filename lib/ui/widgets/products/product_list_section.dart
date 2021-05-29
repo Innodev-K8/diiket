@@ -39,9 +39,13 @@ class ProductListSection extends HookWidget {
             isFinish: productNotifier.nextPage == null,
             products: products.data ?? [],
           ),
-          loading: () => Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: CircularProgressIndicator(),
+          loading: () => Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: CircularProgressIndicator(
+                color: ColorPallete.secondaryColor,
+              ),
+            ),
           ),
           error: (error, stackTrace) => CustomExceptionMessage(error),
         ),

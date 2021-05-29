@@ -193,4 +193,18 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
     return sum;
   }
+
+  int get totalProductWeight {
+    // sebenernya di model Order udah ada, tapi ini karena update sendiri, harus gini
+    int sum = 0;
+
+    state?.order_items?.forEach((item) {
+      final int weight = item.product?.weight ?? 0;
+      final int quantity = item.quantity ?? 0;
+
+      sum += weight * quantity;
+    });
+
+    return sum;
+  }
 }

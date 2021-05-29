@@ -1,10 +1,11 @@
+import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'cart/cart_page.dart';
 import 'history/history_page.dart';
 import 'home/home_page.dart';
@@ -22,7 +23,7 @@ class MainPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pageController = usePageController();
+    final pageController = useProvider(mainPageController.notifier);
 
     final currentBackPressTime = useState<DateTime?>(null);
 
@@ -51,14 +52,12 @@ class MainPage extends HookWidget {
             },
             child: PageView(
               physics: NeverScrollableScrollPhysics(),
-              controller: pageController,
+              controller: pageController.controller,
               children: pages,
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomNavigationBar(
-          pageController: pageController,
-        ),
+        bottomNavigationBar: CustomBottomNavigationBar(),
       ),
     );
   }

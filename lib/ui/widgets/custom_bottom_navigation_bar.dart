@@ -1,25 +1,16 @@
+import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
-import 'package:diiket/ui/common/utils.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CustomBottomNavigationBar extends HookWidget {
-  final duration = const Duration(milliseconds: 250);
-  final curves = Curves.easeInOutSine;
-
-  const CustomBottomNavigationBar({
-    Key? key,
-    required this.pageController,
-  }) : super(key: key);
-
-  final PageController pageController;
-
   @override
   Widget build(BuildContext context) {
-    final selectedIndex = useState(0);
+    final pageController = useProvider(mainPageController.notifier);
+    final pageControllerState = useProvider(mainPageController);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -37,19 +28,11 @@ class CustomBottomNavigationBar extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           BottomBarButton(
-            isSelected: selectedIndex.value == 0,
+            isSelected: pageControllerState == 0,
             image: 'assets/images/bottom_bar/home.png',
             title: 'Pasar',
             onTap: () async {
-              selectedIndex.value = 0;
-
-              await pageController.animateToPage(
-                0,
-                duration: duration,
-                curve: curves,
-              );
-
-              Utils.resetHomeNavigation();
+              pageController.setPage(0);
             },
           ),
           Consumer(builder: (context, watch, child) {
@@ -61,19 +44,11 @@ class CustomBottomNavigationBar extends HookWidget {
             return Stack(
               children: [
                 BottomBarButton(
-                  isSelected: selectedIndex.value == 1,
+                  isSelected: pageControllerState == 1,
                   image: 'assets/images/bottom_bar/cart.png',
                   title: 'Keranjang',
                   onTap: () async {
-                    selectedIndex.value = 1;
-
-                    await pageController.animateToPage(
-                      1,
-                      duration: duration,
-                      curve: curves,
-                    );
-
-                    Utils.resetHomeNavigation();
+                    pageController.setPage(1);
                   },
                 ),
                 if (itemCount > 0)
@@ -105,35 +80,19 @@ class CustomBottomNavigationBar extends HookWidget {
             );
           }),
           BottomBarButton(
-            isSelected: selectedIndex.value == 2,
+            isSelected: pageControllerState == 2,
             image: 'assets/images/bottom_bar/history.png',
             title: 'Riwayat',
             onTap: () async {
-              selectedIndex.value = 2;
-
-              await pageController.animateToPage(
-                2,
-                duration: duration,
-                curve: curves,
-              );
-
-              Utils.resetHomeNavigation();
+              pageController.setPage(2);
             },
           ),
           BottomBarButton(
-            isSelected: selectedIndex.value == 3,
+            isSelected: pageControllerState == 3,
             image: 'assets/images/bottom_bar/profile.png',
             title: 'Profil',
             onTap: () async {
-              selectedIndex.value = 3;
-
-              await pageController.animateToPage(
-                3,
-                duration: duration,
-                curve: curves,
-              );
-
-              Utils.resetHomeNavigation();
+              pageController.setPage(3);
             },
           ),
         ],

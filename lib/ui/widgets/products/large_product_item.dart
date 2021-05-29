@@ -15,10 +15,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LargeProductItem extends StatelessWidget {
   final Product product;
+  final Function? onTap;
 
   const LargeProductItem({
     Key? key,
     required this.product,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,8 @@ class LargeProductItem extends StatelessWidget {
       absorbing: !isStoreOpen,
       child: InkWell(
         onTap: () {
+          if (onTap != null) return onTap?.call();
+
           Utils.homeNav.currentState!.pushNamed(
             '/home/stall',
             arguments: {

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/market.dart';
+import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/stall/stall_detail_provider.dart';
@@ -114,6 +115,7 @@ class StallPage extends HookWidget {
                 ),
                 VerticalScrollProductList(
                   shrinkWrap: true,
+                  onItemTap: (Product product) {},
                   physics: NeverScrollableScrollPhysics(),
                   header: Text(
                     'Produk',

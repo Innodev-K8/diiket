@@ -159,7 +159,11 @@ class SearchResults extends HookWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
         products: products.data ?? [],
       ),
-      loading: () => Text('mencari'),
+      loading: () => Center(
+        child: CircularProgressIndicator(
+          color: ColorPallete.secondaryColor,
+        ),
+      ),
       error: (error, stackTrace) => CustomExceptionMessage(error),
     );
   }

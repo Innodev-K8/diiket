@@ -1,5 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.innodev.diiket">
+
+   <uses-permission android:name="android.permission.INTERNET" />
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+   
    <application
         android:label="diiket"
         android:icon="@mipmap/ic_launcher"
@@ -38,5 +43,11 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+            
+        <!-- Google Maps API Key -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+          android:value="AIzaSyAtRv3aJE1s6JWKPNxEY5Xsc8I1M1Baayw"/>
+
     </application>
 </manifest>

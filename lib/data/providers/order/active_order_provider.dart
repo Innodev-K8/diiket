@@ -114,6 +114,10 @@ class ActiveOrderState extends StateNotifier<Order?> {
           order_items: activeOrder.order_items
             ?..removeWhere((item) => item.id == orderItem.id),
         );
+
+        if (state!.order_items!.isEmpty) {
+          state = null;
+        }
       }
 
       await _orderService.deleteOrderItem(orderItem);

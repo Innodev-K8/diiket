@@ -44,7 +44,7 @@ class VerticalScrollProductList extends StatelessWidget {
         child: Text('Tidak ada produk yang dapat ditampilkan'),
       );
 
-      print(_listLength);
+    print(_listLength);
 
     return ListView.separated(
       padding: padding,
@@ -53,7 +53,7 @@ class VerticalScrollProductList extends StatelessWidget {
       itemCount: _listLength,
       separatorBuilder: (context, index) => SizedBox(height: 10),
       itemBuilder: (context, index) {
-         if (footer != null) {
+        if (footer != null) {
           if (index == _listLength - 1) {
             return footer!;
           }

@@ -14,7 +14,6 @@ abstract class Product with _$Product {
     Stall? stall,
     String? name,
     String? description,
-    String? photo,
     String? photo_url,
     String? quantity_unit,
     int? weight,

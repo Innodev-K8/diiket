@@ -23,6 +23,10 @@ class StallDetailState extends StateNotifier<AsyncValue<Stall>> {
   Future<void> loadStall() async {
     state = AsyncValue.loading();
 
+    return reLoadStall();
+  }
+
+  Future<void> reLoadStall() async {
     try {
       Stall stalls = await _stallService.getStallDetail(_stallId);
 

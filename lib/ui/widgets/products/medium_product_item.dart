@@ -40,12 +40,15 @@ class MediumProductItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: CachedNetworkImage(
-                  imageUrl:
-                      product.photo_url ?? 'https://via.placeholder.com/150',
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
-                  placeholder: (context, url) => Text('ini placehoilder'),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        product.photo_url ?? 'https://via.placeholder.com/150',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Text('ini placehoilder'),
+                  ),
                 ),
               ),
               SizedBox(height: 8.0),

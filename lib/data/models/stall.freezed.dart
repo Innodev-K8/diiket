@@ -27,7 +27,6 @@ class _$StallTearOff {
       bool? is_open,
       String? name,
       String? description,
-      String? photo,
       String? photo_url,
       List<Product>? products,
       String? location_block,
@@ -44,7 +43,6 @@ class _$StallTearOff {
       is_open: is_open,
       name: name,
       description: description,
-      photo: photo,
       photo_url: photo_url,
       products: products,
       location_block: location_block,
@@ -73,7 +71,6 @@ mixin _$Stall {
   bool? get is_open => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  String? get photo => throw _privateConstructorUsedError;
   String? get photo_url => throw _privateConstructorUsedError;
   List<Product>? get products => throw _privateConstructorUsedError;
   String? get location_block => throw _privateConstructorUsedError;
@@ -100,7 +97,6 @@ abstract class $StallCopyWith<$Res> {
       bool? is_open,
       String? name,
       String? description,
-      String? photo,
       String? photo_url,
       List<Product>? products,
       String? location_block,
@@ -130,7 +126,6 @@ class _$StallCopyWithImpl<$Res> implements $StallCopyWith<$Res> {
     Object? is_open = freezed,
     Object? name = freezed,
     Object? description = freezed,
-    Object? photo = freezed,
     Object? photo_url = freezed,
     Object? products = freezed,
     Object? location_block = freezed,
@@ -165,10 +160,6 @@ class _$StallCopyWithImpl<$Res> implements $StallCopyWith<$Res> {
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      photo: photo == freezed
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
               as String?,
       photo_url: photo_url == freezed
           ? _value.photo_url
@@ -233,7 +224,6 @@ abstract class _$StallCopyWith<$Res> implements $StallCopyWith<$Res> {
       bool? is_open,
       String? name,
       String? description,
-      String? photo,
       String? photo_url,
       List<Product>? products,
       String? location_block,
@@ -265,7 +255,6 @@ class __$StallCopyWithImpl<$Res> extends _$StallCopyWithImpl<$Res>
     Object? is_open = freezed,
     Object? name = freezed,
     Object? description = freezed,
-    Object? photo = freezed,
     Object? photo_url = freezed,
     Object? products = freezed,
     Object? location_block = freezed,
@@ -300,10 +289,6 @@ class __$StallCopyWithImpl<$Res> extends _$StallCopyWithImpl<$Res>
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      photo: photo == freezed
-          ? _value.photo
-          : photo // ignore: cast_nullable_to_non_nullable
               as String?,
       photo_url: photo_url == freezed
           ? _value.photo_url
@@ -355,7 +340,6 @@ class _$_Stall implements _Stall {
       this.is_open,
       this.name,
       this.description,
-      this.photo,
       this.photo_url,
       this.products,
       this.location_block,
@@ -382,8 +366,6 @@ class _$_Stall implements _Stall {
   @override
   final String? description;
   @override
-  final String? photo;
-  @override
   final String? photo_url;
   @override
   final List<Product>? products;
@@ -404,7 +386,7 @@ class _$_Stall implements _Stall {
 
   @override
   String toString() {
-    return 'Stall(id: $id, seller: $seller, market_id: $market_id, is_open: $is_open, name: $name, description: $description, photo: $photo, photo_url: $photo_url, products: $products, location_block: $location_block, location_number: $location_number, location_floor: $location_floor, location_detail: $location_detail, location_lat: $location_lat, location_lng: $location_lng, verified_at: $verified_at)';
+    return 'Stall(id: $id, seller: $seller, market_id: $market_id, is_open: $is_open, name: $name, description: $description, photo_url: $photo_url, products: $products, location_block: $location_block, location_number: $location_number, location_floor: $location_floor, location_detail: $location_detail, location_lat: $location_lat, location_lng: $location_lng, verified_at: $verified_at)';
   }
 
   @override
@@ -426,8 +408,6 @@ class _$_Stall implements _Stall {
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
                     .equals(other.description, description)) &&
-            (identical(other.photo, photo) ||
-                const DeepCollectionEquality().equals(other.photo, photo)) &&
             (identical(other.photo_url, photo_url) ||
                 const DeepCollectionEquality()
                     .equals(other.photo_url, photo_url)) &&
@@ -466,7 +446,6 @@ class _$_Stall implements _Stall {
       const DeepCollectionEquality().hash(is_open) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(photo) ^
       const DeepCollectionEquality().hash(photo_url) ^
       const DeepCollectionEquality().hash(products) ^
       const DeepCollectionEquality().hash(location_block) ^
@@ -496,7 +475,6 @@ abstract class _Stall implements Stall {
       bool? is_open,
       String? name,
       String? description,
-      String? photo,
       String? photo_url,
       List<Product>? products,
       String? location_block,
@@ -521,8 +499,6 @@ abstract class _Stall implements Stall {
   String? get name => throw _privateConstructorUsedError;
   @override
   String? get description => throw _privateConstructorUsedError;
-  @override
-  String? get photo => throw _privateConstructorUsedError;
   @override
   String? get photo_url => throw _privateConstructorUsedError;
   @override

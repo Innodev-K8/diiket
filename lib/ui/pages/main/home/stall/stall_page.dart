@@ -21,8 +21,8 @@ class StallPage extends HookWidget {
     required this.stallId,
   }) : super(key: key);
 
-  final double _headerHeight = 176.0;
-  final double _avatarSize = 72.0;
+  final double _headerHeight = 200.0;
+  final double _avatarSize = 89.0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +35,20 @@ class StallPage extends HookWidget {
         data: (stall) => Column(
           children: [
             Expanded(
-              child: CustomScrollView(
-                physics: BouncingScrollPhysics(),
-                slivers: [
-                  _buildAppBar(stall),
-                  _buildContent(stall, market),
-                ],
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  //TODO: remove in production
+                  return await context
+                      .read(stallDetailProvider(stallId).notifier)
+                      .reLoadStall();
+                },
+                child: CustomScrollView(
+                  physics: BouncingScrollPhysics(),
+                  slivers: [
+                    _buildAppBar(stall),
+                    _buildContent(stall, market),
+                  ],
+                ),
               ),
             ),
             OrderPreviewPanel(),
@@ -62,7 +70,7 @@ class StallPage extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -142,7 +150,7 @@ class StallPage extends HookWidget {
         ),
         onPressed: () => Utils.homeNav.currentState?.pop(),
       ),
-      expandedHeight: _headerHeight,
+      expandedHeight: _headerHeight + 8,
       backgroundColor: Colors.white,
       foregroundColor: Colors.red,
       automaticallyImplyLeading: false,
@@ -152,9 +160,9 @@ class StallPage extends HookWidget {
     );
   }
 
-  SizedBox _buildHeader(Stall stall) {
+  Widget _buildHeader(Stall stall) {
     return SizedBox(
-      height: _headerHeight + _avatarSize / 2,
+      height: _headerHeight + _avatarSize / 2 + 8,
       width: double.infinity,
       child: Stack(
         children: [
@@ -178,7 +186,7 @@ class StallPage extends HookWidget {
           ),
           Positioned(
             left: 24.0,
-            bottom: 0,
+            bottom: 8,
             child: CircleAvatar(
               backgroundImage: NetworkImage(
                 stall.seller?.profile_picture_url ?? '-',

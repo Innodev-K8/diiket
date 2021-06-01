@@ -1,10 +1,11 @@
 import 'package:diiket/data/models/directions.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/network/directions_service.dart';
-import 'package:diiket/data/providers/market_provider.dart';
+import 'package:diiket/data/network/geocode_service.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -40,6 +41,8 @@ class _PlacePickerState extends State<PlacePicker> {
   Directions? _directions;
   LatLng? _lastMapPosition;
 
+  bool _isLoading = true;
+
   BitmapDescriptor? customIcon;
 
   @override
@@ -64,8 +67,6 @@ class _PlacePickerState extends State<PlacePicker> {
       double.tryParse(widget.market.locationLng ?? '0') ?? 0,
     );
 
-    // print('MARKET POSITION: ${_marketPosition}');
-
     if (_pickedPosition != null) _setPickedPosition();
   }
 
@@ -77,31 +78,48 @@ class _PlacePickerState extends State<PlacePicker> {
 
   _setPickedPosition() async {
     setState(() {
-      _pickedPosition = _lastMapPosition ?? _pickedPosition;
+      _isLoading = true;
     });
 
+    _pickedPosition = _lastMapPosition ?? _pickedPosition;
+
     if (_pickedPosition == null) return;
+
+    final destinationPosition = _lastMapPosition ?? _pickedPosition!;
 
     Directions? directions =
         await context.read(directionsServiceProvider).getDirections(
               origin: _marketPosition,
-              destination: _lastMapPosition ?? _pickedPosition!,
+              destination: destinationPosition,
             );
 
-    if (directions?.bounds == null)
+    Placemark? placemark = await context
+        .read(geocodeServiceProvider)
+        .reverseGeocoding(destinationPosition);
+
+    if (directions?.bounds == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Terjadi kesalahan, harap coba lagi'),
+        ),
+      );
+
       return setState(() {
         _pickedPosition = null;
         _directions = null;
+        _isLoading = false;
       });
+    }
 
     await _controller
         ?.animateCamera(CameraUpdate.newLatLngBounds(directions!.bounds!, 80));
 
     setState(() {
-      _directions = directions;
+      _directions = directions!.copyWith(
+        placemark: placemark,
+      );
+      _isLoading = false;
     });
-
-    print('Result: ${(directions?.totalDistance ?? 0) / 1000} km');
   }
 
   void _onCameraMove(CameraPosition position) {
@@ -115,54 +133,17 @@ class _PlacePickerState extends State<PlacePicker> {
       body: SafeArea(
         child: Column(
           children: [
-            _buildAppBar('Pilih Alamat Kirim'),
+            _buildAppBar(
+              _directions?.placemark?.subLocality != null
+                  ? _directions!.placemark!.subLocality!
+                  : _directions != null
+                      ? 'Alamat tidak diketahui'
+                      : 'Pilih Alamat Kirim',
+            ),
             Expanded(
               child: Stack(
                 children: [
-                  GoogleMap(
-                    buildingsEnabled: false,
-                    initialCameraPosition: CameraPosition(
-                      target:
-                          widget.initialPosition ?? LatLng(0.7893, 113.9213),
-                      zoom: 16.0,
-                    ),
-                    onCameraMove: _onCameraMove,
-                    onMapCreated: (controller) => _controller = controller,
-                    markers: {
-                      if (_pickedPosition != null)
-                        Marker(
-                          markerId: MarkerId('user-position'),
-                          position: _pickedPosition!,
-                        ),
-                      if (customIcon == null)
-                        Marker(
-                          markerId: MarkerId('market-position'),
-                          position: _marketPosition,
-                          anchor: Offset(0.5, 0.5),
-                        )
-                      else
-                        Marker(
-                          markerId: MarkerId('market-position'),
-                          position: _marketPosition,
-                          anchor: Offset(0.5, 0.5),
-                          icon: customIcon!,
-                        )
-                    },
-                    polylines: {
-                      if (_directions != null)
-                        Polyline(
-                          polylineId: PolylineId('shipment-route'),
-                          color: ColorPallete.primaryColor,
-                          width: 6,
-                          endCap: Cap.roundCap,
-                          points: _directions!.polylinePoints
-                                  ?.map((e) => LatLng(e.latitude, e.longitude))
-                                  .toList() ??
-                              [],
-                        ),
-                    },
-                    zoomControlsEnabled: false,
-                  ),
+                  _buildMap(),
                   if (_pickedPosition == null)
                     Center(
                       child: Transform.translate(
@@ -171,6 +152,15 @@ class _PlacePickerState extends State<PlacePicker> {
                           Icons.location_on_outlined,
                           color: ColorPallete.primaryColor,
                           size: 48,
+                        ),
+                      ),
+                    ),
+                  if (_isLoading)
+                    Container(
+                      color: Colors.black.withOpacity(0.1),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: ColorPallete.secondaryColor,
                         ),
                       ),
                     ),
@@ -192,9 +182,12 @@ class _PlacePickerState extends State<PlacePicker> {
                       height: 38,
                       child: ElevatedButton(
                         onPressed: () async {
-                          await _controller?.moveCamera(
+                          await _controller?.animateCamera(
                             CameraUpdate.newLatLng(_pickedPosition!),
                           );
+
+                          // wait for camera animation
+                          await Future.delayed(Duration(seconds: 1));
 
                           setState(() {
                             _pickedPosition = null;
@@ -247,6 +240,52 @@ class _PlacePickerState extends State<PlacePicker> {
     );
   }
 
+  GoogleMap _buildMap() {
+    return GoogleMap(
+      buildingsEnabled: false,
+      initialCameraPosition: CameraPosition(
+        target: widget.initialPosition ?? LatLng(0.7893, 113.9213),
+        zoom: 16.0,
+      ),
+      onCameraMove: _onCameraMove,
+      onMapCreated: (controller) => _controller = controller,
+      markers: {
+        if (_pickedPosition != null)
+          Marker(
+            markerId: MarkerId('user-position'),
+            position: _pickedPosition!,
+          ),
+        if (customIcon == null)
+          Marker(
+            markerId: MarkerId('market-position'),
+            position: _marketPosition,
+            anchor: Offset(0.5, 0.5),
+          )
+        else
+          Marker(
+            markerId: MarkerId('market-position'),
+            position: _marketPosition,
+            anchor: Offset(0.5, 0.5),
+            icon: customIcon!,
+          )
+      },
+      polylines: {
+        if (_directions != null)
+          Polyline(
+            polylineId: PolylineId('shipment-route'),
+            color: ColorPallete.primaryColor,
+            width: 6,
+            endCap: Cap.roundCap,
+            points: _directions!.polylinePoints
+                    ?.map((e) => LatLng(e.latitude, e.longitude))
+                    .toList() ??
+                [],
+          ),
+      },
+      zoomControlsEnabled: false,
+    );
+  }
+
   Container _buildShipmentInfo() {
     return Container(
       decoration: BoxDecoration(
@@ -273,6 +312,7 @@ class _PlacePickerState extends State<PlacePicker> {
               ),
             ],
           ),
+          SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

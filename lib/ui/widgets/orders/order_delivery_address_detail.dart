@@ -1,3 +1,4 @@
+import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class OrderDeliveryAddressDetail extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final order = useProvider(activeOrderProvider);
     final deliveryDetail = useProvider(deliveryDetailProvider);
 
     return Container(
@@ -37,7 +39,7 @@ class OrderDeliveryAddressDetail extends HookWidget {
               ),
               Expanded(
                 child: Text(
-                  deliveryDetail.geocodedPosition ?? '-',
+                  order?.address ?? deliveryDetail.geocodedPosition ?? '-',
                   textAlign: TextAlign.end,
                 ),
               ),

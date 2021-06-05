@@ -11,16 +11,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class OrderPaymentDetail extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final order = useProvider(activeOrderProvider);
     final orderNotifier = useProvider(activeOrderProvider.notifier);
     final deliveryDetail = useProvider(deliveryDetailProvider);
 
+    final productWeight =
+        (order?.total_weight ?? orderNotifier.totalProductWeight) / 1000;
+    final productPrice =
+        order?.products_price ?? orderNotifier.totalProductPrice;
+
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          color: ColorPallete.lightGray.withOpacity(0.5),
-        ),
-      ),
+      decoration: kBorderedDecoration,
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
@@ -34,7 +35,7 @@ class OrderPaymentDetail extends HookWidget {
                 ),
               ),
               Text(
-                '${(orderNotifier.totalProductWeight) / 1000} kg',
+                '$productWeight kg',
                 textAlign: TextAlign.end,
               ),
             ],
@@ -50,7 +51,7 @@ class OrderPaymentDetail extends HookWidget {
                 ),
               ),
               Text(
-                'Rp. ${Helper.fmtPrice(orderNotifier.totalProductPrice)}',
+                'Rp. ${Helper.fmtPrice(productPrice)}',
                 textAlign: TextAlign.end,
               ),
             ],
@@ -65,20 +66,27 @@ class OrderPaymentDetail extends HookWidget {
                   color: ColorPallete.darkGray,
                 ),
               ),
-              deliveryDetail.fare?.when(
-                    data: (value) => Text(
-                      value.delivery_fee != null
-                          ? 'Rp. ${Helper.fmtPrice(value.delivery_fee)}'
-                          : '-',
+              if (order?.delivery_fee != null)
+                Text(
+                  'Rp. ${Helper.fmtPrice(order!.delivery_fee)}',
+                  textAlign: TextAlign.end,
+                )
+              else
+                deliveryDetail.fare?.when(
+                      data: (value) => Text(
+                        value.delivery_fee != null
+                            ? 'Rp. ${Helper.fmtPrice(value.delivery_fee)}'
+                            : '-',
+                        textAlign: TextAlign.end,
+                      ),
+                      loading: () => SmallLoading(),
+                      error: (error, stackTrace) =>
+                          CustomExceptionMessage(error),
+                    ) ??
+                    Text(
+                      '-',
                       textAlign: TextAlign.end,
                     ),
-                    loading: () => SmallLoading(),
-                    error: (error, stackTrace) => CustomExceptionMessage(error),
-                  ) ??
-                  Text(
-                    '-',
-                    textAlign: TextAlign.end,
-                  ),
             ],
           ),
           SizedBox(height: 16.0),
@@ -91,20 +99,27 @@ class OrderPaymentDetail extends HookWidget {
                   color: ColorPallete.darkGray,
                 ),
               ),
-              deliveryDetail.fare?.when(
-                    data: (value) => Text(
-                      value.pickup_fee != null
-                          ? 'Rp. ${Helper.fmtPrice(value.pickup_fee)}'
-                          : '-',
+              if (order?.pickup_fee != null)
+                Text(
+                  'Rp. ${Helper.fmtPrice(order!.pickup_fee)}',
+                  textAlign: TextAlign.end,
+                )
+              else
+                deliveryDetail.fare?.when(
+                      data: (value) => Text(
+                        value.pickup_fee != null
+                            ? 'Rp. ${Helper.fmtPrice(value.pickup_fee)}'
+                            : '-',
+                        textAlign: TextAlign.end,
+                      ),
+                      loading: () => SmallLoading(),
+                      error: (error, stackTrace) =>
+                          CustomExceptionMessage(error),
+                    ) ??
+                    Text(
+                      '-',
                       textAlign: TextAlign.end,
                     ),
-                    loading: () => SmallLoading(),
-                    error: (error, stackTrace) => CustomExceptionMessage(error),
-                  ) ??
-                  Text(
-                    '-',
-                    textAlign: TextAlign.end,
-                  ),
             ],
           ),
           SizedBox(height: 16.0),
@@ -117,20 +132,27 @@ class OrderPaymentDetail extends HookWidget {
                   color: ColorPallete.darkGray,
                 ),
               ),
-              deliveryDetail.fare?.when(
-                    data: (value) => Text(
-                      value.service_fee != null
-                          ? 'Rp. ${Helper.fmtPrice(value.service_fee)}'
-                          : '-',
+              if (order?.service_fee != null)
+                Text(
+                  'Rp. ${Helper.fmtPrice(order!.service_fee)}',
+                  textAlign: TextAlign.end,
+                )
+              else
+                deliveryDetail.fare?.when(
+                      data: (value) => Text(
+                        value.service_fee != null
+                            ? 'Rp. ${Helper.fmtPrice(value.service_fee)}'
+                            : '-',
+                        textAlign: TextAlign.end,
+                      ),
+                      loading: () => SmallLoading(),
+                      error: (error, stackTrace) =>
+                          CustomExceptionMessage(error),
+                    ) ??
+                    Text(
+                      '-',
                       textAlign: TextAlign.end,
                     ),
-                    loading: () => SmallLoading(),
-                    error: (error, stackTrace) => CustomExceptionMessage(error),
-                  ) ??
-                  Text(
-                    '-',
-                    textAlign: TextAlign.end,
-                  ),
             ],
           ),
           SizedBox(height: 16.0),
@@ -148,22 +170,33 @@ class OrderPaymentDetail extends HookWidget {
                   color: ColorPallete.darkGray,
                 ),
               ),
-              deliveryDetail.fare?.when(
-                    data: (value) => Text(
-                      'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value.total_fee ?? 0))}',
-                      textAlign: TextAlign.end,
-                      style: kTextTheme.subtitle1!.copyWith(
-                        color: ColorPallete.primaryColor,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                    loading: () => SmallLoading(),
-                    error: (error, stackTrace) => CustomExceptionMessage(error),
-                  ) ??
-                  Text(
-                    '-',
-                    textAlign: TextAlign.end,
+              if (order?.service_fee != null)
+                Text(
+                  'Rp. ${Helper.fmtPrice(order!.total_price)}',
+                  textAlign: TextAlign.end,
+                  style: kTextTheme.subtitle1!.copyWith(
+                    color: ColorPallete.primaryColor,
+                    fontSize: 18.0,
                   ),
+                )
+              else
+                deliveryDetail.fare?.when(
+                      data: (value) => Text(
+                        'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value.total_fee ?? 0))}',
+                        textAlign: TextAlign.end,
+                        style: kTextTheme.subtitle1!.copyWith(
+                          color: ColorPallete.primaryColor,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      loading: () => SmallLoading(),
+                      error: (error, stackTrace) =>
+                          CustomExceptionMessage(error),
+                    ) ??
+                    Text(
+                      '-',
+                      textAlign: TextAlign.end,
+                    ),
             ],
           ),
         ],

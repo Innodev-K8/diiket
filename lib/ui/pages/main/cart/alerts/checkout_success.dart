@@ -1,6 +1,6 @@
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/widgets/orders/primary_button.dart';
+import 'package:diiket/ui/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutSuccessPage extends StatelessWidget {
@@ -19,12 +19,9 @@ class CheckoutSuccessPage extends StatelessWidget {
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  Hero(
-                    tag: 'order-button',
-                    child: Image.asset(
-                      'assets/images/icons/cart-check.png',
-                      color: ColorPallete.primaryColor,
-                    ),
+                  Image.asset(
+                    'assets/images/icons/cart-check.png',
+                    color: ColorPallete.primaryColor,
                   ),
                   SizedBox(height: 20),
                   Text(

@@ -18,7 +18,9 @@ class Order with _$Order {
     String? location_lng,
     int? total_weight,
     int? products_price,
-    int? delivery_price,
+    int? delivery_fee,
+    int? pickup_fee,
+    int? service_fee,
     int? total_price,
     List<OrderItem>? order_items,
   }) = _Order;

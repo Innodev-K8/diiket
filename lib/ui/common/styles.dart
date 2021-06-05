@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ColorPallete {
+  const ColorPallete._();
+
   static final primaryColor = const Color(0xFFFF8527);
   static final secondaryColor = const Color(0xFF009EBA);
   static final accentColor = const Color(0xFF003046);
@@ -15,6 +17,13 @@ class ColorPallete {
   static final infoColor = const Color(0xFF0D6EFD);
   static final successColor = const Color(0xFF00B894);
 }
+
+final BoxDecoration kBorderedDecoration = BoxDecoration(
+  borderRadius: BorderRadius.circular(5),
+  border: Border.all(
+    color: ColorPallete.lightGray.withOpacity(0.5),
+  ),
+);
 
 final kTextTheme = TextTheme(
   headline1: GoogleFonts.poppins(

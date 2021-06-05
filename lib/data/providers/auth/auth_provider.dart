@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/auth_response.dart';
 import 'package:diiket/data/models/user.dart';
@@ -90,6 +89,11 @@ class AuthState extends StateNotifier<User?> {
       }
     } on CustomException catch (error) {
       _read(authExceptionProvider).state = error;
+
+      // TODO: try this for infinite loop
+      // await _firebaseAuthRepository.signOut();
+
+      await _signOutAll();
     }
   }
 

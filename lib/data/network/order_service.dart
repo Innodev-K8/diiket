@@ -1,4 +1,6 @@
 import 'package:diiket/data/custom_exception.dart';
+import 'package:diiket/data/models/delivery_detail.dart';
+import 'package:diiket/data/models/fare.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
@@ -7,6 +9,7 @@ import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:dio/dio.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final orderServiceProvider = StateProvider<OrderService>((ref) {
@@ -35,6 +38,44 @@ class OrderService {
       // 404 berarti ndak ada active order
       if (error.response?.statusCode == 404) {
         return null;
+      }
+
+      throw CustomException.fromDioError(error);
+    }
+  }
+
+  Future<Order?> confirmActiveOrder(LatLng location, Fare fare,
+      [String? address]) async {
+    try {
+      Map<String, dynamic> data = {
+        'location_lat': location.latitude.toString(),
+        'location_lng': location.longitude.toString(),
+        'delivery_fee': fare.delivery_fee,
+        'pickup_fee': fare.pickup_fee,
+        'service_fee': fare.service_fee,
+        if (address != null) 'address': address,
+      };
+
+      final response = await _dio.post(
+        _('active/confirm'),
+        data: data,
+      );
+
+      return Order.fromJson(response.data['data']);
+    } on DioError catch (error) {
+      if (error.response?.statusCode == 422) {
+        List<dynamic> results = error.response!.data['data'];
+
+        List<OrderItem> outOfStockItems =
+            results.map((json) => OrderItem.fromJson(json)).toList();
+
+        throw CustomException(
+          message:
+              'Terdapat barang yang habis persediaan:\n\n${outOfStockItems.map(
+                    (e) =>
+                        '${e.product?.name} (tersedia ${e.product?.stocks} ${e.product?.quantity_unit})',
+                  ).join('\n')}',
+        );
       }
 
       throw CustomException.fromDioError(error);

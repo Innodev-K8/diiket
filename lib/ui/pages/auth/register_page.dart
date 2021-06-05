@@ -42,42 +42,60 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return ProviderListener(
-      provider: authProvider,
-      onChange: (context, User? user) {
-        if (user == null) {
-          return;
-        }
+      provider: authExceptionProvider,
+      onChange: (context, StateController<CustomException?> e) {
+        if (e.state != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                e.state!.message ?? 'Terjadi kesalahan',
+              ),
+            ),
+          );
 
-        if (user.name == null || user.name == '') {
           setState(() {
             isLoading = false;
-            curentState = MobileVerificationState.SHOW_USERNAME_FORM;
           });
-        } else {
-          Utils.appNav.currentState?.pop();
         }
       },
-      child: Scaffold(
-        body: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: AbsorbPointer(
-            absorbing: isLoading,
-            child: Stack(
-              children: [
-                AnimatedOpacity(
-                  duration: Duration(milliseconds: 250),
-                  opacity: isLoading ? 0.5 : 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: AnimatedSwitcher(
-                      duration: Duration(milliseconds: 500),
-                      child: _buildContent(context),
+      child: ProviderListener(
+        provider: authProvider,
+        onChange: (context, User? user) {
+          if (user == null) {
+            return;
+          }
+
+          if (user.name == null || user.name == '') {
+            setState(() {
+              isLoading = false;
+              curentState = MobileVerificationState.SHOW_USERNAME_FORM;
+            });
+          } else {
+            Utils.appNav.currentState?.pop();
+          }
+        },
+        child: Scaffold(
+          body: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: AbsorbPointer(
+              absorbing: isLoading,
+              child: Stack(
+                children: [
+                  AnimatedOpacity(
+                    duration: Duration(milliseconds: 250),
+                    opacity: isLoading ? 0.5 : 1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: AnimatedSwitcher(
+                        duration: Duration(milliseconds: 500),
+                        child: _buildContent(context),
+                      ),
                     ),
                   ),
-                ),
-                if (isLoading) _buildLoading(),
-              ],
+                  if (isLoading) _buildLoading(),
+                ],
+              ),
             ),
           ),
         ),

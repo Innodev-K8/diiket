@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
@@ -16,11 +17,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class LargeProductItem extends StatelessWidget {
   final Product product;
   final Function? onTap;
+  final bool readonly;
 
   const LargeProductItem({
     Key? key,
     required this.product,
     this.onTap,
+    this.readonly = false,
   }) : super(key: key);
 
   @override
@@ -90,7 +93,15 @@ class LargeProductItem extends StatelessWidget {
                           Spacer(flex: 1),
                           ProductPiceText(product: product),
                           Spacer(flex: 4),
-                          AuthWrapper(
+                          if (readonly ||
+                              context.read(activeOrderProvider)?.status !=
+                                  'unconfirmed')
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: _buildReadOnlyContent(),
+                            )
+                          else
+                            AuthWrapper(
                             auth: (_) => _buildAction(),
                             guest: Align(
                               alignment: Alignment.bottomRight,
@@ -245,6 +256,30 @@ class LargeProductItem extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildReadOnlyContent() {
+    return Consumer(
+      builder: (context, watch, child) {
+        watch(activeOrderProvider);
+
+        final OrderItem? orderItem = context
+            .read(activeOrderProvider.notifier)
+            .getOrderItemByProduct(product);
+
+        if (orderItem != null) {
+          return Text(
+            '${orderItem.quantity} ${product.quantity_unit}',
+            style: kTextTheme.caption!.copyWith(
+              color: ColorPallete.primaryColor,
+            ),
+            textAlign: TextAlign.end,
+          );
+        } else {
+          return SizedBox.shrink();
+        }
+      },
     );
   }
 }

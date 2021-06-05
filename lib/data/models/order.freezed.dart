@@ -31,7 +31,9 @@ class _$OrderTearOff {
       String? location_lng,
       int? total_weight,
       int? products_price,
-      int? delivery_price,
+      int? delivery_fee,
+      int? pickup_fee,
+      int? service_fee,
       int? total_price,
       List<OrderItem>? order_items}) {
     return _Order(
@@ -45,7 +47,9 @@ class _$OrderTearOff {
       location_lng: location_lng,
       total_weight: total_weight,
       products_price: products_price,
-      delivery_price: delivery_price,
+      delivery_fee: delivery_fee,
+      pickup_fee: pickup_fee,
+      service_fee: service_fee,
       total_price: total_price,
       order_items: order_items,
     );
@@ -71,7 +75,9 @@ mixin _$Order {
   String? get location_lng => throw _privateConstructorUsedError;
   int? get total_weight => throw _privateConstructorUsedError;
   int? get products_price => throw _privateConstructorUsedError;
-  int? get delivery_price => throw _privateConstructorUsedError;
+  int? get delivery_fee => throw _privateConstructorUsedError;
+  int? get pickup_fee => throw _privateConstructorUsedError;
+  int? get service_fee => throw _privateConstructorUsedError;
   int? get total_price => throw _privateConstructorUsedError;
   List<OrderItem>? get order_items => throw _privateConstructorUsedError;
 
@@ -95,7 +101,9 @@ abstract class $OrderCopyWith<$Res> {
       String? location_lng,
       int? total_weight,
       int? products_price,
-      int? delivery_price,
+      int? delivery_fee,
+      int? pickup_fee,
+      int? service_fee,
       int? total_price,
       List<OrderItem>? order_items});
 }
@@ -120,7 +128,9 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? location_lng = freezed,
     Object? total_weight = freezed,
     Object? products_price = freezed,
-    Object? delivery_price = freezed,
+    Object? delivery_fee = freezed,
+    Object? pickup_fee = freezed,
+    Object? service_fee = freezed,
     Object? total_price = freezed,
     Object? order_items = freezed,
   }) {
@@ -165,9 +175,17 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
           ? _value.products_price
           : products_price // ignore: cast_nullable_to_non_nullable
               as int?,
-      delivery_price: delivery_price == freezed
-          ? _value.delivery_price
-          : delivery_price // ignore: cast_nullable_to_non_nullable
+      delivery_fee: delivery_fee == freezed
+          ? _value.delivery_fee
+          : delivery_fee // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pickup_fee: pickup_fee == freezed
+          ? _value.pickup_fee
+          : pickup_fee // ignore: cast_nullable_to_non_nullable
+              as int?,
+      service_fee: service_fee == freezed
+          ? _value.service_fee
+          : service_fee // ignore: cast_nullable_to_non_nullable
               as int?,
       total_price: total_price == freezed
           ? _value.total_price
@@ -197,7 +215,9 @@ abstract class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       String? location_lng,
       int? total_weight,
       int? products_price,
-      int? delivery_price,
+      int? delivery_fee,
+      int? pickup_fee,
+      int? service_fee,
       int? total_price,
       List<OrderItem>? order_items});
 }
@@ -223,7 +243,9 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? location_lng = freezed,
     Object? total_weight = freezed,
     Object? products_price = freezed,
-    Object? delivery_price = freezed,
+    Object? delivery_fee = freezed,
+    Object? pickup_fee = freezed,
+    Object? service_fee = freezed,
     Object? total_price = freezed,
     Object? order_items = freezed,
   }) {
@@ -268,9 +290,17 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
           ? _value.products_price
           : products_price // ignore: cast_nullable_to_non_nullable
               as int?,
-      delivery_price: delivery_price == freezed
-          ? _value.delivery_price
-          : delivery_price // ignore: cast_nullable_to_non_nullable
+      delivery_fee: delivery_fee == freezed
+          ? _value.delivery_fee
+          : delivery_fee // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pickup_fee: pickup_fee == freezed
+          ? _value.pickup_fee
+          : pickup_fee // ignore: cast_nullable_to_non_nullable
+              as int?,
+      service_fee: service_fee == freezed
+          ? _value.service_fee
+          : service_fee // ignore: cast_nullable_to_non_nullable
               as int?,
       total_price: total_price == freezed
           ? _value.total_price
@@ -298,7 +328,9 @@ class _$_Order implements _Order {
       this.location_lng,
       this.total_weight,
       this.products_price,
-      this.delivery_price,
+      this.delivery_fee,
+      this.pickup_fee,
+      this.service_fee,
       this.total_price,
       this.order_items});
 
@@ -326,7 +358,11 @@ class _$_Order implements _Order {
   @override
   final int? products_price;
   @override
-  final int? delivery_price;
+  final int? delivery_fee;
+  @override
+  final int? pickup_fee;
+  @override
+  final int? service_fee;
   @override
   final int? total_price;
   @override
@@ -334,7 +370,7 @@ class _$_Order implements _Order {
 
   @override
   String toString() {
-    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, total_weight: $total_weight, products_price: $products_price, delivery_price: $delivery_price, total_price: $total_price, order_items: $order_items)';
+    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items)';
   }
 
   @override
@@ -369,9 +405,15 @@ class _$_Order implements _Order {
             (identical(other.products_price, products_price) ||
                 const DeepCollectionEquality()
                     .equals(other.products_price, products_price)) &&
-            (identical(other.delivery_price, delivery_price) ||
+            (identical(other.delivery_fee, delivery_fee) ||
                 const DeepCollectionEquality()
-                    .equals(other.delivery_price, delivery_price)) &&
+                    .equals(other.delivery_fee, delivery_fee)) &&
+            (identical(other.pickup_fee, pickup_fee) ||
+                const DeepCollectionEquality()
+                    .equals(other.pickup_fee, pickup_fee)) &&
+            (identical(other.service_fee, service_fee) ||
+                const DeepCollectionEquality()
+                    .equals(other.service_fee, service_fee)) &&
             (identical(other.total_price, total_price) ||
                 const DeepCollectionEquality()
                     .equals(other.total_price, total_price)) &&
@@ -393,7 +435,9 @@ class _$_Order implements _Order {
       const DeepCollectionEquality().hash(location_lng) ^
       const DeepCollectionEquality().hash(total_weight) ^
       const DeepCollectionEquality().hash(products_price) ^
-      const DeepCollectionEquality().hash(delivery_price) ^
+      const DeepCollectionEquality().hash(delivery_fee) ^
+      const DeepCollectionEquality().hash(pickup_fee) ^
+      const DeepCollectionEquality().hash(service_fee) ^
       const DeepCollectionEquality().hash(total_price) ^
       const DeepCollectionEquality().hash(order_items);
 
@@ -420,7 +464,9 @@ abstract class _Order implements Order {
       String? location_lng,
       int? total_weight,
       int? products_price,
-      int? delivery_price,
+      int? delivery_fee,
+      int? pickup_fee,
+      int? service_fee,
       int? total_price,
       List<OrderItem>? order_items}) = _$_Order;
 
@@ -447,7 +493,11 @@ abstract class _Order implements Order {
   @override
   int? get products_price => throw _privateConstructorUsedError;
   @override
-  int? get delivery_price => throw _privateConstructorUsedError;
+  int? get delivery_fee => throw _privateConstructorUsedError;
+  @override
+  int? get pickup_fee => throw _privateConstructorUsedError;
+  @override
+  int? get service_fee => throw _privateConstructorUsedError;
   @override
   int? get total_price => throw _privateConstructorUsedError;
   @override

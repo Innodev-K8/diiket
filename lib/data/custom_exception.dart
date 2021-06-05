@@ -31,7 +31,7 @@ class CustomException implements Exception {
         message = 'Permintaan ke server dibatalkan.';
         break;
       case DioErrorType.response:
-        switch (error.response!.statusCode) {
+        switch (error.response?.statusCode) {
           case 401:
             message = 'Permintaan tidak terautentikasi.';
             break;
@@ -59,7 +59,7 @@ class CustomException implements Exception {
 
     return CustomException(
       message: message,
-      code: error.response!.statusCode ?? 0,
+      code: error.response?.statusCode ?? 0,
     );
   }
 }

@@ -48,6 +48,7 @@ dependencies:
   page_transition: ^2.0.2
   pin_code_fields: ^7.1.0
   trust_location: ^2.0.13
+  url_launcher: ^6.0.6
 
 dev_dependencies:
   flutter_test:

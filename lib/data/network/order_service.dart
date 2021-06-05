@@ -1,5 +1,4 @@
 import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/delivery_detail.dart';
 import 'package:diiket/data/models/fare.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/order.dart';

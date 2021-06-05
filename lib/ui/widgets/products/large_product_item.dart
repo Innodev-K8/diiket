@@ -29,6 +29,8 @@ class LargeProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isStoreOpen = product.stall?.is_open == true;
+    final isAnyProcessedOrder = context.read(activeOrderProvider) != null &&
+        context.read(activeOrderProvider)!.status != 'unconfirmed';
 
     return AbsorbPointer(
       absorbing: !isStoreOpen,
@@ -94,8 +96,7 @@ class LargeProductItem extends StatelessWidget {
                           ProductPiceText(product: product),
                           Spacer(flex: 4),
                           if (readonly ||
-                              context.read(activeOrderProvider)?.status !=
-                                  'unconfirmed')
+                              isAnyProcessedOrder)
                             Align(
                               alignment: Alignment.bottomRight,
                               child: _buildReadOnlyContent(),

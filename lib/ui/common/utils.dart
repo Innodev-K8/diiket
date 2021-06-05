@@ -1,6 +1,7 @@
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/ui/pages/utils/place_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -29,5 +30,13 @@ class Utils {
 
   static popPlacePicker(PlacePickerResult? result) async {
     appNav.currentState?.pop(result);
+  }
+
+  static alert(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 }

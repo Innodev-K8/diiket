@@ -17,6 +17,9 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
     type: json['type'] as String?,
     profile_picture: json['profile_picture'] as String?,
     profile_picture_url: json['profile_picture_url'] as String?,
+    driver_detail: json['driver_detail'] == null
+        ? null
+        : DriverDetaill.fromJson(json['driver_detail'] as Map<String, dynamic>),
   );
 }
 
@@ -30,4 +33,5 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'type': instance.type,
       'profile_picture': instance.profile_picture,
       'profile_picture_url': instance.profile_picture_url,
+      'driver_detail': instance.driver_detail,
     };

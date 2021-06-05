@@ -50,7 +50,7 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
 
       if (mounted) state = AsyncValue.data(products);
     } on CustomException catch (error) {
-      state = AsyncValue.error(error);
+      if (mounted) state = AsyncValue.error(error);
     }
   }
 

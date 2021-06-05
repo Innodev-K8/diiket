@@ -12,6 +12,9 @@ _$_Order _$_$_OrderFromJson(Map<String, dynamic> json) {
     market_id: json['market_id'] as int?,
     user_id: json['user_id'] as int?,
     driver_id: json['driver_id'] as int?,
+    driver: json['driver'] == null
+        ? null
+        : User.fromJson(json['driver'] as Map<String, dynamic>),
     status: json['status'] as String?,
     address: json['address'] as String?,
     location_lat: json['location_lat'] as String?,
@@ -33,6 +36,7 @@ Map<String, dynamic> _$_$_OrderToJson(_$_Order instance) => <String, dynamic>{
       'market_id': instance.market_id,
       'user_id': instance.user_id,
       'driver_id': instance.driver_id,
+      'driver': instance.driver,
       'status': instance.status,
       'address': instance.address,
       'location_lat': instance.location_lat,

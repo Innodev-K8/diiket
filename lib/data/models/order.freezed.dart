@@ -25,6 +25,7 @@ class _$OrderTearOff {
       int? market_id,
       int? user_id,
       int? driver_id,
+      User? driver,
       String? status,
       String? address,
       String? location_lat,
@@ -41,6 +42,7 @@ class _$OrderTearOff {
       market_id: market_id,
       user_id: user_id,
       driver_id: driver_id,
+      driver: driver,
       status: status,
       address: address,
       location_lat: location_lat,
@@ -69,6 +71,7 @@ mixin _$Order {
   int? get market_id => throw _privateConstructorUsedError;
   int? get user_id => throw _privateConstructorUsedError;
   int? get driver_id => throw _privateConstructorUsedError;
+  User? get driver => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
   String? get location_lat => throw _privateConstructorUsedError;
@@ -95,6 +98,7 @@ abstract class $OrderCopyWith<$Res> {
       int? market_id,
       int? user_id,
       int? driver_id,
+      User? driver,
       String? status,
       String? address,
       String? location_lat,
@@ -106,6 +110,8 @@ abstract class $OrderCopyWith<$Res> {
       int? service_fee,
       int? total_price,
       List<OrderItem>? order_items});
+
+  $UserCopyWith<$Res>? get driver;
 }
 
 /// @nodoc
@@ -122,6 +128,7 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? market_id = freezed,
     Object? user_id = freezed,
     Object? driver_id = freezed,
+    Object? driver = freezed,
     Object? status = freezed,
     Object? address = freezed,
     Object? location_lat = freezed,
@@ -151,6 +158,10 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
           ? _value.driver_id
           : driver_id // ignore: cast_nullable_to_non_nullable
               as int?,
+      driver: driver == freezed
+          ? _value.driver
+          : driver // ignore: cast_nullable_to_non_nullable
+              as User?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -197,6 +208,17 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
               as List<OrderItem>?,
     ));
   }
+
+  @override
+  $UserCopyWith<$Res>? get driver {
+    if (_value.driver == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.driver!, (value) {
+      return _then(_value.copyWith(driver: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -209,6 +231,7 @@ abstract class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       int? market_id,
       int? user_id,
       int? driver_id,
+      User? driver,
       String? status,
       String? address,
       String? location_lat,
@@ -220,6 +243,9 @@ abstract class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       int? service_fee,
       int? total_price,
       List<OrderItem>? order_items});
+
+  @override
+  $UserCopyWith<$Res>? get driver;
 }
 
 /// @nodoc
@@ -237,6 +263,7 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? market_id = freezed,
     Object? user_id = freezed,
     Object? driver_id = freezed,
+    Object? driver = freezed,
     Object? status = freezed,
     Object? address = freezed,
     Object? location_lat = freezed,
@@ -266,6 +293,10 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
           ? _value.driver_id
           : driver_id // ignore: cast_nullable_to_non_nullable
               as int?,
+      driver: driver == freezed
+          ? _value.driver
+          : driver // ignore: cast_nullable_to_non_nullable
+              as User?,
       status: status == freezed
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -322,6 +353,7 @@ class _$_Order implements _Order {
       this.market_id,
       this.user_id,
       this.driver_id,
+      this.driver,
       this.status,
       this.address,
       this.location_lat,
@@ -345,6 +377,8 @@ class _$_Order implements _Order {
   final int? user_id;
   @override
   final int? driver_id;
+  @override
+  final User? driver;
   @override
   final String? status;
   @override
@@ -370,7 +404,7 @@ class _$_Order implements _Order {
 
   @override
   String toString() {
-    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items)';
+    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, driver: $driver, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items)';
   }
 
   @override
@@ -388,6 +422,8 @@ class _$_Order implements _Order {
             (identical(other.driver_id, driver_id) ||
                 const DeepCollectionEquality()
                     .equals(other.driver_id, driver_id)) &&
+            (identical(other.driver, driver) ||
+                const DeepCollectionEquality().equals(other.driver, driver)) &&
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.address, address) ||
@@ -429,6 +465,7 @@ class _$_Order implements _Order {
       const DeepCollectionEquality().hash(market_id) ^
       const DeepCollectionEquality().hash(user_id) ^
       const DeepCollectionEquality().hash(driver_id) ^
+      const DeepCollectionEquality().hash(driver) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(address) ^
       const DeepCollectionEquality().hash(location_lat) ^
@@ -458,6 +495,7 @@ abstract class _Order implements Order {
       int? market_id,
       int? user_id,
       int? driver_id,
+      User? driver,
       String? status,
       String? address,
       String? location_lat,
@@ -480,6 +518,8 @@ abstract class _Order implements Order {
   int? get user_id => throw _privateConstructorUsedError;
   @override
   int? get driver_id => throw _privateConstructorUsedError;
+  @override
+  User? get driver => throw _privateConstructorUsedError;
   @override
   String? get status => throw _privateConstructorUsedError;
   @override

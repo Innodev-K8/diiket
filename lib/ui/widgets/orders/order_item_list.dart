@@ -1,8 +1,5 @@
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/product.dart';
-import 'package:diiket/data/providers/main_page_controller_provider.dart';
-import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/widgets/orders/confirm_order_button.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:flutter/material.dart';
 

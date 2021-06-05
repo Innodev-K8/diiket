@@ -15,64 +15,38 @@ class OrderPaymentDetail extends HookWidget {
     final orderNotifier = useProvider(activeOrderProvider.notifier);
     final deliveryDetail = useProvider(deliveryDetailProvider);
 
-    final productWeight =
-        (order?.total_weight ?? orderNotifier.totalProductWeight) / 1000;
+    final bool isOrderProceed = order != null && order.status != 'unconfirmed';
+
+    final productWeight = (isOrderProceed
+            ? order.total_weight!
+            : orderNotifier.totalProductWeight) /
+        1000;
     final productPrice =
-        order?.products_price ?? orderNotifier.totalProductPrice;
+        isOrderProceed ? order.products_price : orderNotifier.totalProductPrice;
 
     return Container(
       decoration: kBorderedDecoration,
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Total berat produk',
-                style: kTextTheme.subtitle2!.copyWith(
-                  color: ColorPallete.darkGray,
-                ),
-              ),
-              Text(
-                '$productWeight kg',
-                textAlign: TextAlign.end,
-              ),
-            ],
+          PaymentDetailRecord(
+            title: 'Total berat produk',
+            value: Text('$productWeight kg'),
           ),
           SizedBox(height: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Total harga produk',
-                style: kTextTheme.subtitle2!.copyWith(
-                  color: ColorPallete.darkGray,
-                ),
-              ),
-              Text(
-                'Rp. ${Helper.fmtPrice(productPrice)}',
-                textAlign: TextAlign.end,
-              ),
-            ],
+          PaymentDetailRecord(
+            title: 'Total harga produk',
+            value: Text('Rp. ${Helper.fmtPrice(productPrice)}'),
           ),
           SizedBox(height: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Ongkos kirim',
-                style: kTextTheme.subtitle2!.copyWith(
-                  color: ColorPallete.darkGray,
-                ),
-              ),
-              if (order?.delivery_fee != null)
-                Text(
-                  'Rp. ${Helper.fmtPrice(order!.delivery_fee)}',
-                  textAlign: TextAlign.end,
-                )
-              else
-                deliveryDetail.fare?.when(
+          PaymentDetailRecord(
+            title: 'Ongkos kirim',
+            value: isOrderProceed
+                ? Text(
+                    'Rp. ${Helper.fmtPrice(order.delivery_fee)}',
+                    textAlign: TextAlign.end,
+                  )
+                : deliveryDetail.fare?.when(
                       data: (value) => Text(
                         value.delivery_fee != null
                             ? 'Rp. ${Helper.fmtPrice(value.delivery_fee)}'
@@ -87,24 +61,16 @@ class OrderPaymentDetail extends HookWidget {
                       '-',
                       textAlign: TextAlign.end,
                     ),
-            ],
           ),
           SizedBox(height: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Ongkos belanja',
-                style: kTextTheme.subtitle2!.copyWith(
-                  color: ColorPallete.darkGray,
-                ),
-              ),
-              if (order?.pickup_fee != null)
-                Text(
-                  'Rp. ${Helper.fmtPrice(order!.pickup_fee)}',
+          PaymentDetailRecord(
+            title: 'Ongkos belanja',
+            value: isOrderProceed
+                ? Text(
+                    'Rp. ${Helper.fmtPrice(order.pickup_fee)}',
                   textAlign: TextAlign.end,
                 )
-              else
+              :
                 deliveryDetail.fare?.when(
                       data: (value) => Text(
                         value.pickup_fee != null
@@ -120,24 +86,16 @@ class OrderPaymentDetail extends HookWidget {
                       '-',
                       textAlign: TextAlign.end,
                     ),
-            ],
           ),
           SizedBox(height: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Biaya Layanan*',
-                style: kTextTheme.subtitle2!.copyWith(
-                  color: ColorPallete.darkGray,
-                ),
-              ),
-              if (order?.service_fee != null)
-                Text(
-                  'Rp. ${Helper.fmtPrice(order!.service_fee)}',
+          PaymentDetailRecord(
+            title: 'Biaya Layanan*',
+            value: isOrderProceed
+                ? Text(
+                    'Rp. ${Helper.fmtPrice(order.service_fee)}',
                   textAlign: TextAlign.end,
                 )
-              else
+              :
                 deliveryDetail.fare?.when(
                       data: (value) => Text(
                         value.service_fee != null
@@ -153,7 +111,6 @@ class OrderPaymentDetail extends HookWidget {
                       '-',
                       textAlign: TextAlign.end,
                     ),
-            ],
           ),
           SizedBox(height: 16.0),
           DottedLine(
@@ -170,9 +127,9 @@ class OrderPaymentDetail extends HookWidget {
                   color: ColorPallete.darkGray,
                 ),
               ),
-              if (order?.service_fee != null)
+              if (isOrderProceed)
                 Text(
-                  'Rp. ${Helper.fmtPrice(order!.total_price)}',
+                  'Rp. ${Helper.fmtPrice(order.total_price)}',
                   textAlign: TextAlign.end,
                   style: kTextTheme.subtitle1!.copyWith(
                     color: ColorPallete.primaryColor,
@@ -201,6 +158,39 @@ class OrderPaymentDetail extends HookWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class PaymentDetailRecord extends StatelessWidget {
+  final String title;
+  final Widget value;
+
+  const PaymentDetailRecord({
+    Key? key,
+    required this.title,
+    required this.value,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: kTextTheme.subtitle2!.copyWith(
+            color: ColorPallete.darkGray,
+          ),
+        ),
+        value is Text
+            ? Text(
+                (value as Text).data ?? '',
+                style: (value as Text).style,
+                textAlign: TextAlign.end,
+              )
+            : value
+      ],
     );
   }
 }

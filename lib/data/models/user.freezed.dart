@@ -29,7 +29,8 @@ class _$UserTearOff {
       String? phone_number,
       String? type,
       String? profile_picture,
-      String? profile_picture_url}) {
+      String? profile_picture_url,
+      DriverDetaill? driver_detail}) {
     return _User(
       id: id,
       firebase_uid: firebase_uid,
@@ -40,6 +41,7 @@ class _$UserTearOff {
       type: type,
       profile_picture: profile_picture,
       profile_picture_url: profile_picture_url,
+      driver_detail: driver_detail,
     );
   }
 
@@ -62,6 +64,7 @@ mixin _$User {
   String? get type => throw _privateConstructorUsedError;
   String? get profile_picture => throw _privateConstructorUsedError;
   String? get profile_picture_url => throw _privateConstructorUsedError;
+  DriverDetaill? get driver_detail => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -81,7 +84,10 @@ abstract class $UserCopyWith<$Res> {
       String? phone_number,
       String? type,
       String? profile_picture,
-      String? profile_picture_url});
+      String? profile_picture_url,
+      DriverDetaill? driver_detail});
+
+  $DriverDetaillCopyWith<$Res>? get driver_detail;
 }
 
 /// @nodoc
@@ -103,6 +109,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? type = freezed,
     Object? profile_picture = freezed,
     Object? profile_picture_url = freezed,
+    Object? driver_detail = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -141,7 +148,22 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.profile_picture_url
           : profile_picture_url // ignore: cast_nullable_to_non_nullable
               as String?,
+      driver_detail: driver_detail == freezed
+          ? _value.driver_detail
+          : driver_detail // ignore: cast_nullable_to_non_nullable
+              as DriverDetaill?,
     ));
+  }
+
+  @override
+  $DriverDetaillCopyWith<$Res>? get driver_detail {
+    if (_value.driver_detail == null) {
+      return null;
+    }
+
+    return $DriverDetaillCopyWith<$Res>(_value.driver_detail!, (value) {
+      return _then(_value.copyWith(driver_detail: value));
+    });
   }
 }
 
@@ -159,7 +181,11 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? phone_number,
       String? type,
       String? profile_picture,
-      String? profile_picture_url});
+      String? profile_picture_url,
+      DriverDetaill? driver_detail});
+
+  @override
+  $DriverDetaillCopyWith<$Res>? get driver_detail;
 }
 
 /// @nodoc
@@ -182,6 +208,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? type = freezed,
     Object? profile_picture = freezed,
     Object? profile_picture_url = freezed,
+    Object? driver_detail = freezed,
   }) {
     return _then(_User(
       id: id == freezed
@@ -220,6 +247,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.profile_picture_url
           : profile_picture_url // ignore: cast_nullable_to_non_nullable
               as String?,
+      driver_detail: driver_detail == freezed
+          ? _value.driver_detail
+          : driver_detail // ignore: cast_nullable_to_non_nullable
+              as DriverDetaill?,
     ));
   }
 }
@@ -236,7 +267,8 @@ class _$_User implements _User {
       this.phone_number,
       this.type,
       this.profile_picture,
-      this.profile_picture_url});
+      this.profile_picture_url,
+      this.driver_detail});
 
   factory _$_User.fromJson(Map<String, dynamic> json) =>
       _$_$_UserFromJson(json);
@@ -259,10 +291,12 @@ class _$_User implements _User {
   final String? profile_picture;
   @override
   final String? profile_picture_url;
+  @override
+  final DriverDetaill? driver_detail;
 
   @override
   String toString() {
-    return 'User(id: $id, firebase_uid: $firebase_uid, name: $name, email: $email, address: $address, phone_number: $phone_number, type: $type, profile_picture: $profile_picture, profile_picture_url: $profile_picture_url)';
+    return 'User(id: $id, firebase_uid: $firebase_uid, name: $name, email: $email, address: $address, phone_number: $phone_number, type: $type, profile_picture: $profile_picture, profile_picture_url: $profile_picture_url, driver_detail: $driver_detail)';
   }
 
   @override
@@ -291,7 +325,10 @@ class _$_User implements _User {
                     .equals(other.profile_picture, profile_picture)) &&
             (identical(other.profile_picture_url, profile_picture_url) ||
                 const DeepCollectionEquality()
-                    .equals(other.profile_picture_url, profile_picture_url)));
+                    .equals(other.profile_picture_url, profile_picture_url)) &&
+            (identical(other.driver_detail, driver_detail) ||
+                const DeepCollectionEquality()
+                    .equals(other.driver_detail, driver_detail)));
   }
 
   @override
@@ -305,7 +342,8 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(phone_number) ^
       const DeepCollectionEquality().hash(type) ^
       const DeepCollectionEquality().hash(profile_picture) ^
-      const DeepCollectionEquality().hash(profile_picture_url);
+      const DeepCollectionEquality().hash(profile_picture_url) ^
+      const DeepCollectionEquality().hash(driver_detail);
 
   @JsonKey(ignore: true)
   @override
@@ -328,7 +366,8 @@ abstract class _User implements User {
       String? phone_number,
       String? type,
       String? profile_picture,
-      String? profile_picture_url}) = _$_User;
+      String? profile_picture_url,
+      DriverDetaill? driver_detail}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -350,6 +389,8 @@ abstract class _User implements User {
   String? get profile_picture => throw _privateConstructorUsedError;
   @override
   String? get profile_picture_url => throw _privateConstructorUsedError;
+  @override
+  DriverDetaill? get driver_detail => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

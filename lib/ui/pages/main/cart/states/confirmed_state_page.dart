@@ -1,22 +1,13 @@
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fare.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
-import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
-import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/pages/main/cart/alerts/checkout_success.dart';
-import 'package:diiket/ui/widgets/orders/confirm_order_button.dart';
 import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_item_list.dart';
 import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
 import 'package:diiket/ui/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:page_transition/page_transition.dart';
 
 class ConfirmedStatePage extends HookWidget {
   final Order order;

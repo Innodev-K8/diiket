@@ -1,3 +1,4 @@
+import 'package:diiket/data/models/driver_detaill.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user.freezed.dart';
@@ -15,6 +16,7 @@ class User with _$User {
     String? type,
     String? profile_picture,
     String? profile_picture_url,
+    DriverDetaill? driver_detail,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

@@ -86,6 +86,6 @@ final kTextTheme = TextTheme(
   overline: GoogleFonts.poppins(
     fontSize: 10,
     fontWeight: FontWeight.w400,
-    letterSpacing: 1.5,
+    letterSpacing: 0.25,
   ),
 );

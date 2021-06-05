@@ -1,6 +1,8 @@
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/pages/main/cart/states/confirmed_state_page.dart';
+import 'package:diiket/ui/pages/main/cart/states/delivering_state_page.dart';
+import 'package:diiket/ui/pages/main/cart/states/purcashing_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/unconfirmed_state_page.dart';
 import 'package:diiket/ui/widgets/orders/order_state_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,8 @@ class CartPage extends HookWidget {
             OrderStateWrapper(
               unconfirmed: (order) => UnconfirmedStatePage(order: order),
               waiting: (order) => ConfirmedStatePage(order: order),
+              purchasing: (order) => PurcashingStatePage(order: order),
+              delivering: (order) => DeliveringStatePage(order: order),
               empty: () => Expanded(
                 child: Center(
                   child: Text('Keranjang Kosong'),

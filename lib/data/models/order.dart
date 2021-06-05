@@ -1,3 +1,4 @@
+import 'package:diiket/data/models/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'order_item.dart';
@@ -12,6 +13,7 @@ class Order with _$Order {
     int? market_id,
     int? user_id,
     int? driver_id,
+    User? driver,
     String? status,
     String? address,
     String? location_lat,

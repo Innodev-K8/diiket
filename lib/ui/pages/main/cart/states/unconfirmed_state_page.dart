@@ -6,6 +6,7 @@ import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/cart/alerts/checkout_success.dart';
+import 'package:diiket/ui/widgets/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/orders/confirm_order_button.dart';
 import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_item_list.dart';
@@ -31,95 +32,100 @@ class UnconfirmedStatePage extends HookWidget {
     final deliveryDetail = useProvider(deliveryDetailProvider);
     final isLoading = useState<bool>(false);
 
-    return Expanded(
-      child: Stack(
-        children: [
-          RefreshIndicator(
-            onRefresh: () async => await context
-                .read(activeOrderProvider.notifier)
-                .retrieveActiveOrder(),
-            child: OrderItemList(
-              padding: const EdgeInsets.fromLTRB(
-                24.0,
-                10.0,
-                24.0,
-                ConfirmOrderButton.height + 20,
-              ),
-              header: Column(
-                children: [
-                  SelectOrderDeliveryLocationButton(),
-                  SizedBox(height: 10),
-                  OrderDeliveryAddressDetail(),
-                  SizedBox(height: 20.0),
-                ],
-              ),
-              order: order,
-              footer: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: OrderPaymentDetail(),
-              ),
-            ),
-          ),
-          if (deliveryDetail.position != null)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
-                child: ConfirmOrderButton(
-                  onPressed: () async {
-                    Fare? fare = deliveryDetail.fare?.data?.value;
-                    LatLng? position = deliveryDetail.position;
-
-                    if (fare == null || position == null) return;
-
-                    isLoading.value = true;
-
-                    HapticFeedback.vibrate();
-
-                    try {
-                      await context
-                          .read(activeOrderProvider.notifier)
-                          .confirmActiveOrder(
-                            position,
-                            fare,
-                            deliveryDetail.geocodedPosition,
-                          );
-
-                      Utils.appNav.currentState?.push(
-                        PageTransition(
-                          child: CheckoutSuccessPage(),
-                          type: PageTransitionType.scale,
-                          alignment: Alignment.bottomCenter,
-                          curve: Curves.easeInOutQuart,
-                          duration: Duration(seconds: 1),
-                        ),
-                      );
-                    } on CustomException catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(e.message ?? 'Terjadi kesalahan'),
-                          duration: Duration(seconds: 4),
-                        ),
-                      );
-                    } finally {
-                      isLoading.value = false;
-                    }
-                  },
+    return Column(
+      children: [
+        CustomAppBar(title: 'Keranjang'),
+        Expanded(
+          child: Stack(
+            children: [
+              RefreshIndicator(
+                onRefresh: () async => await context
+                    .read(activeOrderProvider.notifier)
+                    .retrieveActiveOrder(),
+                child: OrderItemList(
+                  padding: const EdgeInsets.fromLTRB(
+                    24.0,
+                    10.0,
+                    24.0,
+                    ConfirmOrderButton.height + 20,
+                  ),
+                  header: Column(
+                    children: [
+                      SelectOrderDeliveryLocationButton(),
+                      SizedBox(height: 10),
+                      OrderDeliveryAddressDetail(),
+                      SizedBox(height: 20.0),
+                    ],
+                  ),
+                  order: order,
+                  footer: Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: OrderPaymentDetail(),
+                  ),
                 ),
               ),
-            ),
-          if (isLoading.value)
-            Container(
-              alignment: Alignment.center,
-              color: Colors.white.withOpacity(0.7),
-              child: CircularProgressIndicator(
-                color: ColorPallete.primaryColor,
-              ),
-            ),
-        ],
-      ),
+              if (deliveryDetail.position != null)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
+                    child: ConfirmOrderButton(
+                      onPressed: () async {
+                        Fare? fare = deliveryDetail.fare?.data?.value;
+                        LatLng? position = deliveryDetail.position;
+
+                        if (fare == null || position == null) return;
+
+                        isLoading.value = true;
+
+                        HapticFeedback.vibrate();
+
+                        try {
+                          await context
+                              .read(activeOrderProvider.notifier)
+                              .confirmActiveOrder(
+                                position,
+                                fare,
+                                deliveryDetail.geocodedPosition,
+                              );
+
+                          Utils.appNav.currentState?.push(
+                            PageTransition(
+                              child: CheckoutSuccessPage(),
+                              type: PageTransitionType.scale,
+                              alignment: Alignment.bottomCenter,
+                              curve: Curves.easeInOutQuart,
+                              duration: Duration(seconds: 1),
+                            ),
+                          );
+                        } on CustomException catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.message ?? 'Terjadi kesalahan'),
+                              duration: Duration(seconds: 4),
+                            ),
+                          );
+                        } finally {
+                          isLoading.value = false;
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              if (isLoading.value)
+                Container(
+                  alignment: Alignment.center,
+                  color: Colors.white.withOpacity(0.7),
+                  child: CircularProgressIndicator(
+                    color: ColorPallete.primaryColor,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

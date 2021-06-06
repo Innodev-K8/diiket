@@ -3,6 +3,7 @@ import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/widgets/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/orders/driver_detail_banner.dart';
 import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
@@ -24,66 +25,71 @@ class DeliveringStatePage extends HookWidget {
   Widget build(BuildContext context) {
     final isLoading = useState<bool>(false);
 
-    return Expanded(
-      child: Stack(
-        children: [
-          RefreshIndicator(
-            onRefresh: () async => await context
-                .read(activeOrderProvider.notifier)
-                .retrieveActiveOrder(),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  DriverDetailBanner(
-                    title: 'Driver dalam perjalanan, siapkan uang cash',
-                    driver: order.driver ?? User(),
-                    backgroundColor: ColorPallete.successColor,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      24.0,
-                      20.0,
-                      24.0,
-                      24.0,
-                    ),
-                    child: Column(
-                      children: [
-                        OrderDeliveryAddressDetail(),
-                        SizedBox(height: 10),
-                        OrderPaymentDetail(),
-                        SizedBox(height: 10),
-                        PrimaryButton(
-                          child: Text('Hubungi Driver'),
-                          onPressed: () async {
-                            final url = "tel:${order.driver?.phone_number}";
-
-                            if (await canLaunch(url)) {
-                              await launch(url);
-                            } else {
-                              Utils.alert(
-                                context,
-                                'Tidak dapat menghubungi no telepon, ${order.driver?.phone_number}',
-                              );
-                            }
-                          },
+    return Column(
+      children: [
+        CustomAppBar(title: 'Detail Pesanan'),
+        Expanded(
+          child: Stack(
+            children: [
+              RefreshIndicator(
+                onRefresh: () async => await context
+                    .read(activeOrderProvider.notifier)
+                    .retrieveActiveOrder(),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      DriverDetailBanner(
+                        title: 'Driver dalam perjalanan, siapkan uang cash',
+                        driver: order.driver ?? User(),
+                        backgroundColor: ColorPallete.successColor,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          24.0,
+                          20.0,
+                          24.0,
+                          24.0,
                         ),
-                      ],
-                    ),
+                        child: Column(
+                          children: [
+                            OrderDeliveryAddressDetail(),
+                            SizedBox(height: 10),
+                            OrderPaymentDetail(),
+                            SizedBox(height: 10),
+                            PrimaryButton(
+                              child: Text('Hubungi Driver'),
+                              onPressed: () async {
+                                final url = "tel:${order.driver?.phone_number}";
+
+                                if (await canLaunch(url)) {
+                                  await launch(url);
+                                } else {
+                                  Utils.alert(
+                                    context,
+                                    'Tidak dapat menghubungi no telepon, ${order.driver?.phone_number}',
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              if (isLoading.value)
+                Container(
+                  alignment: Alignment.center,
+                  color: Colors.white.withOpacity(0.7),
+                  child: CircularProgressIndicator(
+                    color: ColorPallete.primaryColor,
+                  ),
+                ),
+            ],
           ),
-          if (isLoading.value)
-            Container(
-              alignment: Alignment.center,
-              color: Colors.white.withOpacity(0.7),
-              child: CircularProgressIndicator(
-                color: ColorPallete.primaryColor,
-              ),
-            ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

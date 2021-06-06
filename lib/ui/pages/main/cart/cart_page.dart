@@ -21,45 +21,16 @@ class CartPage extends HookWidget {
     return SafeArea(
       child: Container(
         color: ColorPallete.backgroundColor,
-        child: Column(
-          children: [
-            _buildAppBar('Keranjang'),
-            OrderStateWrapper(
-              unconfirmed: (order) => UnconfirmedStatePage(order: order),
-              waiting: (order) => ConfirmedStatePage(order: order),
-              purchasing: (order) => PurcashingStatePage(order: order),
-              delivering: (order) => DeliveringStatePage(order: order),
-              empty: () => Expanded(
-                child: Center(
-                  child: Text('Keranjang Kosong'),
-                ),
-              ),
+        child: OrderStateWrapper(
+          unconfirmed: (order) => UnconfirmedStatePage(order: order),
+          waiting: (order) => ConfirmedStatePage(order: order),
+          purchasing: (order) => PurcashingStatePage(order: order),
+          delivering: (order) => DeliveringStatePage(order: order),
+          empty: () => Expanded(
+            child: Center(
+              child: Text('Keranjang Kosong'),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAppBar(String labelText) {
-    return Container(
-      height: 78.0,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: ColorPallete.backgroundColor,
-        border: Border(
-          bottom: BorderSide(
-            color: ColorPallete.lightGray.withOpacity(0.5),
           ),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          '${labelText}',
-          style: kTextTheme.headline2,
-          textAlign: TextAlign.center,
         ),
       ),
     );

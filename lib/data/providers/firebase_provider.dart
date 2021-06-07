@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,4 +16,8 @@ final remoteConfigProvider = Provider<RemoteConfig>((ref) {
   });
 
   return instance;
+});
+
+final crashlyticsProvider = Provider<FirebaseCrashlytics>((ref) {
+  return FirebaseCrashlytics.instance;
 });

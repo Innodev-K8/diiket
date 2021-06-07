@@ -7,6 +7,8 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:diiket/ui/pages/main/main_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -22,6 +24,13 @@ void main() async {
   Hive.registerAdapter(SellerAdapter());
   Hive.registerAdapter(ProductAdapter());
   Hive.registerAdapter(ProductCategoryAdapter());
+
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  } else {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  }
 
   runApp(ProviderScope(child: MyApp()));
 }

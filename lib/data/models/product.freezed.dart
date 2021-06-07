@@ -21,17 +21,17 @@ class _$ProductTearOff {
   const _$ProductTearOff();
 
   _Product call(
-      {int? id,
-      int? stall_id,
-      Stall? stall,
-      String? name,
-      String? description,
-      String? photo_url,
-      String? quantity_unit,
-      int? weight,
-      int? price,
-      int? stocks,
-      List<ProductCategory>? categories}) {
+      {@HiveField(0) int? id,
+      @HiveField(1) int? stall_id,
+      @HiveField(2) Stall? stall,
+      @HiveField(3) String? name,
+      @HiveField(4) String? description,
+      @HiveField(5) String? photo_url,
+      @HiveField(6) String? quantity_unit,
+      @HiveField(7) int? weight,
+      @HiveField(8) int? price,
+      @HiveField(9) int? stocks,
+      @HiveField(10) List<ProductCategory>? categories}) {
     return _Product(
       id: id,
       stall_id: stall_id,
@@ -57,16 +57,27 @@ const $Product = _$ProductTearOff();
 
 /// @nodoc
 mixin _$Product {
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   int? get stall_id => throw _privateConstructorUsedError;
+  @HiveField(2)
   Stall? get stall => throw _privateConstructorUsedError;
+  @HiveField(3)
   String? get name => throw _privateConstructorUsedError;
+  @HiveField(4)
   String? get description => throw _privateConstructorUsedError;
+  @HiveField(5)
   String? get photo_url => throw _privateConstructorUsedError;
+  @HiveField(6)
   String? get quantity_unit => throw _privateConstructorUsedError;
+  @HiveField(7)
   int? get weight => throw _privateConstructorUsedError;
+  @HiveField(8)
   int? get price => throw _privateConstructorUsedError;
+  @HiveField(9)
   int? get stocks => throw _privateConstructorUsedError;
+  @HiveField(10)
   List<ProductCategory>? get categories => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -79,17 +90,17 @@ abstract class $ProductCopyWith<$Res> {
   factory $ProductCopyWith(Product value, $Res Function(Product) then) =
       _$ProductCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
-      int? stall_id,
-      Stall? stall,
-      String? name,
-      String? description,
-      String? photo_url,
-      String? quantity_unit,
-      int? weight,
-      int? price,
-      int? stocks,
-      List<ProductCategory>? categories});
+      {@HiveField(0) int? id,
+      @HiveField(1) int? stall_id,
+      @HiveField(2) Stall? stall,
+      @HiveField(3) String? name,
+      @HiveField(4) String? description,
+      @HiveField(5) String? photo_url,
+      @HiveField(6) String? quantity_unit,
+      @HiveField(7) int? weight,
+      @HiveField(8) int? price,
+      @HiveField(9) int? stocks,
+      @HiveField(10) List<ProductCategory>? categories});
 
   $StallCopyWith<$Res>? get stall;
 }
@@ -182,17 +193,17 @@ abstract class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
       __$ProductCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
-      int? stall_id,
-      Stall? stall,
-      String? name,
-      String? description,
-      String? photo_url,
-      String? quantity_unit,
-      int? weight,
-      int? price,
-      int? stocks,
-      List<ProductCategory>? categories});
+      {@HiveField(0) int? id,
+      @HiveField(1) int? stall_id,
+      @HiveField(2) Stall? stall,
+      @HiveField(3) String? name,
+      @HiveField(4) String? description,
+      @HiveField(5) String? photo_url,
+      @HiveField(6) String? quantity_unit,
+      @HiveField(7) int? weight,
+      @HiveField(8) int? price,
+      @HiveField(9) int? stocks,
+      @HiveField(10) List<ProductCategory>? categories});
 
   @override
   $StallCopyWith<$Res>? get stall;
@@ -272,44 +283,56 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(typeId: 3, adapterName: 'ProductAdapter')
 class _$_Product implements _Product {
   const _$_Product(
-      {this.id,
-      this.stall_id,
-      this.stall,
-      this.name,
-      this.description,
-      this.photo_url,
-      this.quantity_unit,
-      this.weight,
-      this.price,
-      this.stocks,
-      this.categories});
+      {@HiveField(0) this.id,
+      @HiveField(1) this.stall_id,
+      @HiveField(2) this.stall,
+      @HiveField(3) this.name,
+      @HiveField(4) this.description,
+      @HiveField(5) this.photo_url,
+      @HiveField(6) this.quantity_unit,
+      @HiveField(7) this.weight,
+      @HiveField(8) this.price,
+      @HiveField(9) this.stocks,
+      @HiveField(10) this.categories});
 
   factory _$_Product.fromJson(Map<String, dynamic> json) =>
       _$_$_ProductFromJson(json);
 
   @override
+  @HiveField(0)
   final int? id;
   @override
+  @HiveField(1)
   final int? stall_id;
   @override
+  @HiveField(2)
   final Stall? stall;
   @override
+  @HiveField(3)
   final String? name;
   @override
+  @HiveField(4)
   final String? description;
   @override
+  @HiveField(5)
   final String? photo_url;
   @override
+  @HiveField(6)
   final String? quantity_unit;
   @override
+  @HiveField(7)
   final int? weight;
   @override
+  @HiveField(8)
   final int? price;
   @override
+  @HiveField(9)
   final int? stocks;
   @override
+  @HiveField(10)
   final List<ProductCategory>? categories;
 
   @override
@@ -378,41 +401,52 @@ class _$_Product implements _Product {
 
 abstract class _Product implements Product {
   const factory _Product(
-      {int? id,
-      int? stall_id,
-      Stall? stall,
-      String? name,
-      String? description,
-      String? photo_url,
-      String? quantity_unit,
-      int? weight,
-      int? price,
-      int? stocks,
-      List<ProductCategory>? categories}) = _$_Product;
+      {@HiveField(0) int? id,
+      @HiveField(1) int? stall_id,
+      @HiveField(2) Stall? stall,
+      @HiveField(3) String? name,
+      @HiveField(4) String? description,
+      @HiveField(5) String? photo_url,
+      @HiveField(6) String? quantity_unit,
+      @HiveField(7) int? weight,
+      @HiveField(8) int? price,
+      @HiveField(9) int? stocks,
+      @HiveField(10) List<ProductCategory>? categories}) = _$_Product;
 
   factory _Product.fromJson(Map<String, dynamic> json) = _$_Product.fromJson;
 
   @override
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
   @override
+  @HiveField(1)
   int? get stall_id => throw _privateConstructorUsedError;
   @override
+  @HiveField(2)
   Stall? get stall => throw _privateConstructorUsedError;
   @override
+  @HiveField(3)
   String? get name => throw _privateConstructorUsedError;
   @override
+  @HiveField(4)
   String? get description => throw _privateConstructorUsedError;
   @override
+  @HiveField(5)
   String? get photo_url => throw _privateConstructorUsedError;
   @override
+  @HiveField(6)
   String? get quantity_unit => throw _privateConstructorUsedError;
   @override
+  @HiveField(7)
   int? get weight => throw _privateConstructorUsedError;
   @override
+  @HiveField(8)
   int? get price => throw _privateConstructorUsedError;
   @override
+  @HiveField(9)
   int? get stocks => throw _privateConstructorUsedError;
   @override
+  @HiveField(10)
   List<ProductCategory>? get categories => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

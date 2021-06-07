@@ -43,6 +43,16 @@ class OrderService {
     }
   }
 
+  
+
+  Future<void> cancelActiveOrder() async {
+    try {
+      await _dio.post(_('active/cancel'));
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
+
   Future<Order?> confirmActiveOrder(LatLng location, Fare fare,
       [String? address]) async {
     try {

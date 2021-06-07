@@ -21,14 +21,14 @@ class _$SellerTearOff {
   const _$SellerTearOff();
 
   _Seller call(
-      {int? id,
-      String? name,
-      String? email,
-      String? address,
-      String? phone_number,
-      String? type,
-      String? profile_picture,
-      String? profile_picture_url}) {
+      {@HiveField(0) int? id,
+      @HiveField(2) String? name,
+      @HiveField(3) String? email,
+      @HiveField(4) String? address,
+      @HiveField(5) String? phone_number,
+      @HiveField(6) String? type,
+      @HiveField(7) String? profile_picture,
+      @HiveField(8) String? profile_picture_url}) {
     return _Seller(
       id: id,
       name: name,
@@ -51,13 +51,21 @@ const $Seller = _$SellerTearOff();
 
 /// @nodoc
 mixin _$Seller {
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
+  @HiveField(2)
   String? get name => throw _privateConstructorUsedError;
+  @HiveField(3)
   String? get email => throw _privateConstructorUsedError;
+  @HiveField(4)
   String? get address => throw _privateConstructorUsedError;
+  @HiveField(5)
   String? get phone_number => throw _privateConstructorUsedError;
+  @HiveField(6)
   String? get type => throw _privateConstructorUsedError;
+  @HiveField(7)
   String? get profile_picture => throw _privateConstructorUsedError;
+  @HiveField(8)
   String? get profile_picture_url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -70,14 +78,14 @@ abstract class $SellerCopyWith<$Res> {
   factory $SellerCopyWith(Seller value, $Res Function(Seller) then) =
       _$SellerCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
-      String? name,
-      String? email,
-      String? address,
-      String? phone_number,
-      String? type,
-      String? profile_picture,
-      String? profile_picture_url});
+      {@HiveField(0) int? id,
+      @HiveField(2) String? name,
+      @HiveField(3) String? email,
+      @HiveField(4) String? address,
+      @HiveField(5) String? phone_number,
+      @HiveField(6) String? type,
+      @HiveField(7) String? profile_picture,
+      @HiveField(8) String? profile_picture_url});
 }
 
 /// @nodoc
@@ -142,14 +150,14 @@ abstract class _$SellerCopyWith<$Res> implements $SellerCopyWith<$Res> {
       __$SellerCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
-      String? name,
-      String? email,
-      String? address,
-      String? phone_number,
-      String? type,
-      String? profile_picture,
-      String? profile_picture_url});
+      {@HiveField(0) int? id,
+      @HiveField(2) String? name,
+      @HiveField(3) String? email,
+      @HiveField(4) String? address,
+      @HiveField(5) String? phone_number,
+      @HiveField(6) String? type,
+      @HiveField(7) String? profile_picture,
+      @HiveField(8) String? profile_picture_url});
 }
 
 /// @nodoc
@@ -211,35 +219,44 @@ class __$SellerCopyWithImpl<$Res> extends _$SellerCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(typeId: 1, adapterName: 'SellerAdapter')
 class _$_Seller implements _Seller {
   const _$_Seller(
-      {this.id,
-      this.name,
-      this.email,
-      this.address,
-      this.phone_number,
-      this.type,
-      this.profile_picture,
-      this.profile_picture_url});
+      {@HiveField(0) this.id,
+      @HiveField(2) this.name,
+      @HiveField(3) this.email,
+      @HiveField(4) this.address,
+      @HiveField(5) this.phone_number,
+      @HiveField(6) this.type,
+      @HiveField(7) this.profile_picture,
+      @HiveField(8) this.profile_picture_url});
 
   factory _$_Seller.fromJson(Map<String, dynamic> json) =>
       _$_$_SellerFromJson(json);
 
   @override
+  @HiveField(0)
   final int? id;
   @override
+  @HiveField(2)
   final String? name;
   @override
+  @HiveField(3)
   final String? email;
   @override
+  @HiveField(4)
   final String? address;
   @override
+  @HiveField(5)
   final String? phone_number;
   @override
+  @HiveField(6)
   final String? type;
   @override
+  @HiveField(7)
   final String? profile_picture;
   @override
+  @HiveField(8)
   final String? profile_picture_url;
 
   @override
@@ -298,32 +315,40 @@ class _$_Seller implements _Seller {
 
 abstract class _Seller implements Seller {
   const factory _Seller(
-      {int? id,
-      String? name,
-      String? email,
-      String? address,
-      String? phone_number,
-      String? type,
-      String? profile_picture,
-      String? profile_picture_url}) = _$_Seller;
+      {@HiveField(0) int? id,
+      @HiveField(2) String? name,
+      @HiveField(3) String? email,
+      @HiveField(4) String? address,
+      @HiveField(5) String? phone_number,
+      @HiveField(6) String? type,
+      @HiveField(7) String? profile_picture,
+      @HiveField(8) String? profile_picture_url}) = _$_Seller;
 
   factory _Seller.fromJson(Map<String, dynamic> json) = _$_Seller.fromJson;
 
   @override
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
   @override
+  @HiveField(2)
   String? get name => throw _privateConstructorUsedError;
   @override
+  @HiveField(3)
   String? get email => throw _privateConstructorUsedError;
   @override
+  @HiveField(4)
   String? get address => throw _privateConstructorUsedError;
   @override
+  @HiveField(5)
   String? get phone_number => throw _privateConstructorUsedError;
   @override
+  @HiveField(6)
   String? get type => throw _privateConstructorUsedError;
   @override
+  @HiveField(7)
   String? get profile_picture => throw _privateConstructorUsedError;
   @override
+  @HiveField(8)
   String? get profile_picture_url => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

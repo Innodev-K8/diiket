@@ -64,9 +64,19 @@ class LargeProductItem extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: CachedNetworkImage(
-                          imageUrl: product.photo_url ?? '',
+                          imageUrl: product.photo_url ??
+                              'https://diiket.rejoin.id/images/placeholders/product.jpg',
                           fit: BoxFit.fitHeight,
                           height: double.infinity,
+                          placeholder: (context, url) => Center(
+                            child: SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: CircularProgressIndicator(
+                                color: ColorPallete.primaryColor,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),

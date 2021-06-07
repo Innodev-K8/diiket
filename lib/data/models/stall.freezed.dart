@@ -21,21 +21,21 @@ class _$StallTearOff {
   const _$StallTearOff();
 
   _Stall call(
-      {int? id,
-      Seller? seller,
-      int? market_id,
-      bool? is_open,
-      String? name,
-      String? description,
-      String? photo_url,
-      List<Product>? products,
-      String? location_block,
-      String? location_number,
-      String? location_floor,
-      String? location_detail,
-      String? location_lat,
-      String? location_lng,
-      int? verified_at}) {
+      {@HiveField(0) int? id,
+      @HiveField(1) Seller? seller,
+      @HiveField(2) int? market_id,
+      @HiveField(3) bool? is_open,
+      @HiveField(4) String? name,
+      @HiveField(5) String? description,
+      @HiveField(6) String? photo_url,
+      @HiveField(7) List<Product>? products,
+      @HiveField(8) String? location_block,
+      @HiveField(9) String? location_number,
+      @HiveField(10) String? location_floor,
+      @HiveField(11) String? location_detail,
+      @HiveField(12) String? location_lat,
+      @HiveField(13) String? location_lng,
+      @HiveField(14) int? verified_at}) {
     return _Stall(
       id: id,
       seller: seller,
@@ -65,20 +65,35 @@ const $Stall = _$StallTearOff();
 
 /// @nodoc
 mixin _$Stall {
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   Seller? get seller => throw _privateConstructorUsedError;
+  @HiveField(2)
   int? get market_id => throw _privateConstructorUsedError;
+  @HiveField(3)
   bool? get is_open => throw _privateConstructorUsedError;
+  @HiveField(4)
   String? get name => throw _privateConstructorUsedError;
+  @HiveField(5)
   String? get description => throw _privateConstructorUsedError;
+  @HiveField(6)
   String? get photo_url => throw _privateConstructorUsedError;
+  @HiveField(7)
   List<Product>? get products => throw _privateConstructorUsedError;
+  @HiveField(8)
   String? get location_block => throw _privateConstructorUsedError;
+  @HiveField(9)
   String? get location_number => throw _privateConstructorUsedError;
+  @HiveField(10)
   String? get location_floor => throw _privateConstructorUsedError;
+  @HiveField(11)
   String? get location_detail => throw _privateConstructorUsedError;
+  @HiveField(12)
   String? get location_lat => throw _privateConstructorUsedError;
+  @HiveField(13)
   String? get location_lng => throw _privateConstructorUsedError;
+  @HiveField(14)
   int? get verified_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -91,21 +106,21 @@ abstract class $StallCopyWith<$Res> {
   factory $StallCopyWith(Stall value, $Res Function(Stall) then) =
       _$StallCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
-      Seller? seller,
-      int? market_id,
-      bool? is_open,
-      String? name,
-      String? description,
-      String? photo_url,
-      List<Product>? products,
-      String? location_block,
-      String? location_number,
-      String? location_floor,
-      String? location_detail,
-      String? location_lat,
-      String? location_lng,
-      int? verified_at});
+      {@HiveField(0) int? id,
+      @HiveField(1) Seller? seller,
+      @HiveField(2) int? market_id,
+      @HiveField(3) bool? is_open,
+      @HiveField(4) String? name,
+      @HiveField(5) String? description,
+      @HiveField(6) String? photo_url,
+      @HiveField(7) List<Product>? products,
+      @HiveField(8) String? location_block,
+      @HiveField(9) String? location_number,
+      @HiveField(10) String? location_floor,
+      @HiveField(11) String? location_detail,
+      @HiveField(12) String? location_lat,
+      @HiveField(13) String? location_lng,
+      @HiveField(14) int? verified_at});
 
   $SellerCopyWith<$Res>? get seller;
 }
@@ -218,21 +233,21 @@ abstract class _$StallCopyWith<$Res> implements $StallCopyWith<$Res> {
       __$StallCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
-      Seller? seller,
-      int? market_id,
-      bool? is_open,
-      String? name,
-      String? description,
-      String? photo_url,
-      List<Product>? products,
-      String? location_block,
-      String? location_number,
-      String? location_floor,
-      String? location_detail,
-      String? location_lat,
-      String? location_lng,
-      int? verified_at});
+      {@HiveField(0) int? id,
+      @HiveField(1) Seller? seller,
+      @HiveField(2) int? market_id,
+      @HiveField(3) bool? is_open,
+      @HiveField(4) String? name,
+      @HiveField(5) String? description,
+      @HiveField(6) String? photo_url,
+      @HiveField(7) List<Product>? products,
+      @HiveField(8) String? location_block,
+      @HiveField(9) String? location_number,
+      @HiveField(10) String? location_floor,
+      @HiveField(11) String? location_detail,
+      @HiveField(12) String? location_lat,
+      @HiveField(13) String? location_lng,
+      @HiveField(14) int? verified_at});
 
   @override
   $SellerCopyWith<$Res>? get seller;
@@ -332,56 +347,72 @@ class __$StallCopyWithImpl<$Res> extends _$StallCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(typeId: 0, adapterName: 'StallAdapter')
 class _$_Stall implements _Stall {
   const _$_Stall(
-      {this.id,
-      this.seller,
-      this.market_id,
-      this.is_open,
-      this.name,
-      this.description,
-      this.photo_url,
-      this.products,
-      this.location_block,
-      this.location_number,
-      this.location_floor,
-      this.location_detail,
-      this.location_lat,
-      this.location_lng,
-      this.verified_at});
+      {@HiveField(0) this.id,
+      @HiveField(1) this.seller,
+      @HiveField(2) this.market_id,
+      @HiveField(3) this.is_open,
+      @HiveField(4) this.name,
+      @HiveField(5) this.description,
+      @HiveField(6) this.photo_url,
+      @HiveField(7) this.products,
+      @HiveField(8) this.location_block,
+      @HiveField(9) this.location_number,
+      @HiveField(10) this.location_floor,
+      @HiveField(11) this.location_detail,
+      @HiveField(12) this.location_lat,
+      @HiveField(13) this.location_lng,
+      @HiveField(14) this.verified_at});
 
   factory _$_Stall.fromJson(Map<String, dynamic> json) =>
       _$_$_StallFromJson(json);
 
   @override
+  @HiveField(0)
   final int? id;
   @override
+  @HiveField(1)
   final Seller? seller;
   @override
+  @HiveField(2)
   final int? market_id;
   @override
+  @HiveField(3)
   final bool? is_open;
   @override
+  @HiveField(4)
   final String? name;
   @override
+  @HiveField(5)
   final String? description;
   @override
+  @HiveField(6)
   final String? photo_url;
   @override
+  @HiveField(7)
   final List<Product>? products;
   @override
+  @HiveField(8)
   final String? location_block;
   @override
+  @HiveField(9)
   final String? location_number;
   @override
+  @HiveField(10)
   final String? location_floor;
   @override
+  @HiveField(11)
   final String? location_detail;
   @override
+  @HiveField(12)
   final String? location_lat;
   @override
+  @HiveField(13)
   final String? location_lng;
   @override
+  @HiveField(14)
   final int? verified_at;
 
   @override
@@ -469,53 +500,68 @@ class _$_Stall implements _Stall {
 
 abstract class _Stall implements Stall {
   const factory _Stall(
-      {int? id,
-      Seller? seller,
-      int? market_id,
-      bool? is_open,
-      String? name,
-      String? description,
-      String? photo_url,
-      List<Product>? products,
-      String? location_block,
-      String? location_number,
-      String? location_floor,
-      String? location_detail,
-      String? location_lat,
-      String? location_lng,
-      int? verified_at}) = _$_Stall;
+      {@HiveField(0) int? id,
+      @HiveField(1) Seller? seller,
+      @HiveField(2) int? market_id,
+      @HiveField(3) bool? is_open,
+      @HiveField(4) String? name,
+      @HiveField(5) String? description,
+      @HiveField(6) String? photo_url,
+      @HiveField(7) List<Product>? products,
+      @HiveField(8) String? location_block,
+      @HiveField(9) String? location_number,
+      @HiveField(10) String? location_floor,
+      @HiveField(11) String? location_detail,
+      @HiveField(12) String? location_lat,
+      @HiveField(13) String? location_lng,
+      @HiveField(14) int? verified_at}) = _$_Stall;
 
   factory _Stall.fromJson(Map<String, dynamic> json) = _$_Stall.fromJson;
 
   @override
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
   @override
+  @HiveField(1)
   Seller? get seller => throw _privateConstructorUsedError;
   @override
+  @HiveField(2)
   int? get market_id => throw _privateConstructorUsedError;
   @override
+  @HiveField(3)
   bool? get is_open => throw _privateConstructorUsedError;
   @override
+  @HiveField(4)
   String? get name => throw _privateConstructorUsedError;
   @override
+  @HiveField(5)
   String? get description => throw _privateConstructorUsedError;
   @override
+  @HiveField(6)
   String? get photo_url => throw _privateConstructorUsedError;
   @override
+  @HiveField(7)
   List<Product>? get products => throw _privateConstructorUsedError;
   @override
+  @HiveField(8)
   String? get location_block => throw _privateConstructorUsedError;
   @override
+  @HiveField(9)
   String? get location_number => throw _privateConstructorUsedError;
   @override
+  @HiveField(10)
   String? get location_floor => throw _privateConstructorUsedError;
   @override
+  @HiveField(11)
   String? get location_detail => throw _privateConstructorUsedError;
   @override
+  @HiveField(12)
   String? get location_lat => throw _privateConstructorUsedError;
   @override
+  @HiveField(13)
   String? get location_lng => throw _privateConstructorUsedError;
   @override
+  @HiveField(14)
   int? get verified_at => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

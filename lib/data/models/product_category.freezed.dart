@@ -20,7 +20,7 @@ ProductCategory _$ProductCategoryFromJson(Map<String, dynamic> json) {
 class _$ProductCategoryTearOff {
   const _$ProductCategoryTearOff();
 
-  _ProductCategory call({int? id, String? name}) {
+  _ProductCategory call({@HiveField(0) int? id, @HiveField(1) String? name}) {
     return _ProductCategory(
       id: id,
       name: name,
@@ -37,7 +37,9 @@ const $ProductCategory = _$ProductCategoryTearOff();
 
 /// @nodoc
 mixin _$ProductCategory {
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -51,7 +53,7 @@ abstract class $ProductCategoryCopyWith<$Res> {
   factory $ProductCategoryCopyWith(
           ProductCategory value, $Res Function(ProductCategory) then) =
       _$ProductCategoryCopyWithImpl<$Res>;
-  $Res call({int? id, String? name});
+  $Res call({@HiveField(0) int? id, @HiveField(1) String? name});
 }
 
 /// @nodoc
@@ -88,7 +90,7 @@ abstract class _$ProductCategoryCopyWith<$Res>
           _ProductCategory value, $Res Function(_ProductCategory) then) =
       __$ProductCategoryCopyWithImpl<$Res>;
   @override
-  $Res call({int? id, String? name});
+  $Res call({@HiveField(0) int? id, @HiveField(1) String? name});
 }
 
 /// @nodoc
@@ -122,15 +124,18 @@ class __$ProductCategoryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(typeId: 4, adapterName: 'ProductCategoryAdapter')
 class _$_ProductCategory implements _ProductCategory {
-  const _$_ProductCategory({this.id, this.name});
+  const _$_ProductCategory({@HiveField(0) this.id, @HiveField(1) this.name});
 
   factory _$_ProductCategory.fromJson(Map<String, dynamic> json) =>
       _$_$_ProductCategoryFromJson(json);
 
   @override
+  @HiveField(0)
   final int? id;
   @override
+  @HiveField(1)
   final String? name;
 
   @override
@@ -166,14 +171,17 @@ class _$_ProductCategory implements _ProductCategory {
 }
 
 abstract class _ProductCategory implements ProductCategory {
-  const factory _ProductCategory({int? id, String? name}) = _$_ProductCategory;
+  const factory _ProductCategory(
+      {@HiveField(0) int? id, @HiveField(1) String? name}) = _$_ProductCategory;
 
   factory _ProductCategory.fromJson(Map<String, dynamic> json) =
       _$_ProductCategory.fromJson;
 
   @override
+  @HiveField(0)
   int? get id => throw _privateConstructorUsedError;
   @override
+  @HiveField(1)
   String? get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

@@ -38,6 +38,15 @@ class ActiveOrderState extends StateNotifier<Order?> {
     }
   }
 
+  Future<void> cancelActiveOrder() async {
+    try {
+      await _orderService.cancelActiveOrder();
+      await retrieveActiveOrder();
+    } on CustomException catch (error) {
+      _read(activeOrderErrorProvider).state = error;
+    }
+  }
+
   Future<void> confirmActiveOrder(LatLng location, Fare fare,
       [String? address]) async {
     try {

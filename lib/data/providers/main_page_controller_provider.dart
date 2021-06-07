@@ -18,13 +18,13 @@ class MainPageController extends StateNotifier<int> {
   PageController get controller => _controller;
 
   Future<void> setPage(int page) async {
+    state = page;
+
     await _controller.animateToPage(
       page,
       duration: _duration,
       curve: _curves,
     );
-
-    state = page;
 
     Utils.resetHomeNavigation();
   }

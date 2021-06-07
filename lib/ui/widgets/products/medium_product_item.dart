@@ -16,64 +16,82 @@ class MediumProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 140,
       decoration: BoxDecoration(
-        // color: Colors.white,
         borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          color: ColorPallete.lightGray.withOpacity(0.5),
-        ),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(4, 15),
+            blurRadius: 70,
+            color: Colors.black.withOpacity(0.08),
+          ),
+        ],
       ),
-      child: InkWell(
-        onTap: () {
-          Utils.homeNav.currentState!.pushNamed(
-            '/home/stall',
-            arguments: {
-              'stall_id': product.stall_id,
-            },
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        product.photo_url ?? 'https://via.placeholder.com/150',
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Text('ini placehoilder'),
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(5),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(5),
+          onTap: () {
+            Utils.homeNav.currentState!.pushNamed(
+              '/home/stall',
+              arguments: {
+                'stall_id': product.stall_id,
+              },
+            );
+          },
+          child: Container(
+            width: 140,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: CachedNetworkImage(
+                        imageUrl: product.photo_url ??
+                            'https://diiket.rejoin.id/images/placeholders/product.jpg',
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Center(
+                          child: SizedBox(
+                            width: 48,
+                            height: 48,
+                            child: CircularProgressIndicator(
+                              color: ColorPallete.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(height: 8.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.name ?? '-',
-                      style: kTextTheme.headline6,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+                  SizedBox(height: 8.0),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.name ?? '-',
+                          style: kTextTheme.headline6,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                        Spacer(flex: 3),
+                        ProductPiceText(product: product),
+                        Spacer(flex: 1),
+                        Text(
+                          product.stall?.name ?? '-',
+                          style: kTextTheme.caption,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
-                    Spacer(flex: 3),
-                    ProductPiceText(product: product),
-                    Spacer(flex: 1),
-                    Text(
-                      product.stall?.name ?? '-',
-                      style: kTextTheme.caption,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

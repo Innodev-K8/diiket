@@ -1,3 +1,7 @@
+import 'package:diiket/data/models/product.dart';
+import 'package:diiket/data/models/product_category.dart';
+import 'package:diiket/data/models/seller.dart';
+import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
@@ -13,6 +17,11 @@ void main() async {
 
   await Firebase.initializeApp();
   await Hive.initFlutter();
+
+  Hive.registerAdapter(StallAdapter());
+  Hive.registerAdapter(SellerAdapter());
+  Hive.registerAdapter(ProductAdapter());
+  Hive.registerAdapter(ProductCategoryAdapter());
 
   runApp(ProviderScope(child: MyApp()));
 }

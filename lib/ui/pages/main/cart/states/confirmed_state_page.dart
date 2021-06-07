@@ -80,7 +80,15 @@ class ConfirmedStatePage extends HookWidget {
                       PrimaryButton(
                         child: Text('Batalkan Pesanan'),
                         color: ColorPallete.darkGray,
-                        onPressed: () {},
+                        onPressed: () async {
+                          isLoading.value = true;
+
+                          await context
+                              .read(activeOrderProvider.notifier)
+                              .cancelActiveOrder();
+
+                          isLoading.value = false;
+                        },
                       ),
                     ],
                   ),

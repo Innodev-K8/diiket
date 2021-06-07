@@ -3,6 +3,7 @@ import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/providers/market_provider.dart';
+import 'package:diiket/data/providers/stall/favorite_stall_provider.dart';
 import 'package:diiket/data/providers/stall/stall_detail_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
@@ -10,6 +11,7 @@ import 'package:diiket/ui/widgets/custom_exception_message.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -74,9 +76,15 @@ class StallPage extends HookWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  stall.name ?? '-',
-                  style: kTextTheme.headline3,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      stall.name ?? '-',
+                      style: kTextTheme.headline3,
+                    ),
+                    _buildFavoriteButton(stall),
+                  ],
                 ),
                 SizedBox(height: 5),
                 Text(
@@ -138,6 +146,64 @@ class StallPage extends HookWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildFavoriteButton(Stall stall) {
+    useProvider(favoriteStallProvider);
+
+    final notifier = useProvider(favoriteStallProvider.notifier);
+
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 250),
+      switchInCurve: Curves.easeInQuint,
+      switchOutCurve: Curves.easeOutQuint,
+      // transitionBuilder: (child, animation) => FadeTransition(
+      //   opacity: animation,
+      //   child: SlideTransition(
+      //     position: Tween(
+      //       begin: Offset(0, 0.5),
+      //       end: Offset(0, 0),
+      //     ).animate(animation),
+      //     child: child,
+      //   ),
+      // ),
+      transitionBuilder: (child, animation) => FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
+      child: notifier.isFavorite(stall)
+          ? SizedBox(
+              key: ValueKey('delete'),
+              width: 110,
+              child: ElevatedButton(
+                child: Text('Langanan'),
+                style: ElevatedButton.styleFrom(
+                  primary: ColorPallete.primaryColor,
+                  elevation: 0,
+                ),
+                onPressed: () {
+                  HapticFeedback.vibrate();
+                  notifier.delete(stall);
+                },
+              ),
+            )
+          : SizedBox(
+              key: ValueKey('favorite'),
+              width: 110,
+              child: OutlinedButton(
+                child: Text(
+                  'Langanan',
+                  style: kTextTheme.button!.copyWith(
+                    color: ColorPallete.primaryColor,
+                  ),
+                ),
+                onPressed: () {
+                  HapticFeedback.vibrate();
+                  notifier.add(stall);
+                },
+              ),
+            ),
     );
   }
 

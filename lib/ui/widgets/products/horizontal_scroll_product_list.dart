@@ -68,6 +68,7 @@ class _HorizontalScrollProductListState
         onNotification: _handleScrollNotification,
         child: ListView.separated(
           controller: _controller,
+          clipBehavior: Clip.none,
           physics: BouncingScrollPhysics(),
           itemCount: isLoadingMore && !widget.isFinish
               ? widget.products.length + 1

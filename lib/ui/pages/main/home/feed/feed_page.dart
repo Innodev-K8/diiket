@@ -4,6 +4,7 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/category_menu.dart';
 import 'package:diiket/ui/widgets/products/product_list_section.dart';
 import 'package:diiket/ui/widgets/search_field.dart';
+import 'package:diiket/ui/widgets/stall/favorite_stalls.dart';
 import 'package:flutter/material.dart';
 
 import 'feed_header.dart';
@@ -46,6 +47,7 @@ class FeedPage extends StatelessWidget {
                 _buildSectionTitle('Atau butuh sesuatu?'),
                 CategoryMenu(),
                 // MarketSelector(),
+                FavoriteStalls(),
                 ProductListSection(
                   label: 'Produk',
                   category: ProductFamily.all,
@@ -54,6 +56,7 @@ class FeedPage extends StatelessWidget {
                   label: 'Terlaris',
                   category: ProductFamily.popular,
                 ),
+                SizedBox(height: 24),
               ],
             ),
           ),

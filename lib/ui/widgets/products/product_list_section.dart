@@ -65,9 +65,13 @@ class ProductListSection extends HookWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            label,
-            style: kTextTheme.headline2,
+          Expanded(
+            child: Text(
+              label,
+              style: kTextTheme.headline2,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           TextButton(
             onPressed: () {

@@ -12,7 +12,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class CartPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-   
     useEffect(() {
       // always update order when we open this page
       context.read(activeOrderProvider.notifier).retrieveActiveOrder();

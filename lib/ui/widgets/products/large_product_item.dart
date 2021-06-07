@@ -104,20 +104,19 @@ class LargeProductItem extends StatelessWidget {
                           Spacer(flex: 1),
                           ProductPiceText(product: product),
                           Spacer(flex: 4),
-                          if (readonly ||
-                              isAnyProcessedOrder)
+                          if (readonly || isAnyProcessedOrder)
                             Align(
                               alignment: Alignment.bottomRight,
                               child: _buildReadOnlyContent(),
                             )
                           else
                             AuthWrapper(
-                            auth: (_) => _buildAction(),
-                            guest: Align(
-                              alignment: Alignment.bottomRight,
-                              child: LoginToContinueButton(),
+                              auth: (_) => _buildAction(),
+                              guest: Align(
+                                alignment: Alignment.bottomRight,
+                                child: LoginToContinueButton(),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),

@@ -26,7 +26,7 @@ class ConfirmedStatePage extends HookWidget {
 
     return Column(
       children: [
-        CustomAppBar(title: 'Mencari Driver'),
+        CustomAppBar(title: 'Menunggu Driver'),
         Expanded(
           child: Stack(
             children: [
@@ -53,7 +53,7 @@ class ConfirmedStatePage extends HookWidget {
                       SizedBox(width: 20),
                       Expanded(
                           child: Text(
-                        'Mencari driver',
+                        'Menunggu driver',
                       )),
                       SizedBox(width: 20),
                       Container(

@@ -43,8 +43,6 @@ class OrderService {
     }
   }
 
-  
-
   Future<void> cancelActiveOrder() async {
     try {
       await _dio.post(_('active/cancel'));

@@ -18,8 +18,6 @@ class DeviceLocationState extends StateNotifier<LatLng> {
     TrustLocation.start(5);
 
     TrustLocation.onChange.listen((event) {
-      print("NEW LOCATION EVENT: ${event}");
-
       if (event.isMockLocation == true) {
         _read(isMockLocationProvider).state = true;
       } else {

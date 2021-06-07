@@ -1,4 +1,5 @@
-import 'package:diiket/data/providers/products/products_provider.dart';
+import 'package:diiket/data/models/product_feed.dart';
+import 'package:diiket/data/providers/products/product_feeds_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/category_menu.dart';
@@ -6,6 +7,7 @@ import 'package:diiket/ui/widgets/products/product_list_section.dart';
 import 'package:diiket/ui/widgets/search_field.dart';
 import 'package:diiket/ui/widgets/stall/favorite_stalls.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'feed_header.dart';
 
@@ -41,24 +43,39 @@ class FeedPage extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSectionTitle('Atau butuh sesuatu?'),
-                CategoryMenu(),
-                // MarketSelector(),
-                FavoriteStalls(),
-                ProductListSection(
-                  label: 'Produk',
-                  category: ProductFamily.all,
-                ),
-                ProductListSection(
-                  label: 'Terlaris',
-                  category: ProductFamily.popular,
-                ),
-                SizedBox(height: 24),
-              ],
-            ),
+            child: Consumer(builder: (context, watch, child) {
+              final List<ProductFeed> feeds = watch(productFeedProvider);
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionTitle('Atau butuh sesuatu?'),
+                  CategoryMenu(),
+                  // MarketSelector(),
+                  FavoriteStalls(),
+
+                  ...feeds.map((feed) {
+                    if (feed.label == null || feed.query == null)
+                      return SizedBox();
+
+                    return ProductListSection(
+                      label: feed.label!,
+                      category: feed.query!,
+                    );
+                  }).toList(),
+
+                  // ProductListSection(
+                  //   label: 'Produk',
+                  //   category: ProductFamily.all,
+                  // ),
+                  // ProductListSection(
+                  //   label: 'Terlaris',
+                  //   category: ProductFamily.popular,
+                  // ),
+                  SizedBox(height: 24),
+                ],
+              );
+            }),
           ),
         ],
       ),

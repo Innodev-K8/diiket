@@ -46,8 +46,6 @@ class VerticalScrollProductList extends StatelessWidget {
         child: Text('Tidak ada produk yang dapat ditampilkan'),
       );
 
-    print(_listLength);
-
     return ListView.separated(
       padding: padding,
       shrinkWrap: shrinkWrap,

@@ -25,8 +25,6 @@ class OrderStateWrapper extends HookWidget {
 
     Widget? widgetState;
 
-    print(order);
-
     switch (order?.status) {
       case 'unconfirmed':
         widgetState = unconfirmed?.call(order!);

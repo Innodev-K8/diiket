@@ -180,8 +180,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                     },
                     codeAutoRetrievalTimeout: (verificationId) {
-                      print('timeout');
-                      print(verificationId);
+                      // print('timeout');
+                      // print(verificationId);
                     },
                   );
             },

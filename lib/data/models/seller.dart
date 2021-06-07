@@ -8,7 +8,7 @@ part 'seller.g.dart';
 abstract class Seller with _$Seller {
   @HiveType(typeId: 1, adapterName: 'SellerAdapter')
   const factory Seller({
-     @HiveField(0) int? id,
+    @HiveField(0) int? id,
     @HiveField(2) String? name,
     @HiveField(3) String? email,
     @HiveField(4) String? address,

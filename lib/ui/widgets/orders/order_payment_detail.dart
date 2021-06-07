@@ -68,10 +68,9 @@ class OrderPaymentDetail extends HookWidget {
             value: isOrderProceed
                 ? Text(
                     'Rp. ${Helper.fmtPrice(order.pickup_fee)}',
-                  textAlign: TextAlign.end,
-                )
-              :
-                deliveryDetail.fare?.when(
+                    textAlign: TextAlign.end,
+                  )
+                : deliveryDetail.fare?.when(
                       data: (value) => Text(
                         value.pickup_fee != null
                             ? 'Rp. ${Helper.fmtPrice(value.pickup_fee)}'
@@ -93,10 +92,9 @@ class OrderPaymentDetail extends HookWidget {
             value: isOrderProceed
                 ? Text(
                     'Rp. ${Helper.fmtPrice(order.service_fee)}',
-                  textAlign: TextAlign.end,
-                )
-              :
-                deliveryDetail.fare?.when(
+                    textAlign: TextAlign.end,
+                  )
+                : deliveryDetail.fare?.when(
                       data: (value) => Text(
                         value.service_fee != null
                             ? 'Rp. ${Helper.fmtPrice(value.service_fee)}'

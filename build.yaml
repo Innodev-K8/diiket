@@ -1,8 +1,0 @@
-# Remove this file when this issue is fixed:
-# https://github.com/lejard-h/chopper/issues/257
-targets:
-  $default:
-    builders:
-      chopper_generator:
-        options:
-          header: ''

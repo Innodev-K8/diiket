@@ -25,10 +25,8 @@ class CartPage extends HookWidget {
           waiting: (order) => ConfirmedStatePage(order: order),
           purchasing: (order) => PurcashingStatePage(order: order),
           delivering: (order) => DeliveringStatePage(order: order),
-          empty: () => Expanded(
-            child: Center(
-              child: Text('Keranjang Kosong'),
-            ),
+          empty: () => Center(
+            child: Text('Keranjang Kosong'),
           ),
         ),
       ),

@@ -72,7 +72,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
         Order order = Order.fromJson(response['order']);
 
         if (order.status == 'completed' || order.status == 'canceled') {
-          _unsubscribe();
+          _unsubscribe(order.id);
           state = null;
         } else {
           state = order;
@@ -81,11 +81,9 @@ class ActiveOrderState extends StateNotifier<Order?> {
     } catch (_) {}
   }
 
-  Future<void> _unsubscribe() async {
-    if (state?.id != null) {
-      await _channel?.unbind('order-status-updated');
-      await _pusher.unsubscribe('orders.${state?.id}');
-    }
+  Future<void> _unsubscribe([int? id]) async {
+    await _channel?.unbind('order-status-updated');
+    await _pusher.unsubscribe('orders.${id ?? state?.id}');
   }
 
   @override

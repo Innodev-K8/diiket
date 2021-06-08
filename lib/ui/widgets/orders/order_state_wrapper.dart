@@ -42,6 +42,21 @@ class OrderStateWrapper extends HookWidget {
         widgetState = empty?.call();
     }
 
-    return widgetState ?? SizedBox.shrink();
+    return AnimatedSwitcher(
+      duration: Duration(milliseconds: 500),
+      switchInCurve: Curves.easeOutQuint,
+      switchOutCurve: Curves.easeInQuint,
+      transitionBuilder: (child, animation) => FadeTransition(
+        opacity: animation,
+        child: SlideTransition(
+          position: Tween(
+            begin: Offset(0, 1),
+            end: Offset(0, 0),
+          ).animate(animation),
+          child: child,
+        ),
+      ),
+      child: widgetState ?? SizedBox.shrink(),
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/login_to_continue_button.dart';
 import 'package:diiket/ui/widgets/number_spinner.dart';
@@ -38,7 +39,7 @@ class LargeProductItem extends StatelessWidget {
           if (onTap != null) return onTap?.call();
 
           Utils.homeNav.currentState!.pushNamed(
-            '/home/stall',
+            StallPage.route,
             arguments: {
               'stall_id': product.stall_id,
             },

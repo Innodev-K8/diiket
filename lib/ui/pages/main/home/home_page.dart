@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       child: Navigator(
         key: Utils.homeNav,
         observers: [_heroController],
-        initialRoute: '/home',
+        initialRoute: FeedPage.route,
         onGenerateRoute: (RouteSettings settings) {
           final Map? arguments =
               settings.arguments != null ? settings.arguments as Map : null;
@@ -38,23 +38,23 @@ class _HomePageState extends State<HomePage> {
           Widget page;
 
           switch (settings.name) {
-            case '/home/stall':
+            case StallPage.route:
               page = StallPage(
                 stallId: arguments?['stall_id'] ?? 0,
               );
               break;
-            case '/home/search':
+            case SearchPage.route:
               page = SearchPage(
                 autofocus: arguments?['search_autofocus'] ?? false,
               );
               break;
-            case '/home/products/category':
+            case ProductsByCategoryPage.route:
               page = ProductsByCategoryPage(
                 category: arguments?['category'] ?? '',
                 label: arguments?['label'],
               );
               break;
-            case '/home':
+            case FeedPage.route:
             default:
               page = FeedPage();
           }

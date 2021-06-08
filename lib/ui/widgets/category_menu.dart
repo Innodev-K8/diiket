@@ -1,4 +1,5 @@
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
 import 'package:flutter/material.dart';
 
 import 'category_button.dart';
@@ -14,7 +15,7 @@ class CategoryMenu extends StatelessWidget {
       text: 'Daging',
       onTap: () {
         Utils.homeNav.currentState!.pushNamed(
-          '/home/products/category',
+          ProductsByCategoryPage.route,
           arguments: {
             'category': 'daging',
             'label': 'Daging Segar',
@@ -27,7 +28,7 @@ class CategoryMenu extends StatelessWidget {
       text: 'Ikan',
       onTap: () {
         Utils.homeNav.currentState!.pushNamed(
-          '/home/products/category',
+          ProductsByCategoryPage.route,
           arguments: {
             'category': 'ikan',
             'label': 'Ikan Segar',
@@ -40,7 +41,7 @@ class CategoryMenu extends StatelessWidget {
       text: 'Bumbu',
       onTap: () {
         Utils.homeNav.currentState!.pushNamed(
-          '/home/products/category',
+          ProductsByCategoryPage.route,
           arguments: {
             'category': 'bumbu',
             'label': 'Bumbu Dapur',
@@ -53,7 +54,7 @@ class CategoryMenu extends StatelessWidget {
       text: 'Beras',
       onTap: () {
         Utils.homeNav.currentState!.pushNamed(
-          '/home/products/category',
+          ProductsByCategoryPage.route,
           arguments: {
             'category': 'beras',
             'label': 'Beras',
@@ -66,7 +67,7 @@ class CategoryMenu extends StatelessWidget {
       text: 'Roti',
       onTap: () {
         Utils.homeNav.currentState!.pushNamed(
-          '/home/products/category',
+          ProductsByCategoryPage.route,
           arguments: {
             'category': 'roti',
             'label': 'Roti',
@@ -79,7 +80,7 @@ class CategoryMenu extends StatelessWidget {
       text: 'Sayur',
       onTap: () {
         Utils.homeNav.currentState!.pushNamed(
-          '/home/products/category',
+          ProductsByCategoryPage.route,
           arguments: {
             'category': 'sayur',
             'label': 'Sayuran Segar',
@@ -92,7 +93,7 @@ class CategoryMenu extends StatelessWidget {
       text: 'Buah',
       onTap: () {
         Utils.homeNav.currentState!.pushNamed(
-          '/home/products/category',
+          ProductsByCategoryPage.route,
           arguments: {
             'category': 'buah',
             'label': 'Buah-buahan',

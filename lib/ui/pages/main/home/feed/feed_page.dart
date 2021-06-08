@@ -2,6 +2,7 @@ import 'package:diiket/data/models/product_feed.dart';
 import 'package:diiket/data/providers/products/product_feeds_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/pages/main/home/search/search_page.dart';
 import 'package:diiket/ui/widgets/category_menu.dart';
 import 'package:diiket/ui/widgets/products/product_list_section.dart';
 import 'package:diiket/ui/widgets/search_field.dart';
@@ -12,6 +13,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'feed_header.dart';
 
 class FeedPage extends StatelessWidget {
+  static const String route = '/home';
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,7 +31,7 @@ class FeedPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
               child: GestureDetector(
                 onTap: () => Utils.homeNav.currentState!.pushNamed(
-                  '/home/search',
+                  SearchPage.route,
                   arguments: {
                     'search_autofocus': true,
                   },

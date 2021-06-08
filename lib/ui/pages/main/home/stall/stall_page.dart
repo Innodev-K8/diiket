@@ -16,6 +16,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class StallPage extends HookWidget {
+  static const String route = '/home/stall';
+
   final int stallId;
 
   const StallPage({

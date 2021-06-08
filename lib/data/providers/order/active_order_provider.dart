@@ -1,16 +1,30 @@
+import 'dart:convert';
+
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/fare.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/network/order_service.dart';
+import 'package:diiket/data/providers/pusher_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pusher_client/pusher_client.dart';
 
 final activeOrderProvider = StateNotifierProvider<ActiveOrderState, Order?>(
   (ref) {
     // orderServiceProvider already watching market and auth state
-    return ActiveOrderState(ref.watch(orderServiceProvider).state, ref.read);
+    final state = ActiveOrderState(
+      ref.watch(orderServiceProvider).state,
+      ref.read(pusherProvider),
+      ref.read,
+    );
+
+    ref.onDispose(() {
+      state.dispose();
+    });
+
+    return state;
   },
 );
 
@@ -23,12 +37,67 @@ final activeOrderErrorProvider = StateProvider<CustomException?>((ref) {
 // PRODUK ADA DALAM PESANAN
 
 class ActiveOrderState extends StateNotifier<Order?> {
+  PusherClient _pusher;
   OrderService _orderService;
   Reader _read;
 
-  ActiveOrderState(this._orderService, this._read) : super(null) {
+  Channel? _channel;
+
+  ActiveOrderState(this._orderService, this._pusher, this._read) : super(null) {
+    initPusher();
     retrieveActiveOrder();
   }
+
+  //#region EVENT-LISTENERS
+  Future<void> initPusher() async {
+    try {
+      await _pusher.connect();
+      await updateSubscription();
+    } catch (_) {}
+  }
+
+  Future<void> updateSubscription() async {
+    if (state?.id == null) return;
+
+    try {
+      await _unsubscribe();
+
+      _channel = _pusher.subscribe('orders.${state!.id}');
+
+      _channel!.bind('order-status-updated', (PusherEvent? event) {
+        dynamic response = jsonDecode(event?.data ?? '');
+
+        if (response['order'] == null) return;
+
+        Order order = Order.fromJson(response['order']);
+
+        if (order.status == 'completed' || order.status == 'canceled') {
+          _unsubscribe();
+          state = null;
+        } else {
+          state = order;
+        }
+      });
+    } catch (_) {}
+  }
+
+  Future<void> _unsubscribe() async {
+    if (state?.id != null) {
+      await _channel?.unbind('order-status-updated');
+      await _pusher.unsubscribe('orders.${state?.id}');
+    }
+  }
+
+  @override
+  Future<void> dispose() async {
+    try {
+      await _unsubscribe();
+      await _pusher.disconnect();
+    } catch (_) {} finally {
+      super.dispose();
+    }
+  }
+  //#endregion
 
   Future<void> retrieveActiveOrder() async {
     try {
@@ -40,6 +109,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   Future<void> cancelActiveOrder() async {
     try {
+      await _unsubscribe();
       await _orderService.cancelActiveOrder();
       await retrieveActiveOrder();
     } on CustomException catch (error) {
@@ -50,8 +120,12 @@ class ActiveOrderState extends StateNotifier<Order?> {
   Future<void> confirmActiveOrder(LatLng location, Fare fare,
       [String? address]) async {
     try {
-      if (mounted)
+      if (mounted) {
         state = await _orderService.confirmActiveOrder(location, fare, address);
+
+        // re-subscribe
+        updateSubscription();
+      }
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
       throw error;

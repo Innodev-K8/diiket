@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
@@ -41,42 +42,22 @@ class CustomBottomNavigationBar extends HookWidget {
             final int itemCount =
                 context.read(activeOrderProvider.notifier).orderCount;
 
-            return Stack(
-              children: [
-                BottomBarButton(
-                  isSelected: pageControllerState == 1,
-                  image: 'assets/images/bottom_bar/cart.png',
-                  title: 'Keranjang',
-                  onTap: () async {
-                    pageController.setPage(1);
-                  },
+            return BottomBarButton(
+              showBadge: itemCount >= 1,
+              badgeContent: Text(
+                '$itemCount',
+                style: kTextTheme.caption!.copyWith(
+                  color: ColorPallete.backgroundColor,
+                  fontSize: 8.0,
                 ),
-                if (itemCount > 0)
-                  Positioned(
-                    top: 8,
-                    right: 24,
-                    child: Entry.scale(
-                      child: Container(
-                        width: 14,
-                        height: 14,
-                        decoration: BoxDecoration(
-                          color: ColorPallete.secondaryColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '$itemCount',
-                            textAlign: TextAlign.center,
-                            style: kTextTheme.caption!.copyWith(
-                              color: ColorPallete.backgroundColor,
-                              fontSize: 8.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-              ],
+              ),
+              badgeAlignment: Alignment.topLeft,
+              isSelected: pageControllerState == 1,
+              image: 'assets/images/bottom_bar/cart.png',
+              title: 'Keranjang',
+              onTap: () async {
+                pageController.setPage(1);
+              },
             );
           }),
           BottomBarButton(
@@ -107,12 +88,19 @@ class BottomBarButton extends StatelessWidget {
   final String image;
   final String title;
 
+  final bool showBadge;
+  final Widget? badgeContent;
+  final AlignmentGeometry? badgeAlignment;
+
   const BottomBarButton({
     Key? key,
     required this.isSelected,
     required this.onTap,
     required this.image,
     required this.title,
+    this.showBadge = false,
+    this.badgeContent,
+    this.badgeAlignment,
   }) : super(key: key);
 
   @override
@@ -124,13 +112,19 @@ class BottomBarButton extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              image,
-              color: isSelected
-                  ? ColorPallete.primaryColor
-                  : ColorPallete.lightGray,
-              width: 24,
-              height: 24,
+            Badge(
+              showBadge: showBadge,
+              badgeContent: badgeContent,
+              elevation: 0,
+              badgeColor: ColorPallete.secondaryColor,
+              child: Image.asset(
+                image,
+                color: isSelected
+                    ? ColorPallete.primaryColor
+                    : ColorPallete.lightGray,
+                width: 24,
+                height: 24,
+              ),
             ),
             Text(
               title,

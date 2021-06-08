@@ -255,11 +255,20 @@ class StallPage extends HookWidget {
           Positioned(
             left: 24.0,
             bottom: 8,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                stall.seller?.profile_picture_url ?? '-',
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: ColorPallete.blueishGray,
+                  width: 3.0,
+                ),
               ),
-              radius: _avatarSize / 2,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  stall.seller?.profile_picture_url ?? '-',
+                ),
+                radius: _avatarSize / 2,
+              ),
             ),
           )
         ],

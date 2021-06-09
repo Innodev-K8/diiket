@@ -15,7 +15,6 @@ final activeOrderProvider = StateNotifierProvider<ActiveOrderState, Order?>(
   (ref) {
     // orderServiceProvider already watching market and auth state
     final state = ActiveOrderState(
-      ref.watch(orderServiceProvider).state,
       ref.read(pusherProvider),
       ref.read,
     );
@@ -38,12 +37,12 @@ final activeOrderErrorProvider = StateProvider<CustomException?>((ref) {
 
 class ActiveOrderState extends StateNotifier<Order?> {
   PusherClient _pusher;
-  OrderService _orderService;
+  // OrderService _read(orderServiceProvider).state;
   Reader _read;
 
   Channel? _channel;
 
-  ActiveOrderState(this._orderService, this._pusher, this._read) : super(null) {
+  ActiveOrderState(this._pusher, this._read) : super(null) {
     initPusher();
     retrieveActiveOrder();
   }
@@ -99,7 +98,8 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   Future<void> retrieveActiveOrder() async {
     try {
-      if (mounted) state = await _orderService.getActiveOrder();
+      if (mounted)
+        state = await _read(orderServiceProvider).state.getActiveOrder();
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
     }
@@ -108,18 +108,27 @@ class ActiveOrderState extends StateNotifier<Order?> {
   Future<void> cancelActiveOrder() async {
     try {
       await _unsubscribe();
-      await _orderService.cancelActiveOrder();
+      await _read(orderServiceProvider).state.cancelActiveOrder();
       await retrieveActiveOrder();
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
     }
   }
 
-  Future<void> confirmActiveOrder(LatLng location, Fare fare,
-      [String? address]) async {
+  Future<void> confirmActiveOrder(
+    LatLng location,
+    Fare fare,
+    String? address,
+    String? notificationToken,
+  ) async {
     try {
       if (mounted) {
-        state = await _orderService.confirmActiveOrder(location, fare, address);
+        state = await _read(orderServiceProvider).state.confirmActiveOrder(
+              location,
+              fare,
+              address,
+              notificationToken,
+            );
 
         // re-subscribe
         updateSubscription();
@@ -133,8 +142,9 @@ class ActiveOrderState extends StateNotifier<Order?> {
   Future<void> placeOrderItem(Product product, int quantity,
       [String? notes]) async {
     try {
-      OrderItem orderItem =
-          await _orderService.placeOrderItem(product, quantity, notes);
+      OrderItem orderItem = await _read(orderServiceProvider)
+          .state
+          .placeOrderItem(product, quantity, notes);
 
       Order? activeOrder = state;
 
@@ -182,11 +192,11 @@ class ActiveOrderState extends StateNotifier<Order?> {
         );
       }
 
-      await _orderService.updateOrderItem(
-        orderItem,
-        quantity: quantity,
-        notes: notes,
-      );
+      await _read(orderServiceProvider).state.updateOrderItem(
+            orderItem,
+            quantity: quantity,
+            notes: notes,
+          );
 
       if (activeOrder == null) {
         await retrieveActiveOrder();
@@ -212,7 +222,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
         }
       }
 
-      await _orderService.deleteOrderItem(orderItem);
+      await _read(orderServiceProvider).state.deleteOrderItem(orderItem);
 
       if (activeOrder == null) {
         await retrieveActiveOrder();

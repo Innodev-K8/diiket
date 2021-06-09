@@ -4,8 +4,10 @@ import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginToContinueButton extends StatelessWidget {
+  final String text;
   const LoginToContinueButton({
     Key? key,
+    this.text = 'Masuk untuk order.',
   }) : super(key: key);
 
   @override
@@ -17,7 +19,7 @@ class LoginToContinueButton extends StatelessWidget {
           Utils.appNav.currentState?.pushNamed(RegisterPage.route);
         },
         child: Text(
-          'Masuk untuk order.',
+          text,
           style: kTextTheme.button!.copyWith(
             fontSize: 10.0,
           ),

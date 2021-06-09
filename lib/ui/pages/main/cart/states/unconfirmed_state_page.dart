@@ -12,6 +12,7 @@ import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_item_list.dart';
 import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
 import 'package:diiket/ui/widgets/orders/select_order_delivery_location_button.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -75,6 +76,8 @@ class UnconfirmedStatePage extends HookWidget {
                       onPressed: () async {
                         Fare? fare = deliveryDetail.fare?.data?.value;
                         LatLng? position = deliveryDetail.position;
+                        String? notificationToken =
+                            await FirebaseMessaging.instance.getToken();
 
                         if (fare == null || position == null) return;
 
@@ -89,6 +92,7 @@ class UnconfirmedStatePage extends HookWidget {
                                 position,
                                 fare,
                                 deliveryDetail.geocodedPosition,
+                                notificationToken,
                               );
 
                           Utils.appNav.currentState?.push(

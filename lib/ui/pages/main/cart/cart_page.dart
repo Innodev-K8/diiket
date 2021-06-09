@@ -4,6 +4,8 @@ import 'package:diiket/ui/pages/main/cart/states/confirmed_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/delivering_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/purcashing_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/unconfirmed_state_page.dart';
+import 'package:diiket/ui/widgets/auth_wrapper.dart';
+import 'package:diiket/ui/widgets/login_to_continue_button.dart';
 import 'package:diiket/ui/widgets/orders/order_state_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -20,13 +22,20 @@ class CartPage extends HookWidget {
     return SafeArea(
       child: Container(
         color: ColorPallete.backgroundColor,
-        child: OrderStateWrapper(
-          unconfirmed: (order) => UnconfirmedStatePage(order: order),
-          waiting: (order) => ConfirmedStatePage(order: order),
-          purchasing: (order) => PurcashingStatePage(order: order),
-          delivering: (order) => DeliveringStatePage(order: order),
-          empty: () => Center(
-            child: Text('Keranjang Kosong'),
+        child: AuthWrapper(
+          auth: (_) => OrderStateWrapper(
+            unconfirmed: (order) => UnconfirmedStatePage(order: order),
+            waiting: (order) => ConfirmedStatePage(order: order),
+            purchasing: (order) => PurcashingStatePage(order: order),
+            delivering: (order) => DeliveringStatePage(order: order),
+            empty: () => Center(
+              child: Text('Keranjang Kosong'),
+            ),
+          ),
+          guest: Center(
+            child: LoginToContinueButton(
+              text: 'Masuk untuk melanjutkan',
+            ),
           ),
         ),
       ),

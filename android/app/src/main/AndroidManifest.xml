@@ -50,5 +50,10 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
           android:value="AIzaSyAtRv3aJE1s6JWKPNxEY5Xsc8I1M1Baayw"/>
 
+        <!-- Firebase Cloud Messaging -->
+        <meta-data
+          android:name="com.google.firebase.messaging.default_notification_channel_id"
+          android:value="high_importance_channel" />
+
     </application>
 </manifest>

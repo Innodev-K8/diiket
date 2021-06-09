@@ -10,7 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductsByCategoryPage extends HookWidget {
   static const String route = '/home/products/category';
-  
+
   final String category;
   final String? label;
 

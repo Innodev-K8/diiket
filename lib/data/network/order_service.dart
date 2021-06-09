@@ -51,8 +51,12 @@ class OrderService {
     }
   }
 
-  Future<Order?> confirmActiveOrder(LatLng location, Fare fare,
-      [String? address]) async {
+  Future<Order?> confirmActiveOrder(
+    LatLng location,
+    Fare fare,
+    String? address,
+    String? notificationToken,
+  ) async {
     try {
       Map<String, dynamic> data = {
         'location_lat': location.latitude.toString(),
@@ -60,6 +64,8 @@ class OrderService {
         'delivery_fee': fare.delivery_fee,
         'pickup_fee': fare.pickup_fee,
         'service_fee': fare.service_fee,
+        if (notificationToken != null)
+          'user_notification_token': notificationToken,
         if (address != null) 'address': address,
       };
 
@@ -71,7 +77,13 @@ class OrderService {
       return Order.fromJson(response.data['data']);
     } on DioError catch (error) {
       if (error.response?.statusCode == 422) {
-        List<dynamic> results = error.response!.data['data'];
+        List<dynamic>? results = error.response?.data['data'];
+
+        if (results == null) {
+          throw CustomException(
+            message: error.response?.data['message'] ?? error.message,
+          );
+        }
 
         List<OrderItem> outOfStockItems =
             results.map((json) => OrderItem.fromJson(json)).toList();

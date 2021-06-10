@@ -7,10 +7,8 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/login_to_continue_button.dart';
-import 'package:diiket/ui/widgets/number_spinner.dart';
+import 'package:diiket/ui/widgets/products/add_product_to_cart_action.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
-import 'package:diiket/ui/widgets/simple_button.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -93,14 +91,24 @@ class LargeProductItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
+                          // Text(
+                          //   '${product.stall?.name}, ${product.stall?.seller?.name}',
+                          //   style: kTextTheme.overline!.copyWith(
+                          //     // fontWeight: FontWeight.bold,
+                          //     color: ColorPallete.darkGray,
+                          //   ),
+                          //   maxLines: 1,
+                          //   overflow: TextOverflow.ellipsis,
+                          // ),
+                          // Spacer(flex: 1),
                           Text(
-                            '${product.stall?.name}, ${product.stall?.seller?.name}',
+                            product.description ?? '-',
                             style: kTextTheme.overline!.copyWith(
                               // fontWeight: FontWeight.bold,
                               color: ColorPallete.darkGray,
                             ),
-                            maxLines: 2,
                             overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                           ),
                           Spacer(flex: 1),
                           ProductPiceText(product: product),
@@ -112,7 +120,8 @@ class LargeProductItem extends StatelessWidget {
                             )
                           else
                             AuthWrapper(
-                              auth: (_) => _buildAction(),
+                              auth: (_) =>
+                                  AddProductToCartAction(product: product),
                               guest: Align(
                                 alignment: Alignment.bottomRight,
                                 child: LoginToContinueButton(),
@@ -162,108 +171,6 @@ class LargeProductItem extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAction() {
-    return Consumer(
-      builder: (context, watch, child) {
-        watch(activeOrderProvider);
-
-        final bool isProductInOrder = context
-            .read(activeOrderProvider.notifier)
-            .isProductInOrder(product);
-
-        if (isProductInOrder) {
-          return _buildNumberSpinner(context);
-        } else {
-          return _buildAddToCart(context);
-        }
-      },
-    );
-  }
-
-  Widget _buildNumberSpinner(BuildContext context) {
-    final OrderItem orderItem = context
-        .read(activeOrderProvider.notifier)
-        .getOrderItemByProduct(product)!;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: SimpleButton(
-            onTap: () {
-              context
-                  .read(activeOrderProvider.notifier)
-                  .deleteOrderItem(orderItem);
-            },
-            child: Text(
-              'Batal',
-              style: kTextTheme.button!.copyWith(
-                fontSize: 11.0,
-                color: ColorPallete.darkGray,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 4.0),
-        NumberSpinner(
-          initialValue: orderItem.quantity ?? 1,
-          onChanged: (value) {
-            if (value <= 0) {
-              context
-                  .read(activeOrderProvider.notifier)
-                  .deleteOrderItem(orderItem);
-            } else {
-              // debounce tiap 1 detik biar server nggak overload
-              EasyDebounce.debounce(
-                '${product.id}-order-item-debouncer',
-                Duration(seconds: 1),
-                () {
-                  context.read(activeOrderProvider.notifier).updateOrderItem(
-                        orderItem,
-                        quantity: value,
-                      );
-                },
-              );
-            }
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAddToCart(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomRight,
-      child: SizedBox(
-        height: 28,
-        child: ElevatedButton.icon(
-          onPressed: () {
-            context
-                .read(activeOrderProvider.notifier)
-                .placeOrderItem(product, 1);
-          },
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-            elevation: 0,
-            primary: product.stall?.is_open == true
-                ? ColorPallete.primaryColor
-                : ColorPallete.lightGray,
-          ),
-          icon: Icon(
-            Icons.add_rounded,
-            size: 14.0,
-          ),
-          label: Text(
-            'Keranjang',
-            style: kTextTheme.button!.copyWith(
-              fontSize: 10.0,
-            ),
-          ),
         ),
       ),
     );

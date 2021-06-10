@@ -39,20 +39,12 @@ class StallPage extends HookWidget {
         data: (stall) => Column(
           children: [
             Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  //TODO: remove in production
-                  return await context
-                      .read(stallDetailProvider(stallId).notifier)
-                      .reLoadStall();
-                },
-                child: CustomScrollView(
-                  physics: BouncingScrollPhysics(),
-                  slivers: [
-                    _buildAppBar(stall),
-                    _buildContent(stall, market),
-                  ],
-                ),
+              child: CustomScrollView(
+                physics: BouncingScrollPhysics(),
+                slivers: [
+                  _buildAppBar(stall),
+                  _buildContent(stall, market),
+                ],
               ),
             ),
             OrderPreviewPanel(),

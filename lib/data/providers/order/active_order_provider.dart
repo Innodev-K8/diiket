@@ -5,7 +5,9 @@ import 'package:diiket/data/models/fare.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
+import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/order_service.dart';
+import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/pusher_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,7 +15,6 @@ import 'package:pusher_client/pusher_client.dart';
 
 final activeOrderProvider = StateNotifierProvider<ActiveOrderState, Order?>(
   (ref) {
-    // orderServiceProvider already watching market and auth state
     final state = ActiveOrderState(
       ref.read(pusherProvider),
       ref.read,
@@ -44,10 +45,29 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   ActiveOrderState(this._pusher, this._read) : super(null) {
     retrieveActiveOrder().then((value) => initPusher());
+
+    _read(authProvider.notifier).addListener(
+      (User? user) {
+        if (user == null) {
+          state = null;
+
+          return;
+        }
+
+        print('refetch active order');
+        retrieveActiveOrder().then((value) => initPusher());
+      },
+      fireImmediately: false,
+    );
   }
 
   //#region EVENT-LISTENERS
   Future<void> initPusher() async {
+    // connect kalau order statusnya udah diproses aja
+    if (state == null ||
+        state?.status == null ||
+        state?.status == 'unconfirmed') return;
+
     try {
       await _pusher.connect();
       await updateSubscription();
@@ -58,8 +78,6 @@ class ActiveOrderState extends StateNotifier<Order?> {
     if (state?.id == null) return;
 
     try {
-      await _unsubscribe();
-
       print('Subscribing to active order channel');
       _channel = _pusher.subscribe('orders.${state!.id}');
 
@@ -117,24 +135,20 @@ class ActiveOrderState extends StateNotifier<Order?> {
   }
 
   Future<void> confirmActiveOrder(
-    LatLng location,
-    Fare fare,
-    String? address,
-    String? notificationToken,
-    // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
-      {Function? onComplete}
-  ) async {
+      LatLng location, Fare fare, String? address, String? notificationToken,
+      // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
+      {Function? onComplete}) async {
     try {
       if (mounted) {
         Order? result =
             await _read(orderServiceProvider).state.confirmActiveOrder(
-              location,
-              fare,
-              address,
-              notificationToken,
-            );
+                  location,
+                  fare,
+                  address,
+                  notificationToken,
+                );
 
-            if (result == null) return;
+        if (result == null) return;
 
         await onComplete?.call();
 

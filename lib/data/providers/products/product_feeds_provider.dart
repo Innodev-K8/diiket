@@ -32,8 +32,6 @@ class ProductFeedsState extends StateNotifier<List<ProductFeed>> {
     try {
       if (state.isEmpty) state = defaultFeed;
 
-      await _read(remoteConfigProvider).fetchAndActivate();
-
       final feedJsonString =
           _read(remoteConfigProvider).getString('product_feeds');
 

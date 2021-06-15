@@ -16,6 +16,8 @@ final remoteConfigProvider = Provider<RemoteConfig>((ref) {
         '[{"label":"Produk","query":"all"},{"label":"Terlaris","query":"popular"}]',
   });
 
+  instance.fetchAndActivate();
+
   return instance;
 });
 

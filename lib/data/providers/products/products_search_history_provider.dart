@@ -22,6 +22,7 @@ class ProductSearchHistoryState extends StateNotifier<List<String>> {
     state = _box!.values.toList();
 
     _box!.listenable().addListener(() {
+      // TODO: try to reverse this
       if (mounted) state = _box!.values.toList();
     });
   }

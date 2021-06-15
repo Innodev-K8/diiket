@@ -5,6 +5,7 @@ import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/auth_service.dart';
 import 'package:diiket/data/providers/auth/token_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:diiket/data/repositories/firebase_auth_repository.dart';
@@ -48,6 +49,8 @@ class AuthState extends StateNotifier<User?> {
       firebaseAuth.PhoneAuthCredential credential) async {
     try {
       await _firebaseAuthRepository.signInWithPhoneCredential(credential);
+
+      _read(analyticsProvider).logLogin(loginMethod: 'phone_number');
     } on CustomException catch (error) {
       _read(authExceptionProvider).state = error;
     }
@@ -55,6 +58,7 @@ class AuthState extends StateNotifier<User?> {
 
   Future<void> signOut() async {
     await _firebaseAuthRepository.signOut();
+
   }
 
   Future<void> updateUserName(String name) async {
@@ -87,8 +91,12 @@ class AuthState extends StateNotifier<User?> {
 
       if (response.token != null && response.user != null) {
         await _read(tokenProvider.notifier).setToken(response.token!);
-        await _read(crashlyticsProvider)
+
+        // set analytics identifier
+        _read(crashlyticsProvider)
             .setUserIdentifier(response.user!.firebase_uid ?? user.uid);
+        _read(analyticsProvider)
+            .setUserId(response.user!.firebase_uid ?? user.uid);
 
         state = response.user;
       } else {

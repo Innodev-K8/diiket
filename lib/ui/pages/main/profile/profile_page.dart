@@ -121,9 +121,12 @@ class ProfilePage extends HookWidget {
                 backgroundImage: NetworkImage(p.photo_url ?? ''),
               ),
               SizedBox(width: 4),
-              Text(
-                p.name ?? '-',
-                style: kTextTheme.headline6,
+              Expanded(
+                child: Text(
+                  p.name ?? '-',
+                  style: kTextTheme.headline6,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/common/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,7 +33,11 @@ class CustomBottomNavigationBar extends HookWidget {
             image: 'assets/images/bottom_bar/home.png',
             title: 'Pasar',
             onTap: () async {
-              pageController.setPage(0);
+              if (pageControllerState == 0) {
+                Utils.resetHomeNavigation();
+              } else {
+                pageController.setPage(0);
+              }
             },
           ),
           Consumer(builder: (context, watch, child) {

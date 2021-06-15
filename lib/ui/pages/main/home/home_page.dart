@@ -1,7 +1,10 @@
+import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'feed/feed_page.dart';
 import 'search/search_page.dart';
@@ -12,7 +15,11 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   late HeroController _heroController;
 
   @override
@@ -23,13 +30,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
+    print('rerender home');
     return WillPopScope(
       onWillPop: () async {
         return !await Utils.homeNav.currentState!.maybePop();
       },
       child: Navigator(
         key: Utils.homeNav,
-        observers: [_heroController],
+        observers: [
+          _heroController,
+          FirebaseAnalyticsObserver(
+            analytics: context.read(analyticsProvider),
+          ),
+        ],
         initialRoute: FeedPage.route,
         onGenerateRoute: (RouteSettings settings) {
           final Map? arguments =

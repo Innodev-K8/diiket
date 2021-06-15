@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -27,4 +28,8 @@ final crashlyticsProvider = Provider<FirebaseCrashlytics>((ref) {
 
 final messagingProvider = Provider<FirebaseMessaging>((ref) {
   return FirebaseMessaging.instance;
+});
+
+final analyticsProvider = Provider<FirebaseAnalytics>((ref) {
+  return FirebaseAnalytics();
 });

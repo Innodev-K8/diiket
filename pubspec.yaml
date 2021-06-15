@@ -34,6 +34,7 @@ dependencies:
   dropdown_search: ^0.6.1
   easy_debounce: ^2.0.0
   entry: ^0.0.4
+  firebase_analytics: ^8.1.2
   firebase_auth: ^1.2.0
   firebase_core: ^1.2.0
   firebase_crashlytics: ^2.0.5

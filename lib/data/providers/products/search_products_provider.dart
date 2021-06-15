@@ -1,6 +1,7 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/paginated/paginated_products.dart';
 import 'package:diiket/data/network/product_service.dart';
+import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/products/products_search_history_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -37,6 +38,8 @@ class SearchProductsState extends StateNotifier<AsyncValue<PaginatedProducts>> {
 
       PaginatedProducts products =
           await _productService.searchProducs(1, query);
+
+      _read(analyticsProvider).logSearch(searchTerm: query!);
 
       if (mounted) state = AsyncValue.data(products);
     } on CustomException catch (error) {

@@ -7,11 +7,13 @@ import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/notification/background_fcm.dart';
 import 'package:diiket/data/notification/channels.dart';
 import 'package:diiket/data/notification/service.dart';
+import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:diiket/ui/pages/main/main_page.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -116,6 +118,9 @@ class _MyAppState extends State<MyApp> {
         textTheme: kTextTheme,
       ),
       initialRoute: MainPage.route,
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: context.read(analyticsProvider)),
+      ],
       routes: {
         MainPage.route: (_) => MainPage(),
         RegisterPage.route: (_) => RegisterPage(),

@@ -43,10 +43,20 @@ class MainPage extends HookWidget {
           },
           child: WillPopScope(
             onWillPop: () async {
-              if (Utils.homeNav.currentState != null &&
-                  Utils.homeNav.currentState!.canPop()) {
+              if (context.read(mainPageController) == 0 &&
+                  Utils.homeNav.currentState?.canPop() == true) {
+                print('on home');
                 return true;
               }
+
+              if (context.read(mainPageController) != 0) {
+                print('should go home');
+
+                context.read(mainPageController.notifier).setPage(0);
+
+                return false;
+              }
+              print('want quit');
 
               return _doubleBackCheck(currentBackPressTime, context);
             },

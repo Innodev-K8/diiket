@@ -10,6 +10,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SelectOrderDeliveryLocationButton extends HookWidget {
+  final Function? onLoading;
+  final Function? onDone;
+
+  SelectOrderDeliveryLocationButton({
+    this.onLoading,
+    this.onDone,
+  });
+
   @override
   Widget build(BuildContext context) {
     final deliveryDetail = useProvider(deliveryDetailProvider);
@@ -33,24 +41,30 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
           elevation: 0,
         ),
         onPressed: () async {
-          LatLng? userPosition = await LocationService.getUserPosition();
+          onLoading?.call();
 
-          if (userPosition != null) {
-            final PlacePickerResult? result = await Utils.pickLocation(
-              context.read(currentMarketProvider).state,
-              initialLocation: deliveryDetail.position ?? userPosition,
-            );
+          try {
+            LatLng? userPosition = await LocationService.getUserPosition();
 
-            if (result != null) {
-              context
-                  .read(deliveryDetailProvider.notifier)
-                  .setDeliveryDirections(result.target, result.directions);
+            if (userPosition != null) {
+              final PlacePickerResult? result = await Utils.pickLocation(
+                context.read(currentMarketProvider).state,
+                initialLocation: deliveryDetail.position ?? userPosition,
+              );
 
-              context.read(deliveryDetailProvider.notifier).calculateFare();
+              if (result != null) {
+                context
+                    .read(deliveryDetailProvider.notifier)
+                    .setDeliveryDirections(result.target, result.directions);
+
+                await context
+                    .read(deliveryDetailProvider.notifier)
+                    .calculateFare();
+              }
             }
+          } finally {
+            onDone?.call();
           }
-          // Handle the result in your way
-          // print(result);
         },
       ),
     );

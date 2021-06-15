@@ -52,7 +52,10 @@ class UnconfirmedStatePage extends HookWidget {
                   ),
                   header: Column(
                     children: [
-                      SelectOrderDeliveryLocationButton(),
+                      SelectOrderDeliveryLocationButton(
+                        onLoading: () => isLoading.value = true,
+                        onDone: () => isLoading.value = false,
+                      ),
                       SizedBox(height: 10),
                       OrderDeliveryAddressDetail(),
                       SizedBox(height: 20.0),
@@ -93,17 +96,17 @@ class UnconfirmedStatePage extends HookWidget {
                                 fare,
                                 deliveryDetail.geocodedPosition,
                                 notificationToken,
+                                onComplete: () async =>
+                                    await Utils.appNav.currentState?.push(
+                                  PageTransition(
+                                    child: CheckoutSuccessPage(),
+                                    type: PageTransitionType.scale,
+                                    alignment: Alignment.bottomCenter,
+                                    curve: Curves.easeInOutQuart,
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                ),
                               );
-
-                          Utils.appNav.currentState?.push(
-                            PageTransition(
-                              child: CheckoutSuccessPage(),
-                              type: PageTransitionType.scale,
-                              alignment: Alignment.bottomCenter,
-                              curve: Curves.easeInOutQuart,
-                              duration: Duration(seconds: 1),
-                            ),
-                          );
                         } on CustomException catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -118,14 +121,18 @@ class UnconfirmedStatePage extends HookWidget {
                     ),
                   ),
                 ),
-              if (isLoading.value)
-                Container(
-                  alignment: Alignment.center,
-                  color: Colors.white.withOpacity(0.7),
-                  child: CircularProgressIndicator(
-                    color: ColorPallete.primaryColor,
-                  ),
-                ),
+              AnimatedSwitcher(
+                duration: Duration(milliseconds: 250),
+                child: isLoading.value
+                    ? Container(
+                        alignment: Alignment.center,
+                        color: Colors.white.withOpacity(0.7),
+                        child: CircularProgressIndicator(
+                          color: ColorPallete.primaryColor,
+                        ),
+                      )
+                    : SizedBox.shrink(),
+              ),
             ],
           ),
         ),

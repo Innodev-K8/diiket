@@ -30,7 +30,7 @@ class CheckoutSuccessPage extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'Pembayaran pesanan dilakukan di tempat (COD)',
+                    'Pesananmu akan kami teruskan ke driver dengan pembayaran dilakukan di tempat (COD)',
                     textAlign: TextAlign.center,
                   ),
                 ],

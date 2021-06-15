@@ -121,15 +121,24 @@ class ActiveOrderState extends StateNotifier<Order?> {
     Fare fare,
     String? address,
     String? notificationToken,
+    // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
+      {Function? onComplete}
   ) async {
     try {
       if (mounted) {
-        state = await _read(orderServiceProvider).state.confirmActiveOrder(
+        Order? result =
+            await _read(orderServiceProvider).state.confirmActiveOrder(
               location,
               fare,
               address,
               notificationToken,
             );
+
+            if (result == null) return;
+
+        await onComplete?.call();
+
+        state = result;
 
         // re-subscribe
         updateSubscription();

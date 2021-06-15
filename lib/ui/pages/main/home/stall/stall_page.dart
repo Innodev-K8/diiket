@@ -152,29 +152,20 @@ class StallPage extends HookWidget {
       duration: Duration(milliseconds: 250),
       switchInCurve: Curves.easeInQuint,
       switchOutCurve: Curves.easeOutQuint,
-      // transitionBuilder: (child, animation) => FadeTransition(
-      //   opacity: animation,
-      //   child: SlideTransition(
-      //     position: Tween(
-      //       begin: Offset(0, 0.5),
-      //       end: Offset(0, 0),
-      //     ).animate(animation),
-      //     child: child,
-      //   ),
-      // ),
       transitionBuilder: (child, animation) => FadeTransition(
         opacity: animation,
         child: child,
       ),
       child: notifier.isFavorite(stall)
           ? SizedBox(
-              key: ValueKey('delete'),
+              key: ValueKey('unfavorite'),
               width: 110,
-              child: ElevatedButton(
-                child: Text('Langanan'),
-                style: ElevatedButton.styleFrom(
-                  primary: ColorPallete.primaryColor,
-                  elevation: 0,
+              child: OutlinedButton(
+                child: Text(
+                  'Langanan',
+                  style: kTextTheme.button!.copyWith(
+                    color: ColorPallete.primaryColor,
+                  ),
                 ),
                 onPressed: () {
                   HapticFeedback.vibrate();
@@ -185,12 +176,13 @@ class StallPage extends HookWidget {
           : SizedBox(
               key: ValueKey('favorite'),
               width: 110,
-              child: OutlinedButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: ColorPallete.primaryColor,
+                  elevation: 0,
+                ),
                 child: Text(
                   'Langanan',
-                  style: kTextTheme.button!.copyWith(
-                    color: ColorPallete.primaryColor,
-                  ),
                 ),
                 onPressed: () {
                   HapticFeedback.vibrate();

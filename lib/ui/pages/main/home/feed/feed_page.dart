@@ -46,39 +46,40 @@ class FeedPage extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
-            child: Consumer(builder: (context, watch, child) {
-              final List<ProductFeed> feeds = watch(productFeedProvider);
-
-              return Column(
+            child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildSectionTitle('Atau butuh sesuatu?'),
                   CategoryMenu(),
                   // MarketSelector(),
                   FavoriteStalls(),
-
-                  ...feeds.map((feed) {
-                    if (feed.label == null || feed.query == null)
-                      return SizedBox();
-
-                    return ProductListSection(
-                      label: feed.label!,
-                      category: feed.query!,
-                    );
-                  }).toList(),
-
-                  // ProductListSection(
-                  //   label: 'Produk',
-                  //   category: ProductFamily.all,
-                  // ),
-                  // ProductListSection(
-                  //   label: 'Terlaris',
-                  //   category: ProductFamily.popular,
-                  // ),
-                  SizedBox(height: 24),
                 ],
-              );
-            }),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 24),
+            sliver: Consumer(
+              builder: (_, watch, child) {
+                final List<ProductFeed> feeds = watch(productFeedProvider);
+          
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final ProductFeed feed = feeds[index];
+
+                      if (feed.label == null || feed.query == null)
+                        return SizedBox();
+
+                      return ProductListSection(
+                        label: feed.label!,
+                        category: feed.query!,
+                      );
+                    },
+                    childCount: feeds.length,
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

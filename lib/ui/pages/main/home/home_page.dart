@@ -1,7 +1,6 @@
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -32,19 +31,13 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     super.build(context);
 
-    print('rerender home');
     return WillPopScope(
       onWillPop: () async {
         return !await Utils.homeNav.currentState!.maybePop();
       },
       child: Navigator(
         key: Utils.homeNav,
-        observers: [
-          _heroController,
-          FirebaseAnalyticsObserver(
-            analytics: context.read(analyticsProvider),
-          ),
-        ],
+        observers: [_heroController],
         initialRoute: FeedPage.route,
         onGenerateRoute: (RouteSettings settings) {
           final Map? arguments =
@@ -73,6 +66,11 @@ class _HomePageState extends State<HomePage>
             default:
               page = FeedPage();
           }
+
+          context.read(analyticsProvider).setCurrentScreen(
+                screenName: settings.name,
+                screenClassOverride: page.toString(),
+              );
 
           return PageTransition(
             type: PageTransitionType.fade,

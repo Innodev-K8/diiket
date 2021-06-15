@@ -47,13 +47,13 @@ class FeedPage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildSectionTitle('Atau butuh sesuatu?'),
-                  CategoryMenu(),
-                  // MarketSelector(),
-                  FavoriteStalls(),
-                ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildSectionTitle('Atau butuh sesuatu?'),
+                CategoryMenu(),
+                // MarketSelector(),
+                FavoriteStalls(),
+              ],
             ),
           ),
           SliverPadding(
@@ -61,7 +61,7 @@ class FeedPage extends StatelessWidget {
             sliver: Consumer(
               builder: (_, watch, child) {
                 final List<ProductFeed> feeds = watch(productFeedProvider);
-          
+
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {

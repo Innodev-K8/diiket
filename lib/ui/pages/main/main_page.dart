@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'cart/cart_page.dart';
 import 'history/history_page.dart';
 import 'home/home_page.dart';
@@ -45,18 +46,14 @@ class MainPage extends HookWidget {
             onWillPop: () async {
               if (context.read(mainPageController) == 0 &&
                   Utils.homeNav.currentState?.canPop() == true) {
-                print('on home');
                 return true;
               }
 
               if (context.read(mainPageController) != 0) {
-                print('should go home');
-
                 context.read(mainPageController.notifier).setPage(0);
 
                 return false;
               }
-              print('want quit');
 
               return _doubleBackCheck(currentBackPressTime, context);
             },

@@ -26,6 +26,7 @@ class OrderItemList extends StatelessWidget {
       footer: footer,
       readonly: readonly,
       padding: padding,
+      entryEnabled: false,
       products: (order.order_items ?? []).map((item) => item.product!).toList(),
       onItemTap: (Product product) async {
         // await context.read(mainPageController.notifier).setPage(0);

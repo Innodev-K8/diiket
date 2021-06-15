@@ -56,8 +56,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
           return;
         }
 
-        print('refetch active order');
-        retrieveActiveOrder().then((value) => initPusher());
+        retrieveActiveOrder();
       },
       fireImmediately: false,
     );
@@ -80,7 +79,9 @@ class ActiveOrderState extends StateNotifier<Order?> {
     if (state?.id == null) return;
 
     try {
-      print('Subscribing to active order channel');
+      await _unsubscribe();
+
+      print('Subscribing to active order channel: orders.${state!.id}');
       _channel = _pusher.subscribe('orders.${state!.id}');
 
       _channel!.bind('order-status-updated', (PusherEvent? event) {
@@ -119,7 +120,16 @@ class ActiveOrderState extends StateNotifier<Order?> {
   Future<void> retrieveActiveOrder() async {
     try {
       if (mounted) {
-        state = await _read(orderServiceProvider).state.getActiveOrder();
+        Order? oldOrder = state;
+
+        Order? newOrder =
+            await _read(orderServiceProvider).state.getActiveOrder();
+
+        if (newOrder?.id != oldOrder?.id) {
+          await _unsubscribe(oldOrder?.id);
+        }
+
+        state = newOrder;
       }
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
@@ -159,7 +169,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
         state = result;
 
         // re-subscribe
-        updateSubscription();
+        initPusher();
 
         _read(analyticsProvider).logEcommercePurchase(
           transactionId: result.id.toString(),
@@ -169,7 +179,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
           origin: _read(currentMarketProvider).state.name,
           shipping: fare.delivery_fee?.toDouble(),
           tax: fare.service_fee?.toDouble(),
-          value: fare.total_fee?.toDouble(),
+          value: (fare.total_fee ?? 0 + totalProductPrice).toDouble(),
         );
       }
     } on CustomException catch (error) {

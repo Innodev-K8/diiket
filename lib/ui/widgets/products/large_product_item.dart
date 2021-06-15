@@ -67,6 +67,10 @@ class LargeProductItem extends StatelessWidget {
                               'https://diiket.rejoin.id/images/placeholders/product.jpg',
                           fit: BoxFit.fitHeight,
                           height: double.infinity,
+                          errorWidget: (context, url, error) => Image.network(
+                            'https://diiket.rejoin.id/images/placeholders/product.jpg',
+                            fit: BoxFit.cover,
+                          ),
                           placeholder: (context, url) => Center(
                             child: SizedBox(
                               width: 48,
@@ -89,7 +93,7 @@ class LargeProductItem extends StatelessWidget {
                             product.name ?? '-',
                             style: kTextTheme.headline6,
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                            maxLines: 1,
                           ),
                           // Text(
                           //   '${product.stall?.name}, ${product.stall?.seller?.name}',

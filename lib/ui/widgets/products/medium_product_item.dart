@@ -56,6 +56,10 @@ class MediumProductItem extends StatelessWidget {
                             'https://diiket.rejoin.id/images/placeholders/product.jpg',
                         width: double.infinity,
                         fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => Image.network(
+                          'https://diiket.rejoin.id/images/placeholders/product.jpg',
+                          fit: BoxFit.cover,
+                        ),
                         placeholder: (context, url) => Center(
                           child: SizedBox(
                             width: 48,

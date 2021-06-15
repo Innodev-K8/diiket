@@ -43,8 +43,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
   Channel? _channel;
 
   ActiveOrderState(this._pusher, this._read) : super(null) {
-    initPusher();
-    retrieveActiveOrder();
+    retrieveActiveOrder().then((value) => initPusher());
   }
 
   //#region EVENT-LISTENERS
@@ -61,6 +60,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
     try {
       await _unsubscribe();
 
+      print('Subscribing to active order channel');
       _channel = _pusher.subscribe('orders.${state!.id}');
 
       _channel!.bind('order-status-updated', (PusherEvent? event) {
@@ -98,8 +98,9 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   Future<void> retrieveActiveOrder() async {
     try {
-      if (mounted)
+      if (mounted) {
         state = await _read(orderServiceProvider).state.getActiveOrder();
+      }
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
     }

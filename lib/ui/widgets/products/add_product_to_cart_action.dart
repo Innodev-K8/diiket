@@ -71,6 +71,7 @@ class AddProductToCartAction extends HookWidget {
         ),
         SizedBox(width: 4.0),
         NumberSpinner(
+          key: ValueKey(orderItem.id),
           initialValue: orderItem.quantity ?? 1,
           onChanged: (value) {
             if (value <= 0) {

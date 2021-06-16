@@ -48,24 +48,28 @@ class _SearchPageState extends State<SearchPage> {
             _buildAppBar(),
             if (!_showResult)
               Expanded(
-                child: Entry.opacity(
-                  delay: Duration(milliseconds: 500),
-                  child: SearchHistory(
-                    onSelect: (text) {
-                      FocusScope.of(context).unfocus();
+                child: Entry.offset(
+                  duration: Duration(seconds: 1),
+                  yOffset: -100,
+                  child: Entry.opacity(
+                    delay: Duration(milliseconds: 500),
+                    child: SearchHistory(
+                      onSelect: (text) {
+                        FocusScope.of(context).unfocus();
 
-                      context
-                          .read(searchProductsProvider.notifier)
-                          .searchProducts(text);
+                        context
+                            .read(searchProductsProvider.notifier)
+                            .searchProducts(text);
 
-                      setState(
-                        () {
-                          _controller.text = text;
-                          _searchQuery = text;
-                          _showResult = true;
-                        },
-                      );
-                    },
+                        setState(
+                          () {
+                            _controller.text = text;
+                            _searchQuery = text;
+                            _showResult = true;
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
               )

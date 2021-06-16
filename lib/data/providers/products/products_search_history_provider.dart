@@ -22,7 +22,6 @@ class ProductSearchHistoryState extends StateNotifier<List<String>> {
     state = _box!.values.toList();
 
     _box!.listenable().addListener(() {
-      // TODO: try to reverse this
       if (mounted) state = _box!.values.toList();
     });
   }
@@ -32,10 +31,14 @@ class ProductSearchHistoryState extends StateNotifier<List<String>> {
   }
 
   Future<void> add(String history) async {
-    return await _box?.put(history, history);
+    if (state.contains(history)) {
+      await delete(history);
+    }
+
+    await _box?.add(history);
   }
 
   Future<void> delete(String history) async {
-    return await _box?.delete(history);
+    await _box?.deleteAt(state.indexOf(history));
   }
 }

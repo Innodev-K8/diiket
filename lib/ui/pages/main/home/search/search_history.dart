@@ -11,7 +11,8 @@ class SearchHistory extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchHistories = useProvider(productSearchHistoryProvider);
+    final searchHistories =
+        useProvider(productSearchHistoryProvider).reversed.toList();
 
     if (searchHistories.isEmpty) return SizedBox.shrink();
 

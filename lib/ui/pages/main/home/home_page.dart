@@ -1,4 +1,5 @@
 import 'package:diiket/data/providers/firebase_provider.dart';
+import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,12 @@ class _HomePageState extends State<HomePage>
 
     return WillPopScope(
       onWillPop: () async {
+        if (context.read(mainPageController) != 0) {
+          context.read(mainPageController.notifier).setPage(0);
+
+          return false;
+        }
+
         return !await Utils.homeNav.currentState!.maybePop();
       },
       child: Navigator(
@@ -49,6 +56,7 @@ class _HomePageState extends State<HomePage>
             case StallPage.route:
               page = StallPage(
                 stallId: arguments?['stall_id'] ?? 0,
+                focusedProductId: arguments?['focused_product_id'] ?? null,
               );
               break;
             case SearchPage.route:

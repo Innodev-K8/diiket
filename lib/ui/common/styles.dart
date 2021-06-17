@@ -16,6 +16,8 @@ class ColorPallete {
 
   static final infoColor = const Color(0xFF0D6EFD);
   static final successColor = const Color(0xFF00B894);
+
+  static final textColor = accentColor;
 }
 
 final BoxDecoration kBorderedDecoration = BoxDecoration(
@@ -30,56 +32,67 @@ final kTextTheme = TextTheme(
     fontSize: 32,
     fontWeight: FontWeight.w600,
     letterSpacing: -1.5,
+    color: ColorPallete.textColor,
   ),
   headline2: GoogleFonts.poppins(
     fontSize: 18,
     fontWeight: FontWeight.w600,
     letterSpacing: 1,
+    color: ColorPallete.textColor,
   ),
   headline3: GoogleFonts.poppins(
     fontSize: 20,
     fontWeight: FontWeight.w600,
     letterSpacing: 1,
+    color: ColorPallete.textColor,
   ),
   headline4: GoogleFonts.poppins(
     fontSize: 18,
     fontWeight: FontWeight.w600,
     letterSpacing: 1,
+    color: ColorPallete.textColor,
   ),
   headline5: GoogleFonts.poppins(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.15,
+    color: ColorPallete.textColor,
   ),
   headline6: GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.15,
+    color: ColorPallete.textColor,
   ),
   subtitle1: GoogleFonts.poppins(
     fontSize: 15,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.15,
+    color: ColorPallete.textColor,
   ),
   subtitle2: GoogleFonts.poppins(
     fontSize: 13,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.1,
+    color: ColorPallete.textColor,
   ),
   bodyText1: GoogleFonts.poppins(
     fontSize: 15,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
+    color: ColorPallete.textColor,
   ),
   bodyText2: GoogleFonts.poppins(
     fontSize: 13,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.25,
+    color: ColorPallete.textColor,
   ),
   button: GoogleFonts.poppins(
     fontSize: 13,
     fontWeight: FontWeight.w600,
     letterSpacing: 1.25,
+    color: ColorPallete.textColor,
   ),
   caption: GoogleFonts.poppins(
     fontSize: 12,
@@ -91,5 +104,6 @@ final kTextTheme = TextTheme(
     fontSize: 10,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.25,
+    color: ColorPallete.textColor,
   ),
 );

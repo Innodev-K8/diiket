@@ -22,6 +22,7 @@ class LoginToContinueButton extends StatelessWidget {
           text,
           style: kTextTheme.button!.copyWith(
             fontSize: 10.0,
+            color: Colors.white,
           ),
         ),
         style: ElevatedButton.styleFrom(

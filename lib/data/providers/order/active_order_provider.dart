@@ -119,7 +119,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   Future<void> retrieveActiveOrder() async {
     try {
-      if (mounted) {
+      if (mounted && _read(authProvider) != null) {
         Order? oldOrder = state;
 
         Order? newOrder =

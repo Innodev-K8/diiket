@@ -18,13 +18,11 @@ class FeedHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.7,
-                alignment: Alignment.centerLeft,
-                child: AuthWrapper(
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AuthWrapper(
                   auth: (user) => Text(
                     'Hai, ${user.name ?? Helper.greeting()}',
                     overflow: TextOverflow.ellipsis,
@@ -34,12 +32,12 @@ class FeedHeader extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ),
-              Text(
-                'Cari Sesuatu?',
-                style: kTextTheme.headline2,
-              ),
-            ],
+                Text(
+                  'Cari Sesuatu?',
+                  style: kTextTheme.headline2,
+                ),
+              ],
+            ),
           ),
           AuthWrapper(
             auth: (user) => CircleAvatar(

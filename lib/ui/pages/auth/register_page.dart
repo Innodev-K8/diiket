@@ -51,6 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
         provider: authProvider,
         onChange: _onAuthStateChanges,
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => FocusScope.of(context).unfocus(),
@@ -107,7 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
         curentState = MobileVerificationState.SHOW_USERNAME_FORM;
       });
     } else {
-      Utils.appNav.currentState?.pop();
+      Utils.resetAppNavigation();
     }
   }
 
@@ -128,89 +129,126 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Form(
         key: phoneFormKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-            DiiketLogo(),
-            SizedBox(height: 30),
-            Text('Selamat Datang', style: kTextTheme.headline1),
-            SizedBox(height: 5),
-            Text('Masukan nomor telepon anda untuk melanjutkan'),
-            SizedBox(height: 37),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    '+62',
-                    style: kTextTheme.headline5,
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
-                    child: TextFormField(
-                      controller: phoneNumberField,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration.collapsed(
-                        hintText: 'Nomor telepon anda',
-                      ),
-                      validator:
-                          kDebugMode ? null : ValidationHelper.validateMobile,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                  DiiketLogo(),
+                  SizedBox(height: 30),
+                  Text('Selamat Datang', style: kTextTheme.headline1),
+                  SizedBox(height: 5),
+                  Text('Masukan nomor telepon anda untuk melanjutkan'),
+                  SizedBox(height: 37),
+                  Container(
+                    decoration: kBorderedDecoration,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                      vertical: 14.0,
                     ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 37),
-            PrimaryButton(
-              onPressed: () {
-                FocusScope.of(context).unfocus();
-
-                if (!phoneFormKey.currentState!.validate()) return;
-
-                setState(() {
-                  isLoading = true;
-                });
-
-                context.read(firebaseAuthProvider).verifyPhoneNumber(
-                      phoneNumber: "+62 ${phoneNumberField.text}",
-                      verificationCompleted: (phoneAuthCredential) {
-                        _signInWithPhoneCredential(phoneAuthCredential);
-                      },
-                      verificationFailed: (error) {
-                        setState(() {
-                          curentState = MobileVerificationState.SHOW_PHONE_FORM;
-                          isLoading = false;
-                          this.verificationId = null;
-                          this.forceResendingToken = null;
-                        });
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              error.message ?? 'Terjadi kesalahan',
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.phone_android_rounded,
+                          color: ColorPallete.darkGray,
+                          size: 22.0,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            '+62',
+                            style: kTextTheme.bodyText2!.copyWith(
+                              fontSize: 15.0,
                             ),
                           ),
-                        );
-                      },
-                      codeSent: (verificationId, forceResendingToken) {
-                        setState(() {
-                          curentState = MobileVerificationState.SHOW_OTP_FORM;
-                          isLoading = false;
-                          this.verificationId = verificationId;
-                          this.forceResendingToken = forceResendingToken;
-                        });
-                      },
-                      codeAutoRetrievalTimeout: (verificationId) {
-                        // print('timeout');
-                        // print(verificationId);
-                      },
-                    );
-              },
-              child: Text('Kirim'),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 0),
+                            child: TextFormField(
+                              controller: phoneNumberField,
+                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration.collapsed(
+                                hintText: 'Nomor telepon anda',
+                              ),
+                              // validator:
+                              //     kDebugMode ? null : ValidationHelper.validateMobile,
+                              // validator: ValidationHelper.validateMobile,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 37),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 120,
+              height: 48,
+              child: PrimaryButton(
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+
+                  if (!phoneFormKey.currentState!.validate()) return;
+
+                  setState(() {
+                    isLoading = true;
+                  });
+
+                  context.read(firebaseAuthProvider).verifyPhoneNumber(
+                        phoneNumber: "+62 ${phoneNumberField.text}",
+                        verificationCompleted: (phoneAuthCredential) {
+                          _signInWithPhoneCredential(phoneAuthCredential);
+                        },
+                        verificationFailed: (error) {
+                          setState(() {
+                            curentState =
+                                MobileVerificationState.SHOW_PHONE_FORM;
+                            isLoading = false;
+                            this.verificationId = null;
+                            this.forceResendingToken = null;
+                          });
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                error.message ?? 'Terjadi kesalahan',
+                              ),
+                            ),
+                          );
+                        },
+                        codeSent: (verificationId, forceResendingToken) {
+                          setState(() {
+                            curentState = MobileVerificationState.SHOW_OTP_FORM;
+                            isLoading = false;
+                            this.verificationId = verificationId;
+                            this.forceResendingToken = forceResendingToken;
+                          });
+                        },
+                        codeAutoRetrievalTimeout: (verificationId) {
+                          // print('timeout');
+                          // print(verificationId);
+                        },
+                      );
+                },
+                child: Text('Lanjut'),
+              ),
+            ),
+            SizedBox(height: 15),
+            Padding(
+              padding: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.1,
+              ),
+              child: Text(
+                'Selanjutnya, Anda akan menerima SMS untuk verifikasi. Tarif pesan dan data mungkin berlaku.',
+                style: kTextTheme.overline,
+              ),
             ),
           ],
         ),

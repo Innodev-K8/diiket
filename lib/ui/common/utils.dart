@@ -9,6 +9,12 @@ class Utils {
   static final GlobalKey<NavigatorState> appNav = GlobalKey();
   static final GlobalKey<NavigatorState> homeNav = GlobalKey();
 
+  static void resetAppNavigation() {
+    appNav.currentState?.popUntil(
+      (route) => route.isFirst,
+    );
+  }
+
   static void resetHomeNavigation() {
     homeNav.currentState?.popUntil(
       (route) => route.isFirst,

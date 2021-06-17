@@ -21,9 +21,19 @@ class FeedHeader extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AuthWrapper(
-                auth: (user) => Text('Hai, ${user.name ?? Helper.greeting()}'),
-                guest: Text('Hai, ${Helper.greeting()}'),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                alignment: Alignment.centerLeft,
+                child: AuthWrapper(
+                  auth: (user) => Text(
+                    'Hai, ${user.name ?? Helper.greeting()}',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  guest: Text(
+                    'Hai, ${Helper.greeting()}',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
               Text(
                 'Cari Sesuatu?',

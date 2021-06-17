@@ -169,146 +169,97 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _buildMobileForm(BuildContext context) {
-    return Container(
-      // color: Colors.red,
-      child: Form(
-        key: phoneFormKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                  DiiketLogo(),
-                  SizedBox(height: 30),
-                  Text('Selamat Datang', style: kTextTheme.headline1),
-                  SizedBox(height: 5),
-                  Text('Masukan nomor telepon anda untuk melanjutkan'),
-                  SizedBox(height: 37),
-                  Container(
-                    decoration: kBorderedDecoration,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0,
-                      vertical: 14.0,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.phone_android_rounded,
-                          color: ColorPallete.darkGray,
-                          size: 22.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            '+62',
-                            style: kTextTheme.bodyText2!.copyWith(
-                              fontSize: 15.0,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 0),
-                            child: TextFormField(
-                              controller: phoneNumberField,
-                              keyboardType: TextInputType.phone,
-                              decoration: InputDecoration.collapsed(
-                                hintText: 'Nomor telepon anda',
-                              ),
-                              onChanged: (_) => setState(() {}),
-                              // validator:
-                              //     kDebugMode ? null : ValidationHelper.validateMobile,
-                              // validator: ValidationHelper.validateMobile,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+    return Form(
+      key: phoneFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                DiiketLogo(),
+                SizedBox(height: 30),
+                Text('Selamat Datang', style: kTextTheme.headline1),
+                SizedBox(height: 5),
+                Text('Masukan nomor telepon anda untuk melanjutkan'),
+                SizedBox(height: 37),
+                Container(
+                  decoration: kBorderedDecoration,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                    vertical: 14.0,
                   ),
-                  SizedBox(height: 37),
-                ],
-              ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.phone_android_rounded,
+                        color: ColorPallete.darkGray,
+                        size: 22.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          '+62',
+                          style: kTextTheme.bodyText2!.copyWith(
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 0),
+                          child: TextFormField(
+                            controller: phoneNumberField,
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration.collapsed(
+                              hintText: 'Nomor telepon anda',
+                            ),
+                            onChanged: (_) => setState(() {}),
+                            // validator:
+                            //     kDebugMode ? null : ValidationHelper.validateMobile,
+                            // validator: ValidationHelper.validateMobile,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 37),
+              ],
             ),
-            SizedBox(
-              width: 120,
-              height: 48,
-              child: PrimaryButton(
-                disabled: phoneNumberField.text.isEmpty,
-                onPressed: () {
-                  FocusScope.of(context).unfocus();
+          ),
+          SizedBox(
+            width: 120,
+            height: 48,
+            child: PrimaryButton(
+              disabled: phoneNumberField.text.isEmpty,
+              onPressed: () {
+                FocusScope.of(context).unfocus();
 
-                  if (!phoneFormKey.currentState!.validate()) return;
+                if (!phoneFormKey.currentState!.validate()) return;
 
-                  _sendSmsVerificationCode();
-                },
-                child: Text('Lanjut'),
-              ),
+                _sendSmsVerificationCode();
+              },
+              child: Text('Lanjut'),
             ),
-            SizedBox(height: 15),
-            Padding(
-              padding: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.1,
-              ),
-              child: Text(
-                'Selanjutnya, Anda akan menerima SMS untuk verifikasi. Tarif pesan dan data mungkin berlaku.',
-                style: kTextTheme.overline,
-              ),
+          ),
+          SizedBox(height: 15),
+          Padding(
+            padding: EdgeInsets.only(
+              right: MediaQuery.of(context).size.width * 0.1,
             ),
-          ],
-        ),
+            child: Text(
+              'Selanjutnya, Anda akan menerima SMS untuk verifikasi. Tarif pesan dan data mungkin berlaku.',
+              style: kTextTheme.overline,
+            ),
+          ),
+        ],
       ),
     );
-  }
-
-  Future<void> _sendSmsVerificationCode(
-      {int? forceResendingToken, Function? onCodeSent}) {
-    setState(() {
-      isLoading = true;
-    });
-
-    return context.read(firebaseAuthProvider).verifyPhoneNumber(
-          phoneNumber: "+62 ${phoneNumberField.text}",
-          forceResendingToken: forceResendingToken,
-          verificationCompleted: (phoneAuthCredential) {
-            _signInWithPhoneCredential(phoneAuthCredential);
-          },
-          verificationFailed: (error) {
-            setState(() {
-              curentState = MobileVerificationState.SHOW_PHONE_FORM;
-              isLoading = false;
-              this.verificationId = null;
-              this.forceResendingToken = null;
-            });
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  error.message ?? 'Terjadi kesalahan',
-                ),
-              ),
-            );
-          },
-          codeSent: (verificationId, forceResendingToken) {
-            setState(() {
-              curentState = MobileVerificationState.SHOW_OTP_FORM;
-              isLoading = false;
-              this.verificationId = verificationId;
-              this.forceResendingToken = forceResendingToken;
-              this.startTimer();
-            });
-
-            onCodeSent?.call();
-          },
-          codeAutoRetrievalTimeout: (verificationId) {
-            // print('timeout');
-            // print(verificationId);
-          },
-        );
   }
 
   Widget _buildOtpForm(BuildContext context) {
@@ -440,49 +391,81 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void _cancelConfirmingOtp() {
-    setState(() {
-      curentState = MobileVerificationState.SHOW_PHONE_FORM;
-      isLoading = false;
-      this.verificationId = null;
-      this.forceResendingToken = null;
-      this.resetTimer();
-    });
-  }
-
   Widget _buildUserNameForm(BuildContext context) {
     return Form(
       key: userNameFormKey,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Selamat Datang!',
-            style: kTextTheme.headline1,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                Container(
+                  decoration: BoxDecoration(
+                    border: kBorderedDecoration.border,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: Icon(
+                    Icons.person_rounded,
+                    color: ColorPallete.primaryColor,
+                  ),
+                ),
+                SizedBox(height: 30),
+                Text(
+                  'Pengguna Baru',
+                  style: kTextTheme.headline1,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Silahkan masukan nama lengkap Anda sesuai KTP.',
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(
+                  height: 32,
+                ),
+                Container(
+                  decoration: kBorderedDecoration,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                    vertical: 14.0,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.person_outline_rounded,
+                        color: ColorPallete.darkGray,
+                        size: 22.0,
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: TextFormField(
+                          controller: userNameCodeField,
+                          keyboardType: TextInputType.name,
+                          textCapitalization: TextCapitalization.words,
+                          validator: ValidationHelper.validateName,
+                          decoration:
+                              InputDecoration.collapsed(hintText: 'Nama Anda'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 14),
+              ],
+            ),
           ),
           SizedBox(
-            height: 12,
-          ),
-          Text(
-            'Silahkan masukan nama lengkap Anda sesuai KTP.',
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 32,
-          ),
-          TextFormField(
-            controller: userNameCodeField,
-            keyboardType: TextInputType.name,
-            textCapitalization: TextCapitalization.words,
-            validator: ValidationHelper.validateName,
-          ),
-          SizedBox(height: 14),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: ColorPallete.primaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 12.0)),
+            width: 120,
+            height: 48,
+            child: PrimaryButton(
+              disabled: otpCodeField.text.length != 6,
               onPressed: () async {
                 FocusScope.of(context).unfocus();
 
@@ -495,12 +478,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 });
 
                 await context.read(authProvider.notifier).updateUserName(name);
-
-                // Utils.appNav.currentState?.pop();
               },
-              child: Text('Simpan'),
+              child: Text('Masuk'),
             ),
           ),
+          SizedBox(height: 38),
         ],
       ),
     );
@@ -512,6 +494,62 @@ class _RegisterPageState extends State<RegisterPage> {
         color: ColorPallete.primaryColor,
       ),
     );
+  }
+
+  Future<void> _sendSmsVerificationCode(
+      {int? forceResendingToken, Function? onCodeSent}) {
+    setState(() {
+      isLoading = true;
+    });
+
+    return context.read(firebaseAuthProvider).verifyPhoneNumber(
+          phoneNumber: "+62 ${phoneNumberField.text}",
+          forceResendingToken: forceResendingToken,
+          verificationCompleted: (phoneAuthCredential) {
+            _signInWithPhoneCredential(phoneAuthCredential);
+          },
+          verificationFailed: (error) {
+            setState(() {
+              curentState = MobileVerificationState.SHOW_PHONE_FORM;
+              isLoading = false;
+              this.verificationId = null;
+              this.forceResendingToken = null;
+            });
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error.message ?? 'Terjadi kesalahan',
+                ),
+              ),
+            );
+          },
+          codeSent: (verificationId, forceResendingToken) {
+            setState(() {
+              curentState = MobileVerificationState.SHOW_OTP_FORM;
+              isLoading = false;
+              this.verificationId = verificationId;
+              this.forceResendingToken = forceResendingToken;
+              this.startTimer();
+            });
+
+            onCodeSent?.call();
+          },
+          codeAutoRetrievalTimeout: (verificationId) {
+            // print('timeout');
+            // print(verificationId);
+          },
+        );
+  }
+
+  void _cancelConfirmingOtp() {
+    setState(() {
+      curentState = MobileVerificationState.SHOW_PHONE_FORM;
+      isLoading = false;
+      this.verificationId = null;
+      this.forceResendingToken = null;
+      this.resetTimer();
+    });
   }
 
   Future<void> _verifyOtpCode(String otpCode) async {

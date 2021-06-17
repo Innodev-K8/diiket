@@ -49,10 +49,10 @@ class _SearchPageState extends State<SearchPage> {
             if (!_showResult)
               Expanded(
                 child: Entry.offset(
-                  duration: Duration(seconds: 1),
+                  duration: Duration(milliseconds: 500),
                   yOffset: -100,
                   child: Entry.opacity(
-                    delay: Duration(milliseconds: 500),
+                    delay: Duration(milliseconds: 250),
                     child: SearchHistory(
                       onSelect: (text) {
                         FocusScope.of(context).unfocus();

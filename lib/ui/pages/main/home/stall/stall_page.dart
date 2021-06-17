@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/product.dart';
@@ -9,6 +11,7 @@ import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/custom_exception_message.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
+import 'package:diiket/ui/widgets/products/large_product_item.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,19 +22,38 @@ class StallPage extends HookWidget {
   static const String route = '/home/stall';
 
   final int stallId;
+  // product to autofocus on
+  final int? focusedProductId;
 
-  const StallPage({
+  StallPage({
     Key? key,
     required this.stallId,
+    this.focusedProductId,
   }) : super(key: key);
 
   final double _headerHeight = 200.0;
   final double _avatarSize = 89.0;
 
+  final GlobalKey _autofocusProductKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final stallState = useProvider(stallDetailProvider(stallId));
     final market = useProvider(currentMarketProvider).state;
+    final scrollController = useScrollController();
+
+    useEffect(() {
+      stallState.whenData((value) {
+        Timer(Duration(milliseconds: 250), () {
+          if (_autofocusProductKey.currentContext != null)
+            Scrollable.ensureVisible(
+              _autofocusProductKey.currentContext!,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+        });
+      });
+    }, [stallState]);
 
     return Container(
       color: ColorPallete.backgroundColor,
@@ -40,6 +62,7 @@ class StallPage extends HookWidget {
           children: [
             Expanded(
               child: CustomScrollView(
+                controller: scrollController,
                 physics: BouncingScrollPhysics(),
                 slivers: [
                   _buildAppBar(stall),
@@ -134,6 +157,14 @@ class StallPage extends HookWidget {
                   products: (stall.products ?? [])
                       .map((p) => p.copyWith(stall: stall))
                       .toList(),
+                  productItemBuilder: (Product product, _) => LargeProductItem(
+                    key: product.id == focusedProductId
+                        ? _autofocusProductKey
+                        : null,
+                    product: product,
+                    readonly: false,
+                    onTap: () {},
+                  ),
                 ),
               ],
             ),

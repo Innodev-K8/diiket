@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
@@ -42,36 +44,79 @@ class _RegisterPageState extends State<RegisterPage> {
   String? verificationId;
   int? forceResendingToken;
 
+  Timer? resendTimer;
+  int resendTimeoutCounter = 30;
+
+  void startTimer() {
+    resendTimer?.cancel();
+
+    const oneSec = const Duration(seconds: 1);
+    resendTimer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (resendTimeoutCounter == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            resendTimeoutCounter--;
+          });
+        }
+      },
+    );
+  }
+
+  void resetTimer() {
+    resendTimer?.cancel();
+    resendTimeoutCounter = 30;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ProviderListener(
-      provider: authExceptionProvider,
-      onChange: _onAuthException,
+    return WillPopScope(
+      onWillPop: () async {
+        switch (curentState) {
+          case MobileVerificationState.SHOW_PHONE_FORM:
+            return true;
+          case MobileVerificationState.SHOW_OTP_FORM:
+            _cancelConfirmingOtp();
+
+            return false;
+          case MobileVerificationState.SHOW_USERNAME_FORM:
+            // dissalow back here
+            return false;
+        }
+      },
       child: ProviderListener(
-        provider: authProvider,
-        onChange: _onAuthStateChanges,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: AbsorbPointer(
-              absorbing: isLoading,
-              child: Stack(
-                children: [
-                  AnimatedOpacity(
-                    duration: Duration(milliseconds: 250),
-                    opacity: isLoading ? 0.5 : 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: AnimatedSwitcher(
-                        duration: Duration(milliseconds: 500),
-                        child: _buildContent(context),
+        provider: authExceptionProvider,
+        onChange: _onAuthException,
+        child: ProviderListener(
+          provider: authProvider,
+          onChange: _onAuthStateChanges,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: AbsorbPointer(
+                absorbing: isLoading,
+                child: Stack(
+                  children: [
+                    AnimatedOpacity(
+                      duration: Duration(milliseconds: 250),
+                      opacity: isLoading ? 0.5 : 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: AnimatedSwitcher(
+                          duration: Duration(milliseconds: 500),
+                          child: _buildContent(context),
+                        ),
                       ),
                     ),
-                  ),
-                  if (isLoading) _buildLoading(),
-                ],
+                    if (isLoading) _buildLoading(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -175,6 +220,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               decoration: InputDecoration.collapsed(
                                 hintText: 'Nomor telepon anda',
                               ),
+                              onChanged: (_) => setState(() {}),
                               // validator:
                               //     kDebugMode ? null : ValidationHelper.validateMobile,
                               // validator: ValidationHelper.validateMobile,
@@ -192,50 +238,13 @@ class _RegisterPageState extends State<RegisterPage> {
               width: 120,
               height: 48,
               child: PrimaryButton(
+                disabled: phoneNumberField.text.isEmpty,
                 onPressed: () {
                   FocusScope.of(context).unfocus();
 
                   if (!phoneFormKey.currentState!.validate()) return;
 
-                  setState(() {
-                    isLoading = true;
-                  });
-
-                  context.read(firebaseAuthProvider).verifyPhoneNumber(
-                        phoneNumber: "+62 ${phoneNumberField.text}",
-                        verificationCompleted: (phoneAuthCredential) {
-                          _signInWithPhoneCredential(phoneAuthCredential);
-                        },
-                        verificationFailed: (error) {
-                          setState(() {
-                            curentState =
-                                MobileVerificationState.SHOW_PHONE_FORM;
-                            isLoading = false;
-                            this.verificationId = null;
-                            this.forceResendingToken = null;
-                          });
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                error.message ?? 'Terjadi kesalahan',
-                              ),
-                            ),
-                          );
-                        },
-                        codeSent: (verificationId, forceResendingToken) {
-                          setState(() {
-                            curentState = MobileVerificationState.SHOW_OTP_FORM;
-                            isLoading = false;
-                            this.verificationId = verificationId;
-                            this.forceResendingToken = forceResendingToken;
-                          });
-                        },
-                        codeAutoRetrievalTimeout: (verificationId) {
-                          // print('timeout');
-                          // print(verificationId);
-                        },
-                      );
+                  _sendSmsVerificationCode();
                 },
                 child: Text('Lanjut'),
               ),
@@ -256,58 +265,130 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  Future<void> _sendSmsVerificationCode(
+      {int? forceResendingToken, Function? onCodeSent}) {
+    setState(() {
+      isLoading = true;
+    });
+
+    return context.read(firebaseAuthProvider).verifyPhoneNumber(
+          phoneNumber: "+62 ${phoneNumberField.text}",
+          forceResendingToken: forceResendingToken,
+          verificationCompleted: (phoneAuthCredential) {
+            _signInWithPhoneCredential(phoneAuthCredential);
+          },
+          verificationFailed: (error) {
+            setState(() {
+              curentState = MobileVerificationState.SHOW_PHONE_FORM;
+              isLoading = false;
+              this.verificationId = null;
+              this.forceResendingToken = null;
+            });
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  error.message ?? 'Terjadi kesalahan',
+                ),
+              ),
+            );
+          },
+          codeSent: (verificationId, forceResendingToken) {
+            setState(() {
+              curentState = MobileVerificationState.SHOW_OTP_FORM;
+              isLoading = false;
+              this.verificationId = verificationId;
+              this.forceResendingToken = forceResendingToken;
+              this.startTimer();
+            });
+
+            onCodeSent?.call();
+          },
+          codeAutoRetrievalTimeout: (verificationId) {
+            // print('timeout');
+            // print(verificationId);
+          },
+        );
+  }
+
   Widget _buildOtpForm(BuildContext context) {
     return Form(
       key: otpFormKey,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Verifikasi',
-            style: kTextTheme.headline1,
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Text(
-            'Kami telah mengirim kode OTP ke nomor telpon Anda.',
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 48,
-          ),
-          PinCodeTextField(
-            length: 6,
-            obscureText: false,
-            validator: ValidationHelper.validateOtp,
-            animationType: AnimationType.fade,
-            keyboardType: TextInputType.number,
-            pinTheme: PinTheme(
-              shape: PinCodeFieldShape.underline,
-              borderRadius: BorderRadius.circular(4),
-              inactiveColor: ColorPallete.lightGray,
-              inactiveFillColor: ColorPallete.backgroundColor,
-              activeColor: ColorPallete.successColor,
-              activeFillColor: ColorPallete.backgroundColor,
-              selectedColor: ColorPallete.primaryColor,
-              selectedFillColor: ColorPallete.backgroundColor,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+                InkWell(
+                  onTap: _cancelConfirmingOtp,
+                  borderRadius: BorderRadius.circular(999),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: kBorderedDecoration.border,
+                      shape: BoxShape.circle,
+                    ),
+                    padding: const EdgeInsets.all(12),
+                    child: Icon(
+                      Icons.chevron_left_rounded,
+                      size: 42,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Text(
+                  'Verifikasi',
+                  style: kTextTheme.headline1,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  'Silakan masukkan 6 digit kode yang sudah kami kirin ke nomer Anda di +62 ${phoneNumberField.value.text}.',
+                  textAlign: TextAlign.start,
+                ),
+                SizedBox(
+                  height: 48,
+                ),
+                PinCodeTextField(
+                  length: 6,
+                  obscureText: false,
+                  // validator: ValidationHelper.validateOtp,
+                  animationType: AnimationType.fade,
+                  keyboardType: TextInputType.number,
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.underline,
+                    borderRadius: BorderRadius.circular(4),
+                    inactiveColor: ColorPallete.lightGray,
+                    inactiveFillColor: ColorPallete.backgroundColor,
+                    activeColor: ColorPallete.successColor,
+                    activeFillColor: ColorPallete.backgroundColor,
+                    selectedColor: ColorPallete.primaryColor,
+                    selectedFillColor: ColorPallete.backgroundColor,
+                  ),
+                  animationDuration: Duration(milliseconds: 300),
+                  controller: otpCodeField,
+                  autoDisposeControllers: false,
+                  // onCompleted: (otpCode) {
+                  //   _verifyOtpCode(otpCodeField.text);
+                  // },
+                  appContext: context,
+                  onChanged: (String value) {
+                    setState(() {});
+                  },
+                ),
+                SizedBox(height: 14),
+              ],
             ),
-            animationDuration: Duration(milliseconds: 300),
-            controller: otpCodeField,
-            autoDisposeControllers: false,
-            onCompleted: (otpCode) {
-              _verifyOtpCode(otpCodeField.text);
-            },
-            appContext: context,
-            onChanged: (String value) {},
           ),
-          SizedBox(height: 14),
           SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: ColorPallete.primaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 12.0)),
+            width: 120,
+            height: 48,
+            child: PrimaryButton(
+              disabled: otpCodeField.text.length != 6,
               onPressed: () {
                 FocusScope.of(context).unfocus();
 
@@ -315,12 +396,58 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 _verifyOtpCode(otpCodeField.text);
               },
-              child: Text('Verifikasi'),
+              child: Text('Lanjut'),
             ),
+          ),
+          AnimatedSwitcher(
+            duration: Duration(seconds: 1),
+            child: resendTimeoutCounter <= 0
+                ? TextButton(
+                    onPressed: () async {
+                      await _sendSmsVerificationCode(
+                        forceResendingToken: this.forceResendingToken,
+                        onCodeSent: () {
+                          setState(() {
+                            this.resetTimer();
+                            this.startTimer();
+
+                            Utils.alert(
+                              context,
+                              'Kode verifikasi berhasil dikirim ulang.',
+                            );
+                          });
+                        },
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      primary: ColorPallete.primaryColor,
+                    ),
+                    child: Text('Kirim ulang kode verifikasi'),
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(
+                      top: 15.0,
+                      right: MediaQuery.of(context).size.width * 0.1,
+                    ),
+                    child: Text(
+                      'Kirim ulang kode dalam 0:${resendTimeoutCounter}',
+                      style: kTextTheme.overline,
+                    ),
+                  ),
           ),
         ],
       ),
     );
+  }
+
+  void _cancelConfirmingOtp() {
+    setState(() {
+      curentState = MobileVerificationState.SHOW_PHONE_FORM;
+      isLoading = false;
+      this.verificationId = null;
+      this.forceResendingToken = null;
+      this.resetTimer();
+    });
   }
 
   Widget _buildUserNameForm(BuildContext context) {
@@ -430,6 +557,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
+    resendTimer?.cancel();
     phoneNumberField.dispose();
     otpCodeField.dispose();
     userNameCodeField.dispose();
@@ -455,7 +583,7 @@ class DiiketLogo extends StatelessWidget {
         child: Image.asset(
           'assets/images/splash.png',
           width: 23,
-          height: 28,
+          height: 23,
         ),
       ),
     );

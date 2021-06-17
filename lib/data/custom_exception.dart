@@ -41,6 +41,9 @@ class CustomException implements Exception {
           case 404:
             message = 'Permintaan tidak ditemukan.';
             break;
+          case 429:
+            message = 'Terlalu banyak permintaan, harap coba lagi.';
+            break;
           case 500:
             message = 'Terdapat kesalahan pada server.';
             break;

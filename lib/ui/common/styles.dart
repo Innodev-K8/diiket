@@ -92,7 +92,7 @@ final kTextTheme = TextTheme(
     fontSize: 13,
     fontWeight: FontWeight.w600,
     letterSpacing: 1.25,
-    color: ColorPallete.textColor,
+    color: Colors.white,
   ),
   caption: GoogleFonts.poppins(
     fontSize: 12,

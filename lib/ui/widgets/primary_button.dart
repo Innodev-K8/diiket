@@ -9,6 +9,7 @@ class PrimaryButton extends HookWidget {
   final Widget? trailing;
   final void Function()? onPressed;
   final Color? color;
+  final bool disabled;
 
   const PrimaryButton({
     Key? key,
@@ -16,6 +17,7 @@ class PrimaryButton extends HookWidget {
     this.trailing,
     this.onPressed,
     this.color,
+    this.disabled = false,
   }) : super(key: key);
 
   @override
@@ -25,7 +27,8 @@ class PrimaryButton extends HookWidget {
       height: height,
       decoration: BoxDecoration(
         boxShadow: <BoxShadow>[
-          BoxShadow(
+          if (!disabled)
+            BoxShadow(
             color: (color ?? ColorPallete.primaryColor).withOpacity(0.24),
             blurRadius: 30,
             offset: Offset(0, 10),
@@ -49,7 +52,7 @@ class PrimaryButton extends HookWidget {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        onPressed: onPressed,
+        onPressed: disabled ? null : onPressed,
       ),
     );
   }

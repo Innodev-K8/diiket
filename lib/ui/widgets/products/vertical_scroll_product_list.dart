@@ -15,6 +15,7 @@ class VerticalScrollProductList extends StatelessWidget {
   final void Function(Product)? onItemTap;
   final bool readonly;
   final bool entryEnabled;
+  final Widget Function(Product product, int index)? productItemBuilder;
 
   int _listLength = 0;
 
@@ -29,6 +30,7 @@ class VerticalScrollProductList extends StatelessWidget {
     this.onItemTap,
     this.readonly = false,
     this.entryEnabled = true,
+    this.productItemBuilder,
   }) : super(key: key) {
     _listLength = products.length;
 
@@ -69,12 +71,17 @@ class VerticalScrollProductList extends StatelessWidget {
           index -= 1;
         }
 
+        final Product product = products[index];
+
+        if (productItemBuilder != null)
+          return productItemBuilder!.call(product, index);
+
         final productItem = LargeProductItem(
-          product: products[index],
+          product: product,
           readonly: readonly,
           onTap: onItemTap != null
               ? () {
-                  onItemTap!.call(products[index]);
+                  onItemTap!.call(product);
                 }
               : null,
         );

@@ -37,6 +37,7 @@ class MediumProductItem extends StatelessWidget {
               StallPage.route,
               arguments: {
                 'stall_id': product.stall_id,
+                'focused_product_id': product.id,
               },
             );
           },

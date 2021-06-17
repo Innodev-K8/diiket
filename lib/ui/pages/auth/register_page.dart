@@ -5,7 +5,10 @@ import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/helpers/validation_helper.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/widgets/primary_button.dart';
+import 'package:entry/entry.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -43,37 +46,10 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return ProviderListener(
       provider: authExceptionProvider,
-      onChange: (context, StateController<CustomException?> e) {
-        if (e.state != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                e.state!.message ?? 'Terjadi kesalahan',
-              ),
-            ),
-          );
-
-          setState(() {
-            isLoading = false;
-          });
-        }
-      },
+      onChange: _onAuthException,
       child: ProviderListener(
         provider: authProvider,
-        onChange: (context, User? user) {
-          if (user == null) {
-            return;
-          }
-
-          if (user.name == null || user.name == '') {
-            setState(() {
-              isLoading = false;
-              curentState = MobileVerificationState.SHOW_USERNAME_FORM;
-            });
-          } else {
-            Utils.appNav.currentState?.pop();
-          }
-        },
+        onChange: _onAuthStateChanges,
         child: Scaffold(
           body: GestureDetector(
             behavior: HitTestBehavior.opaque,
@@ -103,6 +79,38 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  void _onAuthException(
+      BuildContext context, StateController<CustomException?> e) {
+    if (e.state != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            e.state!.message ?? 'Terjadi kesalahan',
+          ),
+        ),
+      );
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void _onAuthStateChanges(BuildContext context, User? user) {
+    if (user == null) {
+      return;
+    }
+
+    if (user.name == null || user.name == '') {
+      setState(() {
+        isLoading = false;
+        curentState = MobileVerificationState.SHOW_USERNAME_FORM;
+      });
+    } else {
+      Utils.appNav.currentState?.pop();
+    }
+  }
+
   Widget _buildContent(BuildContext context) {
     switch (curentState) {
       case MobileVerificationState.SHOW_PHONE_FORM:
@@ -115,79 +123,97 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _buildMobileForm(BuildContext context) {
-    return Form(
-      key: phoneFormKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              Container(
-                color: Colors.grey,
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text('+62'),
-              ),
-              SizedBox(width: 8.0),
-              Expanded(
-                child: TextFormField(
-                  controller: phoneNumberField,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    hintText: 'Nomor Telepon',
+    return Container(
+      // color: Colors.red,
+      child: Form(
+        key: phoneFormKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+            DiiketLogo(),
+            SizedBox(height: 30),
+            Text('Selamat Datang', style: kTextTheme.headline1),
+            SizedBox(height: 5),
+            Text('Masukan nomor telepon anda untuk melanjutkan'),
+            SizedBox(height: 37),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    '+62',
+                    style: kTextTheme.headline5,
                   ),
-                  // validator: ValidationHelper.validateMobile,
                 ),
-              ),
-            ],
-          ),
-          ElevatedButton(
-            onPressed: () {
-              FocusScope.of(context).unfocus();
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2.0),
+                    child: TextFormField(
+                      controller: phoneNumberField,
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'Nomor telepon anda',
+                      ),
+                      validator:
+                          kDebugMode ? null : ValidationHelper.validateMobile,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 37),
+            PrimaryButton(
+              onPressed: () {
+                FocusScope.of(context).unfocus();
 
-              if (!phoneFormKey.currentState!.validate()) return;
+                if (!phoneFormKey.currentState!.validate()) return;
 
-              setState(() {
-                isLoading = true;
-              });
+                setState(() {
+                  isLoading = true;
+                });
 
-              context.read(firebaseAuthProvider).verifyPhoneNumber(
-                    phoneNumber: "+62 ${phoneNumberField.text}",
-                    verificationCompleted: (phoneAuthCredential) {
-                      _signInWithPhoneCredential(phoneAuthCredential);
-                    },
-                    verificationFailed: (error) {
-                      setState(() {
-                        curentState = MobileVerificationState.SHOW_PHONE_FORM;
-                        isLoading = false;
-                        this.verificationId = null;
-                        this.forceResendingToken = null;
-                      });
+                context.read(firebaseAuthProvider).verifyPhoneNumber(
+                      phoneNumber: "+62 ${phoneNumberField.text}",
+                      verificationCompleted: (phoneAuthCredential) {
+                        _signInWithPhoneCredential(phoneAuthCredential);
+                      },
+                      verificationFailed: (error) {
+                        setState(() {
+                          curentState = MobileVerificationState.SHOW_PHONE_FORM;
+                          isLoading = false;
+                          this.verificationId = null;
+                          this.forceResendingToken = null;
+                        });
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            error.message ?? 'Terjadi kesalahan',
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              error.message ?? 'Terjadi kesalahan',
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    codeSent: (verificationId, forceResendingToken) {
-                      setState(() {
-                        curentState = MobileVerificationState.SHOW_OTP_FORM;
-                        isLoading = false;
-                        this.verificationId = verificationId;
-                        this.forceResendingToken = forceResendingToken;
-                      });
-                    },
-                    codeAutoRetrievalTimeout: (verificationId) {
-                      // print('timeout');
-                      // print(verificationId);
-                    },
-                  );
-            },
-            child: Text('Kirim'),
-          ),
-        ],
+                        );
+                      },
+                      codeSent: (verificationId, forceResendingToken) {
+                        setState(() {
+                          curentState = MobileVerificationState.SHOW_OTP_FORM;
+                          isLoading = false;
+                          this.verificationId = verificationId;
+                          this.forceResendingToken = forceResendingToken;
+                        });
+                      },
+                      codeAutoRetrievalTimeout: (verificationId) {
+                        // print('timeout');
+                        // print(verificationId);
+                      },
+                    );
+              },
+              child: Text('Kirim'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -215,6 +241,7 @@ class _RegisterPageState extends State<RegisterPage> {
           PinCodeTextField(
             length: 6,
             obscureText: false,
+            validator: ValidationHelper.validateOtp,
             animationType: AnimationType.fade,
             keyboardType: TextInputType.number,
             pinTheme: PinTheme(
@@ -245,6 +272,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   padding: const EdgeInsets.symmetric(vertical: 12.0)),
               onPressed: () {
                 FocusScope.of(context).unfocus();
+
+                if (!otpFormKey.currentState!.validate()) return;
 
                 _verifyOtpCode(otpCodeField.text);
               },
@@ -368,5 +397,29 @@ class _RegisterPageState extends State<RegisterPage> {
     userNameCodeField.dispose();
 
     super.dispose();
+  }
+}
+
+class DiiketLogo extends StatelessWidget {
+  const DiiketLogo({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Entry.all(
+      child: Container(
+        decoration: BoxDecoration(
+          border: kBorderedDecoration.border,
+          shape: BoxShape.circle,
+        ),
+        padding: const EdgeInsets.all(22),
+        child: Image.asset(
+          'assets/images/splash.png',
+          width: 23,
+          height: 28,
+        ),
+      ),
+    );
   }
 }

@@ -14,7 +14,17 @@ class ValidationHelper {
     if (value == null || value.length == 0) {
       return 'Harap masukan nomor telepon Anda';
     } else if (!regExp.hasMatch(value)) {
-      return 'Harap untuk memasukan nomor telepon yang valid';
+      return 'Nomor telepon tidak valid';
+    }
+
+    return null;
+  }
+
+  static String? validateOtp(String? value) {
+    if (value == null || value.length == 0) {
+      return 'Harap masukan kode OTP';
+    } else if (value.length != 6) {
+      return 'Lengkapi kode OTP';
     }
 
     return null;

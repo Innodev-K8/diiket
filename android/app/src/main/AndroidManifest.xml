@@ -7,9 +7,8 @@
    <uses-permission android:name="android.permission.VIBRATE" />
    
    <application
-        android:label="diiket"
-        android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true">
+        android:label="Diiket"
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

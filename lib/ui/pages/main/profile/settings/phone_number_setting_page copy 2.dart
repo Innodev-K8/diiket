@@ -1,12 +1,13 @@
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/wip.dart';
 import 'package:flutter/material.dart';
 
-class HistoryPage extends StatelessWidget {
+class PhoneNumberSettingPage extends StatelessWidget {
+  static String route = '/settings/phone-number';
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
+    return Scaffold(
+      body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Wip(),
       ),

@@ -11,6 +11,9 @@ import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:diiket/ui/pages/main/main_page.dart';
+import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
+import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page%20copy%202.dart';
+import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page%20copy.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -90,6 +93,9 @@ class _MyAppState extends State<MyApp> {
       routes: {
         MainPage.route: (_) => MainPage(),
         RegisterPage.route: (_) => RegisterPage(),
+        PhoneNumberSettingPage.route: (_) => PhoneNumberSettingPage(),
+        PhotoSettingPage.route: (_) => PhotoSettingPage(),
+        NameSettingPage.route: (_) => NameSettingPage(),
       },
     );
   }

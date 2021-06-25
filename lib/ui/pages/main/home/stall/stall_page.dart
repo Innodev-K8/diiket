@@ -12,6 +12,7 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/custom_exception_message.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/large_product_item.dart';
+import 'package:diiket/ui/widgets/products/product_detail_bottom_sheet.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,12 +46,18 @@ class StallPage extends HookWidget {
     useEffect(() {
       stallState.whenData((value) {
         Timer(Duration(milliseconds: 250), () {
-          if (_autofocusProductKey.currentContext != null)
+          if (_autofocusProductKey.currentContext != null) {
             Scrollable.ensureVisible(
               _autofocusProductKey.currentContext!,
               duration: Duration(milliseconds: 500),
               curve: Curves.easeInOut,
             );
+
+            ProductDetailBottomSheet.show(
+              context,
+              (_autofocusProductKey.currentWidget as LargeProductItem).product,
+            );
+          }
         });
       });
     }, [stallState]);
@@ -66,7 +73,7 @@ class StallPage extends HookWidget {
                 physics: BouncingScrollPhysics(),
                 slivers: [
                   _buildAppBar(stall),
-                  _buildContent(stall, market),
+                  _buildContent(context, stall, market),
                 ],
               ),
             ),
@@ -83,7 +90,8 @@ class StallPage extends HookWidget {
     );
   }
 
-  SliverToBoxAdapter _buildContent(Stall stall, Market market) {
+  SliverToBoxAdapter _buildContent(
+      BuildContext context, Stall stall, Market market) {
     return SliverToBoxAdapter(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +171,9 @@ class StallPage extends HookWidget {
                         : null,
                     product: product,
                     readonly: false,
-                    onTap: () {},
+                    onTap: () {
+                      ProductDetailBottomSheet.show(context, product);
+                    },
                   ),
                 ),
               ],

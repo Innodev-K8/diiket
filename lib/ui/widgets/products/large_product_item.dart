@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
@@ -11,6 +10,8 @@ import 'package:diiket/ui/widgets/products/add_product_to_cart_action.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'product_in_cart_information.dart';
 
 class LargeProductItem extends StatelessWidget {
   final Product product;
@@ -96,16 +97,6 @@ class LargeProductItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
-                          // Text(
-                          //   '${product.stall?.name}, ${product.stall?.seller?.name}',
-                          //   style: kTextTheme.overline!.copyWith(
-                          //     // fontWeight: FontWeight.bold,
-                          //     color: ColorPallete.darkGray,
-                          //   ),
-                          //   maxLines: 1,
-                          //   overflow: TextOverflow.ellipsis,
-                          // ),
-                          // Spacer(flex: 1),
                           Text(
                             product.description ?? '-',
                             style: kTextTheme.overline!.copyWith(
@@ -121,7 +112,7 @@ class LargeProductItem extends StatelessWidget {
                           if (readonly || isAnyProcessedOrder)
                             Align(
                               alignment: Alignment.bottomRight,
-                              child: _buildReadOnlyContent(),
+                              child: ProductInCartInformation(product: product),
                             )
                           else
                             AuthWrapper(
@@ -178,30 +169,6 @@ class LargeProductItem extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildReadOnlyContent() {
-    return Consumer(
-      builder: (context, watch, child) {
-        watch(activeOrderProvider);
-
-        final OrderItem? orderItem = context
-            .read(activeOrderProvider.notifier)
-            .getOrderItemByProduct(product);
-
-        if (orderItem != null) {
-          return Text(
-            '${orderItem.quantity} ${product.quantity_unit}',
-            style: kTextTheme.caption!.copyWith(
-              color: ColorPallete.primaryColor,
-            ),
-            textAlign: TextAlign.end,
-          );
-        } else {
-          return SizedBox.shrink();
-        }
-      },
     );
   }
 }

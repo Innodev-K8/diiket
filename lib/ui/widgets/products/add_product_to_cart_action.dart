@@ -12,10 +12,12 @@ import '../simple_button.dart';
 
 class AddProductToCartAction extends HookWidget {
   final Product product;
+  final bool isLarge;
 
   const AddProductToCartAction({
     Key? key,
     required this.product,
+    this.isLarge = false,
   }) : super(key: key);
 
   @override
@@ -50,58 +52,65 @@ class AddProductToCartAction extends HookWidget {
         .read(activeOrderProvider.notifier)
         .getOrderItemByProduct(product)!;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: SimpleButton(
-            onTap: () {
-              context
-                  .read(activeOrderProvider.notifier)
-                  .deleteOrderItem(orderItem);
-            },
-            child: Text(
-              'Batal',
-              style: kTextTheme.button!.copyWith(
-                fontSize: 11.0,
-                color: ColorPallete.darkGray,
+    return SizedBox(
+      // width:
+      //     isLarge ? MediaQuery.of(context).size.width * 0.5 : double.infinity,
+      child: Row(
+        mainAxisAlignment:
+            isLarge ? MainAxisAlignment.end : MainAxisAlignment.spaceBetween,
+        children: [
+          if (isLarge) Spacer(),
+          Expanded(
+            child: SimpleButton(
+              onTap: () {
+                context
+                    .read(activeOrderProvider.notifier)
+                    .deleteOrderItem(orderItem);
+              },
+              child: Text(
+                'Batal',
+                style: kTextTheme.button!.copyWith(
+                  fontSize: 11.0,
+                  color: ColorPallete.darkGray,
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(width: 4.0),
-        NumberSpinner(
-          key: ValueKey(orderItem.id),
-          initialValue: orderItem.quantity ?? 1,
-          onChanged: (value) {
-            if (value <= 0) {
-              context
-                  .read(activeOrderProvider.notifier)
-                  .deleteOrderItem(orderItem);
-            } else {
-              // debounce tiap 1 detik biar server nggak overload
-              EasyDebounce.debounce(
-                '${product.id}-order-item-debouncer',
-                Duration(seconds: 1),
-                () {
-                  context.read(activeOrderProvider.notifier).updateOrderItem(
-                        orderItem,
-                        quantity: value,
-                      );
-                },
-              );
-            }
-          },
-        ),
-      ],
+          SizedBox(width: 4.0),
+          NumberSpinner(
+            key: ValueKey(orderItem.id),
+            initialValue: orderItem.quantity ?? 1,
+            onChanged: (value) {
+              if (value <= 0) {
+                context
+                    .read(activeOrderProvider.notifier)
+                    .deleteOrderItem(orderItem);
+              } else {
+                // debounce tiap 1 detik biar server nggak overload
+                EasyDebounce.debounce(
+                  '${product.id}-order-item-debouncer',
+                  Duration(seconds: 1),
+                  () {
+                    context.read(activeOrderProvider.notifier).updateOrderItem(
+                          orderItem,
+                          quantity: value,
+                        );
+                  },
+                );
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildAddToCart(BuildContext context) {
     return Align(
-      alignment: Alignment.bottomRight,
+      alignment: isLarge ? Alignment.center : Alignment.bottomRight,
       child: SizedBox(
-        height: 28,
+        height: isLarge ? 48 : 28,
+        width: isLarge ? double.infinity : null,
         child: ElevatedButton.icon(
           onPressed: () {
             context
@@ -117,12 +126,12 @@ class AddProductToCartAction extends HookWidget {
           ),
           icon: Icon(
             Icons.add_rounded,
-            size: 14.0,
+            size: isLarge ? 22.0 : 14.0,
           ),
           label: Text(
             'Keranjang',
             style: kTextTheme.button!.copyWith(
-              fontSize: 10.0,
+              fontSize: isLarge ? 16.0 : 10.0,
             ),
           ),
         ),

@@ -29,10 +29,10 @@ class PrimaryButton extends HookWidget {
         boxShadow: <BoxShadow>[
           if (!disabled)
             BoxShadow(
-            color: (color ?? ColorPallete.primaryColor).withOpacity(0.24),
-            blurRadius: 30,
-            offset: Offset(0, 10),
-          ),
+              color: (color ?? ColorPallete.primaryColor).withOpacity(0.24),
+              blurRadius: 30,
+              offset: Offset(0, 10),
+            ),
         ],
       ),
       child: ElevatedButton(

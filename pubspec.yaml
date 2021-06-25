@@ -54,6 +54,7 @@ dependencies:
   json_annotation: ^4.0.1
   location: 4.1.1
   logger: ^1.0.0
+  modal_bottom_sheet: ^2.0.0
   page_transition: ^2.0.2
   pin_code_fields: ^7.1.0
   trust_location: ^2.0.13

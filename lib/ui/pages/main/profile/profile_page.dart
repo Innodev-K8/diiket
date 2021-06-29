@@ -20,7 +20,7 @@ class ProfilePage extends HookWidget {
           Expanded(
             child: AuthWrapper(
               isAnimated: false,
-              guest: Center(
+              guest: () => Center(
                 child: LoginToContinueButton(
                   text: 'Masuk untuk melanjutkan',
                   isLarge: true,

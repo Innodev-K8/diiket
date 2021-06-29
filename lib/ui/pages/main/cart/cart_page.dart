@@ -41,7 +41,7 @@ class CartPage extends HookWidget {
               delivering: (order) => DeliveringStatePage(order: order),
               empty: () => EmptyStatePage(),
             ),
-            guest: GuestStatePage(),
+            guest: () => GuestStatePage(),
           ),
         ),
       ),

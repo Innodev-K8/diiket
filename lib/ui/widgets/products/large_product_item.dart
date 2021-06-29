@@ -118,7 +118,7 @@ class LargeProductItem extends StatelessWidget {
                             AuthWrapper(
                               auth: (_) =>
                                   AddProductToCartAction(product: product),
-                              guest: Align(
+                              guest: () => Align(
                                 alignment: Alignment.bottomRight,
                                 child: LoginToContinueButton(),
                               ),

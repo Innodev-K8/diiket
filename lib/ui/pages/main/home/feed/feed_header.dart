@@ -27,7 +27,7 @@ class FeedHeader extends StatelessWidget {
                     'Hai, ${user.name ?? Helper.greeting()}',
                     overflow: TextOverflow.ellipsis,
                   ),
-                  guest: Text(
+                  guest: () => Text(
                     'Hai, ${Helper.greeting()}',
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -44,7 +44,7 @@ class FeedHeader extends StatelessWidget {
               radius: 22,
               backgroundImage: NetworkImage(user.profile_picture_url ?? ''),
             ),
-            guest: OutlinedButton(
+            guest: () => OutlinedButton(
               onPressed: () {
                 Utils.appNav.currentState?.pushNamed(RegisterPage.route);
               },

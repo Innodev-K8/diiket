@@ -29,8 +29,7 @@ class MarketSelector extends HookWidget {
         hint: "Pilih pasar tempat Anda ingin berbelanja.",
         showSearchBox: true,
         dropdownSearchDecoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.only(left: 16),
+          contentPadding: const EdgeInsets.only(left: 16),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(

@@ -124,7 +124,7 @@ class ProductDetailBottomSheet extends HookWidget {
                       product: product,
                       isLarge: true,
                     ),
-                    guest: Align(
+                    guest: () => Align(
                       alignment: Alignment.bottomRight,
                       child: LoginToContinueButton(),
                     ),

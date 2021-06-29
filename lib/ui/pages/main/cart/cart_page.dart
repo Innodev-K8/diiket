@@ -4,6 +4,7 @@ import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/cart/states/confirmed_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/delivering_state_page.dart';
+import 'package:diiket/ui/pages/main/cart/states/empty_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/purcashing_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/unconfirmed_state_page.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
@@ -38,30 +39,7 @@ class CartPage extends HookWidget {
               waiting: (order) => ConfirmedStatePage(order: order),
               purchasing: (order) => PurcashingStatePage(order: order),
               delivering: (order) => DeliveringStatePage(order: order),
-              empty: () => Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.remove_shopping_cart_outlined,
-                      color: ColorPallete.primaryColor,
-                      size: 48,
-                    ),
-                    SizedBox(height: 18),
-                    Text(
-                      'Keranjang Kosong',
-                      style: kTextTheme.headline4,
-                    ),
-                    SizedBox(height: 6),
-                    Text(
-                      'Tambahkan barang ke keranjang untuk melanjutkan',
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
+              empty: () => EmptyStatePage(),
             ),
             guest: Center(
               child: LoginToContinueButton(

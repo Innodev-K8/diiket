@@ -221,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             onChanged: (_) => setState(() {}),
                             // validator:
                             //     kDebugMode ? null : ValidationHelper.validateMobile,
-                            // validator: ValidationHelper.validateMobile,
+                            validator: ValidationHelper.validateMobile,
                           ),
                         ),
                       ),

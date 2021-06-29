@@ -97,17 +97,20 @@ class StallPage extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(24.0, 16.0, 24.0, 24.0),
+            padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      stall.name ?? '-',
-                      style: kTextTheme.headline3,
+                    Expanded(
+                      child: Text(
+                        stall.name ?? '-',
+                        style: kTextTheme.headline3,
+                      ),
                     ),
+                    SizedBox(width: 8),
                     _buildFavoriteButton(stall),
                   ],
                 ),
@@ -289,9 +292,10 @@ class StallPage extends HookWidget {
                 ),
               ),
               child: CircleAvatar(
-                backgroundImage: NetworkImage(
+                foregroundImage: NetworkImage(
                   stall.seller?.profile_picture_url ?? '-',
                 ),
+                backgroundColor: ColorPallete.primaryColor,
                 radius: _avatarSize / 2,
               ),
             ),

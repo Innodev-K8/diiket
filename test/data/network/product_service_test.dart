@@ -1,4 +1,4 @@
-import 'package:diiket/data/models/product.dart';
+import 'package:diiket/data/models/paginated/paginated_products.dart';
 import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/network/product_service.dart';
 import 'package:dio/dio.dart';
@@ -16,6 +16,7 @@ void main() {
   test('Product Service should get all products', () async {
     final result = await productService.getAllProducts();
 
-    expect(result, isA<List<Product>>());
+    expect(result, isNotNull);
+    expect(result, isA<PaginatedProducts>());
   });
 }

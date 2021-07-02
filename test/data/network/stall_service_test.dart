@@ -1,3 +1,4 @@
+import 'package:diiket/data/models/paginated/paginated_stalls.dart';
 import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/network/stall_service.dart';
@@ -16,8 +17,8 @@ void main() {
   test('Stall Service should get all stalls', () async {
     final result = await stallService.getStalls();
 
-    expect(result, isNotEmpty);
-    expect(result, isA<List<Stall>>());
+    expect(result, isNotNull);
+    expect(result, isA<PaginatedStalls>());
   });
 
   test('Stall Service should get stall detail', () async {

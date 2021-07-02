@@ -465,7 +465,7 @@ class _RegisterPageState extends State<RegisterPage> {
             width: 120,
             height: 48,
             child: PrimaryButton(
-              disabled: otpCodeField.text.length != 6,
+              disabled: userNameCodeField.text.isEmpty,
               onPressed: () async {
                 FocusScope.of(context).unfocus();
 

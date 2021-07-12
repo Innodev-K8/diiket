@@ -28,6 +28,7 @@ dependencies:
       url: https://github.com/Innodev-K8/pusher_client.git
   badges: ^2.0.1
   cached_network_image: ^3.0.0
+  carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
   dotted_line: ^3.0.0

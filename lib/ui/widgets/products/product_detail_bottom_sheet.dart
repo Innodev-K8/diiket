@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
@@ -6,6 +5,7 @@ import 'package:diiket/data/services/dynamic_link_generators.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/products/product_in_cart_information.dart';
+import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -74,30 +74,9 @@ class ProductDetailBottomSheet extends HookWidget {
                   ),
                 ),
                 SizedBox(height: 16.0),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: CachedNetworkImage(
-                      imageUrl: product.photo_url ??
-                          'https://diiket.rejoin.id/images/placeholders/product.jpg',
-                      fit: BoxFit.fitHeight,
-                      height: double.infinity,
-                      errorWidget: (context, url, error) => Image.network(
-                        'https://diiket.rejoin.id/images/placeholders/product.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                      placeholder: (context, url) => Center(
-                        child: SizedBox(
-                          width: 48,
-                          height: 48,
-                          child: CircularProgressIndicator(
-                            color: ColorPallete.primaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                ProductPhoto(
+                  product: product,
+                  isSquare: true,
                 ),
                 SizedBox(height: 16.0),
                 Row(

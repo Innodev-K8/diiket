@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
@@ -6,6 +5,7 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/login_to_continue_button.dart';
 import 'package:diiket/ui/widgets/products/add_product_to_cart_action.dart';
+import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -55,28 +55,7 @@ class LargeProductItem extends StatelessWidget {
                   children: [
                     Expanded(
                       flex: 2,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: CachedNetworkImage(
-                          imageUrl: product.photo_url ??
-                              'https://diiket.rejoin.id/images/placeholders/product.jpg',
-                          fit: BoxFit.fitHeight,
-                          height: double.infinity,
-                          errorWidget: (context, url, error) => Image.network(
-                            'https://diiket.rejoin.id/images/placeholders/product.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                          placeholder: (context, url) => Center(
-                            child: SizedBox(
-                              width: 48,
-                              height: 48,
-                              child: CircularProgressIndicator(
-                                color: ColorPallete.primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: ProductPhoto(product: product),
                     ),
                     SizedBox(width: 10),
                     Expanded(

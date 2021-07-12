@@ -2,6 +2,7 @@ import 'package:diiket/data/providers/products/products_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
+import 'package:diiket/ui/widgets/products/loading/horizontal_scroll_product_list_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -40,14 +41,7 @@ class ProductListSection extends HookWidget {
             isFinish: productNotifier.nextPage == null,
             products: products.data ?? [],
           ),
-          loading: () => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: CircularProgressIndicator(
-                color: ColorPallete.secondaryColor,
-              ),
-            ),
-          ),
+          loading: () => HorizontalScrollProductListLoading(),
           error: (error, stackTrace) => CustomExceptionMessage(error),
         ),
       ],

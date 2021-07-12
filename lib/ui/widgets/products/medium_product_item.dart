@@ -1,16 +1,20 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:flutter/material.dart';
 
 class MediumProductItem extends StatelessWidget {
   final Product product;
 
+  // set the material color to transparent so the shimmer works
+  final bool isForLoading;
+
   const MediumProductItem({
     Key? key,
     required this.product,
+    this.isForLoading = false,
   }) : super(key: key);
 
   @override
@@ -27,13 +31,15 @@ class MediumProductItem extends StatelessWidget {
         ],
       ),
       child: Material(
-        color: Colors.white,
+        color: isForLoading ? Colors.transparent : Colors.white,
         borderRadius: BorderRadius.circular(5),
         child: InkWell(
           borderRadius: BorderRadius.circular(5),
-          onTap: () {
-            Utils.navigateToStall(product.stall_id!, product.id);
-          },
+          onTap: isForLoading
+              ? null
+              : () {
+                  Utils.navigateToStall(product.stall_id!, product.id);
+                },
           child: Container(
             width: 140,
             child: Padding(
@@ -41,30 +47,9 @@ class MediumProductItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: CachedNetworkImage(
-                        imageUrl: product.photo_url ??
-                            'https://diiket.rejoin.id/images/placeholders/product.jpg',
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        errorWidget: (context, url, error) => Image.network(
-                          'https://diiket.rejoin.id/images/placeholders/product.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                        placeholder: (context, url) => Center(
-                          child: SizedBox(
-                            width: 48,
-                            height: 48,
-                            child: CircularProgressIndicator(
-                              color: ColorPallete.primaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  ProductPhoto(
+                    product: product,
+                    isSquare: true,
                   ),
                   SizedBox(height: 8.0),
                   Expanded(

@@ -60,6 +60,7 @@ dependencies:
   pin_code_fields: ^7.1.0
   share_plus: ^2.1.4
   shared_preferences: ^2.0.6
+  shimmer: ^2.0.0
   trust_location: ^2.0.13
   url_launcher: ^6.0.6
 
@@ -88,6 +89,7 @@ flutter:
     - assets/images/categories/
     - assets/images/icons/
     - assets/images/map/
+    - assets/images/placeholders/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

@@ -26,4 +26,11 @@ abstract class Product with _$Product {
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
+
+  factory Product.fake() {
+    return Product(
+      quantity_unit: '-',
+      stall: Stall.fake(),
+    );
+  }
 }

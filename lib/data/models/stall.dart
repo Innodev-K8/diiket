@@ -29,4 +29,10 @@ abstract class Stall with _$Stall {
   }) = _Stall;
 
   factory Stall.fromJson(Map<String, dynamic> json) => _$StallFromJson(json);
+
+  factory Stall.fake() {
+    return Stall(
+      is_open: true,
+    );
+  }
 }

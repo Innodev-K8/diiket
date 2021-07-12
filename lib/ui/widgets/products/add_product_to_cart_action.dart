@@ -48,9 +48,9 @@ class AddProductToCartAction extends HookWidget {
   }
 
   Widget _buildNumberSpinner(BuildContext context) {
-    final OrderItem orderItem = context
+    final OrderItem? orderItem = context
         .read(activeOrderProvider.notifier)
-        .getOrderItemByProduct(product)!;
+        .getOrderItemByProduct(product);
 
     return SizedBox(
       // width:
@@ -63,6 +63,8 @@ class AddProductToCartAction extends HookWidget {
           Expanded(
             child: SimpleButton(
               onTap: () {
+                if (orderItem == null) return;
+
                 context
                     .read(activeOrderProvider.notifier)
                     .deleteOrderItem(orderItem);
@@ -79,8 +81,10 @@ class AddProductToCartAction extends HookWidget {
           SizedBox(width: 4.0),
           NumberSpinner(
             key: UniqueKey(),
-            initialValue: orderItem.quantity ?? 1,
+            initialValue: orderItem?.quantity ?? 1,
             onChanged: (value) {
+              if (orderItem == null) return;
+              
               if (value <= 0) {
                 context
                     .read(activeOrderProvider.notifier)

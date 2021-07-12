@@ -40,7 +40,7 @@ class _HorizontalScrollProductListState
   }
 
   bool _handleScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollEndNotification) {
+    if (mounted && notification is ScrollEndNotification) {
       if (_controller.position.extentAfter == 0) {
         setState(() {
           isLoadingMore = true;

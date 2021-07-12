@@ -329,7 +329,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   OrderItem? getOrderItemByProduct(Product product) {
     List<OrderItem> orderProducts = state?.order_items
-            ?.where((OrderItem item) => item.product?.id! == product.id!)
+            ?.where((OrderItem item) => item.product?.id == product.id)
             .toList() ??
         [];
 

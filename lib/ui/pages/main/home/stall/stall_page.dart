@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/stall.dart';
@@ -16,6 +15,7 @@ import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/large_product_item.dart';
 import 'package:diiket/ui/widgets/products/product_detail_bottom_sheet.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
+import 'package:diiket/ui/widgets/stall/stall_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -296,10 +296,7 @@ class StallPage extends HookWidget {
                 ],
               ),
             ),
-            child: CachedNetworkImage(
-              imageUrl: stall.photo_url ?? '-',
-              fit: BoxFit.cover,
-            ),
+            child: StallPhoto(stall: stall),
           ),
           Positioned(
             left: 24.0,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
@@ -37,8 +38,13 @@ class ProfilePage extends HookWidget {
                           children: [
                             CircleAvatar(
                               radius: 72 / 2,
-                              foregroundImage:
-                                  NetworkImage(user.profile_picture_url ?? ''),
+                              foregroundImage: (user.profile_picture_url != null
+                                  ? CachedNetworkImageProvider(
+                                      user.profile_picture_url!,
+                                    )
+                                  : AssetImage(
+                                      'assets/images/placeholders/profile.jpg',
+                                    )) as ImageProvider,
                             ),
                             SizedBox(width: 16),
                             Expanded(

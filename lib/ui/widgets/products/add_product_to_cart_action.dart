@@ -84,7 +84,7 @@ class AddProductToCartAction extends HookWidget {
             initialValue: orderItem?.quantity ?? 1,
             onChanged: (value) {
               if (orderItem == null) return;
-              
+
               if (value <= 0) {
                 context
                     .read(activeOrderProvider.notifier)

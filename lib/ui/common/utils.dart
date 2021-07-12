@@ -1,6 +1,7 @@
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
 import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:diiket/ui/pages/utils/place_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,6 +35,21 @@ class Utils {
       arguments: {
         'stall_id': stallId,
         'focused_product_id': productId,
+      },
+    );
+  }
+
+  static Future<void>? navigateToProductByCategory(
+    String? category,
+    String? label,
+  ) {
+    if (category == null) return null;
+
+    return homeNav.currentState?.pushNamed(
+      ProductsByCategoryPage.route,
+      arguments: {
+        'category': category,
+        'label': label ?? category,
       },
     );
   }

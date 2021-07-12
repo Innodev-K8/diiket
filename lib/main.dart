@@ -42,6 +42,10 @@ void main() async {
 
   if (kDebugMode) {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+    await RemoteConfig.instance.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: Duration(seconds: 10),
+      minimumFetchInterval: Duration(minutes: 1),
+    ));
   } else {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;

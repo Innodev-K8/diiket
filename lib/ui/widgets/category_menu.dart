@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'category_button.dart';
 
+// TODO: move this to remote config
 class CategoryMenu extends StatelessWidget {
   CategoryMenu({
     Key? key,

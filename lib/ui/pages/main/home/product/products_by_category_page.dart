@@ -3,6 +3,7 @@ import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/custom_exception_message.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
+import 'package:diiket/ui/widgets/products/loading/vertical_scroll_product_list_loading.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -45,9 +46,10 @@ class ProductsByCategoryPage extends HookWidget {
                   physics: BouncingScrollPhysics(),
                   products: results.data ?? [],
                 ),
-                loading: () => Center(
-                  child: CircularProgressIndicator(
-                    color: ColorPallete.secondaryColor,
+                loading: () => VerticalScrollProductListLoading(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0,
+                    vertical: 20.0,
                   ),
                 ),
                 error: (error, stackTrace) => CustomExceptionMessage(error),

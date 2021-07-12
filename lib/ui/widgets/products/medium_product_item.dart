@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:flutter/material.dart';
 
@@ -33,13 +32,7 @@ class MediumProductItem extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(5),
           onTap: () {
-            Utils.homeNav.currentState!.pushNamed(
-              StallPage.route,
-              arguments: {
-                'stall_id': product.stall_id,
-                'focused_product_id': product.id,
-              },
-            );
+            Utils.navigateToStall(product.stall_id!, product.id);
           },
           child: Container(
             width: 140,

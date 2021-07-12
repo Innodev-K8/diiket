@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:flutter/material.dart';
 
 class MediumStallItem extends StatelessWidget {
@@ -34,12 +33,7 @@ class MediumStallItem extends StatelessWidget {
         child: InkWell(
           borderRadius: radius,
           onTap: () {
-            Utils.homeNav.currentState!.pushNamed(
-              StallPage.route,
-              arguments: {
-                'stall_id': stall.id,
-              },
-            );
+            Utils.navigateToStall(stall.id!);
           },
           child: Container(
             width: 180,

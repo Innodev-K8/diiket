@@ -7,6 +7,7 @@ import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/notification/background_fcm.dart';
 import 'package:diiket/data/notification/service.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
+import 'package:diiket/data/services/dynamic_link_service.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
@@ -66,6 +67,8 @@ class _MyAppState extends State<MyApp> {
     NotificationService()
         .initializeNotificationHandler(context)
         .then((streamSubscription) => notificationStream = streamSubscription);
+
+    DynamicLinkService().initializeHandler(context);
   }
 
   @override
@@ -81,6 +84,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Diiket',
       debugShowCheckedModeBanner: false,
       navigatorKey: Utils.appNav,
+      scaffoldMessengerKey: Utils.appScaffoldMessager,
       theme: ThemeData(
         primaryColor: ColorPallete.primaryColor,
         accentColor: ColorPallete.secondaryColor,

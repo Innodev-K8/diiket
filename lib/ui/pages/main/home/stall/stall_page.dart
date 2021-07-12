@@ -4,9 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/stall.dart';
+import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/stall/favorite_stall_provider.dart';
 import 'package:diiket/data/providers/stall/stall_detail_provider.dart';
+import 'package:diiket/data/services/dynamic_link_generators.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/custom_exception_message.dart';
@@ -18,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 
 class StallPage extends HookWidget {
   static const String route = '/home/stall';
@@ -72,7 +75,7 @@ class StallPage extends HookWidget {
                 controller: scrollController,
                 physics: BouncingScrollPhysics(),
                 slivers: [
-                  _buildAppBar(stall),
+                  _buildAppBar(context, stall),
                   _buildContent(context, stall, market),
                 ],
               ),
@@ -237,7 +240,7 @@ class StallPage extends HookWidget {
     );
   }
 
-  SliverAppBar _buildAppBar(Stall stall) {
+  SliverAppBar _buildAppBar(BuildContext context, Stall stall) {
     return SliverAppBar(
       leading: IconButton(
         icon: Icon(
@@ -246,6 +249,24 @@ class StallPage extends HookWidget {
         ),
         onPressed: () => Utils.homeNav.currentState?.pop(),
       ),
+      actions: [
+        IconButton(
+          onPressed: () async {
+            final uri = await DynamicLinkGenerators.generateStallDeepLink(
+              stall,
+              referrer: context.read(authProvider),
+            );
+
+            Share.share(uri.toString());
+          },
+          icon: Icon(
+            Icons.share,
+            size: 18.0,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(width: 8),
+      ],
       expandedHeight: _headerHeight + 8,
       backgroundColor: Colors.white,
       foregroundColor: Colors.red,

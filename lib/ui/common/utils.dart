@@ -1,6 +1,7 @@
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:diiket/ui/pages/utils/place_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ class Utils {
   static final GlobalKey<NavigatorState> appNav = GlobalKey();
   static final GlobalKey<NavigatorState> homeNav = GlobalKey();
 
+  static final GlobalKey<ScaffoldMessengerState> appScaffoldMessager =
+      GlobalKey();
+
   static void resetAppNavigation() {
     appNav.currentState?.popUntil(
       (route) => route.isFirst,
@@ -21,6 +25,18 @@ class Utils {
   static void resetHomeNavigation() {
     homeNav.currentState?.popUntil(
       (route) => route.isFirst,
+    );
+  }
+
+  static Future<void>? navigateToStall(int stallId, [int? productId]) {
+    print('navigateToStall called');
+
+    return homeNav.currentState?.pushNamed(
+      StallPage.route,
+      arguments: {
+        'stall_id': stallId,
+        'focused_product_id': productId,
+      },
     );
   }
 
@@ -42,7 +58,7 @@ class Utils {
   }
 
   static alert(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    appScaffoldMessager.currentState?.showSnackBar(
       SnackBar(
         content: Text(message),
       ),

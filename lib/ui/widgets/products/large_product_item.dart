@@ -3,7 +3,6 @@ import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/login_to_continue_button.dart';
 import 'package:diiket/ui/widgets/products/add_product_to_cart_action.dart';
@@ -37,13 +36,7 @@ class LargeProductItem extends StatelessWidget {
         onTap: () {
           if (onTap != null) return onTap?.call();
 
-          Utils.homeNav.currentState!.pushNamed(
-            StallPage.route,
-            arguments: {
-              'stall_id': product.stall_id,
-              'focused_product_id': product.id,
-            },
-          );
+          Utils.navigateToStall(product.stall!.id!, product.id);
         },
         child: Container(
           height: 138.0,

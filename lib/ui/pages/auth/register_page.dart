@@ -5,6 +5,7 @@ import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/helpers/validation_helper.dart';
+import 'package:diiket/ui/common/helper.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/primary_button.dart';
@@ -519,10 +520,16 @@ class _RegisterPageState extends State<RegisterPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  error.message ?? 'Terjadi kesalahan',
+                  Helper.getFirebaseAuthExceptionMessage('auth/${error.code}'),
                 ),
               ),
             );
+
+            context.read(crashlyticsProvider).recordError(
+                  error,
+                  error.stackTrace,
+                  reason: 'auth/${error.code}',
+                );
           },
           codeSent: (verificationId, forceResendingToken) {
             setState(() {

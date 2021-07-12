@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:diiket/data/network/interceptors/auth_interceptor.dart';
 import 'package:diiket/data/network/interceptors/performance_monitoring_interceptor.dart';
 import 'package:dio/dio.dart';
@@ -24,7 +26,8 @@ class ApiService {
 
     dio.interceptors.addAll([
       AuthInterceptor(),
-      PerformanceMonitoringInterceptor(),
+      if (!Platform.environment.containsKey('FLUTTER_TEST'))
+        PerformanceMonitoringInterceptor(),
       // LoggingInterceptors(),
     ]);
 

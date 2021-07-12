@@ -29,8 +29,6 @@ class Utils {
   }
 
   static Future<void>? navigateToStall(int stallId, [int? productId]) {
-    print('navigateToStall called');
-
     return homeNav.currentState?.pushNamed(
       StallPage.route,
       arguments: {

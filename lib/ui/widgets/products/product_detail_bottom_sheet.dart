@@ -110,8 +110,8 @@ class ProductDetailBottomSheet extends HookWidget {
                       ),
                     ),
                     SizedBox(width: 8),
-                    IconButton(
-                      onPressed: () async {
+                    InkWell(
+                      onTap: () async {
                         if (product.stall == null) return;
 
                         final uri =
@@ -123,10 +123,13 @@ class ProductDetailBottomSheet extends HookWidget {
 
                         Share.share(uri.toString());
                       },
-                      icon: Icon(
-                        Icons.share,
-                        size: 18.0,
-                        color: ColorPallete.darkGray,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Icon(
+                          Icons.share,
+                          size: 18.0,
+                          color: ColorPallete.darkGray,
+                        ),
                       ),
                     ),
                   ],

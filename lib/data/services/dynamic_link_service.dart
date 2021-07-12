@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/services/dynamic_link_handlers.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DynamicLinkService {
   static DynamicLinkService? _dynamicLinkService;
@@ -23,8 +25,6 @@ class DynamicLinkService {
   }
 
   Future initializeHandler(BuildContext context) async {
-    print('DynamicLink Initialized');
-
     instance.onLink(
       onSuccess: (PendingDynamicLinkData? dynamicLink) async {
         final Uri? deepLink = dynamicLink?.link;
@@ -33,9 +33,11 @@ class DynamicLinkService {
           _handleLink(context, deepLink);
         }
       },
-      onError: (OnLinkErrorException e) async {
-        print('onLinkError');
-        print(e.message);
+      onError: (OnLinkErrorException exception) async {
+        context.read(crashlyticsProvider).recordError(
+              exception,
+              null,
+            );
       },
     );
 
@@ -61,7 +63,5 @@ class DynamicLinkService {
       case 'stall':
         DynamicLinkHandlers.handleStallLink(context, deepLink);
     }
-
-    print('DeepLink: $deepLink');
   }
 }

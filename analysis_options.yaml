@@ -10,3 +10,4 @@ linter:
   rules:
     non_constant_identifier_names: false
     prefer_const_constructors: false
+    sort_pub_dependencies: false

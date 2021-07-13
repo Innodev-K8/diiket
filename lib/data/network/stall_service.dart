@@ -3,6 +3,7 @@ import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/paginated/paginated_stalls.dart';
 import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/providers/market_provider.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,12 +16,12 @@ final stallServiceProvider = StateProvider<StallService>((ref) {
 });
 
 class StallService {
-  Dio _dio;
-  int _marketId;
+  final Dio _dio;
+  final int _marketId;
 
   StallService(this._dio, this._marketId);
 
-  String _(Object path) => '/user/markets/${_marketId}/stalls/$path';
+  String _(Object path) => '/user/markets/$_marketId/stalls/$path';
 
   Future<PaginatedStalls> getStalls([int page = 1]) async {
     try {
@@ -31,7 +32,7 @@ class StallService {
         },
       );
 
-      return PaginatedStalls.fromJson(response.data);
+      return PaginatedStalls.fromJson(castOrFallback(response.data, {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }
@@ -41,7 +42,7 @@ class StallService {
     try {
       final response = await _dio.get(_(id));
 
-      return Stall.fromJson(response.data['data']);
+      return Stall.fromJson(castOrFallback(response.data['data'], {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }

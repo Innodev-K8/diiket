@@ -7,6 +7,7 @@ import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,18 +22,18 @@ final orderServiceProvider = StateProvider<OrderService>((ref) {
 });
 
 class OrderService {
-  Dio _dio;
-  int _marketId;
+  final Dio _dio;
+  final int _marketId;
 
   OrderService(this._dio, this._marketId);
 
-  String _(Object path) => '/user/markets/${_marketId}/orders/$path';
+  String _(Object path) => '/user/markets/$_marketId/orders/$path';
 
   Future<Order?> getActiveOrder() async {
     try {
       final response = await _dio.get(_('active'));
 
-      return Order.fromJson(response.data['data']);
+      return Order.fromJson(castOrFallback(response.data['data'], {}));
     } on DioError catch (error) {
       // 404 berarti ndak ada active order
       if (error.response?.statusCode == 404) {
@@ -58,7 +59,7 @@ class OrderService {
     String? notificationToken,
   ) async {
     try {
-      Map<String, dynamic> data = {
+      final Map<String, dynamic> data = {
         'location_lat': location.latitude.toString(),
         'location_lng': location.longitude.toString(),
         'delivery_fee': fare.delivery_fee,
@@ -74,19 +75,25 @@ class OrderService {
         data: data,
       );
 
-      return Order.fromJson(response.data['data']);
+      return Order.fromJson(castOrFallback(response.data['data'], {}));
     } on DioError catch (error) {
       if (error.response?.statusCode == 422) {
-        List<dynamic>? results = error.response?.data['data'];
+        final List<dynamic>? results = castOrNull(error.response?.data['data']);
 
         if (results == null) {
           throw CustomException(
-            message: error.response?.data['message'] ?? error.message,
+            message: castOrFallback(
+              error.response?.data['message'],
+              error.message,
+            ),
           );
         }
 
-        List<OrderItem> outOfStockItems =
-            results.map((json) => OrderItem.fromJson(json)).toList();
+        final List<OrderItem> outOfStockItems = results
+            .map(
+              (json) => OrderItem.fromJson(castOrFallback(json, {})),
+            )
+            .toList();
 
         throw CustomException(
           message:
@@ -104,7 +111,7 @@ class OrderService {
   Future<OrderItem> placeOrderItem(Product product, int quantity,
       [String? notes]) async {
     try {
-      Map<String, dynamic> data = {
+      final Map<String, dynamic> data = {
         'product_id': product.id,
         'quantity': quantity,
         if (notes != null) 'notes': notes,
@@ -115,7 +122,7 @@ class OrderService {
         data: data,
       );
 
-      return OrderItem.fromJson(response.data['data']);
+      return OrderItem.fromJson(castOrFallback(response.data['data'], {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }
@@ -127,7 +134,7 @@ class OrderService {
     String? notes,
   }) async {
     try {
-      Map<String, dynamic> data = {
+      final Map<String, dynamic> data = {
         '_method': 'PATCH',
         if (quantity != null) 'quantity': quantity,
         if (notes != null) 'notes': notes,
@@ -138,7 +145,7 @@ class OrderService {
         data: data,
       );
 
-      return OrderItem.fromJson(response.data['data']);
+      return OrderItem.fromJson(castOrFallback(response.data['data'], {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }
@@ -150,12 +157,12 @@ class OrderService {
     } on DioError catch (error) {
       // 404 berarti ndak ada itemnya
       if (error.response?.statusCode == 404) {
-        return null;
+        return;
       }
 
       // ini buat ngehandle server yang ngawur, sukses kok 403
       if (error.response?.statusCode == 403) {
-        return null;
+        return;
       }
 
       throw CustomException.fromDioError(error);

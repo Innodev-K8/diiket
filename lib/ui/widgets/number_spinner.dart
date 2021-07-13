@@ -6,7 +6,7 @@ class NumberSpinner extends HookWidget {
   final Function(int)? onChanged;
   final int initialValue;
 
-  NumberSpinner({
+  const NumberSpinner({
     Key? key,
     this.onChanged,
     this.initialValue = 1,

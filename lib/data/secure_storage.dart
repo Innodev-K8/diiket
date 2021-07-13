@@ -1,31 +1,37 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SecureStorage {
-  static const AUTH_TOKEN = 'AUTH_TOKEN';
+  static final SecureStorage _instance = SecureStorage._();
 
-  static SharedPreferences? _storage;
-
-  static Future<void> ensure() async {
-    if (_storage == null) {
-      _storage = await SharedPreferences.getInstance();
-    }
+  factory SecureStorage() {
+    return _instance;
   }
 
-  static Future<void> setToken(String token) async {
-    await ensure();
+  SecureStorage._();
 
-    await _storage!.setString(AUTH_TOKEN, token);
+  static const authTokenKey = 'AUTH_TOKEN';
+
+  SharedPreferences? _storage;
+
+  Future<void> ensure() async {
+    _storage ??= await SharedPreferences.getInstance();
   }
 
-  static Future<void> clearToken() async {
+  Future<void> setToken(String token) async {
     await ensure();
 
-    await _storage!.remove(AUTH_TOKEN);
+    await _storage!.setString(authTokenKey, token);
   }
 
-  static Future<String?> getToken() async {
+  Future<void> clearToken() async {
     await ensure();
 
-    return _storage!.getString(AUTH_TOKEN);
+    await _storage!.remove(authTokenKey);
+  }
+
+  Future<String?> getToken() async {
+    await ensure();
+
+    return _storage!.getString(authTokenKey);
   }
 }

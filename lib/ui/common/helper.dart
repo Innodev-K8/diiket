@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+// ignore: avoid_classes_with_only_static_members
 abstract class Helper {
   static NumberFormat currencyFormatter = NumberFormat.currency(
     locale: 'id_ID',
@@ -8,7 +9,7 @@ abstract class Helper {
   );
 
   static String greeting() {
-    var hour = DateTime.now().hour;
+    final hour = DateTime.now().hour;
 
     if (hour < 12) {
       return 'Selamat Pagi';
@@ -83,22 +84,12 @@ abstract class Helper {
         return 'Nomor telepon anda tidak ditemukan';
       case 'auth/missing-verification-code':
         return 'Kode verifikasi tidak ditemukan';
-      case 'auth/network-request-failed':
-        return 'Permintaan ke server gagal';
       case 'auth/invalid-recipient-phone-number':
         return 'Nomor telepon penerima tidak valid';
-      case 'auth/missing-verification-code':
-        return 'Kode verifikasi tidak ditemukan';
-      case 'auth/missing-phone-number':
-        return 'Nomor telepon anda tidak ditemukan';
       case 'auth/missing-sender-id':
         return 'ID pengirim tidak ditemukan';
       case 'auth/missing-recipient-id':
         return 'ID penerima tidak ditemukan';
-      case 'auth/network-request-failed':
-        return 'Permintaan ke server gagal';
-      case 'auth/missing-verification-code':
-        return 'Kode verifikasi tidak ditemukan';
       case 'auth/missing-verification-id':
         return 'ID verifikasi tidak ditemukan';
       default:

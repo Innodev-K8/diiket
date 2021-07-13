@@ -11,6 +11,7 @@ import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/pusher_provider.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pusher_client/pusher_client.dart';
@@ -39,9 +40,9 @@ final activeOrderErrorProvider = StateProvider<CustomException?>((ref) {
 // PRODUK ADA DALAM PESANAN
 
 class ActiveOrderState extends StateNotifier<Order?> {
-  PusherClient _pusher;
+  final PusherClient _pusher;
   // OrderService _read(orderServiceProvider).state;
-  Reader _read;
+  final Reader _read;
 
   Channel? _channel;
 
@@ -81,15 +82,16 @@ class ActiveOrderState extends StateNotifier<Order?> {
     try {
       await _unsubscribe();
 
-      print('Subscribing to active order channel: orders.${state!.id}');
       _channel = _pusher.subscribe('orders.${state!.id}');
 
       _channel!.bind('order-status-updated', (PusherEvent? event) {
-        dynamic response = jsonDecode(event?.data ?? '');
+        final dynamic response = jsonDecode(event?.data ?? '');
 
         if (response['order'] == null) return;
 
-        Order order = Order.fromJson(response['order']);
+        final Order order = Order.fromJson(
+          castOrFallback(response['order'], {}),
+        );
 
         if (order.status == 'completed' || order.status == 'canceled') {
           _unsubscribe(order.id);
@@ -120,9 +122,9 @@ class ActiveOrderState extends StateNotifier<Order?> {
   Future<void> retrieveActiveOrder() async {
     try {
       if (mounted && _read(authProvider) != null) {
-        Order? oldOrder = state;
+        final Order? oldOrder = state;
 
-        Order? newOrder =
+        final Order? newOrder =
             await _read(orderServiceProvider).state.getActiveOrder();
 
         if (newOrder?.id != oldOrder?.id) {
@@ -154,7 +156,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
       {Function? onComplete}) async {
     try {
       if (mounted) {
-        Order? result =
+        final Order? result =
             await _read(orderServiceProvider).state.confirmActiveOrder(
                   location,
                   fare,
@@ -184,18 +186,18 @@ class ActiveOrderState extends StateNotifier<Order?> {
       }
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
-      throw error;
+      rethrow;
     }
   }
 
   Future<void> placeOrderItem(Product product, int quantity,
       [String? notes]) async {
     try {
-      OrderItem orderItem = await _read(orderServiceProvider)
+      final OrderItem orderItem = await _read(orderServiceProvider)
           .state
           .placeOrderItem(product, quantity, notes);
 
-      Order? activeOrder = state;
+      final Order? activeOrder = state;
 
       if (activeOrder != null) {
         state = activeOrder.copyWith(
@@ -233,7 +235,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
         notes: notes ?? orderItem.notes,
       );
 
-      Order? activeOrder = state;
+      final Order? activeOrder = state;
 
       if (activeOrder != null) {
         // change current state biar kenceng nggak nunggu network request
@@ -264,7 +266,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   Future<void> deleteOrderItem(OrderItem orderItem) async {
     try {
-      Order? activeOrder = state;
+      final Order? activeOrder = state;
 
       if (activeOrder != null) {
         // change current state biar kenceng nggak nunggu network request
@@ -301,7 +303,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
     String? notes,
   }) async {
     try {
-      OrderItem? orderItem = getOrderItemByProduct(product);
+      final OrderItem? orderItem = getOrderItemByProduct(product);
 
       if (orderItem == null) return;
 
@@ -317,7 +319,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   Future<void> deleteOrderItemByProduct(Product product) async {
     try {
-      OrderItem? orderItem = getOrderItemByProduct(product);
+      final OrderItem? orderItem = getOrderItemByProduct(product);
 
       if (orderItem == null) return;
 
@@ -328,7 +330,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
   }
 
   OrderItem? getOrderItemByProduct(Product product) {
-    List<OrderItem> orderProducts = state?.order_items
+    final List<OrderItem> orderProducts = state?.order_items
             ?.where((OrderItem item) => item.product?.id == product.id)
             .toList() ??
         [];
@@ -344,7 +346,9 @@ class ActiveOrderState extends StateNotifier<Order?> {
   int get orderCount {
     int sum = 0;
 
-    state?.order_items?.forEach((item) => sum += item.quantity ?? 0);
+    for (final OrderItem item in castOrFallback(state?.order_items, [])) {
+      sum += item.quantity ?? 0;
+    }
 
     return sum;
   }
@@ -353,12 +357,12 @@ class ActiveOrderState extends StateNotifier<Order?> {
     // sebenernya di model Order udah ada, tapi ini karena update sendiri, harus gini
     int sum = 0;
 
-    state?.order_items?.forEach((item) {
+    for (final OrderItem item in castOrFallback(state?.order_items, [])) {
       final int price = item.product?.price ?? 0;
       final int quantity = item.quantity ?? 0;
 
       sum += price * quantity;
-    });
+    }
 
     return sum;
   }
@@ -367,12 +371,12 @@ class ActiveOrderState extends StateNotifier<Order?> {
     // sebenernya di model Order udah ada, tapi ini karena update sendiri, harus gini
     int sum = 0;
 
-    state?.order_items?.forEach((item) {
+    for (final OrderItem item in castOrFallback(state?.order_items, [])) {
       final int weight = item.product?.weight ?? 0;
       final int quantity = item.quantity ?? 0;
 
       sum += weight * quantity;
-    });
+    }
 
     return sum;
   }

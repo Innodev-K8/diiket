@@ -75,8 +75,6 @@ class ProductsByCategoryPage extends HookWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
             onPressed: () {
@@ -90,7 +88,7 @@ class ProductsByCategoryPage extends HookWidget {
             ),
           ),
           Text(
-            '${labelText}',
+            labelText,
             style: kTextTheme.headline2,
           ),
         ],

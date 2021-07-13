@@ -8,12 +8,12 @@ class TokenState extends StateNotifier<String?> {
   TokenState() : super(null);
 
   Future<void> setToken(String token) async {
-    await SecureStorage.setToken(token);
+    await SecureStorage().setToken(token);
     state = token;
   }
 
   Future<void> clearToken() async {
-    await SecureStorage.clearToken();
+    await SecureStorage().clearToken();
     state = null;
   }
 }

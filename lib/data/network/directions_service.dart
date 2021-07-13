@@ -1,5 +1,6 @@
 import 'package:diiket/data/models/directions.dart';
 import 'package:diiket/data/network/api_service.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -31,7 +32,7 @@ class DirectionsService {
 
     // Check if response is successful
     if (response.statusCode == 200) {
-      return Directions.fromMap(response.data);
+      return Directions.fromMap(castOrFallback(response.data, {}));
     }
 
     return null;

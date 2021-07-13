@@ -76,7 +76,7 @@ class _PlacePickerState extends State<PlacePicker> {
     super.dispose();
   }
 
-  _setPickedPosition() async {
+  Future<void> _setPickedPosition() async {
     setState(() {
       _isLoading = true;
     });
@@ -87,13 +87,13 @@ class _PlacePickerState extends State<PlacePicker> {
 
     final destinationPosition = _lastMapPosition ?? _pickedPosition!;
 
-    Directions? directions =
+    final Directions? directions =
         await context.read(directionsServiceProvider).getDirections(
               origin: _marketPosition,
               destination: destinationPosition,
             );
 
-    Placemark? placemark = await context
+    final Placemark? placemark = await context
         .read(geocodeServiceProvider)
         .reverseGeocoding(destinationPosition);
 
@@ -194,7 +194,6 @@ class _PlacePickerState extends State<PlacePicker> {
                             _directions = null;
                           });
                         },
-                        child: Text('Pilih Ulang'),
                         style: ElevatedButton.styleFrom(
                           primary: ColorPallete.secondaryColor,
                           elevation: 0,
@@ -202,6 +201,7 @@ class _PlacePickerState extends State<PlacePicker> {
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                         ),
+                        child: Text('Pilih Ulang'),
                       ),
                     ),
                     SizedBox(height: 8.0),
@@ -220,8 +220,6 @@ class _PlacePickerState extends State<PlacePicker> {
                           _setPickedPosition();
                         }
                       },
-                      child: Text(
-                          _pickedPosition != null ? 'Konfirmasi' : 'Pilih'),
                       style: ElevatedButton.styleFrom(
                         primary: ColorPallete.primaryColor,
                         elevation: 0,
@@ -229,6 +227,8 @@ class _PlacePickerState extends State<PlacePicker> {
                           borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
+                      child: Text(
+                          _pickedPosition != null ? 'Konfirmasi' : 'Pilih'),
                     ),
                   ),
                 ],
@@ -349,7 +349,7 @@ class _PlacePickerState extends State<PlacePicker> {
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          '${labelText}',
+          labelText,
           style: kTextTheme.headline2,
           textAlign: TextAlign.center,
         ),

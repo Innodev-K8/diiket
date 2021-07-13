@@ -26,12 +26,6 @@ class ConfirmOrderButton extends HookWidget {
     final deliveryDetail = useProvider(deliveryDetailProvider);
 
     return PrimaryButton(
-      child: Text(
-        'Pesan',
-        style: kTextTheme.headline6!.copyWith(
-          color: ColorPallete.backgroundColor,
-        ),
-      ),
       trailing: deliveryDetail.fare?.when(
             data: (value) => Text(
               'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value.total_fee ?? 0))}',
@@ -44,6 +38,12 @@ class ConfirmOrderButton extends HookWidget {
           ) ??
           SizedBox.shrink(),
       onPressed: onPressed,
+      child: Text(
+        'Pesan',
+        style: kTextTheme.headline6!.copyWith(
+          color: ColorPallete.backgroundColor,
+        ),
+      ),
     );
   }
 }

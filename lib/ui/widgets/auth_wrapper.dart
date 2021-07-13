@@ -10,16 +10,17 @@ class AuthWrapper extends HookWidget {
 
   final bool isAnimated;
 
-  AuthWrapper({
+  const AuthWrapper({
     this.auth,
     this.guest,
     this.isAnimated = true,
   });
 
+  @override
   Widget build(BuildContext context) {
     final User? user = useProvider(authProvider);
 
-    Widget child = user == null
+    final Widget child = user == null
         ? (guest?.call() ?? SizedBox.shrink())
         : (auth?.call(user) ?? SizedBox.shrink());
 

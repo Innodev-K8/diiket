@@ -10,20 +10,20 @@ import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/primary_button.dart';
 import 'package:entry/entry.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 enum MobileVerificationState {
-  SHOW_PHONE_FORM,
-  SHOW_OTP_FORM,
-  SHOW_USERNAME_FORM,
+  showPhoneForm,
+  showOtpForm,
+  showUsernameForm,
 }
 
 class RegisterPage extends StatefulWidget {
-  static final route = '/auth/register';
+  static const route = '/auth/register';
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -31,7 +31,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   // state ini digunakan untuk menentukan user memasukan no-telp atau kode otp
-  MobileVerificationState curentState = MobileVerificationState.SHOW_PHONE_FORM;
+  MobileVerificationState curentState = MobileVerificationState.showPhoneForm;
 
   final GlobalKey<FormState> phoneFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> otpFormKey = GlobalKey<FormState>();
@@ -51,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void startTimer() {
     resendTimer?.cancel();
 
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     resendTimer = Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -78,13 +78,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return WillPopScope(
       onWillPop: () async {
         switch (curentState) {
-          case MobileVerificationState.SHOW_PHONE_FORM:
+          case MobileVerificationState.showPhoneForm:
             return true;
-          case MobileVerificationState.SHOW_OTP_FORM:
+          case MobileVerificationState.showOtpForm:
             _cancelConfirmingOtp();
-
             return false;
-          case MobileVerificationState.SHOW_USERNAME_FORM:
+          case MobileVerificationState.showUsernameForm:
             // dissalow back here
             return false;
         }
@@ -105,12 +104,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Stack(
                   children: [
                     AnimatedOpacity(
-                      duration: Duration(milliseconds: 250),
+                      duration: const Duration(milliseconds: 250),
                       opacity: isLoading ? 0.5 : 1,
                       child: Padding(
                         padding: const EdgeInsets.all(24.0),
                         child: AnimatedSwitcher(
-                          duration: Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 500),
                           child: _buildContent(context),
                         ),
                       ),
@@ -151,7 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
     if (user.name == null || user.name == '') {
       setState(() {
         isLoading = false;
-        curentState = MobileVerificationState.SHOW_USERNAME_FORM;
+        curentState = MobileVerificationState.showUsernameForm;
       });
     } else {
       Utils.resetAppNavigation();
@@ -160,11 +159,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildContent(BuildContext context) {
     switch (curentState) {
-      case MobileVerificationState.SHOW_PHONE_FORM:
+      case MobileVerificationState.showPhoneForm:
         return _buildMobileForm(context);
-      case MobileVerificationState.SHOW_OTP_FORM:
+      case MobileVerificationState.showOtpForm:
         return _buildOtpForm(context);
-      case MobileVerificationState.SHOW_USERNAME_FORM:
+      case MobileVerificationState.showUsernameForm:
         return _buildUserNameForm(context);
     }
   }
@@ -177,16 +176,15 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.15),
-                DiiketLogo(),
-                SizedBox(height: 30),
+                const DiiketLogo(),
+                const SizedBox(height: 30),
                 Text('Selamat Datang', style: kTextTheme.headline1),
-                SizedBox(height: 5),
-                Text('Masukan nomor telepon anda untuk melanjutkan'),
-                SizedBox(height: 37),
+                const SizedBox(height: 5),
+                const Text('Masukan nomor telepon anda untuk melanjutkan'),
+                const SizedBox(height: 37),
                 Container(
                   decoration: kBorderedDecoration,
                   padding: const EdgeInsets.symmetric(
@@ -196,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.phone_android_rounded,
                         color: ColorPallete.darkGray,
                         size: 22.0,
@@ -212,7 +210,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 0),
+                          padding: const EdgeInsets.only(),
                           child: TextFormField(
                             controller: phoneNumberField,
                             keyboardType: TextInputType.phone,
@@ -272,7 +270,6 @@ class _RegisterPageState extends State<RegisterPage> {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.15),
                 InkWell(
@@ -284,30 +281,29 @@ class _RegisterPageState extends State<RegisterPage> {
                       shape: BoxShape.circle,
                     ),
                     padding: const EdgeInsets.all(12),
-                    child: Icon(
+                    child: const Icon(
                       Icons.chevron_left_rounded,
                       size: 42,
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Text(
                   'Verifikasi',
                   style: kTextTheme.headline1,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
-                  'Silakan masukkan 6 digit kode yang sudah kami kirin ke nomer Anda di +62 ${phoneNumberField.value.text}.',
+                  'Silakan masukkan 6 digit kode yang sudah kami kirim ke nomer Anda di +62 ${phoneNumberField.value.text}.',
                   textAlign: TextAlign.start,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 48,
                 ),
                 PinCodeTextField(
                   length: 6,
-                  obscureText: false,
                   // validator: ValidationHelper.validateOtp,
                   animationType: AnimationType.fade,
                   keyboardType: TextInputType.number,
@@ -357,11 +353,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 ? TextButton(
                     onPressed: () async {
                       await _sendSmsVerificationCode(
-                        forceResendingToken: this.forceResendingToken,
+                        forceResendingToken: forceResendingToken,
                         onCodeSent: () {
                           setState(() {
-                            this.resetTimer();
-                            this.startTimer();
+                            resetTimer();
+                            startTimer();
 
                             Utils.alert(
                               context,
@@ -382,7 +378,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       right: MediaQuery.of(context).size.width * 0.1,
                     ),
                     child: Text(
-                      'Kirim ulang kode dalam 0:${resendTimeoutCounter}',
+                      'Kirim ulang kode dalam 0:$resendTimeoutCounter',
                       style: kTextTheme.overline,
                     ),
                   ),
@@ -400,7 +396,6 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.15),
@@ -511,9 +506,9 @@ class _RegisterPageState extends State<RegisterPage> {
           },
           verificationFailed: (error) {
             setState(() {
-              curentState = MobileVerificationState.SHOW_PHONE_FORM;
+              curentState = MobileVerificationState.showPhoneForm;
               isLoading = false;
-              this.verificationId = null;
+              verificationId = null;
               this.forceResendingToken = null;
             });
 
@@ -533,11 +528,11 @@ class _RegisterPageState extends State<RegisterPage> {
           },
           codeSent: (verificationId, forceResendingToken) {
             setState(() {
-              curentState = MobileVerificationState.SHOW_OTP_FORM;
+              curentState = MobileVerificationState.showOtpForm;
               isLoading = false;
               this.verificationId = verificationId;
               this.forceResendingToken = forceResendingToken;
-              this.startTimer();
+              startTimer();
             });
 
             onCodeSent?.call();
@@ -551,21 +546,22 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _cancelConfirmingOtp() {
     setState(() {
-      curentState = MobileVerificationState.SHOW_PHONE_FORM;
+      curentState = MobileVerificationState.showPhoneForm;
       isLoading = false;
-      this.verificationId = null;
-      this.forceResendingToken = null;
-      this.resetTimer();
+      verificationId = null;
+      forceResendingToken = null;
+      resetTimer();
     });
   }
 
   Future<void> _verifyOtpCode(String otpCode) async {
-    if (verificationId == null)
+    if (verificationId == null) {
       return setState(() {
-        curentState = MobileVerificationState.SHOW_PHONE_FORM;
+        curentState = MobileVerificationState.showPhoneForm;
       });
+    }
 
-    final phoneAuthCredential = firebaseAuth.PhoneAuthProvider.credential(
+    final phoneAuthCredential = firebase_auth.PhoneAuthProvider.credential(
       verificationId: verificationId!,
       smsCode: otpCode,
     );
@@ -574,7 +570,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _signInWithPhoneCredential(
-      firebaseAuth.PhoneAuthCredential phoneAuthCredential) async {
+      firebase_auth.PhoneAuthCredential phoneAuthCredential) async {
     setState(() {
       isLoading = true;
     });

@@ -31,7 +31,7 @@ abstract class Stall with _$Stall {
   factory Stall.fromJson(Map<String, dynamic> json) => _$StallFromJson(json);
 
   factory Stall.fake() {
-    return Stall(
+    return const Stall(
       is_open: true,
     );
   }

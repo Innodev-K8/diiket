@@ -5,7 +5,7 @@ import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/auth_service.dart';
 import 'package:diiket/data/providers/auth/token_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:diiket/data/repositories/firebase_auth_repository.dart';
 
@@ -20,9 +20,9 @@ final authProvider = StateNotifierProvider<AuthState, User?>((ref) {
 final authExceptionProvider = StateProvider<CustomException?>((_) => null);
 
 class AuthState extends StateNotifier<User?> {
-  FirebaseAuthRepository _firebaseAuthRepository;
-  AuthService _authService;
-  Reader _read;
+  final FirebaseAuthRepository _firebaseAuthRepository;
+  final AuthService _authService;
+  final Reader _read;
 
   StreamSubscription<FirebaseUser?>? _authStateChangesSubscription;
 
@@ -36,7 +36,7 @@ class AuthState extends StateNotifier<User?> {
         .listen(onFirebaseAuthStateChanges);
   }
 
-  void onFirebaseAuthStateChanges(FirebaseUser? user) async {
+  Future<void> onFirebaseAuthStateChanges(FirebaseUser? user) async {
     if (user != null) {
       await _signInWithFirebaseUser(user);
     } else {
@@ -45,7 +45,7 @@ class AuthState extends StateNotifier<User?> {
   }
 
   Future<void> signInWithPhoneCredential(
-      firebaseAuth.PhoneAuthCredential credential) async {
+      firebase_auth.PhoneAuthCredential credential) async {
     try {
       await _firebaseAuthRepository.signInWithPhoneCredential(credential);
 

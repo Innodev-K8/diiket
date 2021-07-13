@@ -9,7 +9,7 @@ final geocodeServiceProvider = Provider<GeocodeService>((ref) {
 class GeocodeService {
   Future<Placemark?> reverseGeocoding(LatLng position) async {
     try {
-      Placemark placemark = (await placemarkFromCoordinates(
+      final Placemark placemark = (await placemarkFromCoordinates(
         position.latitude,
         position.longitude,
       ))

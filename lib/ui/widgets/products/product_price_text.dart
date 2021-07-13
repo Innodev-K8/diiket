@@ -20,7 +20,7 @@ class ProductPiceText extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
             text: product.price != null
-                ? '${Helper.fmtPrice(product.price)}'
+                ? Helper.fmtPrice(product.price)
                 : '-',
             style: kTextTheme.subtitle2!.copyWith(
               color: ColorPallete.primaryColor,

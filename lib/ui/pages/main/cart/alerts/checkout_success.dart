@@ -13,7 +13,6 @@ class CheckoutSuccessPage extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(24.0),
@@ -38,10 +37,10 @@ class CheckoutSuccessPage extends StatelessWidget {
             ),
             SizedBox(height: 54),
             PrimaryButton(
-              child: Text('Kembali ke pesanan'),
               onPressed: () {
                 Utils.appNav.currentState?.pop();
               },
+              child: Text('Kembali ke pesanan'),
             ),
           ],
         ),

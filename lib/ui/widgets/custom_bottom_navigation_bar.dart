@@ -1,6 +1,8 @@
 import 'package:badges/badges.dart';
+import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,6 @@ class CustomBottomNavigationBar extends HookWidget {
         border: Border(
           top: BorderSide(
             color: ColorPallete.lightGray.withOpacity(0.5),
-            width: 1.0,
           ),
         ),
       ),
@@ -45,8 +46,12 @@ class CustomBottomNavigationBar extends HookWidget {
 
             int itemCount = 0;
 
-            activeOrder?.order_items
-                ?.forEach((item) => itemCount += item.quantity ?? 0);
+            for (final OrderItem item in castOrFallback(
+              activeOrder?.order_items,
+              [],
+            )) {
+              itemCount += item.quantity ?? 0;
+            }
 
             return BottomBarButton(
               showBadge: itemCount >= 1,

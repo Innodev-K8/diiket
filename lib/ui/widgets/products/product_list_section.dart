@@ -58,7 +58,6 @@ class ProductListSection extends HookWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Text(
@@ -78,11 +77,11 @@ class ProductListSection extends HookWidget {
                 },
               );
             },
-            child: Text('Lihat Semua'),
             style: TextButton.styleFrom(
               padding: const EdgeInsets.all(4),
               primary: ColorPallete.primaryColor,
             ),
+            child: Text('Lihat Semua'),
           ),
         ],
       ),

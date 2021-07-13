@@ -32,7 +32,7 @@ class DeliveringStatePage extends HookWidget {
           child: Stack(
             children: [
               RefreshIndicator(
-                onRefresh: () async => await context
+                onRefresh: () async => context
                     .read(activeOrderProvider.notifier)
                     .retrieveActiveOrder(),
                 child: SingleChildScrollView(
@@ -57,7 +57,6 @@ class DeliveringStatePage extends HookWidget {
                             OrderPaymentDetail(),
                             SizedBox(height: 10),
                             PrimaryButton(
-                              child: Text('Hubungi Driver'),
                               onPressed: () async {
                                 final url = "tel:${order.driver?.phone_number}";
 
@@ -70,6 +69,7 @@ class DeliveringStatePage extends HookWidget {
                                   );
                                 }
                               },
+                              child: Text('Hubungi Driver'),
                             ),
                           ],
                         ),

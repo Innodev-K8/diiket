@@ -27,7 +27,7 @@ class SearchProductsState extends StateNotifier<AsyncValue<PaginatedProducts>> {
   }
 
   Future<void> searchProducts(String? q) async {
-    state = AsyncValue.loading();
+    state = const AsyncValue.loading();
 
     try {
       query = q;
@@ -36,7 +36,7 @@ class SearchProductsState extends StateNotifier<AsyncValue<PaginatedProducts>> {
         _read(productSearchHistoryProvider.notifier).add(query!);
       }
 
-      PaginatedProducts products =
+      final PaginatedProducts products =
           await _productService.searchProducs(1, query);
 
       _read(analyticsProvider).logSearch(searchTerm: query!);
@@ -64,13 +64,13 @@ class SearchProductsState extends StateNotifier<AsyncValue<PaginatedProducts>> {
       final PaginatedProducts? currentState = state.data?.value;
 
       if (state.data?.value == null) {
-        return searchProducts(this.query);
+        return searchProducts(query);
       }
 
       final int? nextPage = this.nextPage;
 
       if (nextPage != null) {
-        PaginatedProducts result =
+        final PaginatedProducts result =
             await _productService.searchProducs(nextPage, query);
 
         state = AsyncValue.data(result.copyWith(data: [

@@ -15,9 +15,7 @@ class ProductSearchHistoryState extends StateNotifier<List<String>> {
   }
 
   Future<void> init() async {
-    if (_box == null) {
-      _box = await Hive.openBox<String>('product-search-history');
-    }
+    _box ??= await Hive.openBox<String>('product-search-history');
 
     state = _box!.values.toList();
 

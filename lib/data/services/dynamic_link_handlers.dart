@@ -7,7 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // implementations for link handlers, initialization on DynamicLinkService
 class DynamicLinkHandlers {
-  static void handleStallLink(BuildContext context, Uri deepLink) async {
+  static Future<void> handleStallLink(
+      BuildContext context, Uri deepLink) async {
     final int? stallId = int.tryParse(
       deepLink.queryParameters['stallId'] ?? '',
     );

@@ -73,6 +73,7 @@ dev_dependencies:
   freezed: ^0.14.2
   hive_generator: ^1.1.0
   json_serializable: ^4.1.1
+  lint: ^1.5.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

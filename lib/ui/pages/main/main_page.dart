@@ -13,7 +13,7 @@ import 'home/home_page.dart';
 import 'profile/profile_page.dart';
 
 class MainPage extends HookWidget {
-  static final route = '/';
+  static const route = '/';
 
   final pages = [
     HomePage(),
@@ -73,7 +73,7 @@ class MainPage extends HookWidget {
     ValueNotifier<DateTime?> currentBackPressTime,
     BuildContext context,
   ) {
-    DateTime now = DateTime.now();
+    final DateTime now = DateTime.now();
 
     if (currentBackPressTime.value == null ||
         now.difference(currentBackPressTime.value!) > Duration(seconds: 2)) {

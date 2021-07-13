@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:diiket/data/models/product_feed.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/products/products_provider.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final productFeedProvider =
@@ -11,7 +12,7 @@ final productFeedProvider =
 });
 
 class ProductFeedsState extends StateNotifier<List<ProductFeed>> {
-  Reader _read;
+  final Reader _read;
 
   ProductFeedsState(this._read) : super([]) {
     fetch();
@@ -35,9 +36,13 @@ class ProductFeedsState extends StateNotifier<List<ProductFeed>> {
       final feedJsonString =
           _read(remoteConfigProvider).getString('product_feeds');
 
-      final List<dynamic> json = jsonDecode(feedJsonString);
+      final List<dynamic> json = castOrFallback(jsonDecode(feedJsonString), []);
 
-      state = json.map((json) => ProductFeed.fromJson(json)).toList();
+      state = json
+          .map(
+            (json) => ProductFeed.fromJson(castOrFallback(json, {})),
+          )
+          .toList();
     } on Exception catch (_) {
       // set to default
       state = defaultFeed;

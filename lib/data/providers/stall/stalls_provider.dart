@@ -14,15 +14,15 @@ final stallsProvider =
 class StallsState extends StateNotifier<AsyncValue<PaginatedStalls>> {
   final StallService _stallService;
 
-  StallsState(this._stallService) : super(AsyncValue.loading()) {
+  StallsState(this._stallService) : super(const AsyncValue.loading()) {
     loadStalls();
   }
 
   Future<void> loadStalls() async {
-    state = AsyncValue.loading();
+    state = const AsyncValue.loading();
 
     try {
-      PaginatedStalls stalls = await _stallService.getStalls(1);
+      final PaginatedStalls stalls = await _stallService.getStalls();
 
       state = AsyncValue.data(stalls);
     } on CustomException catch (error) {
@@ -53,7 +53,7 @@ class StallsState extends StateNotifier<AsyncValue<PaginatedStalls>> {
       final int? nextPage = this.nextPage;
 
       if (nextPage != null) {
-        PaginatedStalls result = await _stallService.getStalls(nextPage);
+        final PaginatedStalls result = await _stallService.getStalls(nextPage);
 
         state = AsyncValue.data(result.copyWith(data: [
           ...?currentState!.data,

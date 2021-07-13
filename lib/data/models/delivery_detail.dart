@@ -8,8 +8,6 @@ part 'delivery_detail.freezed.dart';
 
 @freezed
 class DeliveryDetail with _$DeliveryDetail {
-  const DeliveryDetail._();
-
   factory DeliveryDetail({
     LatLng? position,
     String? geocodedPosition,
@@ -17,6 +15,8 @@ class DeliveryDetail with _$DeliveryDetail {
     Directions? directions,
     AsyncValue<Fare>? fare,
   }) = _DeliveryDetail;
+
+  const DeliveryDetail._();
 
   bool fullfiled() {
     if (position == null || fare?.data?.value.total_fee == null) return false;

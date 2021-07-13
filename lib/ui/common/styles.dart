@@ -4,20 +4,20 @@ import 'package:google_fonts/google_fonts.dart';
 class ColorPallete {
   const ColorPallete._();
 
-  static final primaryColor = const Color(0xFFFF8527);
-  static final secondaryColor = const Color(0xFF009EBA);
-  static final accentColor = const Color(0xFF003046);
-  static final darkGray = const Color(0xFF636773);
-  static final lightGray = const Color(0xFFb8b9ba);
-  static final blueishGray = const Color(0xFFF2F3F4);
+  static const primaryColor = Color(0xFFFF8527);
+  static const secondaryColor = Color(0xFF009EBA);
+  static const accentColor = Color(0xFF003046);
+  static const darkGray = Color(0xFF636773);
+  static const lightGray = Color(0xFFb8b9ba);
+  static const blueishGray = Color(0xFFF2F3F4);
   static final backgroundColor = Colors.white;
 
-  static final numberSpinnerColor = const Color(0xFFFFB945);
+  static const numberSpinnerColor = Color(0xFFFFB945);
 
-  static final infoColor = const Color(0xFF0D6EFD);
-  static final successColor = const Color(0xFF00B894);
+  static const infoColor = Color(0xFF0D6EFD);
+  static const successColor = Color(0xFF00B894);
 
-  static final textColor = accentColor;
+  static const textColor = accentColor;
 }
 
 final BoxDecoration kBorderedDecoration = BoxDecoration(

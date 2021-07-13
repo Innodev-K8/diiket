@@ -8,14 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DynamicLinkService {
-  static DynamicLinkService? _dynamicLinkService;
+  static final DynamicLinkService _singleton = DynamicLinkService._();
 
   factory DynamicLinkService() {
-    if (_dynamicLinkService == null) {
-      _dynamicLinkService = DynamicLinkService._();
-    }
-
-    return _dynamicLinkService!;
+    return _singleton;
   }
 
   late FirebaseDynamicLinks instance;

@@ -1,5 +1,6 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/fare.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,7 +11,7 @@ final fareServiceProvider = Provider<FareService>((ref) {
 });
 
 class FareService {
-  Dio _dio;
+  final Dio _dio;
 
   FareService(this._dio);
 
@@ -26,7 +27,7 @@ class FareService {
         },
       );
 
-      return Fare.fromJson(response.data['data']);
+      return Fare.fromJson(castOrFallback(response.data['data'], {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }

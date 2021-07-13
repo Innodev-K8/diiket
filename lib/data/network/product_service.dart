@@ -2,6 +2,7 @@ import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/paginated/paginated_products.dart';
 import 'package:diiket/data/providers/market_provider.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -14,12 +15,12 @@ final productServiceProvider = StateProvider<ProductService>((ref) {
 });
 
 class ProductService {
-  Dio _dio;
-  int _marketId;
+  final Dio _dio;
+  final int _marketId;
 
   ProductService(this._dio, this._marketId);
 
-  String _(Object path) => '/user/markets/${_marketId}/products/$path';
+  String _(Object path) => '/user/markets/$_marketId/products/$path';
 
   Future<PaginatedProducts> getAllProducts(
       [int page = 1, String? category]) async {
@@ -32,7 +33,7 @@ class ProductService {
         },
       );
 
-      return PaginatedProducts.fromJson(response.data);
+      return PaginatedProducts.fromJson(castOrFallback(response.data, {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }
@@ -48,7 +49,7 @@ class ProductService {
         },
       );
 
-      return PaginatedProducts.fromJson(response.data);
+      return PaginatedProducts.fromJson(castOrFallback(response.data, {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }
@@ -63,7 +64,7 @@ class ProductService {
         },
       );
 
-      return PaginatedProducts.fromJson(response.data);
+      return PaginatedProducts.fromJson(castOrFallback(response.data, {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }
@@ -78,7 +79,7 @@ class ProductService {
         },
       );
 
-      return PaginatedProducts.fromJson(response.data);
+      return PaginatedProducts.fromJson(castOrFallback(response.data, {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }

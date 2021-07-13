@@ -13,8 +13,8 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:diiket/ui/pages/main/main_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
-import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page%20copy%202.dart';
-import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page%20copy.dart';
+import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page.dart';
+import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -26,7 +26,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
@@ -43,8 +43,8 @@ void main() async {
   if (kDebugMode) {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
     await RemoteConfig.instance.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: Duration(seconds: 10),
-      minimumFetchInterval: Duration(minutes: 1),
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(minutes: 1),
     ));
   } else {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);

@@ -30,7 +30,6 @@ class OrderPreviewPanel extends HookWidget {
         border: Border(
           top: BorderSide(
             color: ColorPallete.lightGray.withOpacity(0.5),
-            width: 1.0,
           ),
         ),
       ),

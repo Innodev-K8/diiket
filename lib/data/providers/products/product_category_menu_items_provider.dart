@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:diiket/data/providers/firebase_provider.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/category_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,7 +13,7 @@ final productCategoryMenuItemsProvider =
 
 class ProductCategoryMenuItemsState
     extends StateNotifier<List<CategoryButton>> {
-  Reader _read;
+  final Reader _read;
 
   ProductCategoryMenuItemsState(this._read) : super([]) {
     fetch();
@@ -77,16 +78,16 @@ class ProductCategoryMenuItemsState
       final feedJsonString =
           _read(remoteConfigProvider).getString('product_category_menu_items');
 
-      final List<dynamic> json = jsonDecode(feedJsonString);
+      final List<dynamic> json = castOrFallback(jsonDecode(feedJsonString), []);
 
       state = json
           .map((item) => CategoryButton(
-                text: item['text'],
-                fileName: item['iconFileName'],
+                text: castOrFallback(item['text'], '-'),
+                fileName: castOrFallback(item['iconFileName'], ''),
                 onTap: () {
                   Utils.navigateToProductByCategory(
-                    item['category'],
-                    item['pageLabel'],
+                    castOrNull(item['category']),
+                    castOrNull(item['pageLabel']),
                   );
                 },
               ))

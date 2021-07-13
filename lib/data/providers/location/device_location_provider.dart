@@ -12,9 +12,9 @@ final deviceLocationProvider =
 });
 
 class DeviceLocationState extends StateNotifier<LatLng> {
-  Reader _read;
+  final Reader _read;
 
-  DeviceLocationState(this._read) : super(LatLng(0, 0)) {
+  DeviceLocationState(this._read) : super(const LatLng(0, 0)) {
     TrustLocation.start(5);
 
     TrustLocation.onChange.listen((event) {
@@ -31,6 +31,7 @@ class DeviceLocationState extends StateNotifier<LatLng> {
     });
   }
 
+  @override
   void dispose() {
     TrustLocation.stop();
 

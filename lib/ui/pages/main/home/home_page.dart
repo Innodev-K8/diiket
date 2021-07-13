@@ -1,5 +1,6 @@
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
 import 'package:flutter/material.dart';
@@ -47,27 +48,27 @@ class _HomePageState extends State<HomePage>
         observers: [_heroController],
         initialRoute: FeedPage.route,
         onGenerateRoute: (RouteSettings settings) {
-          final Map? arguments =
-              settings.arguments != null ? settings.arguments as Map : null;
+          final Map arguments =
+              settings.arguments != null ? settings.arguments! as Map : {};
 
           Widget page;
 
           switch (settings.name) {
             case StallPage.route:
               page = StallPage(
-                stallId: arguments?['stall_id'] ?? 0,
-                focusedProductId: arguments?['focused_product_id'] ?? null,
+                stallId: castOrFallback(arguments['stall_id'], 0) ?? 0,
+                focusedProductId: castOrNull(arguments['focused_product_id']),
               );
               break;
             case SearchPage.route:
               page = SearchPage(
-                autofocus: arguments?['search_autofocus'] ?? false,
+                autofocus: castOrFallback(arguments['search_autofocus'], false),
               );
               break;
             case ProductsByCategoryPage.route:
               page = ProductsByCategoryPage(
-                category: arguments?['category'] ?? '',
-                label: arguments?['label'],
+                category: castOrFallback(arguments['category'], ''),
+                label: castOrNull(arguments['label']),
               );
               break;
             case FeedPage.route:

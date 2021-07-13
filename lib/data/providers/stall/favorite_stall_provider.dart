@@ -16,9 +16,7 @@ class FavoriteStallState extends StateNotifier<List<Stall>> {
   }
 
   Future<void> init() async {
-    if (_box == null) {
-      _box = await Hive.openBox<Stall>('favorite-stalls');
-    }
+    _box ??= await Hive.openBox<Stall>('favorite-stalls');
 
     state = _box!.values.toList();
 

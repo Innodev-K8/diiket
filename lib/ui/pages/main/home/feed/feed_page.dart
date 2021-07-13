@@ -71,8 +71,9 @@ class FeedPage extends StatelessWidget {
                     (context, index) {
                       final ProductFeed feed = feeds[index];
 
-                      if (feed.label == null || feed.query == null)
+                      if (feed.label == null || feed.query == null) {
                         return SizedBox();
+                      }
 
                       return ProductListSection(
                         label: feed.label!,
@@ -157,14 +158,9 @@ class _CampaignBannerState extends State<CampaignBanner> {
             ),
             options: CarouselOptions(
               height: 160,
-              aspectRatio: 16 / 9,
-              initialPage: 0,
-              reverse: false,
               autoPlay: true,
               autoPlayInterval: Duration(seconds: 8),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              scrollDirection: Axis.horizontal,
               onPageChanged: (index, reason) {
                 setState(() {
                   _current = index;

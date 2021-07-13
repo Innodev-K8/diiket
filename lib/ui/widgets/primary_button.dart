@@ -36,6 +36,14 @@ class PrimaryButton extends HookWidget {
         ],
       ),
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: color ?? ColorPallete.primaryColor,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        onPressed: disabled ? null : onPressed,
         child: Row(
           mainAxisAlignment: trailing != null
               ? MainAxisAlignment.spaceBetween
@@ -45,14 +53,6 @@ class PrimaryButton extends HookWidget {
             if (trailing != null) trailing!,
           ],
         ),
-        style: ElevatedButton.styleFrom(
-          primary: color ?? ColorPallete.primaryColor,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-        ),
-        onPressed: disabled ? null : onPressed,
       ),
     );
   }

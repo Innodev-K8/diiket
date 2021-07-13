@@ -1,5 +1,6 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/market.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,7 +11,7 @@ final marketServiceProvider = Provider<MarketService>((ref) {
 });
 
 class MarketService {
-  Dio _dio;
+  final Dio _dio;
 
   MarketService(this._dio);
 
@@ -20,9 +21,11 @@ class MarketService {
     try {
       final response = await _dio.get(_('nearby'));
 
-      List<dynamic> results = response.data['data'];
+      final List<dynamic> results = castOrFallback(response.data['data'], []);
 
-      return results.map((json) => Market.fromJson(json)).toList();
+      return results
+          .map((json) => Market.fromJson(castOrFallback(json, {})))
+          .toList();
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }
@@ -32,7 +35,7 @@ class MarketService {
     try {
       final response = await _dio.get(_(id));
 
-      return Market.fromJson(response.data['data']);
+      return Market.fromJson(castOrFallback(response.data['data'], {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }

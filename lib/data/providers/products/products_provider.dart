@@ -24,7 +24,7 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
   final ProductService _productService;
 
   ProductState(this._productService, this._category)
-      : super(AsyncValue.loading()) {
+      : super(const AsyncValue.loading()) {
     loadProducts();
   }
 
@@ -32,21 +32,21 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
     // fetch product by provided category
     switch (_category) {
       case ProductFamily.popular:
-        return await _productService.getPopularProducts(page);
+        return _productService.getPopularProducts(page);
       case ProductFamily.random:
-        return await _productService.getRandomProducts(page);
+        return _productService.getRandomProducts(page);
       case ProductFamily.all:
-        return await _productService.getAllProducts(page);
+        return _productService.getAllProducts(page);
       default:
-        return await _productService.getAllProducts(page, _category);
+        return _productService.getAllProducts(page, _category);
     }
   }
 
   Future<void> loadProducts() async {
-    state = AsyncValue.loading();
+    state = const AsyncValue.loading();
 
     try {
-      PaginatedProducts products = await _getProductAtPage(1);
+      final PaginatedProducts products = await _getProductAtPage();
 
       if (mounted) state = AsyncValue.data(products);
     } on CustomException catch (error) {
@@ -77,7 +77,7 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
       final int? nextPage = this.nextPage;
 
       if (nextPage != null) {
-        PaginatedProducts result = await _getProductAtPage(nextPage);
+        final PaginatedProducts result = await _getProductAtPage(nextPage);
 
         state = AsyncValue.data(result.copyWith(data: [
           ...?currentState!.data,

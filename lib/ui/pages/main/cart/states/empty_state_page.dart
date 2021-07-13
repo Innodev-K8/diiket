@@ -28,7 +28,6 @@ class EmptyStatePage extends HookWidget {
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.remove_shopping_cart_outlined,

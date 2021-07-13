@@ -6,7 +6,7 @@ final currentMarketProvider = StateProvider<Market>((ref) {
   final nearbyMarkets = ref.watch(nearbyMarketsProvider).data?.value;
 
   // default market pake id 1,
-  return nearbyMarkets?.first ?? Market(id: 1);
+  return nearbyMarkets?.first ?? const Market(id: 1);
 });
 
 final nearbyMarketsProvider = FutureProvider<List<Market>>((ref) {

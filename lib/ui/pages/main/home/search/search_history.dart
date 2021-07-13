@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class SearchHistory extends HookWidget {
   final Function(String)? onSelect;
 
-  SearchHistory({this.onSelect});
+  const SearchHistory({this.onSelect});
 
   @override
   Widget build(BuildContext context) {

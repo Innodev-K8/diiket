@@ -13,7 +13,7 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
   final Function? onLoading;
   final Function? onDone;
 
-  SelectOrderDeliveryLocationButton({
+  const SelectOrderDeliveryLocationButton({
     this.onLoading,
     this.onDone,
   });
@@ -26,14 +26,6 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
       height: 42.0,
       width: double.infinity,
       child: ElevatedButton(
-        child: Text(
-          'Pilih Lokasi Antar',
-          style: kTextTheme.caption!.copyWith(
-            color: deliveryDetail.position != null
-                ? ColorPallete.darkGray
-                : ColorPallete.backgroundColor,
-          ),
-        ),
         style: ElevatedButton.styleFrom(
           primary: deliveryDetail.position != null
               ? ColorPallete.blueishGray
@@ -44,7 +36,7 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
           onLoading?.call();
 
           try {
-            LatLng? userPosition = await LocationService.getUserPosition();
+            final LatLng? userPosition = await LocationService.getUserPosition();
 
             if (userPosition != null) {
               final PlacePickerResult? result = await Utils.pickLocation(
@@ -66,6 +58,14 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
             onDone?.call();
           }
         },
+        child: Text(
+          'Pilih Lokasi Antar',
+          style: kTextTheme.caption!.copyWith(
+            color: deliveryDetail.position != null
+                ? ColorPallete.darkGray
+                : ColorPallete.backgroundColor,
+          ),
+        ),
       ),
     );
   }

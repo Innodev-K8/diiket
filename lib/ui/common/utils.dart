@@ -10,6 +10,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// ignore: avoid_classes_with_only_static_members
 class Utils {
   static final GlobalKey<NavigatorState> appNav = GlobalKey();
   static final GlobalKey<NavigatorState> homeNav = GlobalKey();
@@ -39,10 +40,10 @@ class Utils {
     );
   }
 
-  static Future<void>? navigateToProductByCategory(
+  static Future<Object?>? navigateToProductByCategory(
     String? category,
     String? label,
-  ) {
+  ) async {
     if (category == null) return null;
 
     return homeNav.currentState?.pushNamed(
@@ -67,11 +68,11 @@ class Utils {
     );
   }
 
-  static popPlacePicker(PlacePickerResult? result) async {
+  static void popPlacePicker(PlacePickerResult? result) {
     appNav.currentState?.pop(result);
   }
 
-  static alert(BuildContext context, String message) {
+  static void alert(BuildContext context, String message) {
     appScaffoldMessager.currentState?.showSnackBar(
       SnackBar(
         content: Text(message),
@@ -81,29 +82,29 @@ class Utils {
 
   static Future<void> signOutPrompt(BuildContext context) async {
     // set up the buttons
-    Widget cancelButton = TextButton(
-      child: Text("Tidak"),
+    final Widget cancelButton = TextButton(
       onPressed: () {
         appNav.currentState?.pop();
       },
+      child: const Text("Tidak"),
     );
-    Widget continueButton = TextButton(
-      child: Text(
+    final Widget continueButton = TextButton(
+      onPressed: () {
+        appNav.currentState?.pop();
+        context.read(authProvider.notifier).signOut();
+      },
+      child: const Text(
         "Ya",
         style: TextStyle(
           color: ColorPallete.primaryColor,
         ),
       ),
-      onPressed: () {
-        appNav.currentState?.pop();
-        context.read(authProvider.notifier).signOut();
-      },
     );
 
     // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Perhatian"),
-      content: Text("Anda yakin ingin keluar dari akun ini?"),
+    final AlertDialog alert = AlertDialog(
+      title: const Text("Perhatian"),
+      content: const Text("Anda yakin ingin keluar dari akun ini?"),
       actions: [
         cancelButton,
         continueButton,

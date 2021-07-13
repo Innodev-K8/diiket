@@ -40,7 +40,7 @@ class MediumProductItem extends StatelessWidget {
               : () {
                   Utils.navigateToStall(product.stall_id!, product.id);
                 },
-          child: Container(
+          child: SizedBox(
             width: 140,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -64,7 +64,7 @@ class MediumProductItem extends StatelessWidget {
                         ),
                         Spacer(flex: 3),
                         ProductPiceText(product: product),
-                        Spacer(flex: 1),
+                        Spacer(),
                         Text(
                           product.stall?.name ?? '-',
                           style: kTextTheme.caption,

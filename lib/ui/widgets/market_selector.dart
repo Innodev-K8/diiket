@@ -51,8 +51,9 @@ class MarketSelector extends HookWidget {
           ),
         ),
         onChanged: (Market? market) {
-          if (market != null)
+          if (market != null) {
             context.read(currentMarketProvider).state = market;
+          }
         },
       ),
       loading: () => Text('Mencari Pasar Terdekat...'),

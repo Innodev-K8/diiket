@@ -15,7 +15,7 @@ class DynamicLinkGenerators {
     final int? productId = product?.id;
 
     if (stallId == null || marketId == null) {
-      throw CustomException(
+      throw const CustomException(
         message: 'Stall ID and Market ID are required.',
       );
     }

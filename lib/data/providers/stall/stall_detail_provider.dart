@@ -17,19 +17,20 @@ class StallDetailState extends StateNotifier<AsyncValue<Stall>> {
   final Reader _read;
   final int _stallId;
 
-  StallDetailState(this._read, this._stallId) : super(AsyncValue.loading()) {
+  StallDetailState(this._read, this._stallId)
+      : super(const AsyncValue.loading()) {
     loadStall();
   }
 
   Future<void> loadStall() async {
-    state = AsyncValue.loading();
+    state = const AsyncValue.loading();
 
     return reloadStall();
   }
 
   Future<void> reloadStall() async {
     try {
-      Stall stalls =
+      final Stall stalls =
           await _read(stallServiceProvider).state.getStallDetail(_stallId);
 
       state = AsyncValue.data(stalls);

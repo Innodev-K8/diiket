@@ -1,3 +1,4 @@
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 
@@ -141,7 +142,8 @@ typedef ResponseContentLengthMethod = int? Function(Response options);
 
 int? defaultResponseContentLength(Response response) {
   if (response.data is String) {
-    return (response.headers.toString().length) + response.data.length as int?;
+    return (response.headers.toString().length) +
+        castOrFallback(response.data.length, 0) as int?;
   } else {
     return null;
   }

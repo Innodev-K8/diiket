@@ -117,7 +117,6 @@ class OrderPaymentDetail extends HookWidget {
           SizedBox(height: 12.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Total harga',
@@ -181,13 +180,11 @@ class PaymentDetailRecord extends StatelessWidget {
             color: ColorPallete.darkGray,
           ),
         ),
-        value is Text
-            ? Text(
+        if (value is Text) Text(
                 (value as Text).data ?? '',
                 style: (value as Text).style,
                 textAlign: TextAlign.end,
-              )
-            : value
+              ) else value
       ],
     );
   }

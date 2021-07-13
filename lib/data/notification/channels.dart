@@ -4,7 +4,7 @@ class NotificationChannels {
   NotificationChannels._();
 
   static const AndroidNotificationChannel defaultChannel =
-      const AndroidNotificationChannel(
+      AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
     'This channel is used for important notifications.', // description
@@ -12,7 +12,7 @@ class NotificationChannels {
   );
 
   static const AndroidNotificationDetails feed =
-      const AndroidNotificationDetails(
+      AndroidNotificationDetails(
     'diiket',
     'Diiket',
     'Display Feeds',
@@ -22,14 +22,12 @@ class NotificationChannels {
   );
 
   static const AndroidNotificationDetails order =
-      const AndroidNotificationDetails(
+      AndroidNotificationDetails(
     'order',
     'Pesanan',
     'Notifikasi status pesanan',
     importance: Importance.max,
     priority: Priority.max,
-    enableVibration: true,
-    playSound: true,
     enableLights: true,
     styleInformation: BigTextStyleInformation(''),
   );

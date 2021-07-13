@@ -13,7 +13,7 @@ class DriverDetailBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 176,
       width: double.infinity,
       child: Column(
@@ -23,7 +23,6 @@ class DriverDetailBanner extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CircleAvatar(

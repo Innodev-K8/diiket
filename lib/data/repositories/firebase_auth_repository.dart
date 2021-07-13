@@ -18,7 +18,7 @@ abstract class BaseFirebaseAuthRepository {
 }
 
 class FirebaseAuthRepository extends BaseFirebaseAuthRepository {
-  FirebaseAuth _auth;
+  final FirebaseAuth _auth;
 
   FirebaseAuthRepository(this._auth);
 

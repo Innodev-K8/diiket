@@ -11,7 +11,7 @@ class GuestStatePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: const [
         CustomAppBar(title: 'Keranjang'),
         Expanded(
           child: Center(

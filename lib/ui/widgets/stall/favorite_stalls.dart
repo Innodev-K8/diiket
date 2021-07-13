@@ -48,8 +48,6 @@ class FavoriteStalls extends HookWidget {
         bottom: 20,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             'Langganan',

@@ -31,7 +31,7 @@ class ConfirmedStatePage extends HookWidget {
           child: Stack(
             children: [
               RefreshIndicator(
-                onRefresh: () async => await context
+                onRefresh: () async => context
                     .read(activeOrderProvider.notifier)
                     .retrieveActiveOrder(),
                 child: OrderItemList(
@@ -78,7 +78,6 @@ class ConfirmedStatePage extends HookWidget {
                       OrderPaymentDetail(),
                       SizedBox(height: 10.0),
                       PrimaryButton(
-                        child: Text('Batalkan Pesanan'),
                         color: ColorPallete.darkGray,
                         onPressed: () async {
                           isLoading.value = true;
@@ -89,6 +88,7 @@ class ConfirmedStatePage extends HookWidget {
 
                           isLoading.value = false;
                         },
+                        child: Text('Batalkan Pesanan'),
                       ),
                     ],
                   ),

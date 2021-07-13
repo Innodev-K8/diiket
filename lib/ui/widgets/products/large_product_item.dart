@@ -29,7 +29,11 @@ class LargeProductItem extends StatelessWidget {
       absorbing: !isStoreOpen,
       child: InkWell(
         onTap: () {
-          if (onTap != null) return onTap?.call();
+          if (onTap != null) {
+            onTap?.call();
+
+            return;
+          }
 
           Utils.navigateToStall(product.stall!.id!, product.id);
         },
@@ -73,7 +77,7 @@ class LargeProductItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
-                          Spacer(flex: 1),
+                          Spacer(),
                           ProductPiceText(product: product),
                           Spacer(flex: 4),
                           if (readonly)
@@ -112,7 +116,6 @@ class LargeProductItem extends StatelessWidget {
           color: ColorPallete.blueishGray,
           border: Border.all(
             color: ColorPallete.secondaryColor,
-            width: 1.0,
           ),
           borderRadius: BorderRadius.circular(5.0),
         ),

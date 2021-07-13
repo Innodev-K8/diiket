@@ -2,6 +2,7 @@
 
 
 [![Codemagic build status](https://api.codemagic.io/apps/60ed12b38daa78327dd4a4e7/60ed12b38daa78327dd4a4e6/status_badge.svg)](https://codemagic.io/apps/60ed12b38daa78327dd4a4e7/60ed12b38daa78327dd4a4e6/latest_build)
+[![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 
 ## Getting Started
 

@@ -11,7 +11,7 @@ class OrderStateWrapper extends HookWidget {
   final Widget Function(Order)? delivering;
   final Widget Function()? empty;
 
-  OrderStateWrapper({
+  const OrderStateWrapper({
     this.unconfirmed,
     this.waiting,
     this.purchasing,

@@ -49,7 +49,8 @@ class StallPage extends HookWidget {
     useEffect(() {
       stallState.whenData((value) {
         Timer(Duration(milliseconds: 250), () {
-          if (_autofocusProductKey.currentContext != null) {
+          if (_autofocusProductKey.currentWidget != null &&
+              _autofocusProductKey.currentWidget != null) {
             Scrollable.ensureVisible(
               _autofocusProductKey.currentContext!,
               duration: Duration(milliseconds: 500),
@@ -58,7 +59,7 @@ class StallPage extends HookWidget {
 
             ProductDetailBottomSheet.show(
               context,
-              (_autofocusProductKey.currentWidget as LargeProductItem).product,
+              (_autofocusProductKey.currentWidget! as LargeProductItem).product,
             );
           }
         });
@@ -176,7 +177,6 @@ class StallPage extends HookWidget {
                         ? _autofocusProductKey
                         : null,
                     product: product,
-                    readonly: false,
                     onTap: () {
                       ProductDetailBottomSheet.show(context, product);
                     },
@@ -208,16 +208,16 @@ class StallPage extends HookWidget {
               key: ValueKey('unfavorite'),
               width: 110,
               child: OutlinedButton(
+                onPressed: () {
+                  HapticFeedback.vibrate();
+                  notifier.delete(stall);
+                },
                 child: Text(
                   'Langanan',
                   style: kTextTheme.button!.copyWith(
                     color: ColorPallete.primaryColor,
                   ),
                 ),
-                onPressed: () {
-                  HapticFeedback.vibrate();
-                  notifier.delete(stall);
-                },
               ),
             )
           : SizedBox(
@@ -228,13 +228,13 @@ class StallPage extends HookWidget {
                   primary: ColorPallete.primaryColor,
                   elevation: 0,
                 ),
-                child: Text(
-                  'Langanan',
-                ),
                 onPressed: () {
                   HapticFeedback.vibrate();
                   notifier.add(stall);
                 },
+                child: Text(
+                  'Langanan',
+                ),
               ),
             ),
     );

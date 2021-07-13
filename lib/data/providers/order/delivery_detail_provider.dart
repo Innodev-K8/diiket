@@ -12,7 +12,7 @@ final deliveryDetailProvider =
 });
 
 class DeliveryDetailState extends StateNotifier<DeliveryDetail> {
-  Reader _read;
+  final Reader _read;
 
   DeliveryDetailState(this._read) : super(DeliveryDetail()) {
     _read(activeOrderProvider.notifier).addListener((state) {
@@ -30,10 +30,10 @@ class DeliveryDetailState extends StateNotifier<DeliveryDetail> {
     if (state.directions?.totalDistance == null) return;
 
     state = state.copyWith(
-      fare: AsyncValue.loading(),
+      fare: const AsyncValue.loading(),
     );
 
-    Fare fare = await _read(fareServiceProvider).calculate(
+    final Fare fare = await _read(fareServiceProvider).calculate(
       state.directions?.totalDistance ?? 0,
       _read(activeOrderProvider.notifier).totalProductWeight,
     );
@@ -46,12 +46,12 @@ class DeliveryDetailState extends StateNotifier<DeliveryDetail> {
   void setDeliveryDirections(LatLng? position, Directions? directions) {
     final placeMark = directions?.placemark;
 
-    String? subLocality = placeMark?.subLocality;
-    String? locality = placeMark?.locality;
-    String? administrativeArea = placeMark?.administrativeArea;
-    String? postalCode = placeMark?.postalCode;
+    final String? subLocality = placeMark?.subLocality;
+    final String? locality = placeMark?.locality;
+    final String? administrativeArea = placeMark?.administrativeArea;
+    final String? postalCode = placeMark?.postalCode;
 
-    String address =
+    final String address =
         "${subLocality ?? '-'}, ${locality ?? '-'}, ${administrativeArea ?? '-'} ${postalCode ?? '-'}";
 
     state = state.copyWith(

@@ -1,4 +1,4 @@
-import 'package:dio/src/dio_error.dart';
+import 'package:dio/dio.dart';
 
 class CustomException implements Exception {
   final String? message;

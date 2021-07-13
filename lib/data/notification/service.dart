@@ -21,10 +21,10 @@ class NotificationService {
   }
 
   Future<bool?> initialize() async {
-    final AndroidInitializationSettings initializationSettingsAndroid =
+    const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
     );
@@ -42,7 +42,7 @@ class NotificationService {
 
   Future<StreamSubscription<RemoteMessage>> initializeNotificationHandler(
       BuildContext context) async {
-    RemoteMessage? initialMessage =
+    final RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
@@ -50,8 +50,8 @@ class NotificationService {
     }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
-      RemoteNotification? notification = message?.notification;
-      AndroidNotification? android = message?.notification?.android;
+      final RemoteNotification? notification = message?.notification;
+      final AndroidNotification? android = message?.notification?.android;
 
       // If `onMessage` is triggered with a notification, construct our own
       // local notification to show to users using the created channel.
@@ -60,7 +60,7 @@ class NotificationService {
               notification.hashCode,
               notification.title,
               notification.body,
-              NotificationDetails(
+              const NotificationDetails(
                 android: NotificationChannels.order,
               ),
             );

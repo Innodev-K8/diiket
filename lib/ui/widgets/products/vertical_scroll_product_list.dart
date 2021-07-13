@@ -45,10 +45,11 @@ class VerticalScrollProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (products.isEmpty)
+    if (products.isEmpty) {
       return Center(
         child: Text('Tidak ada produk yang dapat ditampilkan'),
       );
+    }
 
     return ListView.separated(
       padding: padding,
@@ -73,8 +74,9 @@ class VerticalScrollProductList extends StatelessWidget {
 
         final Product product = products[index];
 
-        if (productItemBuilder != null)
+        if (productItemBuilder != null) {
           return productItemBuilder!.call(product, index);
+        }
 
         final productItem = LargeProductItem(
           product: product,

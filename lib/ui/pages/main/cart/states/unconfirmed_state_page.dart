@@ -40,7 +40,7 @@ class UnconfirmedStatePage extends HookWidget {
           child: Stack(
             children: [
               RefreshIndicator(
-                onRefresh: () async => await context
+                onRefresh: () async => context
                     .read(activeOrderProvider.notifier)
                     .retrieveActiveOrder(),
                 child: OrderItemList(
@@ -77,9 +77,9 @@ class UnconfirmedStatePage extends HookWidget {
                     padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
                     child: ConfirmOrderButton(
                       onPressed: () async {
-                        Fare? fare = deliveryDetail.fare?.data?.value;
-                        LatLng? position = deliveryDetail.position;
-                        String? notificationToken =
+                        final Fare? fare = deliveryDetail.fare?.data?.value;
+                        final LatLng? position = deliveryDetail.position;
+                        final String? notificationToken =
                             await FirebaseMessaging.instance.getToken();
 
                         if (fare == null || position == null) return;

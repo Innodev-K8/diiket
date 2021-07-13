@@ -30,7 +30,7 @@ class _HorizontalScrollProductListState
   @override
   void initState() {
     super.initState();
-    _controller = new ScrollController();
+    _controller = ScrollController();
   }
 
   @override

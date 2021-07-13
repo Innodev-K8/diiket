@@ -63,7 +63,6 @@ class ProductDetailBottomSheet extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
-                  alignment: Alignment.center,
                   child: Container(
                     width: 48,
                     height: 6,
@@ -115,7 +114,7 @@ class ProductDetailBottomSheet extends HookWidget {
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  (product.description ?? '-'),
+                  product.description ?? '-',
                   style: kTextTheme.overline!.copyWith(
                     // fontWeight: FontWeight.bold,
                     color: ColorPallete.darkGray,

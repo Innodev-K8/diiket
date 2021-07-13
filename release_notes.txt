@@ -1,2 +1,0 @@
-- Fix tombol add to chart tidak terupdate saat konfirmasi order
-- Hanya load pasar baru jika link produk yang dibuka beda pasar

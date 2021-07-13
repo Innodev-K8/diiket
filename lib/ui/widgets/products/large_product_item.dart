@@ -1,5 +1,4 @@
 import 'package:diiket/data/models/product.dart';
-import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
@@ -8,8 +7,6 @@ import 'package:diiket/ui/widgets/products/add_product_to_cart_action.dart';
 import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import 'product_in_cart_information.dart';
 
 class LargeProductItem extends StatelessWidget {
@@ -27,8 +24,6 @@ class LargeProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isStoreOpen = product.stall?.is_open == true;
-    final isAnyProcessedOrder = context.read(activeOrderProvider) != null &&
-        context.read(activeOrderProvider)!.status != 'unconfirmed';
 
     return AbsorbPointer(
       absorbing: !isStoreOpen,
@@ -81,7 +76,7 @@ class LargeProductItem extends StatelessWidget {
                           Spacer(flex: 1),
                           ProductPiceText(product: product),
                           Spacer(flex: 4),
-                          if (readonly || isAnyProcessedOrder)
+                          if (readonly)
                             Align(
                               alignment: Alignment.bottomRight,
                               child: ProductInCartInformation(product: product),

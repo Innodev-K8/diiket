@@ -2,6 +2,7 @@ import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/widgets/products/product_in_cart_information.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -27,6 +28,9 @@ class AddProductToCartAction extends HookWidget {
     final bool isProductInOrder =
         context.read(activeOrderProvider.notifier).isProductInOrder(product);
 
+    final isAnyProcessedOrder = context.read(activeOrderProvider) != null &&
+        context.read(activeOrderProvider)!.status != 'unconfirmed';
+
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 250),
       switchInCurve: Curves.easeInQuint,
@@ -41,9 +45,14 @@ class AddProductToCartAction extends HookWidget {
           child: child,
         ),
       ),
-      child: isProductInOrder
-          ? _buildNumberSpinner(context)
-          : _buildAddToCart(context),
+      child: isAnyProcessedOrder
+          ? Align(
+              alignment: Alignment.bottomRight,
+              child: ProductInCartInformation(product: product),
+            )
+          : (isProductInOrder
+              ? _buildNumberSpinner(context)
+              : _buildAddToCart(context)),
     );
   }
 

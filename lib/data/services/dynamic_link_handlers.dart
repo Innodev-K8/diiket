@@ -25,14 +25,10 @@ class DynamicLinkHandlers {
       final currentSelectedMarket = context.read(currentMarketProvider).state;
 
       if (currentSelectedMarket.id != marketId) {
-        print('fetching new market');
-
         final market =
             await context.read(marketServiceProvider).getMarketDetail(marketId);
 
         context.read(currentMarketProvider).state = market;
-      } else {
-        print('market is correct already');
       }
 
       Utils.navigateToStall(stallId, productId);

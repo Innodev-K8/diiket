@@ -4,12 +4,14 @@ import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/network/stall_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   late Dio dio;
   late StallService stallService;
 
   setUp(() {
+    SharedPreferences.setMockInitialValues({});
     dio = ApiService.create();
     stallService = StallService(dio, 1);
   });

@@ -3,10 +3,13 @@ import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/network/directions_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   test('it should get correct directions', () async {
     // arrange
+    SharedPreferences.setMockInitialValues({});
+    
     final dio = ApiService.create();
     final service = DirectionsService(dio);
 

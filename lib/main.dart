@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/product_category.dart';
 import 'package:diiket/data/models/seller.dart';
@@ -7,6 +8,7 @@ import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/notification/background_fcm.dart';
 import 'package:diiket/data/notification/service.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
+import 'package:diiket/data/providers/global_exception_provider.dart';
 import 'package:diiket/data/services/dynamic_link_service.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
@@ -84,27 +86,39 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Diiket',
-      debugShowCheckedModeBanner: false,
-      navigatorKey: Utils.appNav,
-      scaffoldMessengerKey: Utils.appScaffoldMessager,
-      theme: ThemeData(
-        primaryColor: ColorPallete.primaryColor,
-        accentColor: ColorPallete.secondaryColor,
-        textTheme: kTextTheme,
-      ),
-      initialRoute: MainPage.route,
-      navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: context.read(analyticsProvider)),
-      ],
-      routes: {
-        MainPage.route: (_) => MainPage(),
-        RegisterPage.route: (_) => RegisterPage(),
-        PhoneNumberSettingPage.route: (_) => PhoneNumberSettingPage(),
-        PhotoSettingPage.route: (_) => PhotoSettingPage(),
-        NameSettingPage.route: (_) => NameSettingPage(),
+    return ProviderListener(
+      provider: exceptionProvider,
+      onChange: (context, Exception? exception) {
+        if (exception == null) return;
+
+        Utils.alert(
+          exception is CustomException && exception.message != null
+              ? exception.message!
+              : 'Terjadi Kesalahan...',
+        );
       },
+      child: MaterialApp(
+        title: 'Diiket',
+        debugShowCheckedModeBanner: false,
+        navigatorKey: Utils.appNav,
+        scaffoldMessengerKey: Utils.appScaffoldMessager,
+        theme: ThemeData(
+          primaryColor: ColorPallete.primaryColor,
+          accentColor: ColorPallete.secondaryColor,
+          textTheme: kTextTheme,
+        ),
+        initialRoute: MainPage.route,
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: context.read(analyticsProvider)),
+        ],
+        routes: {
+          MainPage.route: (_) => MainPage(),
+          RegisterPage.route: (_) => RegisterPage(),
+          PhoneNumberSettingPage.route: (_) => PhoneNumberSettingPage(),
+          PhotoSettingPage.route: (_) => PhotoSettingPage(),
+          NameSettingPage.route: (_) => NameSettingPage(),
+        },
+      ),
     );
   }
 }

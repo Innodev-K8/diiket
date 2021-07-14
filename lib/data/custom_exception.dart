@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 
 class CustomException implements Exception {
   final String? message;
+  final StackTrace? stackTrace;
   final int code;
 
   const CustomException({
     this.message = 'Terjadi kesalahan!',
     this.code = 0,
+    this.stackTrace,
   });
 
   @override
@@ -63,6 +65,7 @@ class CustomException implements Exception {
     return CustomException(
       message: message,
       code: error.response?.statusCode ?? 0,
+      stackTrace: error.stackTrace,
     );
   }
 }

@@ -72,7 +72,7 @@ class Utils {
     appNav.currentState?.pop(result);
   }
 
-  static void alert(BuildContext context, String message) {
+  static void alert(String message) {
     appScaffoldMessager.currentState?.showSnackBar(
       SnackBar(
         content: Text(message),

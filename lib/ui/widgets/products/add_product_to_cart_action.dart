@@ -119,35 +119,63 @@ class AddProductToCartAction extends HookWidget {
   }
 
   Widget _buildAddToCart(BuildContext context) {
+    final isPlacingOrder = useState<bool>(false);
+
+    void addToCart() {
+      isPlacingOrder.value = true;
+
+      context
+          .read(activeOrderProvider.notifier)
+          .placeOrderItem(product, 1)
+          .whenComplete(() => isPlacingOrder.value = false);
+    }
+
+    final buttonStyle = ElevatedButton.styleFrom(
+      padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+      elevation: 0,
+      primary: product.stall?.is_open == true
+          ? ColorPallete.primaryColor
+          : ColorPallete.lightGray,
+    );
+
+    late Widget button;
+
+    if (isPlacingOrder.value) {
+      button = ElevatedButton(
+        onPressed: () {},
+        style: buttonStyle,
+        child: SizedBox(
+          width: 16,
+          height: 16,
+          child: CircularProgressIndicator(
+            color: Colors.white,
+            strokeWidth: 2,
+          ),
+        ),
+      );
+    } else {
+      button = ElevatedButton.icon(
+        onPressed: addToCart,
+        style: buttonStyle,
+        icon: Icon(
+          Icons.add_rounded,
+          size: isLarge ? 22.0 : 14.0,
+        ),
+        label: Text(
+          'Keranjang',
+          style: kTextTheme.button!.copyWith(
+            fontSize: isLarge ? 16.0 : 10.0,
+          ),
+        ),
+      );
+    }
+
     return Align(
       alignment: isLarge ? Alignment.center : Alignment.bottomRight,
       child: SizedBox(
         height: isLarge ? 48 : 28,
         width: isLarge ? double.infinity : null,
-        child: ElevatedButton.icon(
-          onPressed: () {
-            context
-                .read(activeOrderProvider.notifier)
-                .placeOrderItem(product, 1);
-          },
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-            elevation: 0,
-            primary: product.stall?.is_open == true
-                ? ColorPallete.primaryColor
-                : ColorPallete.lightGray,
-          ),
-          icon: Icon(
-            Icons.add_rounded,
-            size: isLarge ? 22.0 : 14.0,
-          ),
-          label: Text(
-            'Keranjang',
-            style: kTextTheme.button!.copyWith(
-              fontSize: isLarge ? 16.0 : 10.0,
-            ),
-          ),
-        ),
+        child: button,
       ),
     );
   }

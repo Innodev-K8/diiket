@@ -52,7 +52,7 @@ class DynamicLinkService {
     final String? alertMessage = deepLink.queryParameters['alertMessage'];
 
     if (alertMessage != null) {
-      Utils.alert(context, alertMessage);
+      Utils.alert(alertMessage);
     }
 
     switch (type) {

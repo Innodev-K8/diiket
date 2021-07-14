@@ -19,14 +19,14 @@ class CartPage extends HookWidget {
   Widget build(BuildContext context) {
     useEffect(() {
       // always update order when we open this page
-      context.read(activeOrderProvider.notifier).retrieveActiveOrder();
+      // context.read(activeOrderProvider.notifier).retrieveActiveOrder();
     }, []);
 
     return ProviderListener(
       provider: activeOrderErrorProvider,
       onChange: (context, StateController<CustomException?> value) {
         if (value.state != null) {
-          Utils.alert(context, value.state!.message ?? 'Terjadi Kesalahan');
+          Utils.alert(value.state!.message ?? 'Terjadi Kesalahan');
         }
       },
       child: SafeArea(

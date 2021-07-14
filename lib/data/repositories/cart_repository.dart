@@ -1,17 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:diiket/data/models/order_item.dart';
 
-extension FirestoreCartExtension on FirebaseFirestore {
-  CollectionReference userCartsRef(String firebase_uid) =>
-      collection('users').doc(firebase_uid).collection('carts');
+abstract class BaseCartRepository {
+  Stream<List<OrderItem>> cartStream();
+  Future<List<OrderItem>> getItems();
+  Future<OrderItem?> getItem(String cartId);
+  void addItem(OrderItem orderItem);
+  void removeItem(String cartId);
+  void updateItem(
+    String cartId, {
+    int? quantity,
+    String? notes,
+  });
 }
 
-extension CartsCollectionExtension on CollectionReference {
-  CollectionReference byMarket(int marketId) =>
-      doc('market-$marketId').collection('items');
-}
-
-class CartRepository {
+class CartRepository implements BaseCartRepository {
   final CollectionReference _ref;
 
   CartRepository(
@@ -19,8 +22,14 @@ class CartRepository {
     String _firebase_uid,
   ) : _ref = _firestore.userCartsRef(_firebase_uid);
 
-  Future<List<OrderItem>> getItems(int marketId) async {
-    final snapshot = await _ref.byMarket(marketId).get();
+  @override
+  Stream<List<OrderItem>> cartStream() => _ref.snapshots().map(
+        (qs) => qs.docs.map((doc) => OrderItem.fromSnapshot(doc)).toList(),
+      );
+
+  @override
+  Future<List<OrderItem>> getItems() async {
+    final snapshot = await _ref.get();
 
     if (snapshot.docs.isNotEmpty) {
       return snapshot.docs.map((doc) => OrderItem.fromSnapshot(doc)).toList();
@@ -29,8 +38,9 @@ class CartRepository {
     return [];
   }
 
-  Future<OrderItem?> getItem(int marketId, String firebaseCartId) async {
-    final snapshot = await _ref.byMarket(marketId).doc(firebaseCartId).get();
+  @override
+  Future<OrderItem?> getItem(String firebaseCartId) async {
+    final snapshot = await _ref.doc(firebaseCartId).get();
 
     if (snapshot.exists) {
       return OrderItem.fromSnapshot(snapshot);
@@ -39,16 +49,18 @@ class CartRepository {
     return null;
   }
 
-  void addItem(int marketId, OrderItem orderItem) {
-    _ref.byMarket(marketId).add(orderItem.toJson());
+  @override
+  void addItem(OrderItem orderItem) {
+    _ref.add(orderItem.toJson());
   }
 
-  void removeItem(int marketId, String firebaseCartId) {
-    _ref.byMarket(marketId).doc(firebaseCartId).delete();
+  @override
+  void removeItem(String firebaseCartId) {
+    _ref.doc(firebaseCartId).delete();
   }
 
+  @override
   void updateItem(
-    int marketId,
     String firebaseCartId, {
     int? quantity,
     String? notes,
@@ -58,6 +70,11 @@ class CartRepository {
       if (notes != null) 'notes': notes,
     };
 
-    _ref.byMarket(marketId).doc(firebaseCartId).update(data);
+    _ref.doc(firebaseCartId).update(data);
   }
+}
+
+extension FirestoreCartExtension on FirebaseFirestore {
+  CollectionReference userCartsRef(String firebase_uid) =>
+      collection('users').doc(firebase_uid).collection('items');
 }

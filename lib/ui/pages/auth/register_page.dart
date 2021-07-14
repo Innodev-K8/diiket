@@ -360,7 +360,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             startTimer();
 
                             Utils.alert(
-                              context,
                               'Kode verifikasi berhasil dikirim ulang.',
                             );
                           });

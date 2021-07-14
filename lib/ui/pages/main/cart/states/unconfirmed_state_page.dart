@@ -2,6 +2,7 @@ import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/fare.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
+import 'package:diiket/data/providers/order/cart_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
@@ -12,6 +13,7 @@ import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_item_list.dart';
 import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
 import 'package:diiket/ui/widgets/orders/select_order_delivery_location_button.dart';
+import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,6 +35,10 @@ class UnconfirmedStatePage extends HookWidget {
     final deliveryDetail = useProvider(deliveryDetailProvider);
     final isLoading = useState<bool>(false);
 
+    final activeCartProvider = useProvider(activeCartFamilyProvider).state;
+
+    final cartItems = useProvider(activeCartProvider);
+
     return Column(
       children: [
         CustomAppBar(title: 'Keranjang'),
@@ -43,30 +49,33 @@ class UnconfirmedStatePage extends HookWidget {
                 onRefresh: () async => context
                     .read(activeOrderProvider.notifier)
                     .retrieveActiveOrder(),
-                child: OrderItemList(
-                  padding: const EdgeInsets.fromLTRB(
-                    24.0,
-                    10.0,
-                    24.0,
-                    ConfirmOrderButton.height + 20,
-                  ),
-                  header: Column(
-                    children: [
-                      SelectOrderDeliveryLocationButton(
-                        onLoading: () => isLoading.value = true,
-                        onDone: () => isLoading.value = false,
-                      ),
-                      SizedBox(height: 10),
-                      OrderDeliveryAddressDetail(),
-                      SizedBox(height: 20.0),
-                    ],
-                  ),
-                  order: order,
-                  footer: Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: OrderPaymentDetail(),
-                  ),
+                child: VerticalScrollProductList(
+                  products: cartItems.map((item) => item.product!).toList(),
                 ),
+                // child: OrderItemList(
+                //   padding: const EdgeInsets.fromLTRB(
+                //     24.0,
+                //     10.0,
+                //     24.0,
+                //     ConfirmOrderButton.height + 20,
+                //   ),
+                //   header: Column(
+                //     children: [
+                //       SelectOrderDeliveryLocationButton(
+                //         onLoading: () => isLoading.value = true,
+                //         onDone: () => isLoading.value = false,
+                //       ),
+                //       SizedBox(height: 10),
+                //       OrderDeliveryAddressDetail(),
+                //       SizedBox(height: 20.0),
+                //     ],
+                //   ),
+                //   order: order,
+                //   footer: Padding(
+                //     padding: const EdgeInsets.only(top: 20.0),
+                //     child: OrderPaymentDetail(),
+                //   ),
+                // ),
               ),
               if (deliveryDetail.position != null)
                 Positioned(

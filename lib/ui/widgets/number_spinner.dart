@@ -53,14 +53,16 @@ class NumberSpinner extends HookWidget {
           ),
           Expanded(
             flex: 4,
-            child: Center(
-              child: Text(
-                '${number.value}',
-                style: kTextTheme.caption!.copyWith(
-                  color: ColorPallete.backgroundColor,
+            child: AbsorbPointer(
+              child: Center(
+                child: Text(
+                  '${number.value}',
+                  style: kTextTheme.caption!.copyWith(
+                    color: ColorPallete.backgroundColor,
+                  ),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),

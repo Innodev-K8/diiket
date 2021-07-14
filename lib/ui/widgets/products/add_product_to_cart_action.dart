@@ -1,6 +1,8 @@
 import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
+import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
+import 'package:diiket/data/providers/order/cart_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/products/product_in_cart_information.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -23,10 +25,12 @@ class AddProductToCartAction extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    useProvider(activeOrderProvider);
+    final cartProvider = useProvider(activeCartFamilyProvider).state;
+
+    useProvider(cartProvider);
 
     final bool isProductInOrder =
-        context.read(activeOrderProvider.notifier).isProductInOrder(product);
+        context.read(cartProvider.notifier).isProductInOrder(product);
 
     final isAnyProcessedOrder = context.read(activeOrderProvider) != null &&
         context.read(activeOrderProvider)!.status != 'unconfirmed';
@@ -57,9 +61,10 @@ class AddProductToCartAction extends HookWidget {
   }
 
   Widget _buildNumberSpinner(BuildContext context) {
-    final OrderItem? orderItem = context
-        .read(activeOrderProvider.notifier)
-        .getOrderItemByProduct(product);
+    final cartProvider = context.read(activeCartFamilyProvider).state;
+
+    final OrderItem? orderItem =
+        context.read(cartProvider.notifier).getOrderItemByProduct(product);
 
     return SizedBox(
       // width:
@@ -74,9 +79,7 @@ class AddProductToCartAction extends HookWidget {
               onTap: () {
                 if (orderItem == null) return;
 
-                context
-                    .read(activeOrderProvider.notifier)
-                    .deleteOrderItem(orderItem);
+                context.read(cartProvider.notifier).deleteItem(orderItem);
               },
               child: Text(
                 'Batal',
@@ -95,21 +98,12 @@ class AddProductToCartAction extends HookWidget {
               if (orderItem == null) return;
 
               if (value <= 0) {
-                context
-                    .read(activeOrderProvider.notifier)
-                    .deleteOrderItem(orderItem);
+                context.read(cartProvider.notifier).deleteItem(orderItem);
               } else {
-                // debounce tiap 1 detik biar server nggak overload
-                EasyDebounce.debounce(
-                  '${product.id}-order-item-debouncer',
-                  Duration(seconds: 1),
-                  () {
-                    context.read(activeOrderProvider.notifier).updateOrderItem(
-                          orderItem,
-                          quantity: value,
-                        );
-                  },
-                );
+                context.read(cartProvider.notifier).updateItem(
+                      orderItem,
+                      quantity: value,
+                    );
               }
             },
           ),
@@ -119,6 +113,8 @@ class AddProductToCartAction extends HookWidget {
   }
 
   Widget _buildAddToCart(BuildContext context) {
+    final cartProvider = context.read(activeCartFamilyProvider).state;
+
     return Align(
       alignment: isLarge ? Alignment.center : Alignment.bottomRight,
       child: SizedBox(
@@ -126,9 +122,7 @@ class AddProductToCartAction extends HookWidget {
         width: isLarge ? double.infinity : null,
         child: ElevatedButton.icon(
           onPressed: () {
-            context
-                .read(activeOrderProvider.notifier)
-                .placeOrderItem(product, 1);
+            context.read(cartProvider.notifier).addItem(product, 1);
           },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.only(right: 8.0, left: 8.0),

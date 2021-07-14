@@ -40,13 +40,13 @@ class Utils {
     );
   }
 
-  static Future<Object?>? navigateToProductByCategory(
+  static Future<void> navigateToProductByCategory(
     String? category,
     String? label,
   ) async {
-    if (category == null) return null;
+    if (category == null) return;
 
-    return homeNav.currentState?.pushNamed(
+    await homeNav.currentState?.pushNamed(
       ProductsByCategoryPage.route,
       arguments: {
         'category': category,

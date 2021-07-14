@@ -22,7 +22,7 @@ class LocationService {
 
       if (!_serviceEnabled!) {
         _serviceEnabled = await _instance.requestService();
-        
+
         if (!_serviceEnabled!) {
           return null;
         }

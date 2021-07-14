@@ -11,8 +11,7 @@ class NotificationChannels {
     importance: Importance.high,
   );
 
-  static const AndroidNotificationDetails feed =
-      AndroidNotificationDetails(
+  static const AndroidNotificationDetails feed = AndroidNotificationDetails(
     'diiket',
     'Diiket',
     'Display Feeds',
@@ -21,8 +20,7 @@ class NotificationChannels {
     styleInformation: BigTextStyleInformation(''),
   );
 
-  static const AndroidNotificationDetails order =
-      AndroidNotificationDetails(
+  static const AndroidNotificationDetails order = AndroidNotificationDetails(
     'order',
     'Pesanan',
     'Notifikasi status pesanan',

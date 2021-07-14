@@ -22,6 +22,7 @@ class _$OrderItemTearOff {
 
   _OrderItem call(
       {int? id,
+      String? firebase_cart_id,
       int? order_id,
       int? product_id,
       String? payment_status,
@@ -31,6 +32,7 @@ class _$OrderItemTearOff {
       int? quantity}) {
     return _OrderItem(
       id: id,
+      firebase_cart_id: firebase_cart_id,
       order_id: order_id,
       product_id: product_id,
       payment_status: payment_status,
@@ -52,6 +54,7 @@ const $OrderItem = _$OrderItemTearOff();
 /// @nodoc
 mixin _$OrderItem {
   int? get id => throw _privateConstructorUsedError;
+  String? get firebase_cart_id => throw _privateConstructorUsedError;
   int? get order_id => throw _privateConstructorUsedError;
   int? get product_id => throw _privateConstructorUsedError;
   String? get payment_status => throw _privateConstructorUsedError;
@@ -72,6 +75,7 @@ abstract class $OrderItemCopyWith<$Res> {
       _$OrderItemCopyWithImpl<$Res>;
   $Res call(
       {int? id,
+      String? firebase_cart_id,
       int? order_id,
       int? product_id,
       String? payment_status,
@@ -94,6 +98,7 @@ class _$OrderItemCopyWithImpl<$Res> implements $OrderItemCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? firebase_cart_id = freezed,
     Object? order_id = freezed,
     Object? product_id = freezed,
     Object? payment_status = freezed,
@@ -107,6 +112,10 @@ class _$OrderItemCopyWithImpl<$Res> implements $OrderItemCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      firebase_cart_id: firebase_cart_id == freezed
+          ? _value.firebase_cart_id
+          : firebase_cart_id // ignore: cast_nullable_to_non_nullable
+              as String?,
       order_id: order_id == freezed
           ? _value.order_id
           : order_id // ignore: cast_nullable_to_non_nullable
@@ -158,6 +167,7 @@ abstract class _$OrderItemCopyWith<$Res> implements $OrderItemCopyWith<$Res> {
   @override
   $Res call(
       {int? id,
+      String? firebase_cart_id,
       int? order_id,
       int? product_id,
       String? payment_status,
@@ -182,6 +192,7 @@ class __$OrderItemCopyWithImpl<$Res> extends _$OrderItemCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? firebase_cart_id = freezed,
     Object? order_id = freezed,
     Object? product_id = freezed,
     Object? payment_status = freezed,
@@ -195,6 +206,10 @@ class __$OrderItemCopyWithImpl<$Res> extends _$OrderItemCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      firebase_cart_id: firebase_cart_id == freezed
+          ? _value.firebase_cart_id
+          : firebase_cart_id // ignore: cast_nullable_to_non_nullable
+              as String?,
       order_id: order_id == freezed
           ? _value.order_id
           : order_id // ignore: cast_nullable_to_non_nullable
@@ -229,22 +244,26 @@ class __$OrderItemCopyWithImpl<$Res> extends _$OrderItemCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_OrderItem implements _OrderItem {
+class _$_OrderItem extends _OrderItem {
   _$_OrderItem(
       {this.id,
+      this.firebase_cart_id,
       this.order_id,
       this.product_id,
       this.payment_status,
       this.status,
       this.notes,
       this.product,
-      this.quantity});
+      this.quantity})
+      : super._();
 
   factory _$_OrderItem.fromJson(Map<String, dynamic> json) =>
       _$_$_OrderItemFromJson(json);
 
   @override
   final int? id;
+  @override
+  final String? firebase_cart_id;
   @override
   final int? order_id;
   @override
@@ -262,7 +281,7 @@ class _$_OrderItem implements _OrderItem {
 
   @override
   String toString() {
-    return 'OrderItem(id: $id, order_id: $order_id, product_id: $product_id, payment_status: $payment_status, status: $status, notes: $notes, product: $product, quantity: $quantity)';
+    return 'OrderItem(id: $id, firebase_cart_id: $firebase_cart_id, order_id: $order_id, product_id: $product_id, payment_status: $payment_status, status: $status, notes: $notes, product: $product, quantity: $quantity)';
   }
 
   @override
@@ -271,6 +290,9 @@ class _$_OrderItem implements _OrderItem {
         (other is _OrderItem &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.firebase_cart_id, firebase_cart_id) ||
+                const DeepCollectionEquality()
+                    .equals(other.firebase_cart_id, firebase_cart_id)) &&
             (identical(other.order_id, order_id) ||
                 const DeepCollectionEquality()
                     .equals(other.order_id, order_id)) &&
@@ -296,6 +318,7 @@ class _$_OrderItem implements _OrderItem {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(firebase_cart_id) ^
       const DeepCollectionEquality().hash(order_id) ^
       const DeepCollectionEquality().hash(product_id) ^
       const DeepCollectionEquality().hash(payment_status) ^
@@ -315,9 +338,10 @@ class _$_OrderItem implements _OrderItem {
   }
 }
 
-abstract class _OrderItem implements OrderItem {
+abstract class _OrderItem extends OrderItem {
   factory _OrderItem(
       {int? id,
+      String? firebase_cart_id,
       int? order_id,
       int? product_id,
       String? payment_status,
@@ -325,12 +349,15 @@ abstract class _OrderItem implements OrderItem {
       String? notes,
       Product? product,
       int? quantity}) = _$_OrderItem;
+  _OrderItem._() : super._();
 
   factory _OrderItem.fromJson(Map<String, dynamic> json) =
       _$_OrderItem.fromJson;
 
   @override
   int? get id => throw _privateConstructorUsedError;
+  @override
+  String? get firebase_cart_id => throw _privateConstructorUsedError;
   @override
   int? get order_id => throw _privateConstructorUsedError;
   @override

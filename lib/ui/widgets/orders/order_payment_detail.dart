@@ -180,11 +180,14 @@ class PaymentDetailRecord extends StatelessWidget {
             color: ColorPallete.darkGray,
           ),
         ),
-        if (value is Text) Text(
-                (value as Text).data ?? '',
-                style: (value as Text).style,
-                textAlign: TextAlign.end,
-              ) else value
+        if (value is Text)
+          Text(
+            (value as Text).data ?? '',
+            style: (value as Text).style,
+            textAlign: TextAlign.end,
+          )
+        else
+          value
       ],
     );
   }

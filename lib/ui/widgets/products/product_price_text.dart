@@ -19,9 +19,7 @@ class ProductPiceText extends StatelessWidget {
         style: DefaultTextStyle.of(context).style,
         children: <TextSpan>[
           TextSpan(
-            text: product.price != null
-                ? Helper.fmtPrice(product.price)
-                : '-',
+            text: product.price != null ? Helper.fmtPrice(product.price) : '-',
             style: kTextTheme.subtitle2!.copyWith(
               color: ColorPallete.primaryColor,
               fontWeight: FontWeight.w600,

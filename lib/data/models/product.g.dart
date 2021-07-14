@@ -98,7 +98,7 @@ Map<String, dynamic> _$_$_ProductToJson(_$_Product instance) =>
     <String, dynamic>{
       'id': instance.id,
       'stall_id': instance.stall_id,
-      'stall': instance.stall,
+      'stall': instance.stall?.toJson(),
       'name': instance.name,
       'description': instance.description,
       'photo_url': instance.photo_url,
@@ -106,5 +106,5 @@ Map<String, dynamic> _$_$_ProductToJson(_$_Product instance) =>
       'weight': instance.weight,
       'price': instance.price,
       'stocks': instance.stocks,
-      'categories': instance.categories,
+      'categories': instance.categories?.map((e) => e.toJson()).toList(),
     };

@@ -9,6 +9,7 @@ part of 'order_item.dart';
 _$_OrderItem _$_$_OrderItemFromJson(Map<String, dynamic> json) {
   return _$_OrderItem(
     id: json['id'] as int?,
+    firebase_cart_id: json['firebase_cart_id'] as String?,
     order_id: json['order_id'] as int?,
     product_id: json['product_id'] as int?,
     payment_status: json['payment_status'] as String?,
@@ -24,11 +25,12 @@ _$_OrderItem _$_$_OrderItemFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_OrderItemToJson(_$_OrderItem instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'firebase_cart_id': instance.firebase_cart_id,
       'order_id': instance.order_id,
       'product_id': instance.product_id,
       'payment_status': instance.payment_status,
       'status': instance.status,
       'notes': instance.notes,
-      'product': instance.product,
+      'product': instance.product?.toJson(),
       'quantity': instance.quantity,
     };

@@ -36,7 +36,7 @@ Map<String, dynamic> _$_$_OrderToJson(_$_Order instance) => <String, dynamic>{
       'market_id': instance.market_id,
       'user_id': instance.user_id,
       'driver_id': instance.driver_id,
-      'driver': instance.driver,
+      'driver': instance.driver?.toJson(),
       'status': instance.status,
       'address': instance.address,
       'location_lat': instance.location_lat,
@@ -47,5 +47,5 @@ Map<String, dynamic> _$_$_OrderToJson(_$_Order instance) => <String, dynamic>{
       'pickup_fee': instance.pickup_fee,
       'service_fee': instance.service_fee,
       'total_price': instance.total_price,
-      'order_items': instance.order_items,
+      'order_items': instance.order_items?.map((e) => e.toJson()).toList(),
     };

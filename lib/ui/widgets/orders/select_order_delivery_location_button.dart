@@ -36,7 +36,8 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
           onLoading?.call();
 
           try {
-            final LatLng? userPosition = await LocationService.getUserPosition();
+            final LatLng? userPosition =
+                await LocationService.getUserPosition();
 
             if (userPosition != null) {
               final PlacePickerResult? result = await Utils.pickLocation(

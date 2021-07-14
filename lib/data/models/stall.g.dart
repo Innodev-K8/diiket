@@ -112,13 +112,13 @@ _$_Stall _$_$_StallFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_StallToJson(_$_Stall instance) => <String, dynamic>{
       'id': instance.id,
-      'seller': instance.seller,
+      'seller': instance.seller?.toJson(),
       'market_id': instance.market_id,
       'is_open': instance.is_open,
       'name': instance.name,
       'description': instance.description,
       'photo_url': instance.photo_url,
-      'products': instance.products,
+      'products': instance.products?.map((e) => e.toJson()).toList(),
       'location_block': instance.location_block,
       'location_number': instance.location_number,
       'location_floor': instance.location_floor,

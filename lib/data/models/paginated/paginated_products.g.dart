@@ -23,7 +23,7 @@ _$_PaginatedProducts _$_$_PaginatedProductsFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_PaginatedProductsToJson(
         _$_PaginatedProducts instance) =>
     <String, dynamic>{
-      'data': instance.data,
-      'links': instance.links,
-      'meta': instance.meta,
+      'data': instance.data?.map((e) => e.toJson()).toList(),
+      'links': instance.links?.toJson(),
+      'meta': instance.meta?.toJson(),
     };

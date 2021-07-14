@@ -33,5 +33,5 @@ Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'type': instance.type,
       'profile_picture': instance.profile_picture,
       'profile_picture_url': instance.profile_picture_url,
-      'driver_detail': instance.driver_detail,
+      'driver_detail': instance.driver_detail?.toJson(),
     };

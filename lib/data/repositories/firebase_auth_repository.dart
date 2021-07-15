@@ -35,7 +35,7 @@ class FirebaseAuthRepository extends BaseFirebaseAuthRepository {
     try {
       await _auth.signInWithCredential(credential);
     } on FirebaseAuthException catch (error) {
-      throw CustomException(message: error.message);
+      throw CustomException.fromFirebaseAuthException(error);
     }
   }
 
@@ -44,7 +44,7 @@ class FirebaseAuthRepository extends BaseFirebaseAuthRepository {
     try {
       await _auth.signOut();
     } on FirebaseAuthException catch (error) {
-      throw CustomException(message: error.message);
+      throw CustomException.fromFirebaseAuthException(error);
     }
   }
 }

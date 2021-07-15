@@ -28,6 +28,10 @@ abstract class Helper {
 
   static String getFirebaseAuthExceptionMessage(String code) {
     switch (code) {
+      case 'auth/invalid-verification-code':
+        return 'Kode yang Anda masukan tidak valid';
+      case 'auth/code-expired':
+        return 'Kode yang Anda masukan telah usang, kirim ulang kode verifikasi';
       case 'auth/invalid-email':
         return 'Email yang anda masukkan tidak valid';
       case 'auth/user-disabled':
@@ -70,8 +74,6 @@ abstract class Helper {
         return 'Waktu kedaluwarsa perintah telah habis';
       case 'auth/invalid-action-code':
         return 'Kode perintah tidak valid';
-      case 'auth/invalid-verification-code':
-        return 'Kode verifikasi tidak valid';
       case 'auth/invalid-message-payload':
         return 'Isi pesan tidak valid';
       case 'auth/invalid-sender':

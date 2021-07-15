@@ -5,7 +5,6 @@ import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/helpers/validation_helper.dart';
-import 'package:diiket/ui/common/helper.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/primary_button.dart';
@@ -128,17 +127,21 @@ class _RegisterPageState extends State<RegisterPage> {
   void _onAuthException(
       BuildContext context, StateController<CustomException?> e) {
     if (e.state != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            e.state!.message ?? 'Terjadi kesalahan',
-          ),
-        ),
-      );
+      final CustomException exception = e.state!;
 
-      setState(() {
-        isLoading = false;
-      });
+      Utils.alert(exception.message ?? 'Terjadi kesalahan');
+
+      context.read(crashlyticsProvider).recordError(
+            exception,
+            exception.stackTrace,
+            reason: 'auth-exception',
+          );
+
+      if (isLoading == true) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -511,19 +514,8 @@ class _RegisterPageState extends State<RegisterPage> {
               this.forceResendingToken = null;
             });
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  Helper.getFirebaseAuthExceptionMessage('auth/${error.code}'),
-                ),
-              ),
-            );
-
-            context.read(crashlyticsProvider).recordError(
-                  error,
-                  error.stackTrace,
-                  reason: 'auth/${error.code}',
-                );
+            context.read(authExceptionProvider).state =
+                CustomException.fromFirebaseAuthException(error);
           },
           codeSent: (verificationId, forceResendingToken) {
             setState(() {
@@ -574,25 +566,9 @@ class _RegisterPageState extends State<RegisterPage> {
       isLoading = true;
     });
 
-    try {
-      await context
-          .read(authProvider.notifier)
-          .signInWithPhoneCredential(phoneAuthCredential);
-
-      // Utils.appNav.currentState?.pop();
-    } on CustomException catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            error.message ?? 'Terjadi kesalahan',
-          ),
-        ),
-      );
-
-      setState(() {
-        isLoading = false;
-      });
-    }
+    await context
+        .read(authProvider.notifier)
+        .signInWithPhoneCredential(phoneAuthCredential);
   }
 
   @override

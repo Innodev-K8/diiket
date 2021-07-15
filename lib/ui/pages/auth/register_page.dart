@@ -7,6 +7,7 @@ import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/helpers/validation_helper.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/widgets/diiket_logo.dart';
 import 'package:diiket/ui/widgets/primary_button.dart';
 import 'package:entry/entry.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
@@ -579,29 +580,5 @@ class _RegisterPageState extends State<RegisterPage> {
     userNameCodeField.dispose();
 
     super.dispose();
-  }
-}
-
-class DiiketLogo extends StatelessWidget {
-  const DiiketLogo({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Entry.all(
-      child: Container(
-        decoration: BoxDecoration(
-          border: kBorderedDecoration.border,
-          shape: BoxShape.circle,
-        ),
-        padding: const EdgeInsets.all(22),
-        child: Image.asset(
-          'assets/images/splash.png',
-          width: 23,
-          height: 23,
-        ),
-      ),
-    );
   }
 }

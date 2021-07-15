@@ -47,6 +47,10 @@ class AuthState extends StateNotifier<User?> {
   Future<void> signInWithPhoneCredential(
       firebase_auth.PhoneAuthCredential credential) async {
     try {
+      if (_firebaseAuthRepository.getCurrentFirebaseUser() != null) {
+        await _firebaseAuthRepository.signOut();
+      }
+
       await _firebaseAuthRepository.signInWithPhoneCredential(credential);
 
       _read(analyticsProvider).logLogin(loginMethod: 'phone_number');
@@ -102,9 +106,6 @@ class AuthState extends StateNotifier<User?> {
       }
     } on CustomException catch (error) {
       _read(authExceptionProvider).state = error;
-
-      // TODO: try this for infinite loop
-      // await _firebaseAuthRepository.signOut();
 
       await _signOutAll();
     }

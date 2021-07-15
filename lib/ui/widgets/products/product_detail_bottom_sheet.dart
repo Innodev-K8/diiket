@@ -1,6 +1,7 @@
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
+import 'package:diiket/data/providers/recombee_provider.dart';
 import 'package:diiket/data/services/dynamic_link_generators.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:recombee_client/recombee_client.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../login_to_continue_button.dart';
@@ -18,6 +20,17 @@ import 'add_product_to_cart_action.dart';
 
 class ProductDetailBottomSheet extends HookWidget {
   static Future<void> show(BuildContext context, Product product) {
+    final user = context.read(authProvider);
+
+    if (user != null) {
+      final recombee = context.read(recombeeProvider);
+
+      recombee.send(AddDetailView(
+        userId: user.id,
+        itemId: product.id,
+      ));
+    }
+
     return showMaterialModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,

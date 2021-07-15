@@ -1,12 +1,15 @@
 import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
+import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
+import 'package:diiket/data/providers/recombee_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/products/product_in_cart_information.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:recombee_client/recombee_client.dart';
 
 import '../number_spinner.dart';
 import '../simple_button.dart';
@@ -123,6 +126,17 @@ class AddProductToCartAction extends HookWidget {
 
     void addToCart() {
       isPlacingOrder.value = true;
+
+      final user = context.read(authProvider);
+
+      if (user != null) {
+        final recombee = context.read(recombeeProvider);
+
+        recombee.send(AddCartAddition(
+          userId: user.id,
+          itemId: product.id,
+        ));
+      }
 
       context
           .read(activeOrderProvider.notifier)

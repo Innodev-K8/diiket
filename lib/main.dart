@@ -88,15 +88,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ProviderListener(
       provider: exceptionProvider,
-      onChange: (context, Exception? exception) {
-        if (exception == null) return;
-
-        Utils.alert(
-          exception is CustomException && exception.message != null
-              ? exception.message!
-              : 'Terjadi Kesalahan...',
-        );
-      },
+      onChange: _handleException,
       child: MaterialApp(
         title: 'Diiket',
         debugShowCheckedModeBanner: false,
@@ -119,6 +111,16 @@ class _MyAppState extends State<MyApp> {
           NameSettingPage.route: (_) => NameSettingPage(),
         },
       ),
+    );
+  }
+
+  void _handleException(context, Exception? exception) {
+    if (exception == null) return;
+
+    Utils.alert(
+      exception is CustomException && exception.message != null
+          ? exception.message!
+          : 'Terjadi Kesalahan...',
     );
   }
 }

@@ -37,7 +37,7 @@ class DynamicLinkHandlers {
       context.read(crashlyticsProvider).recordError(
             exception,
             stackTrace,
-            reason: '_handleStallLink',
+            reason: 'dynamic-link-handler-stall-link-handler',
           );
     }
   }

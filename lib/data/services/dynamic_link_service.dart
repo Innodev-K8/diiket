@@ -33,6 +33,7 @@ class DynamicLinkService {
         context.read(crashlyticsProvider).recordError(
               exception,
               null,
+              reason: 'dynamic-link-onlink'
             );
       },
     );

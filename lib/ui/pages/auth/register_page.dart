@@ -133,7 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
       context.read(crashlyticsProvider).recordError(
             exception,
             exception.stackTrace,
-            reason: 'auth-exception',
+            reason: exception.reason ?? 'auth-exception',
           );
 
       if (isLoading == true) {

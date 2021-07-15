@@ -21,6 +21,7 @@ class GlobalExceptionState extends StateNotifier<Exception?> {
       exception,
       stackTrace ??
           (exception is CustomException ? exception.stackTrace : null),
+      reason: exception is CustomException ? exception.reason : 'unknown-error',
     );
   }
 }

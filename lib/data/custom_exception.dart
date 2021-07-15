@@ -4,12 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class CustomException implements Exception {
   final String? message;
+  final dynamic reason;
   final StackTrace? stackTrace;
   final int code;
 
   const CustomException({
     this.message = 'Terjadi kesalahan!',
     this.code = 0,
+    this.reason,
     this.stackTrace,
   });
 
@@ -67,6 +69,7 @@ class CustomException implements Exception {
     return CustomException(
       message: message,
       code: error.response?.statusCode ?? 0,
+      reason: 'dio-error',
       stackTrace: error.stackTrace,
     );
   }
@@ -77,6 +80,7 @@ class CustomException implements Exception {
     return CustomException(
       message: Helper.getFirebaseAuthExceptionMessage('auth/${error.code}'),
       stackTrace: error.stackTrace,
+      reason: 'auth/${error.code}',
     );
   }
 }

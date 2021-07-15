@@ -24,34 +24,23 @@ class AuthState extends StateNotifier<User?> {
   final AuthService _authService;
   final Reader _read;
 
-  StreamSubscription<FirebaseUser?>? _authStateChangesSubscription;
-
   AuthState(
     this._firebaseAuthRepository,
     this._authService,
     this._read,
   ) : super(null) {
-    _authStateChangesSubscription?.cancel();
-    _authStateChangesSubscription = _firebaseAuthRepository.authStateChanges
-        .listen(onFirebaseAuthStateChanges);
-  }
-
-  Future<void> onFirebaseAuthStateChanges(FirebaseUser? user) async {
-    if (user != null) {
-      await _signInWithFirebaseUser(user);
-    } else {
-      await _signOutAll();
-    }
+    _signInWithCurrentFirebaseUser();
   }
 
   Future<void> signInWithPhoneCredential(
       firebase_auth.PhoneAuthCredential credential) async {
     try {
       if (_firebaseAuthRepository.getCurrentFirebaseUser() != null) {
-        await _firebaseAuthRepository.signOut();
+        await signOut();
       }
 
       await _firebaseAuthRepository.signInWithPhoneCredential(credential);
+      await _signInWithCurrentFirebaseUser();
 
       _read(analyticsProvider).logLogin(loginMethod: 'phone_number');
     } on CustomException catch (error) {
@@ -59,8 +48,13 @@ class AuthState extends StateNotifier<User?> {
     }
   }
 
-  Future<void> signOut() async {
-    await _firebaseAuthRepository.signOut();
+  // Always call this after signIn using firebase auth
+  Future<void> _signInWithCurrentFirebaseUser() async {
+    final loggedUser = _firebaseAuthRepository.getCurrentFirebaseUser();
+
+    if (loggedUser != null) {
+      return _signInWithFirebaseUser(loggedUser);
+    }
   }
 
   Future<void> updateUserName(String name) async {
@@ -102,17 +96,19 @@ class AuthState extends StateNotifier<User?> {
 
         state = response.user;
       } else {
-        await _signOutAll();
+        await signOut();
       }
     } on CustomException catch (error) {
       _read(authExceptionProvider).state = error;
 
-      await _signOutAll();
+      await signOut();
     }
   }
 
-  Future<void> _signOutAll() async {
+  Future<void> signOut() async {
     try {
+      await _firebaseAuthRepository.signOut();
+
       if (_read(tokenProvider) != null) {
         await _authService.logout().onError((error, stackTrace) => null);
         await _read(tokenProvider.notifier).clearToken();

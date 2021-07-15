@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:diiket/data/models/product_feed.dart';
+import 'package:diiket/data/models/user.dart';
+import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/products/product_feeds_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
@@ -65,13 +67,16 @@ class FeedPage extends StatelessWidget {
             sliver: Consumer(
               builder: (_, watch, child) {
                 final List<ProductFeed> feeds = watch(productFeedProvider);
+                final bool isLoggedIn = watch(authProvider) is User;
 
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final ProductFeed feed = feeds[index];
 
-                      if (feed.label == null || feed.query == null) {
+                      if (feed.label == null ||
+                          feed.query == null ||
+                          (feed.require_auth == true && !isLoggedIn)) {
                         return SizedBox();
                       }
 

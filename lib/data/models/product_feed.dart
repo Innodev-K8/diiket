@@ -8,6 +8,7 @@ class ProductFeed with _$ProductFeed {
   factory ProductFeed({
     String? label,
     String? query,
+    bool? require_auth,
   }) = _ProductFeed;
 
   factory ProductFeed.fromJson(Map<String, dynamic> json) =>

@@ -20,10 +20,11 @@ ProductFeed _$ProductFeedFromJson(Map<String, dynamic> json) {
 class _$ProductFeedTearOff {
   const _$ProductFeedTearOff();
 
-  _ProductFeed call({String? label, String? query}) {
+  _ProductFeed call({String? label, String? query, bool? require_auth}) {
     return _ProductFeed(
       label: label,
       query: query,
+      require_auth: require_auth,
     );
   }
 
@@ -39,6 +40,7 @@ const $ProductFeed = _$ProductFeedTearOff();
 mixin _$ProductFeed {
   String? get label => throw _privateConstructorUsedError;
   String? get query => throw _privateConstructorUsedError;
+  bool? get require_auth => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,7 +53,7 @@ abstract class $ProductFeedCopyWith<$Res> {
   factory $ProductFeedCopyWith(
           ProductFeed value, $Res Function(ProductFeed) then) =
       _$ProductFeedCopyWithImpl<$Res>;
-  $Res call({String? label, String? query});
+  $Res call({String? label, String? query, bool? require_auth});
 }
 
 /// @nodoc
@@ -66,6 +68,7 @@ class _$ProductFeedCopyWithImpl<$Res> implements $ProductFeedCopyWith<$Res> {
   $Res call({
     Object? label = freezed,
     Object? query = freezed,
+    Object? require_auth = freezed,
   }) {
     return _then(_value.copyWith(
       label: label == freezed
@@ -76,6 +79,10 @@ class _$ProductFeedCopyWithImpl<$Res> implements $ProductFeedCopyWith<$Res> {
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String?,
+      require_auth: require_auth == freezed
+          ? _value.require_auth
+          : require_auth // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -87,7 +94,7 @@ abstract class _$ProductFeedCopyWith<$Res>
           _ProductFeed value, $Res Function(_ProductFeed) then) =
       __$ProductFeedCopyWithImpl<$Res>;
   @override
-  $Res call({String? label, String? query});
+  $Res call({String? label, String? query, bool? require_auth});
 }
 
 /// @nodoc
@@ -104,6 +111,7 @@ class __$ProductFeedCopyWithImpl<$Res> extends _$ProductFeedCopyWithImpl<$Res>
   $Res call({
     Object? label = freezed,
     Object? query = freezed,
+    Object? require_auth = freezed,
   }) {
     return _then(_ProductFeed(
       label: label == freezed
@@ -114,6 +122,10 @@ class __$ProductFeedCopyWithImpl<$Res> extends _$ProductFeedCopyWithImpl<$Res>
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
               as String?,
+      require_auth: require_auth == freezed
+          ? _value.require_auth
+          : require_auth // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -121,7 +133,7 @@ class __$ProductFeedCopyWithImpl<$Res> extends _$ProductFeedCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ProductFeed implements _ProductFeed {
-  _$_ProductFeed({this.label, this.query});
+  _$_ProductFeed({this.label, this.query, this.require_auth});
 
   factory _$_ProductFeed.fromJson(Map<String, dynamic> json) =>
       _$_$_ProductFeedFromJson(json);
@@ -130,10 +142,12 @@ class _$_ProductFeed implements _ProductFeed {
   final String? label;
   @override
   final String? query;
+  @override
+  final bool? require_auth;
 
   @override
   String toString() {
-    return 'ProductFeed(label: $label, query: $query)';
+    return 'ProductFeed(label: $label, query: $query, require_auth: $require_auth)';
   }
 
   @override
@@ -143,14 +157,18 @@ class _$_ProductFeed implements _ProductFeed {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.query, query) ||
-                const DeepCollectionEquality().equals(other.query, query)));
+                const DeepCollectionEquality().equals(other.query, query)) &&
+            (identical(other.require_auth, require_auth) ||
+                const DeepCollectionEquality()
+                    .equals(other.require_auth, require_auth)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(query);
+      const DeepCollectionEquality().hash(query) ^
+      const DeepCollectionEquality().hash(require_auth);
 
   @JsonKey(ignore: true)
   @override
@@ -164,7 +182,8 @@ class _$_ProductFeed implements _ProductFeed {
 }
 
 abstract class _ProductFeed implements ProductFeed {
-  factory _ProductFeed({String? label, String? query}) = _$_ProductFeed;
+  factory _ProductFeed({String? label, String? query, bool? require_auth}) =
+      _$_ProductFeed;
 
   factory _ProductFeed.fromJson(Map<String, dynamic> json) =
       _$_ProductFeed.fromJson;
@@ -173,6 +192,8 @@ abstract class _ProductFeed implements ProductFeed {
   String? get label => throw _privateConstructorUsedError;
   @override
   String? get query => throw _privateConstructorUsedError;
+  @override
+  bool? get require_auth => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProductFeedCopyWith<_ProductFeed> get copyWith =>

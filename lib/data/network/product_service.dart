@@ -55,25 +55,12 @@ class ProductService {
     }
   }
 
-  Future<PaginatedProducts> getPopularProducts([int page = 1]) async {
+  // Product section endpoint: /user/markets/$_marketId/products/${section}
+  Future<PaginatedProducts> getProductSection(String section,
+      [int page = 1]) async {
     try {
       final response = await _dio.get(
-        _('popular'),
-        queryParameters: {
-          'page': page,
-        },
-      );
-
-      return PaginatedProducts.fromJson(castOrFallback(response.data, {}));
-    } on DioError catch (error) {
-      throw CustomException.fromDioError(error);
-    }
-  }
-
-  Future<PaginatedProducts> getRandomProducts([int page = 1]) async {
-    try {
-      final response = await _dio.get(
-        _('random'),
+        _(section),
         queryParameters: {
           'page': page,
         },

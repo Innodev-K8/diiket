@@ -4,10 +4,17 @@ import 'package:diiket/data/network/product_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // predefined category
+// ignore: avoid_classes_with_only_static_members
 abstract class ProductFamily {
   static const String all = 'all';
   static const String popular = 'popular';
   static const String random = 'random';
+  static const String recommended = 'recommended';
+
+  // preserved sections
+  static const productSections = [popular, random, recommended];
+  // sections that requrie auth
+  static const requireAuthSections = [recommended];
 }
 
 final productProvider = StateNotifierProvider.family<ProductState,
@@ -19,7 +26,6 @@ final productProvider = StateNotifierProvider.family<ProductState,
 );
 
 class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
-  // ignore: unused_field
   final String _category;
   final ProductService _productService;
 
@@ -30,16 +36,15 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
 
   Future<PaginatedProducts> _getProductAtPage([int page = 1]) async {
     // fetch product by provided category
-    switch (_category) {
-      case ProductFamily.popular:
-        return _productService.getPopularProducts(page);
-      case ProductFamily.random:
-        return _productService.getRandomProducts(page);
-      case ProductFamily.all:
-        return _productService.getAllProducts(page);
-      default:
-        return _productService.getAllProducts(page, _category);
+    if (_category == ProductFamily.all) {
+      return _productService.getAllProducts(page);
     }
+
+    if (ProductFamily.productSections.contains(_category)) {
+      return _productService.getProductSection(_category, page);
+    }
+
+    return _productService.getAllProducts(page, _category);
   }
 
   Future<void> loadProducts() async {

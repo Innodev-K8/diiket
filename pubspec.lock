@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  dio_firebase_performance:
+    dependency: "direct main"
+    description:
+      name: dio_firebase_performance
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1-dev.3"
   dotted_line:
     dependency: "direct main"
     description:
@@ -336,7 +343,7 @@ packages:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0"
+    version: "1.4.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -399,7 +406,7 @@ packages:
       name: firebase_performance
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.0+6"
+    version: "0.7.0+7"
   firebase_remote_config:
     dependency: "direct main"
     description:

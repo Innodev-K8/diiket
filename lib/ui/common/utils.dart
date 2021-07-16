@@ -1,4 +1,5 @@
 import 'package:diiket/data/models/market.dart';
+import 'package:diiket/data/models/product_feed.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
@@ -41,6 +42,20 @@ class Utils {
   }
 
   static Future<void> navigateToProductByCategory(
+    ProductFeed? productFeed,
+  ) async {
+    if (productFeed == null) return;
+
+    await homeNav.currentState?.pushNamed(
+      ProductsByCategoryPage.route,
+      arguments: {
+        'product_feed': productFeed,
+      },
+    );
+  }
+
+  // Old API, for backward compatibility.
+  static Future<void> navigateToProductByCategoryOld(
     String? category,
     String? label,
   ) async {
@@ -49,8 +64,11 @@ class Utils {
     await homeNav.currentState?.pushNamed(
       ProductsByCategoryPage.route,
       arguments: {
-        'category': category,
-        'label': label ?? category,
+         'product_feed': ProductFeed(
+          title: label ?? category,
+          type: ProductSourceType.category,
+          query: category,
+        ),
       },
     );
   }

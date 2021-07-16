@@ -24,49 +24,49 @@ class ProductCategoryMenuItemsState
           fileName: 'meat',
           text: 'Daging',
           onTap: () {
-            Utils.navigateToProductByCategory('daging', 'Daging Segar');
+            Utils.navigateToProductByCategoryOld('daging', 'Daging Segar');
           },
         ),
         CategoryButton(
           fileName: 'fish',
           text: 'Ikan',
           onTap: () {
-            Utils.navigateToProductByCategory('ikan', 'Ikan Segar');
+            Utils.navigateToProductByCategoryOld('ikan', 'Ikan Segar');
           },
         ),
         CategoryButton(
           fileName: 'seasoning',
           text: 'Bumbu',
           onTap: () {
-            Utils.navigateToProductByCategory('bumbu', 'Bumbu Dapur');
+            Utils.navigateToProductByCategoryOld('bumbu', 'Bumbu Dapur');
           },
         ),
         CategoryButton(
           fileName: 'rice',
           text: 'Beras',
           onTap: () {
-            Utils.navigateToProductByCategory('beras', 'Beras');
+            Utils.navigateToProductByCategoryOld('beras', 'Beras');
           },
         ),
         CategoryButton(
           fileName: 'bread',
           text: 'Roti',
           onTap: () {
-            Utils.navigateToProductByCategory('roti', 'Roti');
+            Utils.navigateToProductByCategoryOld('roti', 'Roti');
           },
         ),
         CategoryButton(
           fileName: 'vegetable',
           text: 'Sayur',
           onTap: () {
-            Utils.navigateToProductByCategory('sayur', 'Sayuran Segar');
+            Utils.navigateToProductByCategoryOld('sayur', 'Sayuran Segar');
           },
         ),
         CategoryButton(
           fileName: 'fruit',
           text: 'Buah',
           onTap: () {
-            Utils.navigateToProductByCategory('buah', 'Buah-buahan');
+            Utils.navigateToProductByCategoryOld('buah', 'Buah-buahan');
           },
         ),
       ];
@@ -85,7 +85,7 @@ class ProductCategoryMenuItemsState
                 text: castOrFallback(item['text'], '-'),
                 fileName: castOrFallback(item['iconFileName'], ''),
                 onTap: () {
-                  Utils.navigateToProductByCategory(
+                  Utils.navigateToProductByCategoryOld(
                     castOrNull(item['category']),
                     castOrNull(item['pageLabel']),
                   );

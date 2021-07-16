@@ -9,11 +9,13 @@ class ProductFeedBanner extends StatelessWidget {
     required this.productFeed,
     this.padding,
     this.imageOnly = false,
+    this.onTap,
   }) : super(key: key);
 
   final ProductFeed productFeed;
   final EdgeInsets? padding;
   final bool imageOnly;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -86,18 +88,23 @@ class ProductFeedBanner extends StatelessWidget {
       );
     }
 
-    final paddedWidget = Padding(
-      padding: padding ?? const EdgeInsets.only(),
-      child: widget,
-    );
-
     if (isBannerImage) {
-      return Hero(
+      widget = Hero(
         tag: productFeed.image_url!,
-        child: paddedWidget,
+        child: widget,
       );
     }
 
-    return paddedWidget;
+    if (onTap != null) {
+      widget = GestureDetector(
+        onTap: onTap,
+        child: widget,
+      );
+    }
+
+    return Padding(
+      padding: padding ?? const EdgeInsets.only(),
+      child: widget,
+    );
   }
 }

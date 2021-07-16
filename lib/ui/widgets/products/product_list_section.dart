@@ -3,7 +3,6 @@ import 'package:diiket/data/models/product_provider_detail.dart';
 import 'package:diiket/data/providers/products/products_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
 import 'package:diiket/ui/widgets/products/loading/horizontal_scroll_product_list_loading.dart';
 import 'package:diiket/ui/widgets/products/product_feed_banner.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +46,9 @@ class ProductListSection extends HookWidget {
           ),
           productFeed: productFeed,
           imageOnly: true,
+          onTap: () {
+            Utils.navigateToProductByCategory(productFeed);
+          },
         ),
         _buildHeader(),
         productState.when(
@@ -86,12 +88,7 @@ class ProductListSection extends HookWidget {
           ),
           TextButton(
             onPressed: () {
-              Utils.homeNav.currentState!.pushNamed(
-                ProductsByCategoryPage.route,
-                arguments: {
-                  'product_feed': productFeed,
-                },
-              );
+              Utils.navigateToProductByCategory(productFeed);
             },
             style: TextButton.styleFrom(
               padding: const EdgeInsets.all(4),

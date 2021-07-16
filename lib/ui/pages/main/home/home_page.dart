@@ -1,3 +1,4 @@
+import 'package:diiket/data/models/product_feed.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/helpers/casting_helper.dart';
@@ -67,8 +68,8 @@ class _HomePageState extends State<HomePage>
               break;
             case ProductsByCategoryPage.route:
               page = ProductsByCategoryPage(
-                category: castOrFallback(arguments['category'], ''),
-                label: castOrNull(arguments['label']),
+                productFeed:
+                    castOrFallback(arguments['product_feed'], ProductFeed()),
               );
               break;
             case FeedPage.route:

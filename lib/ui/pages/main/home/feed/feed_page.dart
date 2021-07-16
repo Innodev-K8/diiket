@@ -74,15 +74,12 @@ class FeedPage extends StatelessWidget {
                     (context, index) {
                       final ProductFeed feed = feeds[index];
 
-                      if (feed.label == null ||
-                          feed.query == null ||
-                          (feed.require_auth == true && !isLoggedIn)) {
+                      if (feed.require_auth == true && !isLoggedIn) {
                         return SizedBox();
                       }
 
                       return ProductListSection(
-                        label: feed.label!,
-                        category: feed.query!,
+                        productFeed: feed,
                       );
                     },
                     childCount: feeds.length,
@@ -148,18 +145,7 @@ class _CampaignBannerState extends State<CampaignBanner> {
                     Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.symmetric(horizontal: 5.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: CachedNetworkImage(
-                  imageUrl: banners[itemIndex],
-                  fit: BoxFit.fill,
-                  placeholder: (context, url) => Loading(
-                    child: Container(
-                      color: ColorPallete.lightGray,
-                    ),
-                  ),
-                ),
-              ),
+              child: BannerImage(imageUrl: banners[itemIndex]),
             ),
             options: CarouselOptions(
               height: 160,
@@ -200,6 +186,31 @@ class _CampaignBannerState extends State<CampaignBanner> {
             ).toList(),
           ),
       ],
+    );
+  }
+}
+
+class BannerImage extends StatelessWidget {
+  final String imageUrl;
+
+  const BannerImage({
+    Key? key,
+    required this.imageUrl,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10.0),
+      child: CachedNetworkImage(
+        imageUrl: imageUrl,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => Loading(
+          child: Container(
+            color: ColorPallete.lightGray,
+          ),
+        ),
+      ),
     );
   }
 }

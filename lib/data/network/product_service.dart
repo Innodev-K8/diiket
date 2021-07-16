@@ -71,4 +71,22 @@ class ProductService {
       throw CustomException.fromDioError(error);
     }
   }
+
+// Product scenario endpoint: /user/markets/$_marketId/products/scenario/${scenario}
+  Future<PaginatedProducts> getProductScenario(String scenario,
+      [int page = 1, int? limit]) async {
+    try {
+      final response = await _dio.get(
+        _('scenario/$scenario'),
+        queryParameters: {
+          'page': page,
+          if (limit != null) 'limit': limit,
+        },
+      );
+
+      return PaginatedProducts.fromJson(castOrFallback(response.data, {}));
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
 }

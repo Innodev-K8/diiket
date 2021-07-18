@@ -1,23 +1,23 @@
 import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fare.dart';
+import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/helpers/casting_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'api_service.dart';
 
-final fareServiceProvider = Provider<FareService>((ref) {
-  return FareService(ref.read(apiProvider));
+final feeServiceProvider = Provider<FeeService>((ref) {
+  return FeeService(ref.read(apiProvider));
 });
 
-class FareService {
+class FeeService {
   final Dio _dio;
 
-  FareService(this._dio);
+  FeeService(this._dio);
 
-  String _(Object path) => '/fare/$path';
+  String _(Object path) => '/fee/$path';
 
-  Future<Fare> calculate(int distance, int weight) async {
+  Future<Fee> calculate(int distance, int weight) async {
     try {
       final response = await _dio.get(
         _('calculate'),
@@ -27,7 +27,7 @@ class FareService {
         },
       );
 
-      return Fare.fromJson(castOrFallback(response.data['data'], {}));
+      return Fee.fromJson(castOrFallback(response.data['data'], {}));
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }

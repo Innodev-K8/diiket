@@ -52,7 +52,7 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
 
                 await context
                     .read(deliveryDetailProvider.notifier)
-                    .calculateFare();
+                    .calculateFee();
               }
             }
           } finally {

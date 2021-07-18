@@ -26,7 +26,7 @@ class ConfirmOrderButton extends HookWidget {
     final deliveryDetail = useProvider(deliveryDetailProvider);
 
     return PrimaryButton(
-      trailing: deliveryDetail.fare?.when(
+      trailing: deliveryDetail.fee?.when(
             data: (value) => Text(
               'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value.total_fee ?? 0))}',
               style: kTextTheme.button!.copyWith(

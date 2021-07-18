@@ -1,5 +1,5 @@
 import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fare.dart';
+import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
@@ -77,12 +77,12 @@ class UnconfirmedStatePage extends HookWidget {
                     padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
                     child: ConfirmOrderButton(
                       onPressed: () async {
-                        final Fare? fare = deliveryDetail.fare?.data?.value;
+                        final Fee? fee = deliveryDetail.fee?.data?.value;
                         final LatLng? position = deliveryDetail.position;
                         final String? notificationToken =
                             await FirebaseMessaging.instance.getToken();
 
-                        if (fare == null || position == null) return;
+                        if (fee == null || position == null) return;
 
                         isLoading.value = true;
 
@@ -93,7 +93,7 @@ class UnconfirmedStatePage extends HookWidget {
                               .read(activeOrderProvider.notifier)
                               .confirmActiveOrder(
                                 position,
-                                fare,
+                                fee,
                                 deliveryDetail.geocodedPosition,
                                 notificationToken,
                                 onComplete: () async =>

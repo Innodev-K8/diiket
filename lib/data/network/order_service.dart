@@ -1,5 +1,5 @@
 import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fare.dart';
+import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
@@ -54,7 +54,7 @@ class OrderService {
 
   Future<Order?> confirmActiveOrder(
     LatLng location,
-    Fare fare,
+    Fee fee,
     String? address,
     String? notificationToken,
   ) async {
@@ -62,9 +62,9 @@ class OrderService {
       final Map<String, dynamic> data = {
         'location_lat': location.latitude.toString(),
         'location_lng': location.longitude.toString(),
-        'delivery_fee': fare.delivery_fee,
-        'pickup_fee': fare.pickup_fee,
-        'service_fee': fare.service_fee,
+        'delivery_fee': fee.delivery_fee,
+        'pickup_fee': fee.pickup_fee,
+        'service_fee': fee.service_fee,
         if (notificationToken != null)
           'user_notification_token': notificationToken,
         if (address != null) 'address': address,

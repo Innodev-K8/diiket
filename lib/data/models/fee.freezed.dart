@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'fare.dart';
+part of 'fee.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,17 +12,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Fare _$FareFromJson(Map<String, dynamic> json) {
-  return _Fare.fromJson(json);
+Fee _$FeeFromJson(Map<String, dynamic> json) {
+  return _Fee.fromJson(json);
 }
 
 /// @nodoc
-class _$FareTearOff {
-  const _$FareTearOff();
+class _$FeeTearOff {
+  const _$FeeTearOff();
 
-  _Fare call(
+  _Fee call(
       {int? delivery_fee, int? pickup_fee, int? service_fee, int? total_fee}) {
-    return _Fare(
+    return _Fee(
       delivery_fee: delivery_fee,
       pickup_fee: pickup_fee,
       service_fee: service_fee,
@@ -30,16 +30,16 @@ class _$FareTearOff {
     );
   }
 
-  Fare fromJson(Map<String, Object> json) {
-    return Fare.fromJson(json);
+  Fee fromJson(Map<String, Object> json) {
+    return Fee.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Fare = _$FareTearOff();
+const $Fee = _$FeeTearOff();
 
 /// @nodoc
-mixin _$Fare {
+mixin _$Fee {
   int? get delivery_fee => throw _privateConstructorUsedError;
   int? get pickup_fee => throw _privateConstructorUsedError;
   int? get service_fee => throw _privateConstructorUsedError;
@@ -47,24 +47,24 @@ mixin _$Fare {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $FareCopyWith<Fare> get copyWith => throw _privateConstructorUsedError;
+  $FeeCopyWith<Fee> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FareCopyWith<$Res> {
-  factory $FareCopyWith(Fare value, $Res Function(Fare) then) =
-      _$FareCopyWithImpl<$Res>;
+abstract class $FeeCopyWith<$Res> {
+  factory $FeeCopyWith(Fee value, $Res Function(Fee) then) =
+      _$FeeCopyWithImpl<$Res>;
   $Res call(
       {int? delivery_fee, int? pickup_fee, int? service_fee, int? total_fee});
 }
 
 /// @nodoc
-class _$FareCopyWithImpl<$Res> implements $FareCopyWith<$Res> {
-  _$FareCopyWithImpl(this._value, this._then);
+class _$FeeCopyWithImpl<$Res> implements $FeeCopyWith<$Res> {
+  _$FeeCopyWithImpl(this._value, this._then);
 
-  final Fare _value;
+  final Fee _value;
   // ignore: unused_field
-  final $Res Function(Fare) _then;
+  final $Res Function(Fee) _then;
 
   @override
   $Res call({
@@ -95,22 +95,22 @@ class _$FareCopyWithImpl<$Res> implements $FareCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$FareCopyWith<$Res> implements $FareCopyWith<$Res> {
-  factory _$FareCopyWith(_Fare value, $Res Function(_Fare) then) =
-      __$FareCopyWithImpl<$Res>;
+abstract class _$FeeCopyWith<$Res> implements $FeeCopyWith<$Res> {
+  factory _$FeeCopyWith(_Fee value, $Res Function(_Fee) then) =
+      __$FeeCopyWithImpl<$Res>;
   @override
   $Res call(
       {int? delivery_fee, int? pickup_fee, int? service_fee, int? total_fee});
 }
 
 /// @nodoc
-class __$FareCopyWithImpl<$Res> extends _$FareCopyWithImpl<$Res>
-    implements _$FareCopyWith<$Res> {
-  __$FareCopyWithImpl(_Fare _value, $Res Function(_Fare) _then)
-      : super(_value, (v) => _then(v as _Fare));
+class __$FeeCopyWithImpl<$Res> extends _$FeeCopyWithImpl<$Res>
+    implements _$FeeCopyWith<$Res> {
+  __$FeeCopyWithImpl(_Fee _value, $Res Function(_Fee) _then)
+      : super(_value, (v) => _then(v as _Fee));
 
   @override
-  _Fare get _value => super._value as _Fare;
+  _Fee get _value => super._value as _Fee;
 
   @override
   $Res call({
@@ -119,7 +119,7 @@ class __$FareCopyWithImpl<$Res> extends _$FareCopyWithImpl<$Res>
     Object? service_fee = freezed,
     Object? total_fee = freezed,
   }) {
-    return _then(_Fare(
+    return _then(_Fee(
       delivery_fee: delivery_fee == freezed
           ? _value.delivery_fee
           : delivery_fee // ignore: cast_nullable_to_non_nullable
@@ -142,12 +142,11 @@ class __$FareCopyWithImpl<$Res> extends _$FareCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Fare implements _Fare {
-  _$_Fare(
+class _$_Fee implements _Fee {
+  _$_Fee(
       {this.delivery_fee, this.pickup_fee, this.service_fee, this.total_fee});
 
-  factory _$_Fare.fromJson(Map<String, dynamic> json) =>
-      _$_$_FareFromJson(json);
+  factory _$_Fee.fromJson(Map<String, dynamic> json) => _$_$_FeeFromJson(json);
 
   @override
   final int? delivery_fee;
@@ -160,13 +159,13 @@ class _$_Fare implements _Fare {
 
   @override
   String toString() {
-    return 'Fare(delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_fee: $total_fee)';
+    return 'Fee(delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_fee: $total_fee)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Fare &&
+        (other is _Fee &&
             (identical(other.delivery_fee, delivery_fee) ||
                 const DeepCollectionEquality()
                     .equals(other.delivery_fee, delivery_fee)) &&
@@ -191,23 +190,23 @@ class _$_Fare implements _Fare {
 
   @JsonKey(ignore: true)
   @override
-  _$FareCopyWith<_Fare> get copyWith =>
-      __$FareCopyWithImpl<_Fare>(this, _$identity);
+  _$FeeCopyWith<_Fee> get copyWith =>
+      __$FeeCopyWithImpl<_Fee>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_FareToJson(this);
+    return _$_$_FeeToJson(this);
   }
 }
 
-abstract class _Fare implements Fare {
-  factory _Fare(
+abstract class _Fee implements Fee {
+  factory _Fee(
       {int? delivery_fee,
       int? pickup_fee,
       int? service_fee,
-      int? total_fee}) = _$_Fare;
+      int? total_fee}) = _$_Fee;
 
-  factory _Fare.fromJson(Map<String, dynamic> json) = _$_Fare.fromJson;
+  factory _Fee.fromJson(Map<String, dynamic> json) = _$_Fee.fromJson;
 
   @override
   int? get delivery_fee => throw _privateConstructorUsedError;
@@ -219,5 +218,5 @@ abstract class _Fare implements Fare {
   int? get total_fee => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$FareCopyWith<_Fare> get copyWith => throw _privateConstructorUsedError;
+  _$FeeCopyWith<_Fee> get copyWith => throw _privateConstructorUsedError;
 }

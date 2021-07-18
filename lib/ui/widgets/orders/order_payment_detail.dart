@@ -46,7 +46,7 @@ class OrderPaymentDetail extends HookWidget {
                     'Rp. ${Helper.fmtPrice(order.delivery_fee)}',
                     textAlign: TextAlign.end,
                   )
-                : deliveryDetail.fare?.when(
+                : deliveryDetail.fee?.when(
                       data: (value) => Text(
                         value.delivery_fee != null
                             ? 'Rp. ${Helper.fmtPrice(value.delivery_fee)}'
@@ -70,7 +70,7 @@ class OrderPaymentDetail extends HookWidget {
                     'Rp. ${Helper.fmtPrice(order.pickup_fee)}',
                     textAlign: TextAlign.end,
                   )
-                : deliveryDetail.fare?.when(
+                : deliveryDetail.fee?.when(
                       data: (value) => Text(
                         value.pickup_fee != null
                             ? 'Rp. ${Helper.fmtPrice(value.pickup_fee)}'
@@ -94,7 +94,7 @@ class OrderPaymentDetail extends HookWidget {
                     'Rp. ${Helper.fmtPrice(order.service_fee)}',
                     textAlign: TextAlign.end,
                   )
-                : deliveryDetail.fare?.when(
+                : deliveryDetail.fee?.when(
                       data: (value) => Text(
                         value.service_fee != null
                             ? 'Rp. ${Helper.fmtPrice(value.service_fee)}'
@@ -134,7 +134,7 @@ class OrderPaymentDetail extends HookWidget {
                   ),
                 )
               else
-                deliveryDetail.fare?.when(
+                deliveryDetail.fee?.when(
                       data: (value) => Text(
                         'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value.total_fee ?? 0))}',
                         textAlign: TextAlign.end,

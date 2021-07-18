@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fare.dart';
+import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
@@ -151,7 +151,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
   }
 
   Future<void> confirmActiveOrder(
-      LatLng location, Fare fare, String? address, String? notificationToken,
+      LatLng location, Fee fee, String? address, String? notificationToken,
       // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
       {Function? onComplete}) async {
     try {
@@ -159,7 +159,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
         final Order? result =
             await _read(orderServiceProvider).state.confirmActiveOrder(
                   location,
-                  fare,
+                  fee,
                   address,
                   notificationToken,
                 );
@@ -179,9 +179,9 @@ class ActiveOrderState extends StateNotifier<Order?> {
           destination: address,
           location: '${location.latitude}, ${location.latitude}',
           origin: _read(currentMarketProvider).state.name,
-          shipping: fare.delivery_fee?.toDouble(),
-          tax: fare.service_fee?.toDouble(),
-          value: (fare.total_fee ?? 0 + totalProductPrice).toDouble(),
+          shipping: fee.delivery_fee?.toDouble(),
+          tax: fee.service_fee?.toDouble(),
+          value: (fee.total_fee ?? 0 + totalProductPrice).toDouble(),
         );
       }
     } on CustomException catch (error) {

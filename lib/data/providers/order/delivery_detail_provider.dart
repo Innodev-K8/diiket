@@ -1,7 +1,7 @@
 import 'package:diiket/data/models/delivery_detail.dart';
 import 'package:diiket/data/models/directions.dart';
-import 'package:diiket/data/models/fare.dart';
-import 'package:diiket/data/network/fare_service.dart';
+import 'package:diiket/data/models/fee.dart';
+import 'package:diiket/data/network/fee_service.dart';
 import 'package:diiket/data/providers/global_exception_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,7 +17,7 @@ class DeliveryDetailState extends StateNotifier<DeliveryDetail> {
 
   DeliveryDetailState(this._read) : super(DeliveryDetail()) {
     _read(activeOrderProvider.notifier).addListener((state) {
-      if (state != null) calculateFare();
+      if (state != null) calculateFee();
     });
   }
 
@@ -27,21 +27,21 @@ class DeliveryDetailState extends StateNotifier<DeliveryDetail> {
     );
   }
 
-  Future<void> calculateFare() async {
+  Future<void> calculateFee() async {
     if (state.directions?.totalDistance == null) return;
 
     try {
       state = state.copyWith(
-        fare: const AsyncValue.loading(),
+        fee: const AsyncValue.loading(),
       );
 
-      final Fare fare = await _read(fareServiceProvider).calculate(
+      final Fee fee = await _read(feeServiceProvider).calculate(
         state.directions?.totalDistance ?? 0,
         _read(activeOrderProvider.notifier).totalProductWeight,
       );
 
       state = state.copyWith(
-        fare: AsyncValue.data(fare),
+        fee: AsyncValue.data(fee),
       );
     } on Exception catch (e, st) {
       _read(exceptionProvider.notifier).setError(e, st);

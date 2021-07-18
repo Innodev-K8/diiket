@@ -18,6 +18,7 @@ class Order with _$Order {
     String? address,
     String? location_lat,
     String? location_lng,
+    int? delivery_distance,
     int? total_weight,
     int? products_price,
     int? delivery_fee,

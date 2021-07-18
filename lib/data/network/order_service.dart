@@ -52,16 +52,18 @@ class OrderService {
     }
   }
 
-  Future<Order?> confirmActiveOrder(
-    LatLng location,
-    Fee fee,
+  Future<Order?> confirmActiveOrder({
+    required LatLng location,
+    required Fee fee,
+    required int deliveryDistance,
     String? address,
     String? notificationToken,
-  ) async {
+  }) async {
     try {
       final Map<String, dynamic> data = {
         'location_lat': location.latitude.toString(),
         'location_lng': location.longitude.toString(),
+        'delivery_distance': deliveryDistance,
         'delivery_fee': fee.delivery_fee,
         'pickup_fee': fee.pickup_fee,
         'service_fee': fee.service_fee,

@@ -84,23 +84,25 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
       _channel = _pusher.subscribe('orders.${state!.id}');
 
-      _channel!.bind('order-status-updated', (PusherEvent? event) {
-        final dynamic response = jsonDecode(event?.data ?? '');
-
-        if (response['order'] == null) return;
-
-        final Order order = Order.fromJson(
-          castOrFallback(response['order'], {}),
-        );
-
-        if (order.status == 'completed' || order.status == 'canceled') {
-          _unsubscribe(order.id);
-          state = null;
-        } else {
-          state = order;
-        }
-      });
+      _channel!.bind('order-status-updated', _onOrderStatusUpdated);
     } catch (_) {}
+  }
+
+  void _onOrderStatusUpdated(PusherEvent? event) {
+    final dynamic response = jsonDecode(event?.data ?? '');
+
+    if (response['order'] == null) return;
+
+    final Order order = Order.fromJson(
+      castOrFallback(response['order'], {}),
+    );
+
+    if (order.status == 'completed' || order.status == 'canceled') {
+      _unsubscribe(order.id);
+      state = null;
+    } else {
+      state = order;
+    }
   }
 
   Future<void> _unsubscribe([int? id]) async {
@@ -150,23 +152,28 @@ class ActiveOrderState extends StateNotifier<Order?> {
     }
   }
 
-  Future<void> confirmActiveOrder(
-      LatLng location, Fee fee, String? address, String? notificationToken,
-      // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
-      {Function? onComplete}) async {
+  Future<void> confirmActiveOrder({
+    required LatLng location,
+    required Fee fee,
+    required int deliveryDistance,
+    String? address,
+    String? notificationToken,
+    // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
+    Function? onConfirmed,
+  }) async {
     try {
       if (mounted) {
         final Order? result =
             await _read(orderServiceProvider).state.confirmActiveOrder(
-                  location,
-                  fee,
-                  address,
-                  notificationToken,
+                  location: location,
+                  deliveryDistance: deliveryDistance,
+                  fee: fee,
+                  address: address,
                 );
 
         if (result == null) return;
 
-        await onComplete?.call();
+        await onConfirmed?.call();
 
         state = result;
 

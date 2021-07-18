@@ -78,11 +78,15 @@ class UnconfirmedStatePage extends HookWidget {
                     child: ConfirmOrderButton(
                       onPressed: () async {
                         final Fee? fee = deliveryDetail.fee?.data?.value;
-                        final LatLng? position = deliveryDetail.position;
+                        final LatLng? location = deliveryDetail.position;
+                        final int? deliveryDistance =
+                            deliveryDetail.directions?.totalDistance;
                         final String? notificationToken =
                             await FirebaseMessaging.instance.getToken();
 
-                        if (fee == null || position == null) return;
+                        if (fee == null ||
+                            location == null ||
+                            deliveryDistance == null) return;
 
                         isLoading.value = true;
 
@@ -92,20 +96,12 @@ class UnconfirmedStatePage extends HookWidget {
                           await context
                               .read(activeOrderProvider.notifier)
                               .confirmActiveOrder(
-                                position,
-                                fee,
-                                deliveryDetail.geocodedPosition,
-                                notificationToken,
-                                onComplete: () async =>
-                                    await Utils.appNav.currentState?.push(
-                                  PageTransition(
-                                    child: CheckoutSuccessPage(),
-                                    type: PageTransitionType.scale,
-                                    alignment: Alignment.bottomCenter,
-                                    curve: Curves.easeInOutQuart,
-                                    duration: Duration(seconds: 1),
-                                  ),
-                                ),
+                                location: location,
+                                fee: fee,
+                                deliveryDistance: deliveryDistance,
+                                address: deliveryDetail.geocodedPosition,
+                                notificationToken: notificationToken,
+                                onConfirmed: _onOrderConfirmed,
                               );
                         } on CustomException catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -139,4 +135,14 @@ class UnconfirmedStatePage extends HookWidget {
       ],
     );
   }
+
+  Future? _onOrderConfirmed() => Utils.appNav.currentState?.push(
+        PageTransition(
+          child: CheckoutSuccessPage(),
+          type: PageTransitionType.scale,
+          alignment: Alignment.bottomCenter,
+          curve: Curves.easeInOutQuart,
+          duration: Duration(seconds: 1),
+        ),
+      );
 }

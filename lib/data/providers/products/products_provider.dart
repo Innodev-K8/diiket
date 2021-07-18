@@ -48,14 +48,17 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
 
   Future<PaginatedProducts> _getProductByCategory(String category, int page) {
     if (category == ProductFamily.all) {
-      return _productService.getAllProducts(page);
+      return _productService.getAllProducts(page: page);
     }
 
     if (ProductFamily.productSections.contains(category)) {
       return _productService.getProductSection(category, page);
     }
 
-    return _productService.getAllProducts(page, category);
+    return _productService.getAllProducts(
+      page: page,
+      category: category,
+    );
   }
 
   Future<PaginatedProducts> _getProductByScenario(String scenario, int page,

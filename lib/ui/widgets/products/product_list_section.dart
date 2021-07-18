@@ -33,6 +33,10 @@ class ProductListSection extends HookWidget {
     final productState = useProvider(provider);
     final productNotifier = useProvider(provider.notifier);
 
+    if (productState.data?.value.data?.isEmpty == true) {
+      return SizedBox.shrink();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -1,6 +1,6 @@
 import 'package:diiket/data/models/product_feed.dart';
 import 'package:diiket/ui/common/styles.dart';
-import 'package:diiket/ui/pages/main/home/feed/feed_page.dart';
+import 'package:diiket/ui/widgets/campaign/banner_image.dart';
 import 'package:flutter/material.dart';
 
 class ProductFeedBanner extends StatelessWidget {
@@ -66,23 +66,24 @@ class ProductFeedBanner extends StatelessWidget {
               imageUrl: productFeed.image_url!,
             ),
           ),
-          Container(
-            height: 160.0,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-              gradient: LinearGradient(
-                begin: FractionalOffset.bottomCenter,
-                end: FractionalOffset.topCenter,
-                colors: [
-                  Colors.black.withOpacity(0.7),
-                  Colors.black.withOpacity(0.7),
-                  Colors.black.withOpacity(0.1),
-                ],
-                stops: const [0.0, 0.2, 1.0],
+          if (isDescriptionAvailable)
+            Container(
+              height: 160.0,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                gradient: LinearGradient(
+                  begin: FractionalOffset.bottomCenter,
+                  end: FractionalOffset.topCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.7),
+                    Colors.black.withOpacity(0.7),
+                    Colors.black.withOpacity(0.1),
+                  ],
+                  stops: const [0.0, 0.2, 1.0],
+                ),
               ),
             ),
-          ),
           Positioned(left: 8, right: 8, bottom: 10, child: message),
         ],
       );

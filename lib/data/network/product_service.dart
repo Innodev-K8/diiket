@@ -22,14 +22,18 @@ class ProductService {
 
   String _(Object path) => '/user/markets/$_marketId/products/$path';
 
-  Future<PaginatedProducts> getAllProducts(
-      [int page = 1, String? category]) async {
+  Future<PaginatedProducts> getAllProducts({
+    int page = 1,
+    String? category,
+    int? randomSeed,
+  }) async {
     try {
       final response = await _dio.get(
         _(''),
         queryParameters: {
           'page': page,
           if (category != null) 'category': category,
+          if (randomSeed != null) 'random_seed': randomSeed,
         },
       );
 

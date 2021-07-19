@@ -362,7 +362,7 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Order implements _Order {
+class _$_Order extends _Order {
   _$_Order(
       {this.id,
       this.market_id,
@@ -380,7 +380,8 @@ class _$_Order implements _Order {
       this.pickup_fee,
       this.service_fee,
       this.total_price,
-      this.order_items});
+      this.order_items})
+      : super._();
 
   factory _$_Order.fromJson(Map<String, dynamic> json) =>
       _$_$_OrderFromJson(json);
@@ -511,7 +512,7 @@ class _$_Order implements _Order {
   }
 }
 
-abstract class _Order implements Order {
+abstract class _Order extends Order {
   factory _Order(
       {int? id,
       int? market_id,
@@ -530,6 +531,7 @@ abstract class _Order implements Order {
       int? service_fee,
       int? total_price,
       List<OrderItem>? order_items}) = _$_Order;
+  _Order._() : super._();
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$_Order.fromJson;
 

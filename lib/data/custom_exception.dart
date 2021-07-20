@@ -3,22 +3,32 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CustomException implements Exception {
+  // message to be shown to user
   final String? message;
-  final dynamic reason;
-  final StackTrace? stackTrace;
+  // exception code
   final int code;
+  // exception stack trace
+  final StackTrace? stackTrace;
+  // messge to be shown to developer
+  final dynamic reason;
+  // additional data
+  final dynamic payload;
 
   const CustomException({
     this.message = 'Terjadi kesalahan!',
     this.code = 0,
-    this.reason,
     this.stackTrace,
+    this.reason,
+    this.payload,
   });
 
   @override
   String toString() {
     return "CustomException { message: $message, code: $code }";
   }
+
+  // special exception code
+  static int outOfStockProducts = 900;
 
   factory CustomException.fromDioError(DioError error) {
     String message = 'Terjadi kesalahan';

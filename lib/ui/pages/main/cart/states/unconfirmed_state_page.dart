@@ -104,6 +104,7 @@ class UnconfirmedStatePage extends HookWidget {
                                 onConfirmed: _onOrderConfirmed,
                               );
                         } on CustomException catch (e) {
+                          // I don't think this will be executed.
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(e.message ?? 'Terjadi kesalahan'),

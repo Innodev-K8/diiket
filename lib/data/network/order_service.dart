@@ -103,6 +103,8 @@ class OrderService {
                     (e) =>
                         '${e.product?.name} (tersedia ${e.product?.stocks} ${e.product?.quantity_unit})',
                   ).join('\n')}',
+          code: CustomException.outOfStockProducts,
+          payload: outOfStockItems,
         );
       }
 

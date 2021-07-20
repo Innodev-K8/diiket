@@ -161,39 +161,38 @@ class ActiveOrderState extends StateNotifier<Order?> {
     Function? onConfirmed,
   }) async {
     try {
-      if (mounted) {
-        final Order? result =
-            await _read(orderServiceProvider).state.confirmActiveOrder(
-                  location: location,
-                  deliveryDistance: deliveryDistance,
-                  notificationToken: notificationToken,
-                  fee: fee,
-                  address: address,
-                );
+      if (!mounted) return;
 
-        if (result == null) return;
+      final Order? result =
+          await _read(orderServiceProvider).state.confirmActiveOrder(
+                location: location,
+                deliveryDistance: deliveryDistance,
+                notificationToken: notificationToken,
+                fee: fee,
+                address: address,
+              );
 
-        await onConfirmed?.call();
+      if (result == null) return;
 
-        state = result;
+      await onConfirmed?.call();
 
-        // subscribe to pusher
-        connectToPusher(result);
+      state = result;
 
-        _read(analyticsProvider).logEcommercePurchase(
-          transactionId: result.id.toString(),
-          currency: 'IDR',
-          destination: address,
-          location: '${location.latitude}, ${location.latitude}',
-          origin: _read(currentMarketProvider).state.name,
-          shipping: fee.delivery_fee?.toDouble(),
-          tax: fee.service_fee?.toDouble(),
-          value: (fee.total_fee ?? 0 + totalProductPrice).toDouble(),
-        );
-      }
+      // subscribe to pusher
+      await connectToPusher(result);
+
+      _read(analyticsProvider).logEcommercePurchase(
+        transactionId: result.id.toString(),
+        currency: 'IDR',
+        destination: address,
+        location: '${location.latitude}, ${location.latitude}',
+        origin: _read(currentMarketProvider).state.name,
+        shipping: fee.delivery_fee?.toDouble(),
+        tax: fee.service_fee?.toDouble(),
+        value: (fee.total_fee ?? 0 + totalProductPrice).toDouble(),
+      );
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
-      rethrow;
     }
   }
 

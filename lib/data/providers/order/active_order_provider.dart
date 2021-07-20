@@ -178,8 +178,8 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
       state = result;
 
-      // subscribe to pusher
-      await connectToPusher(result);
+      // just to make sure whenever driver confirm this order before the user calls onConfirmed.
+      await retrieveActiveOrder();
 
       _read(analyticsProvider).logEcommercePurchase(
         transactionId: result.id.toString(),

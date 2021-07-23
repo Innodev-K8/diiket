@@ -11,6 +11,7 @@ final deviceLocationProvider =
   return DeviceLocationState(ref.read);
 });
 
+// dont use this state
 class DeviceLocationState extends StateNotifier<LatLng> {
   final Reader _read;
 

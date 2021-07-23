@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:trust_location/trust_location.dart';
@@ -16,7 +17,8 @@ class LocationService {
   static late bool? _serviceEnabled;
   static PermissionStatus? _permissionGranted;
 
-  static Future<LatLng?> getUserPosition() async {
+  static Future<LatLng?> getUserPosition(
+      {bool allowMockLocation = false}) async {
     try {
       _serviceEnabled = await _instance.serviceEnabled();
 
@@ -40,7 +42,9 @@ class LocationService {
 
       final bool isMockLocation = await TrustLocation.isMockLocation;
 
-      if (isMockLocation == true) return null;
+      if (!allowMockLocation && isMockLocation == true && kReleaseMode) {
+        return null;
+      }
 
       final LocationData location = await _instance.getLocation();
 

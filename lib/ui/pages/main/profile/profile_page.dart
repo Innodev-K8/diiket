@@ -7,7 +7,6 @@ import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page.dart';
 import 'package:diiket/ui/widgets/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/login_to_continue_button.dart';
-import 'package:diiket/ui/widgets/market_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -68,8 +67,6 @@ class ProfilePage extends HookWidget {
                           ],
                         ),
                         SizedBox(height: 40.0),
-                        MarketSelector(),
-                        SizedBox(height: 20.0),
                         Text(
                           'Pengaturan',
                           style: kTextTheme.headline2,

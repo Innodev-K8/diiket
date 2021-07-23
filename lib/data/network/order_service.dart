@@ -16,20 +16,23 @@ final orderServiceProvider = StateProvider<OrderService>((ref) {
   // rebuild order service whenever user state changes
   ref.watch(authProvider);
 
-  final Market currentMarket = ref.watch(currentMarketProvider).state;
+  final Market? currentMarket = ref.watch(currentMarketProvider).state;
 
-  return OrderService(ref.read(apiProvider), currentMarket.id ?? 1);
+  return OrderService(ref.read(apiProvider), currentMarket?.id);
 });
 
 class OrderService {
   final Dio _dio;
-  final int _marketId;
+  final int? _marketId;
 
   OrderService(this._dio, this._marketId);
 
   String _(Object path) => '/user/markets/$_marketId/orders/$path';
 
   Future<Order?> getActiveOrder() async {
+    if (_marketId == null) {
+      return null;
+    }
     try {
       final response = await _dio.get(_('active'));
 
@@ -45,6 +48,9 @@ class OrderService {
   }
 
   Future<void> cancelActiveOrder() async {
+    if (_marketId == null) {
+      return;
+    }
     try {
       await _dio.post(_('active/cancel'));
     } on DioError catch (error) {
@@ -59,6 +65,9 @@ class OrderService {
     String? address,
     String? notificationToken,
   }) async {
+    if (_marketId == null) {
+      return null;
+    }
     try {
       final Map<String, dynamic> data = {
         'location_lat': location.latitude.toString(),
@@ -114,6 +123,10 @@ class OrderService {
 
   Future<OrderItem> placeOrderItem(Product product, int quantity,
       [String? notes]) async {
+    if (_marketId == null) {
+      return OrderItem.fromJson({});
+    }
+
     try {
       final Map<String, dynamic> data = {
         'product_id': product.id,
@@ -137,6 +150,10 @@ class OrderService {
     int? quantity,
     String? notes,
   }) async {
+    if (_marketId == null) {
+      return OrderItem.fromJson({});
+    }
+
     try {
       final Map<String, dynamic> data = {
         '_method': 'PATCH',
@@ -156,6 +173,10 @@ class OrderService {
   }
 
   Future<void> deleteOrderItem(OrderItem orderItem) async {
+    if (_marketId == null) {
+      return;
+    }
+
     try {
       await _dio.delete(_('items/${orderItem.id}'));
     } on DioError catch (error) {

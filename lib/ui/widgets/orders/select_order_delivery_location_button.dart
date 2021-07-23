@@ -1,3 +1,4 @@
+import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/data/services/location_service.dart';
@@ -36,12 +37,19 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
           onLoading?.call();
 
           try {
+            final Market? currentMarket =
+                context.read(currentMarketProvider).state;
+
+            if (currentMarket == null) {
+              return;
+            }
+
             final LatLng? userPosition =
                 await LocationService.getUserPosition();
 
             if (userPosition != null) {
               final PlacePickerResult? result = await Utils.pickLocation(
-                context.read(currentMarketProvider).state,
+                currentMarket,
                 initialLocation: deliveryDetail.position ?? userPosition,
               );
 

@@ -6,6 +6,7 @@ import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_item_list.dart';
 import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
 import 'package:diiket/ui/widgets/primary_button.dart';
+import 'package:diiket/ui/widgets/small_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -59,14 +60,7 @@ class ConfirmedStatePage extends HookWidget {
                       Container(
                         decoration: kBorderedDecoration,
                         padding: const EdgeInsets.all(16.0),
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            color: ColorPallete.primaryColor,
-                            strokeWidth: 3,
-                          ),
-                        ),
+                        child: SmallLoadingIndicator(),
                       ),
                     ],
                   ),

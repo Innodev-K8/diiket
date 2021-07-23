@@ -1,4 +1,5 @@
 import 'package:diiket/data/custom_exception.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CustomExceptionMessage extends StatelessWidget {
@@ -12,7 +13,9 @@ class CustomExceptionMessage extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Text(e.message ?? 'Terjadi kesalahan.'),
+      child: kReleaseMode
+          ? Text(e.message ?? 'Terjadi kesalahan.')
+          : Text(e.toString()),
     );
   }
 }

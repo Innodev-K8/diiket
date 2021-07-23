@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:diiket/data/custom_exception.dart';
+import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/product_category.dart';
 import 'package:diiket/data/models/seller.dart';
@@ -9,6 +10,8 @@ import 'package:diiket/data/notification/background_fcm.dart';
 import 'package:diiket/data/notification/service.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/global_exception_provider.dart';
+import 'package:diiket/data/providers/market_provider.dart';
+import 'package:diiket/data/secure_storage.dart';
 import 'package:diiket/data/services/dynamic_link_service.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
@@ -17,6 +20,7 @@ import 'package:diiket/ui/pages/main/main_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page.dart';
+import 'package:diiket/ui/widgets/market/select_market_bottom_sheet.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -70,12 +74,25 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    // setup selected market
+    _initializeSelectedMarket();
 
+    // setup service handlers
     NotificationService()
         .initializeNotificationHandler(context)
         .then((streamSubscription) => notificationStream = streamSubscription);
 
     DynamicLinkService().initializeHandler(context);
+  }
+
+  Future<void> _initializeSelectedMarket() async {
+    final Market? selectedMarket = await SecureStorage().getSelectedMarket();
+
+    if (selectedMarket == null) {
+      await SelectMarketBottomSheet.show(Utils.appNav.currentContext!);
+    } else {
+      context.read(currentMarketProvider).state = selectedMarket;
+    }
   }
 
   @override
@@ -95,27 +112,32 @@ class _MyAppState extends State<MyApp> {
     return ProviderListener(
       provider: exceptionProvider,
       onChange: _handleException,
-      child: MaterialApp(
-        title: 'Diiket',
-        debugShowCheckedModeBanner: false,
-        navigatorKey: Utils.appNav,
-        scaffoldMessengerKey: Utils.appScaffoldMessager,
-        theme: ThemeData(
-          primaryColor: ColorPallete.primaryColor,
-          accentColor: ColorPallete.secondaryColor,
-          textTheme: kTextTheme,
+      child: ProviderListener(
+        provider: currentMarketProvider,
+        onChange: _handleCurrentMarketChange,
+        child: MaterialApp(
+          title: 'Diiket',
+          debugShowCheckedModeBanner: false,
+          navigatorKey: Utils.appNav,
+          scaffoldMessengerKey: Utils.appScaffoldMessager,
+          theme: ThemeData(
+            primaryColor: ColorPallete.primaryColor,
+            accentColor: ColorPallete.secondaryColor,
+            textTheme: kTextTheme,
+          ),
+          initialRoute: MainPage.route,
+          navigatorObservers: [
+            FirebaseAnalyticsObserver(
+                analytics: context.read(analyticsProvider)),
+          ],
+          routes: {
+            MainPage.route: (_) => MainPage(),
+            RegisterPage.route: (_) => RegisterPage(),
+            PhoneNumberSettingPage.route: (_) => PhoneNumberSettingPage(),
+            PhotoSettingPage.route: (_) => PhotoSettingPage(),
+            NameSettingPage.route: (_) => NameSettingPage(),
+          },
         ),
-        initialRoute: MainPage.route,
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: context.read(analyticsProvider)),
-        ],
-        routes: {
-          MainPage.route: (_) => MainPage(),
-          RegisterPage.route: (_) => RegisterPage(),
-          PhoneNumberSettingPage.route: (_) => PhoneNumberSettingPage(),
-          PhotoSettingPage.route: (_) => PhotoSettingPage(),
-          NameSettingPage.route: (_) => NameSettingPage(),
-        },
       ),
     );
   }
@@ -128,5 +150,12 @@ class _MyAppState extends State<MyApp> {
           ? exception.message!
           : 'Terjadi Kesalahan...',
     );
+  }
+
+  Future<void> _handleCurrentMarketChange(
+      BuildContext context, StateController<Market?> market) async {
+    if (market.state == null) {
+      await SelectMarketBottomSheet.show(Utils.appNav.currentContext!);
+    }
   }
 }

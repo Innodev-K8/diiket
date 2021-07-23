@@ -123,6 +123,7 @@ class AddProductToCartAction extends HookWidget {
 
   Widget _buildAddToCart(BuildContext context) {
     final isPlacingOrder = useState<bool>(false);
+    final isMounted = useIsMounted();
 
     void addToCart() {
       isPlacingOrder.value = true;
@@ -141,7 +142,13 @@ class AddProductToCartAction extends HookWidget {
       context
           .read(activeOrderProvider.notifier)
           .placeOrderItem(product, 1)
-          .whenComplete(() => isPlacingOrder.value = false);
+          .whenComplete(
+        () {
+          if (isMounted()) {
+            isPlacingOrder.value = false;
+          }
+        },
+      );
     }
 
     final buttonStyle = ElevatedButton.styleFrom(

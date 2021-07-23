@@ -1,0 +1,161 @@
+import 'package:diiket/data/models/market.dart';
+import 'package:diiket/data/providers/market_provider.dart';
+import 'package:diiket/data/providers/order/active_order_provider.dart';
+import 'package:diiket/data/secure_storage.dart';
+import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/widgets/custom_exception_message.dart';
+import 'package:diiket/ui/widgets/small_loading_indicator.dart';
+import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class MarketSelector extends HookWidget {
+  final Function(Market)? onSelected;
+
+  const MarketSelector({
+    Key? key,
+    this.onSelected,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final nearbyMarketState = useProvider(nearbyMarketsProvider);
+    final currentMarket = useProvider(currentMarketProvider).state;
+    final activeOrder = useProvider(activeOrderProvider);
+
+    if (activeOrder != null) return _buildActiveOrder();
+
+    return nearbyMarketState.when(
+      data: (markets) => markets.isEmpty
+          ? _buildEmpty()
+          : _buidlDropdown(context, currentMarket, markets),
+      loading: () => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          children: const [
+            SmallLoadingIndicator(),
+            SizedBox(width: 12),
+            Text('Mencari Pasar Terdekat...'),
+          ],
+        ),
+      ),
+      error: (e, st) => CustomExceptionMessage(e),
+    );
+  }
+
+  Widget _buildEmpty() => Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            Icon(
+              Icons.wrong_location_rounded,
+              color: ColorPallete.primaryColor,
+              size: 88,
+            ),
+            SizedBox(height: 12),
+            Text(
+              'Mohon maaf, saat ini belum terdapat pasar yang terdaftar di daerah Anda.',
+              textAlign: TextAlign.center,
+              style: kTextTheme.headline6,
+            ),
+          ],
+        ),
+      );
+
+  Widget _buildActiveOrder() => Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            Icon(
+              Icons.shopping_cart_rounded,
+              color: ColorPallete.primaryColor,
+              size: 88,
+            ),
+            SizedBox(height: 12),
+            Text(
+              'Anda tidak dapat mengganti pasar jika terdapat barang di keranjang.',
+              textAlign: TextAlign.center,
+              style: kTextTheme.headline6,
+            ),
+          ],
+        ),
+      );
+
+  DropdownSearch<Market> _buidlDropdown(
+    BuildContext context,
+    Market? currentMarket,
+    List<Market> markets,
+  ) {
+    return DropdownSearch<Market>(
+      mode: Mode.MENU,
+      showSelectedItem: true,
+      compareFn: (item, selectedItem) => item.id == selectedItem?.id,
+      selectedItem: currentMarket,
+      items: markets,
+      label: "Pasar",
+      popupShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      itemAsString: (Market m) => m.name ?? '-',
+      dropdownBuilder: (context, selectedItem, itemAsString) =>
+          selectedItem == null ? Text('Pilih pasar') : _buildItem(selectedItem),
+      popupItemBuilder: (context, item, isSelected) => _buildItem(item),
+      hint: "Pilih pasar tempat Anda ingin berbelanja.",
+      showSearchBox: true,
+      dropdownSearchDecoration: InputDecoration(
+        contentPadding: const EdgeInsets.only(left: 16),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: ColorPallete.lightGray.withOpacity(0.5),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            width: 2.0,
+            color: ColorPallete.primaryColor,
+          ),
+        ),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        labelText: 'Bumbu, Daging Sapi',
+        suffixIconConstraints: BoxConstraints(
+          minHeight: 24,
+          minWidth: 24,
+        ),
+      ),
+      onChanged: (Market? market) async {
+        if (market != null) {
+          context.read(currentMarketProvider).state = market;
+
+          await SecureStorage().setSelectedMarket(market);
+
+          onSelected?.call(market);
+        }
+      },
+    );
+  }
+
+  Padding _buildItem(Market item) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              item.name ?? '-',
+              style: kTextTheme.headline6,
+            ),
+          ),
+          SizedBox(width: 8),
+          Text(
+            '${item.distance?.toStringAsFixed(1) ?? '-'}km',
+            style: kTextTheme.caption,
+          ),
+        ],
+      ),
+    );
+  }
+}

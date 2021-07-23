@@ -9,14 +9,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'api_service.dart';
 
 final productServiceProvider = StateProvider<ProductService>((ref) {
-  final Market currentMarket = ref.watch(currentMarketProvider).state;
+  final Market? currentMarket = ref.watch(currentMarketProvider).state;
 
-  return ProductService(ref.read(apiProvider), currentMarket.id ?? 1);
+  return ProductService(ref.read(apiProvider), currentMarket?.id);
 });
 
 class ProductService {
   final Dio _dio;
-  final int _marketId;
+  final int? _marketId;
 
   ProductService(this._dio, this._marketId);
 
@@ -28,6 +28,10 @@ class ProductService {
     int? randomSeed,
   }) async {
     try {
+      if (_marketId == null) {
+        return PaginatedProducts.fromJson({});
+      }
+
       final response = await _dio.get(
         _(''),
         queryParameters: {
@@ -44,6 +48,10 @@ class ProductService {
   }
 
   Future<PaginatedProducts> searchProducs([int page = 1, String? query]) async {
+    if (_marketId == null) {
+      return PaginatedProducts.fromJson({});
+    }
+
     try {
       final response = await _dio.get(
         _(''),
@@ -62,6 +70,10 @@ class ProductService {
   // Product section endpoint: /user/markets/$_marketId/products/${section}
   Future<PaginatedProducts> getProductSection(String section,
       [int page = 1]) async {
+    if (_marketId == null) {
+      return PaginatedProducts.fromJson({});
+    }
+
     try {
       final response = await _dio.get(
         _(section),
@@ -79,6 +91,10 @@ class ProductService {
 // Product scenario endpoint: /user/markets/$_marketId/products/scenario/${scenario}
   Future<PaginatedProducts> getProductScenario(String scenario,
       [int page = 1, int? limit]) async {
+    if (_marketId == null) {
+      return PaginatedProducts.fromJson({});
+    }
+
     try {
       final response = await _dio.get(
         _('scenario/$scenario'),

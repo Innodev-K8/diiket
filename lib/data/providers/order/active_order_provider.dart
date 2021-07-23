@@ -8,8 +8,6 @@ import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/order_service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
-import 'package:diiket/data/providers/firebase_provider.dart';
-import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/pusher_provider.dart';
 import 'package:diiket/helpers/casting_helper.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -144,8 +142,6 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
       await _read(orderServiceProvider).state.cancelActiveOrder();
       await retrieveActiveOrder();
-
-      _read(analyticsProvider).logEvent(name: 'order_canceled');
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
     }
@@ -180,17 +176,6 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
       // just to make sure whenever driver confirm this order before the user calls onConfirmed.
       await retrieveActiveOrder();
-
-      _read(analyticsProvider).logEcommercePurchase(
-        transactionId: result.id.toString(),
-        currency: 'IDR',
-        destination: address,
-        location: '${location.latitude}, ${location.latitude}',
-        origin: _read(currentMarketProvider).state.name,
-        shipping: fee.delivery_fee?.toDouble(),
-        tax: fee.service_fee?.toDouble(),
-        value: (fee.total_fee ?? 0 + totalProductPrice).toDouble(),
-      );
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
     }
@@ -215,13 +200,6 @@ class ActiveOrderState extends StateNotifier<Order?> {
       } else {
         await retrieveActiveOrder();
       }
-
-      _read(analyticsProvider).logAddToCart(
-        itemId: product.id.toString(),
-        itemName: product.name ?? '',
-        itemCategory: product.categories?.join(', ') ?? '',
-        quantity: quantity,
-      );
     } on CustomException catch (error) {
       // ignore if item already in order list
       if (error.code == 403) return;
@@ -291,13 +269,6 @@ class ActiveOrderState extends StateNotifier<Order?> {
       if (activeOrder == null) {
         await retrieveActiveOrder();
       }
-
-      _read(analyticsProvider).logRemoveFromCart(
-        itemId: orderItem.product?.id.toString() ?? '',
-        itemName: orderItem.product?.name ?? '',
-        itemCategory: orderItem.product?.categories?.join(', ') ?? '',
-        quantity: orderItem.quantity ?? 0,
-      );
     } on CustomException catch (_) {
       await retrieveActiveOrder();
     }

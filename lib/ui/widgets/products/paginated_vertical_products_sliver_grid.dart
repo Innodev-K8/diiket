@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/network/product_service.dart';
+import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/ui/hooks/paging_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -17,6 +18,9 @@ class PaginatedVerticalProductsSliverGrid extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    // watch for market changes
+    final market = useProvider(currentMarketProvider);
+
     final randomSeed = useMemoized<int>(() => Random().nextInt(1000));
     final controller = usePagingController<int, Product>(firstPageKey: 1);
     final repository = useProvider(productServiceProvider).state;
@@ -51,14 +55,22 @@ class PaginatedVerticalProductsSliverGrid extends HookWidget {
       controller.addPageRequestListener((pageKey) {
         _fetchPage(pageKey);
       });
-
-      return controller.dispose;
     }, []);
+
+    useEffect(() {
+      controller.refresh();
+      _fetchPage(1);
+    }, [market.state]);
+
+    if (controller.itemList?.isEmpty == true) {
+      return SliverToBoxAdapter();
+    }
 
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       sliver: PagedSliverGrid(
         pagingController: controller,
+
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: 100 / 165,
           crossAxisSpacing: 15,
@@ -69,6 +81,7 @@ class PaginatedVerticalProductsSliverGrid extends HookWidget {
           itemBuilder: (context, item, index) {
             return MediumProductItem(product: item);
           },
+          noItemsFoundIndicatorBuilder: (context) => SizedBox(),
         ),
         showNewPageProgressIndicatorAsGridChild: false,
       ),

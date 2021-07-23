@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:diiket/data/models/market.dart';
+import 'package:diiket/helpers/casting_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SecureStorage {
@@ -10,6 +14,7 @@ class SecureStorage {
   SecureStorage._();
 
   static const authTokenKey = 'AUTH_TOKEN';
+  static const selectedMarketKey = 'SELECTED_MARKET';
 
   SharedPreferences? _storage;
 
@@ -33,5 +38,28 @@ class SecureStorage {
     await ensure();
 
     return _storage!.getString(authTokenKey);
+  }
+
+  // Market stuff
+  Future<void> setSelectedMarket(Market market) async {
+    await ensure();
+
+    await _storage!.setString(selectedMarketKey, jsonEncode(market.toJson()));
+  }
+
+  Future<void> clearSelectedMarket() async {
+    await ensure();
+
+    await _storage!.remove(selectedMarketKey);
+  }
+
+  Future<Market?> getSelectedMarket() async {
+    await ensure();
+
+    final jsonMarket = _storage!.getString(selectedMarketKey);
+
+    if (jsonMarket == null) return null;
+
+    return Market.fromJson(castOrFallback(jsonDecode(jsonMarket), {}));
   }
 }

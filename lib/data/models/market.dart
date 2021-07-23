@@ -15,6 +15,7 @@ abstract class Market with _$Market {
     @JsonKey(name: 'responsible_person_contact')
         String? responsiblePersonContact,
     @JsonKey(name: 'field_merchant_count') int? fieldMerchantCount,
+    double? distance,
   }) = _Market;
 
   factory Market.fromJson(Map<String, dynamic> json) => _$MarketFromJson(json);

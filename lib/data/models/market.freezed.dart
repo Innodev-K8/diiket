@@ -33,7 +33,8 @@ class _$MarketTearOff {
       @JsonKey(name: 'responsible_person_contact')
           String? responsiblePersonContact,
       @JsonKey(name: 'field_merchant_count')
-          int? fieldMerchantCount}) {
+          int? fieldMerchantCount,
+      double? distance}) {
     return _Market(
       id: id,
       name: name,
@@ -43,6 +44,7 @@ class _$MarketTearOff {
       responsiblePersonName: responsiblePersonName,
       responsiblePersonContact: responsiblePersonContact,
       fieldMerchantCount: fieldMerchantCount,
+      distance: distance,
     );
   }
 
@@ -69,6 +71,7 @@ mixin _$Market {
   String? get responsiblePersonContact => throw _privateConstructorUsedError;
   @JsonKey(name: 'field_merchant_count')
   int? get fieldMerchantCount => throw _privateConstructorUsedError;
+  double? get distance => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -92,7 +95,8 @@ abstract class $MarketCopyWith<$Res> {
       @JsonKey(name: 'responsible_person_contact')
           String? responsiblePersonContact,
       @JsonKey(name: 'field_merchant_count')
-          int? fieldMerchantCount});
+          int? fieldMerchantCount,
+      double? distance});
 }
 
 /// @nodoc
@@ -113,6 +117,7 @@ class _$MarketCopyWithImpl<$Res> implements $MarketCopyWith<$Res> {
     Object? responsiblePersonName = freezed,
     Object? responsiblePersonContact = freezed,
     Object? fieldMerchantCount = freezed,
+    Object? distance = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -147,6 +152,10 @@ class _$MarketCopyWithImpl<$Res> implements $MarketCopyWith<$Res> {
           ? _value.fieldMerchantCount
           : fieldMerchantCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      distance: distance == freezed
+          ? _value.distance
+          : distance // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -169,7 +178,8 @@ abstract class _$MarketCopyWith<$Res> implements $MarketCopyWith<$Res> {
       @JsonKey(name: 'responsible_person_contact')
           String? responsiblePersonContact,
       @JsonKey(name: 'field_merchant_count')
-          int? fieldMerchantCount});
+          int? fieldMerchantCount,
+      double? distance});
 }
 
 /// @nodoc
@@ -191,6 +201,7 @@ class __$MarketCopyWithImpl<$Res> extends _$MarketCopyWithImpl<$Res>
     Object? responsiblePersonName = freezed,
     Object? responsiblePersonContact = freezed,
     Object? fieldMerchantCount = freezed,
+    Object? distance = freezed,
   }) {
     return _then(_Market(
       id: id == freezed
@@ -225,6 +236,10 @@ class __$MarketCopyWithImpl<$Res> extends _$MarketCopyWithImpl<$Res>
           ? _value.fieldMerchantCount
           : fieldMerchantCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      distance: distance == freezed
+          ? _value.distance
+          : distance // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -245,7 +260,8 @@ class _$_Market implements _Market {
       @JsonKey(name: 'responsible_person_contact')
           this.responsiblePersonContact,
       @JsonKey(name: 'field_merchant_count')
-          this.fieldMerchantCount});
+          this.fieldMerchantCount,
+      this.distance});
 
   factory _$_Market.fromJson(Map<String, dynamic> json) =>
       _$_$_MarketFromJson(json);
@@ -271,10 +287,12 @@ class _$_Market implements _Market {
   @override
   @JsonKey(name: 'field_merchant_count')
   final int? fieldMerchantCount;
+  @override
+  final double? distance;
 
   @override
   String toString() {
-    return 'Market(id: $id, name: $name, address: $address, locationLat: $locationLat, locationLng: $locationLng, responsiblePersonName: $responsiblePersonName, responsiblePersonContact: $responsiblePersonContact, fieldMerchantCount: $fieldMerchantCount)';
+    return 'Market(id: $id, name: $name, address: $address, locationLat: $locationLat, locationLng: $locationLng, responsiblePersonName: $responsiblePersonName, responsiblePersonContact: $responsiblePersonContact, fieldMerchantCount: $fieldMerchantCount, distance: $distance)';
   }
 
   @override
@@ -304,7 +322,10 @@ class _$_Market implements _Market {
                     responsiblePersonContact)) &&
             (identical(other.fieldMerchantCount, fieldMerchantCount) ||
                 const DeepCollectionEquality()
-                    .equals(other.fieldMerchantCount, fieldMerchantCount)));
+                    .equals(other.fieldMerchantCount, fieldMerchantCount)) &&
+            (identical(other.distance, distance) ||
+                const DeepCollectionEquality()
+                    .equals(other.distance, distance)));
   }
 
   @override
@@ -317,7 +338,8 @@ class _$_Market implements _Market {
       const DeepCollectionEquality().hash(locationLng) ^
       const DeepCollectionEquality().hash(responsiblePersonName) ^
       const DeepCollectionEquality().hash(responsiblePersonContact) ^
-      const DeepCollectionEquality().hash(fieldMerchantCount);
+      const DeepCollectionEquality().hash(fieldMerchantCount) ^
+      const DeepCollectionEquality().hash(distance);
 
   @JsonKey(ignore: true)
   @override
@@ -344,7 +366,8 @@ abstract class _Market implements Market {
       @JsonKey(name: 'responsible_person_contact')
           String? responsiblePersonContact,
       @JsonKey(name: 'field_merchant_count')
-          int? fieldMerchantCount}) = _$_Market;
+          int? fieldMerchantCount,
+      double? distance}) = _$_Market;
 
   factory _Market.fromJson(Map<String, dynamic> json) = _$_Market.fromJson;
 
@@ -369,6 +392,8 @@ abstract class _Market implements Market {
   @override
   @JsonKey(name: 'field_merchant_count')
   int? get fieldMerchantCount => throw _privateConstructorUsedError;
+  @override
+  double? get distance => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$MarketCopyWith<_Market> get copyWith => throw _privateConstructorUsedError;

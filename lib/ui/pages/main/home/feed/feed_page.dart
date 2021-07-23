@@ -11,6 +11,7 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/search/search_page.dart';
 import 'package:diiket/ui/widgets/campaign/campaign_banner_carousel.dart';
 import 'package:diiket/ui/widgets/category_menu.dart';
+import 'package:diiket/ui/widgets/market/market_selector_button.dart';
 import 'package:diiket/ui/widgets/products/paginated_vertical_products_sliver_grid.dart';
 import 'package:diiket/ui/widgets/products/product_feed_banner.dart';
 import 'package:diiket/ui/widgets/products/product_list_section.dart';
@@ -60,7 +61,10 @@ class FeedPage extends StatelessWidget {
               children: [
                 _buildSectionTitle('Atau butuh sesuatu?'),
                 CategoryMenu(),
-                SizedBox(height: 34.0),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: MarketSelectorButton(),
+                ),
                 CampaignBanner(),
                 FavoriteStalls(),
               ],

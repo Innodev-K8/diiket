@@ -16,6 +16,7 @@ _$_Market _$_$_MarketFromJson(Map<String, dynamic> json) {
     responsiblePersonName: json['responsible_person_name'] as String?,
     responsiblePersonContact: json['responsible_person_contact'] as String?,
     fieldMerchantCount: json['field_merchant_count'] as int?,
+    distance: (json['distance'] as num?)?.toDouble(),
   );
 }
 
@@ -28,4 +29,5 @@ Map<String, dynamic> _$_$_MarketToJson(_$_Market instance) => <String, dynamic>{
       'responsible_person_name': instance.responsiblePersonName,
       'responsible_person_contact': instance.responsiblePersonContact,
       'field_merchant_count': instance.fieldMerchantCount,
+      'distance': instance.distance,
     };

@@ -9,10 +9,12 @@ import 'package:diiket/data/notification/background_fcm.dart';
 import 'package:diiket/data/notification/service.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/global_exception_provider.dart';
+import 'package:diiket/data/providers/order/chat/chat_client_provider.dart';
 import 'package:diiket/data/services/dynamic_link_service.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
+import 'package:diiket/ui/pages/main/cart/chat/chat_page.dart';
 import 'package:diiket/ui/pages/main/main_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page.dart';
@@ -28,6 +30,7 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -100,6 +103,17 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         navigatorKey: Utils.appNav,
         scaffoldMessengerKey: Utils.appScaffoldMessager,
+        builder: (context, child) => StreamChat(
+          client: context.read(chatClientProvider),
+          streamChatThemeData: StreamChatThemeData.fromTheme(
+            ThemeData(
+              primaryColor: ColorPallete.primaryColor,
+              accentColor: ColorPallete.secondaryColor,
+              textTheme: kTextTheme,
+            ),
+          ),
+          child: child,
+        ),
         theme: ThemeData(
           primaryColor: ColorPallete.primaryColor,
           accentColor: ColorPallete.secondaryColor,
@@ -115,6 +129,7 @@ class _MyAppState extends State<MyApp> {
           PhoneNumberSettingPage.route: (_) => PhoneNumberSettingPage(),
           PhotoSettingPage.route: (_) => PhotoSettingPage(),
           NameSettingPage.route: (_) => NameSettingPage(),
+          ChatPage.route: (_) => ChatPage(),
         },
       ),
     );

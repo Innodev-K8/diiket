@@ -47,24 +47,7 @@ class SelectMarketBottomSheet extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        final currentMarket = context.read(currentMarketProvider).state;
-
-        // close app if there is no option, eg: diiket is not yet supported in users area
-        final nearbyMarket = context.read(nearbyMarketsProvider).maybeWhen(
-              data: (markets) => markets,
-              orElse: () => [],
-            );
-
-        if (currentMarket == null && nearbyMarket.isEmpty) {
-          await SystemNavigator.pop();
-
-          return false;
-        }
-
-        // disable close when we haven't select any market
-        return currentMarket != null;
-      },
+      onWillPop: () => _onWillPop(context),
       child: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8),
         child: Container(
@@ -103,5 +86,24 @@ class SelectMarketBottomSheet extends HookWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> _onWillPop(BuildContext context) async {
+    final currentMarket = context.read(currentMarketProvider).state;
+
+    // close app if there is no option, eg: diiket is not yet supported in users area
+    final nearbyMarket = context.read(nearbyMarketsProvider).maybeWhen(
+          data: (markets) => markets,
+          orElse: () => [],
+        );
+
+    if (currentMarket == null && nearbyMarket.isEmpty) {
+      await SystemNavigator.pop();
+
+      return false;
+    }
+
+    // disable close when we haven't select any market
+    return currentMarket != null;
   }
 }

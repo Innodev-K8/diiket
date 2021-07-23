@@ -1,3 +1,4 @@
+import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
@@ -40,8 +41,15 @@ class MarketSelector extends HookWidget {
           ],
         ),
       ),
-      error: (e, st) => CustomExceptionMessage(e),
+      error: (exception, st) => _buildError(exception as Exception),
     );
+  }
+
+  Widget _buildError(Exception exception) {
+    if (exception is CustomException && exception.code == 422) {
+      return _buildNoGPS();
+    }
+    return CustomExceptionMessage(exception);
   }
 
   Widget _buildEmpty() => Padding(
@@ -56,6 +64,25 @@ class MarketSelector extends HookWidget {
             SizedBox(height: 12),
             Text(
               'Mohon maaf, saat ini belum terdapat pasar yang terdaftar di daerah Anda.',
+              textAlign: TextAlign.center,
+              style: kTextTheme.headline6,
+            ),
+          ],
+        ),
+      );
+
+      Widget _buildNoGPS() => Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            Icon(
+              Icons.location_disabled_rounded,
+              color: ColorPallete.primaryColor,
+              size: 88,
+            ),
+            SizedBox(height: 12),
+            Text(
+              'Gagal mendapatkan pasar terdekat, harap pastikan layanan lokasi/GPS Anda menyala.',
               textAlign: TextAlign.center,
               style: kTextTheme.headline6,
             ),

@@ -15,7 +15,7 @@ class LocationService {
   static final _instance = Location();
 
   static late bool? _serviceEnabled;
-  static PermissionStatus? _permissionGranted;
+  static PermissionStatus? _permissionStatus;
 
   static Future<LatLng?> getUserPosition(
       {bool allowMockLocation = false}) async {
@@ -30,12 +30,12 @@ class LocationService {
         }
       }
 
-      _permissionGranted = await _instance.hasPermission();
+      _permissionStatus = await _instance.hasPermission();
 
-      if (_permissionGranted == PermissionStatus.denied) {
-        _permissionGranted = await _instance.requestPermission();
+      if (_permissionStatus == PermissionStatus.denied) {
+        _permissionStatus = await _instance.requestPermission();
 
-        if (_permissionGranted != PermissionStatus.granted) {
+        if (_permissionStatus != PermissionStatus.granted) {
           return null;
         }
       }

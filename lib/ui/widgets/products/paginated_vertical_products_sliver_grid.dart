@@ -21,6 +21,8 @@ class PaginatedVerticalProductsSliverGrid extends HookWidget {
     final controller = usePagingController<int, Product>(firstPageKey: 1);
     final repository = useProvider(productServiceProvider).state;
 
+    final isMounted = useIsMounted();
+
     Future<void> _fetchPage(int pageKey) async {
       try {
         final paginatedProducts = await repository.getAllProducts(
@@ -30,12 +32,17 @@ class PaginatedVerticalProductsSliverGrid extends HookWidget {
 
         final isLastPage = pageKey >= (paginatedProducts.meta?.last_page ?? 0);
 
+        // because we are using future and it may complete after the state has been disposed, we have to check if the state is still mounted
+        if (!isMounted()) return;
+
         if (isLastPage) {
           controller.appendLastPage(paginatedProducts.data ?? []);
         } else {
           controller.appendPage(paginatedProducts.data ?? [], pageKey + 1);
         }
       } catch (error) {
+        if (!isMounted()) return;
+
         controller.error = error;
       }
     }

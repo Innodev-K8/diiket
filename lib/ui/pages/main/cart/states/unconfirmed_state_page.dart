@@ -1,5 +1,5 @@
 import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fare.dart';
+import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
@@ -77,12 +77,16 @@ class UnconfirmedStatePage extends HookWidget {
                     padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
                     child: ConfirmOrderButton(
                       onPressed: () async {
-                        final Fare? fare = deliveryDetail.fare?.data?.value;
-                        final LatLng? position = deliveryDetail.position;
+                        final Fee? fee = deliveryDetail.fee?.data?.value;
+                        final LatLng? location = deliveryDetail.position;
+                        final int? deliveryDistance =
+                            deliveryDetail.directions?.totalDistance;
                         final String? notificationToken =
                             await FirebaseMessaging.instance.getToken();
 
-                        if (fare == null || position == null) return;
+                        if (fee == null ||
+                            location == null ||
+                            deliveryDistance == null) return;
 
                         isLoading.value = true;
 
@@ -92,22 +96,15 @@ class UnconfirmedStatePage extends HookWidget {
                           await context
                               .read(activeOrderProvider.notifier)
                               .confirmActiveOrder(
-                                position,
-                                fare,
-                                deliveryDetail.geocodedPosition,
-                                notificationToken,
-                                onComplete: () async =>
-                                    await Utils.appNav.currentState?.push(
-                                  PageTransition(
-                                    child: CheckoutSuccessPage(),
-                                    type: PageTransitionType.scale,
-                                    alignment: Alignment.bottomCenter,
-                                    curve: Curves.easeInOutQuart,
-                                    duration: Duration(seconds: 1),
-                                  ),
-                                ),
+                                location: location,
+                                fee: fee,
+                                deliveryDistance: deliveryDistance,
+                                address: deliveryDetail.geocodedPosition,
+                                notificationToken: notificationToken,
+                                onConfirmed: _onOrderConfirmed,
                               );
                         } on CustomException catch (e) {
+                          // I don't think this will be executed.
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(e.message ?? 'Terjadi kesalahan'),
@@ -139,4 +136,14 @@ class UnconfirmedStatePage extends HookWidget {
       ],
     );
   }
+
+  Future? _onOrderConfirmed() => Utils.appNav.currentState?.push(
+        PageTransition(
+          child: CheckoutSuccessPage(),
+          type: PageTransitionType.scale,
+          alignment: Alignment.bottomCenter,
+          curve: Curves.easeInOutQuart,
+          duration: Duration(seconds: 1),
+        ),
+      );
 }

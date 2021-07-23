@@ -20,11 +20,11 @@ class ProductFeedsState extends StateNotifier<List<ProductFeed>> {
 
   List<ProductFeed> get defaultFeed => [
         ProductFeed(
-          label: 'Produk',
+          title: 'Jelajahi',
           query: ProductFamily.all,
         ),
         ProductFeed(
-          label: 'Terlaris',
+          title: 'Terlaris',
           query: ProductFamily.popular,
         ),
       ];

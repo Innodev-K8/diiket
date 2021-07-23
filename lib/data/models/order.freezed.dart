@@ -30,6 +30,7 @@ class _$OrderTearOff {
       String? address,
       String? location_lat,
       String? location_lng,
+      int? delivery_distance,
       int? total_weight,
       int? products_price,
       int? delivery_fee,
@@ -47,6 +48,7 @@ class _$OrderTearOff {
       address: address,
       location_lat: location_lat,
       location_lng: location_lng,
+      delivery_distance: delivery_distance,
       total_weight: total_weight,
       products_price: products_price,
       delivery_fee: delivery_fee,
@@ -76,6 +78,7 @@ mixin _$Order {
   String? get address => throw _privateConstructorUsedError;
   String? get location_lat => throw _privateConstructorUsedError;
   String? get location_lng => throw _privateConstructorUsedError;
+  int? get delivery_distance => throw _privateConstructorUsedError;
   int? get total_weight => throw _privateConstructorUsedError;
   int? get products_price => throw _privateConstructorUsedError;
   int? get delivery_fee => throw _privateConstructorUsedError;
@@ -103,6 +106,7 @@ abstract class $OrderCopyWith<$Res> {
       String? address,
       String? location_lat,
       String? location_lng,
+      int? delivery_distance,
       int? total_weight,
       int? products_price,
       int? delivery_fee,
@@ -133,6 +137,7 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? address = freezed,
     Object? location_lat = freezed,
     Object? location_lng = freezed,
+    Object? delivery_distance = freezed,
     Object? total_weight = freezed,
     Object? products_price = freezed,
     Object? delivery_fee = freezed,
@@ -178,6 +183,10 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
           ? _value.location_lng
           : location_lng // ignore: cast_nullable_to_non_nullable
               as String?,
+      delivery_distance: delivery_distance == freezed
+          ? _value.delivery_distance
+          : delivery_distance // ignore: cast_nullable_to_non_nullable
+              as int?,
       total_weight: total_weight == freezed
           ? _value.total_weight
           : total_weight // ignore: cast_nullable_to_non_nullable
@@ -236,6 +245,7 @@ abstract class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       String? address,
       String? location_lat,
       String? location_lng,
+      int? delivery_distance,
       int? total_weight,
       int? products_price,
       int? delivery_fee,
@@ -268,6 +278,7 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? address = freezed,
     Object? location_lat = freezed,
     Object? location_lng = freezed,
+    Object? delivery_distance = freezed,
     Object? total_weight = freezed,
     Object? products_price = freezed,
     Object? delivery_fee = freezed,
@@ -313,6 +324,10 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
           ? _value.location_lng
           : location_lng // ignore: cast_nullable_to_non_nullable
               as String?,
+      delivery_distance: delivery_distance == freezed
+          ? _value.delivery_distance
+          : delivery_distance // ignore: cast_nullable_to_non_nullable
+              as int?,
       total_weight: total_weight == freezed
           ? _value.total_weight
           : total_weight // ignore: cast_nullable_to_non_nullable
@@ -347,7 +362,7 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Order implements _Order {
+class _$_Order extends _Order {
   _$_Order(
       {this.id,
       this.market_id,
@@ -358,13 +373,15 @@ class _$_Order implements _Order {
       this.address,
       this.location_lat,
       this.location_lng,
+      this.delivery_distance,
       this.total_weight,
       this.products_price,
       this.delivery_fee,
       this.pickup_fee,
       this.service_fee,
       this.total_price,
-      this.order_items});
+      this.order_items})
+      : super._();
 
   factory _$_Order.fromJson(Map<String, dynamic> json) =>
       _$_$_OrderFromJson(json);
@@ -388,6 +405,8 @@ class _$_Order implements _Order {
   @override
   final String? location_lng;
   @override
+  final int? delivery_distance;
+  @override
   final int? total_weight;
   @override
   final int? products_price;
@@ -404,7 +423,7 @@ class _$_Order implements _Order {
 
   @override
   String toString() {
-    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, driver: $driver, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items)';
+    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, driver: $driver, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, delivery_distance: $delivery_distance, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items)';
   }
 
   @override
@@ -435,6 +454,9 @@ class _$_Order implements _Order {
             (identical(other.location_lng, location_lng) ||
                 const DeepCollectionEquality()
                     .equals(other.location_lng, location_lng)) &&
+            (identical(other.delivery_distance, delivery_distance) ||
+                const DeepCollectionEquality()
+                    .equals(other.delivery_distance, delivery_distance)) &&
             (identical(other.total_weight, total_weight) ||
                 const DeepCollectionEquality()
                     .equals(other.total_weight, total_weight)) &&
@@ -470,6 +492,7 @@ class _$_Order implements _Order {
       const DeepCollectionEquality().hash(address) ^
       const DeepCollectionEquality().hash(location_lat) ^
       const DeepCollectionEquality().hash(location_lng) ^
+      const DeepCollectionEquality().hash(delivery_distance) ^
       const DeepCollectionEquality().hash(total_weight) ^
       const DeepCollectionEquality().hash(products_price) ^
       const DeepCollectionEquality().hash(delivery_fee) ^
@@ -489,7 +512,7 @@ class _$_Order implements _Order {
   }
 }
 
-abstract class _Order implements Order {
+abstract class _Order extends Order {
   factory _Order(
       {int? id,
       int? market_id,
@@ -500,6 +523,7 @@ abstract class _Order implements Order {
       String? address,
       String? location_lat,
       String? location_lng,
+      int? delivery_distance,
       int? total_weight,
       int? products_price,
       int? delivery_fee,
@@ -507,6 +531,7 @@ abstract class _Order implements Order {
       int? service_fee,
       int? total_price,
       List<OrderItem>? order_items}) = _$_Order;
+  _Order._() : super._();
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$_Order.fromJson;
 
@@ -528,6 +553,8 @@ abstract class _Order implements Order {
   String? get location_lat => throw _privateConstructorUsedError;
   @override
   String? get location_lng => throw _privateConstructorUsedError;
+  @override
+  int? get delivery_distance => throw _privateConstructorUsedError;
   @override
   int? get total_weight => throw _privateConstructorUsedError;
   @override

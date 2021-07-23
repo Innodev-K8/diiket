@@ -1,4 +1,5 @@
 import 'package:diiket/data/custom_exception.dart';
+import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
@@ -24,11 +25,7 @@ class CartPage extends HookWidget {
 
     return ProviderListener(
       provider: activeOrderErrorProvider,
-      onChange: (context, StateController<CustomException?> value) {
-        if (value.state != null) {
-          Utils.alert(value.state!.message ?? 'Terjadi Kesalahan');
-        }
-      },
+      onChange: _onActiveOrderError,
       child: SafeArea(
         child: Container(
           color: ColorPallete.backgroundColor,
@@ -46,5 +43,16 @@ class CartPage extends HookWidget {
         ),
       ),
     );
+  }
+
+  void _onActiveOrderError(
+    BuildContext context,
+    StateController<CustomException?> value,
+  ) {
+    if (value.state?.payload is List<OrderItem>) {
+      Utils.alert(value.state!.message ?? '-');
+    } else if (value.state != null) {
+      Utils.alert(value.state!.message ?? 'Terjadi Kesalahan');
+    }
   }
 }

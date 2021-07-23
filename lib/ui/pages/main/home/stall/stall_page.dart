@@ -95,7 +95,7 @@ class StallPage extends HookWidget {
   }
 
   SliverToBoxAdapter _buildContent(
-      BuildContext context, Stall stall, Market market) {
+      BuildContext context, Stall stall, Market? market) {
     return SliverToBoxAdapter(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,7 +144,7 @@ class StallPage extends HookWidget {
                     SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '${market.name}, Lt. ${stall.location_floor} Blok ${stall.location_block} No. ${stall.location_number}',
+                        '${market?.name}, Lt. ${stall.location_floor} Blok ${stall.location_block} No. ${stall.location_number}',
                         style: kTextTheme.subtitle1!.copyWith(
                           color: ColorPallete.darkGray,
                         ),

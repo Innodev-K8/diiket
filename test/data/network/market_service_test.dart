@@ -16,7 +16,10 @@ void main() {
   });
 
   test('Market Service should get a list of nearby markets', () async {
-    final result = await marketService.getNearbyMarket();
+    final result = await marketService.getNearbyMarket(
+      latitude: -7.871166,
+      longitude: 112.526823,
+    );
 
     expect(result, isNotEmpty);
     expect(result, isA<List<Market>>());

@@ -1,5 +1,7 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/paginated/paginated_products.dart';
+import 'package:diiket/data/models/product_feed.dart';
+import 'package:diiket/data/models/product_provider_detail.dart';
 import 'package:diiket/data/network/product_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,33 +20,50 @@ abstract class ProductFamily {
 }
 
 final productProvider = StateNotifierProvider.family<ProductState,
-    AsyncValue<PaginatedProducts>, String>(
-  (ref, category) {
+    AsyncValue<PaginatedProducts>, ProductProviderDetail>(
+  (ref, detail) {
     // perlu watch karena productService bergantung ke active Market
-    return ProductState(ref.watch(productServiceProvider).state, category);
+    return ProductState(ref.watch(productServiceProvider).state, detail);
   },
 );
 
 class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
-  final String _category;
+  final ProductProviderDetail _detail;
   final ProductService _productService;
 
-  ProductState(this._productService, this._category)
+  ProductState(this._productService, this._detail)
       : super(const AsyncValue.loading()) {
     loadProducts();
   }
 
   Future<PaginatedProducts> _getProductAtPage([int page = 1]) async {
     // fetch product by provided category
-    if (_category == ProductFamily.all) {
-      return _productService.getAllProducts(page);
+    switch (_detail.source) {
+      case ProductSourceType.category:
+        return _getProductByCategory(_detail.query, page);
+      case ProductSourceType.scenario:
+        return _getProductByScenario(_detail.query, page, _detail.limit);
+    }
+  }
+
+  Future<PaginatedProducts> _getProductByCategory(String category, int page) {
+    if (category == ProductFamily.all) {
+      return _productService.getAllProducts(page: page);
     }
 
-    if (ProductFamily.productSections.contains(_category)) {
-      return _productService.getProductSection(_category, page);
+    if (ProductFamily.productSections.contains(category)) {
+      return _productService.getProductSection(category, page);
     }
 
-    return _productService.getAllProducts(page, _category);
+    return _productService.getAllProducts(
+      page: page,
+      category: category,
+    );
+  }
+
+  Future<PaginatedProducts> _getProductByScenario(String scenario, int page,
+      [int? limit]) {
+    return _productService.getProductScenario(scenario, page, limit);
   }
 
   Future<void> loadProducts() async {

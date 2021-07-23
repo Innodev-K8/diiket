@@ -17,9 +17,15 @@ class MarketService {
 
   String _(Object path) => '/user/markets/$path';
 
-  Future<List<Market>> getNearbyMarket() async {
+  Future<List<Market>> getNearbyMarket({
+    double? latitude,
+    double? longitude,
+  }) async {
     try {
-      final response = await _dio.get(_('nearby'));
+      final response = await _dio.get(_('nearby'), queryParameters: {
+        'latitude': latitude,
+        'longitude': longitude,
+      });
 
       final List<dynamic> results = castOrFallback(response.data['data'], []);
 

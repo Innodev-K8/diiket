@@ -1,5 +1,5 @@
 import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fare.dart';
+import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
@@ -16,20 +16,23 @@ final orderServiceProvider = StateProvider<OrderService>((ref) {
   // rebuild order service whenever user state changes
   ref.watch(authProvider);
 
-  final Market currentMarket = ref.watch(currentMarketProvider).state;
+  final Market? currentMarket = ref.watch(currentMarketProvider).state;
 
-  return OrderService(ref.read(apiProvider), currentMarket.id ?? 1);
+  return OrderService(ref.read(apiProvider), currentMarket?.id);
 });
 
 class OrderService {
   final Dio _dio;
-  final int _marketId;
+  final int? _marketId;
 
   OrderService(this._dio, this._marketId);
 
   String _(Object path) => '/user/markets/$_marketId/orders/$path';
 
   Future<Order?> getActiveOrder() async {
+    if (_marketId == null) {
+      return null;
+    }
     try {
       final response = await _dio.get(_('active'));
 
@@ -45,6 +48,9 @@ class OrderService {
   }
 
   Future<void> cancelActiveOrder() async {
+    if (_marketId == null) {
+      return;
+    }
     try {
       await _dio.post(_('active/cancel'));
     } on DioError catch (error) {
@@ -52,19 +58,24 @@ class OrderService {
     }
   }
 
-  Future<Order?> confirmActiveOrder(
-    LatLng location,
-    Fare fare,
+  Future<Order?> confirmActiveOrder({
+    required LatLng location,
+    required Fee fee,
+    required int deliveryDistance,
     String? address,
     String? notificationToken,
-  ) async {
+  }) async {
+    if (_marketId == null) {
+      return null;
+    }
     try {
       final Map<String, dynamic> data = {
         'location_lat': location.latitude.toString(),
         'location_lng': location.longitude.toString(),
-        'delivery_fee': fare.delivery_fee,
-        'pickup_fee': fare.pickup_fee,
-        'service_fee': fare.service_fee,
+        'delivery_distance': deliveryDistance,
+        'delivery_fee': fee.delivery_fee,
+        'pickup_fee': fee.pickup_fee,
+        'service_fee': fee.service_fee,
         if (notificationToken != null)
           'user_notification_token': notificationToken,
         if (address != null) 'address': address,
@@ -101,6 +112,8 @@ class OrderService {
                     (e) =>
                         '${e.product?.name} (tersedia ${e.product?.stocks} ${e.product?.quantity_unit})',
                   ).join('\n')}',
+          code: CustomException.outOfStockProducts,
+          payload: outOfStockItems,
         );
       }
 
@@ -110,6 +123,10 @@ class OrderService {
 
   Future<OrderItem> placeOrderItem(Product product, int quantity,
       [String? notes]) async {
+    if (_marketId == null) {
+      return OrderItem.fromJson({});
+    }
+
     try {
       final Map<String, dynamic> data = {
         'product_id': product.id,
@@ -133,6 +150,10 @@ class OrderService {
     int? quantity,
     String? notes,
   }) async {
+    if (_marketId == null) {
+      return OrderItem.fromJson({});
+    }
+
     try {
       final Map<String, dynamic> data = {
         '_method': 'PATCH',
@@ -152,6 +173,10 @@ class OrderService {
   }
 
   Future<void> deleteOrderItem(OrderItem orderItem) async {
+    if (_marketId == null) {
+      return;
+    }
+
     try {
       await _dio.delete(_('items/${orderItem.id}'));
     } on DioError catch (error) {

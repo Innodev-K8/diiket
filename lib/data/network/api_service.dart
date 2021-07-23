@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:diiket/data/network/interceptors/auth_interceptor.dart';
-import 'package:diiket/data/network/interceptors/performance_monitoring_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_firebase_performance/dio_firebase_performance.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final apiProvider = Provider<Dio>((ref) {
@@ -26,8 +27,8 @@ class ApiService {
 
     dio.interceptors.addAll([
       AuthInterceptor(),
-      if (!Platform.environment.containsKey('FLUTTER_TEST'))
-        PerformanceMonitoringInterceptor(),
+      if (!Platform.environment.containsKey('FLUTTER_TEST') && kReleaseMode)
+        DioFirebasePerformanceInterceptor(),
       // LoggingInterceptors(),
     ]);
 

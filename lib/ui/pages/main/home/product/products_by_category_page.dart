@@ -1,9 +1,12 @@
+import 'package:diiket/data/models/product_feed.dart';
+import 'package:diiket/data/models/product_provider_detail.dart';
 import 'package:diiket/data/providers/products/products_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/custom_exception_message.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/loading/vertical_scroll_product_list_loading.dart';
+import 'package:diiket/ui/widgets/products/product_feed_banner.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -12,23 +15,26 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class ProductsByCategoryPage extends HookWidget {
   static const String route = '/home/products/category';
 
-  final String category;
-  final String? label;
+  final ProductFeed productFeed;
 
   const ProductsByCategoryPage({
     Key? key,
-    required this.category,
-    this.label,
+    required this.productFeed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final String labelText = label ?? category;
+    final String labelText = productFeed.title;
 
-    final provider = productProvider(category);
+    final provider = productProvider(
+      ProductProviderDetail(
+        source: productFeed.type,
+        query: productFeed.query,
+        limit: productFeed.limit,
+      ),
+    );
 
     final productState = useProvider(provider);
-    // final productNotifier = useProvider(provider.notifier);
 
     return SafeArea(
       child: Container(
@@ -39,12 +45,17 @@ class ProductsByCategoryPage extends HookWidget {
             Expanded(
               child: productState.when(
                 data: (results) => VerticalScrollProductList(
+                  header: ProductFeedBanner(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    productFeed: productFeed,
+                  ),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24.0,
                     vertical: 20.0,
                   ),
                   physics: BouncingScrollPhysics(),
                   products: results.data ?? [],
+                  entryEnabled: false,
                 ),
                 loading: () => VerticalScrollProductListLoading(
                   padding: const EdgeInsets.symmetric(
@@ -87,9 +98,12 @@ class ProductsByCategoryPage extends HookWidget {
               size: 28.0,
             ),
           ),
-          Text(
-            labelText,
-            style: kTextTheme.headline2,
+          Expanded(
+            child: Text(
+              labelText,
+              overflow: TextOverflow.ellipsis,
+              style: kTextTheme.headline2,
+            ),
           ),
         ],
       ),

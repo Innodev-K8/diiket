@@ -1,15 +1,13 @@
 import 'dart:convert';
 
 import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fare.dart';
+import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/order_service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
-import 'package:diiket/data/providers/firebase_provider.dart';
-import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/pusher_provider.dart';
 import 'package:diiket/helpers/casting_helper.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -41,13 +39,12 @@ final activeOrderErrorProvider = StateProvider<CustomException?>((ref) {
 
 class ActiveOrderState extends StateNotifier<Order?> {
   final PusherClient _pusher;
-  // OrderService _read(orderServiceProvider).state;
   final Reader _read;
 
   Channel? _channel;
 
   ActiveOrderState(this._pusher, this._read) : super(null) {
-    retrieveActiveOrder().then((value) => initPusher());
+    retrieveActiveOrder();
 
     _read(authProvider.notifier).addListener(
       (User? user) {
@@ -64,55 +61,51 @@ class ActiveOrderState extends StateNotifier<Order?> {
   }
 
   //#region EVENT-LISTENERS
-  Future<void> initPusher() async {
-    // connect kalau order statusnya udah diproses aja
-    if (state == null ||
-        state?.status == null ||
-        state?.status == 'unconfirmed') return;
+  Future<void> connectToPusher(Order order) async {
+    if (!order.isProcessing) return;
 
     try {
       await _pusher.connect();
-      await updateSubscription();
+
+      _channel = _pusher.subscribe(
+        'market.${order.market_id}.orders.${order.id}',
+      );
+
+      _channel!.bind('order-status-updated', _onOrderStatusUpdated);
     } catch (_) {}
   }
 
-  Future<void> updateSubscription() async {
-    if (state?.id == null) return;
+  void _onOrderStatusUpdated(PusherEvent? event) {
+    final dynamic response = jsonDecode(event?.data ?? '');
 
-    try {
-      await _unsubscribe();
+    if (response['order'] == null) return;
 
-      _channel = _pusher.subscribe('orders.${state!.id}');
+    final Order order = Order.fromJson(
+      castOrFallback(response['order'], {}),
+    );
 
-      _channel!.bind('order-status-updated', (PusherEvent? event) {
-        final dynamic response = jsonDecode(event?.data ?? '');
-
-        if (response['order'] == null) return;
-
-        final Order order = Order.fromJson(
-          castOrFallback(response['order'], {}),
-        );
-
-        if (order.status == 'completed' || order.status == 'canceled') {
-          _unsubscribe(order.id);
-          state = null;
-        } else {
-          state = order;
-        }
-      });
-    } catch (_) {}
+    if (!order.isProcessing) {
+      disconnectFromPusher(order);
+      state = null;
+    } else {
+      state = order;
+    }
   }
 
-  Future<void> _unsubscribe([int? id]) async {
+  Future<void> disconnectFromPusher(Order order) async {
     await _channel?.unbind('order-status-updated');
-    await _pusher.unsubscribe('orders.${id ?? state?.id}');
+    await _pusher.unsubscribe(
+      'market.${order.market_id}.orders.${order.id}',
+    );
+    await _pusher.disconnect();
   }
 
   @override
   Future<void> dispose() async {
     try {
-      await _unsubscribe();
-      await _pusher.disconnect();
+      if (state != null) {
+        await disconnectFromPusher(state!);
+      }
     } catch (_) {} finally {
       super.dispose();
     }
@@ -127,8 +120,11 @@ class ActiveOrderState extends StateNotifier<Order?> {
         final Order? newOrder =
             await _read(orderServiceProvider).state.getActiveOrder();
 
-        if (newOrder?.id != oldOrder?.id) {
-          await _unsubscribe(oldOrder?.id);
+        // connect to pusher if newOrder is not null and isProcessing
+        if (newOrder != null && newOrder.isProcessing) {
+          await connectToPusher(newOrder);
+        } else if (oldOrder != null) {
+          await disconnectFromPusher(oldOrder);
         }
 
         state = newOrder;
@@ -140,53 +136,48 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
   Future<void> cancelActiveOrder() async {
     try {
-      await _unsubscribe();
+      if (state != null) {
+        await disconnectFromPusher(state!);
+      }
+
       await _read(orderServiceProvider).state.cancelActiveOrder();
       await retrieveActiveOrder();
-
-      _read(analyticsProvider).logEvent(name: 'order_canceled');
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
     }
   }
 
-  Future<void> confirmActiveOrder(
-      LatLng location, Fare fare, String? address, String? notificationToken,
-      // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
-      {Function? onComplete}) async {
+  Future<void> confirmActiveOrder({
+    required LatLng location,
+    required Fee fee,
+    required int deliveryDistance,
+    String? address,
+    String? notificationToken,
+    // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
+    Function? onConfirmed,
+  }) async {
     try {
-      if (mounted) {
-        final Order? result =
-            await _read(orderServiceProvider).state.confirmActiveOrder(
-                  location,
-                  fare,
-                  address,
-                  notificationToken,
-                );
+      if (!mounted) return;
 
-        if (result == null) return;
+      final Order? result =
+          await _read(orderServiceProvider).state.confirmActiveOrder(
+                location: location,
+                deliveryDistance: deliveryDistance,
+                notificationToken: notificationToken,
+                fee: fee,
+                address: address,
+              );
 
-        await onComplete?.call();
+      if (result == null) return;
 
-        state = result;
+      await onConfirmed?.call();
 
-        // re-subscribe
-        initPusher();
+      state = result;
 
-        _read(analyticsProvider).logEcommercePurchase(
-          transactionId: result.id.toString(),
-          currency: 'IDR',
-          destination: address,
-          location: '${location.latitude}, ${location.latitude}',
-          origin: _read(currentMarketProvider).state.name,
-          shipping: fare.delivery_fee?.toDouble(),
-          tax: fare.service_fee?.toDouble(),
-          value: (fare.total_fee ?? 0 + totalProductPrice).toDouble(),
-        );
-      }
+      // just to make sure whenever driver confirm this order before the user calls onConfirmed.
+      await retrieveActiveOrder();
     } on CustomException catch (error) {
       _read(activeOrderErrorProvider).state = error;
-      rethrow;
     }
   }
 
@@ -209,13 +200,6 @@ class ActiveOrderState extends StateNotifier<Order?> {
       } else {
         await retrieveActiveOrder();
       }
-
-      _read(analyticsProvider).logAddToCart(
-        itemId: product.id.toString(),
-        itemName: product.name ?? '',
-        itemCategory: product.categories?.join(', ') ?? '',
-        quantity: quantity,
-      );
     } on CustomException catch (error) {
       // ignore if item already in order list
       if (error.code == 403) return;
@@ -285,13 +269,6 @@ class ActiveOrderState extends StateNotifier<Order?> {
       if (activeOrder == null) {
         await retrieveActiveOrder();
       }
-
-      _read(analyticsProvider).logRemoveFromCart(
-        itemId: orderItem.product?.id.toString() ?? '',
-        itemName: orderItem.product?.name ?? '',
-        itemCategory: orderItem.product?.categories?.join(', ') ?? '',
-        quantity: orderItem.quantity ?? 0,
-      );
     } on CustomException catch (_) {
       await retrieveActiveOrder();
     }

@@ -18,6 +18,7 @@ class Order with _$Order {
     String? address,
     String? location_lat,
     String? location_lng,
+    int? delivery_distance,
     int? total_weight,
     int? products_price,
     int? delivery_fee,
@@ -27,5 +28,14 @@ class Order with _$Order {
     List<OrderItem>? order_items,
   }) = _Order;
 
+  Order._();
+
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
+
+  // a condition where we need to listen to pusher for realtime update
+  bool get isProcessing => [
+        'waiting',
+        'purchasing',
+        'delivering',
+      ].contains(status);
 }

@@ -1,4 +1,6 @@
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginToContinueScreen extends StatelessWidget {
@@ -12,7 +14,9 @@ class LoginToContinueScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Utils.appNav.currentState?.pushNamed(RegisterPage.route);
+          },
           style: ElevatedButton.styleFrom(
             primary: ColorPallete.primaryColor,
             shadowColor: ColorPallete.primaryColor.withOpacity(0.5),

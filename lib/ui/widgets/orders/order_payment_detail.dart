@@ -2,7 +2,7 @@ import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/helper.dart';
 import 'package:diiket/ui/common/styles.dart';
-import 'package:diiket/ui/widgets/custom_exception_message.dart';
+import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

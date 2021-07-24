@@ -3,7 +3,7 @@ import 'package:diiket/data/models/product_provider_detail.dart';
 import 'package:diiket/data/providers/products/products_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/widgets/custom_exception_message.dart';
+import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/loading/vertical_scroll_product_list_loading.dart';
 import 'package:diiket/ui/widgets/products/product_feed_banner.dart';

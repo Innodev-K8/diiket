@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../custom_exception_message.dart';
+import '../common/custom_exception_message.dart';
 import 'horizontal_scroll_product_list.dart';
 
 class ProductListSection extends HookWidget {

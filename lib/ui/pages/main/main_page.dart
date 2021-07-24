@@ -1,7 +1,7 @@
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/widgets/custom_bottom_navigation_bar.dart';
+import 'package:diiket/ui/widgets/common/custom_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

@@ -10,7 +10,7 @@ import 'package:diiket/data/providers/stall/stall_detail_provider.dart';
 import 'package:diiket/data/services/dynamic_link_generators.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/widgets/custom_exception_message.dart';
+import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/large_product_item.dart';
 import 'package:diiket/ui/widgets/products/product_detail_bottom_sheet.dart';

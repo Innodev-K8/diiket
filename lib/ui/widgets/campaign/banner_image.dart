@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:diiket/ui/common/styles.dart';
-import 'package:diiket/ui/widgets/loading.dart';
+import 'package:diiket/ui/widgets/common/loading.dart';
 import 'package:flutter/material.dart';
 
 class BannerImage extends StatelessWidget {

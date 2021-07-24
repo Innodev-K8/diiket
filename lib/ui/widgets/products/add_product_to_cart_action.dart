@@ -11,8 +11,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:recombee_client/recombee_client.dart';
 
-import '../number_spinner.dart';
-import '../simple_button.dart';
+import '../inputs/number_spinner.dart';
+import '../inputs/simple_button.dart';
 
 class AddProductToCartAction extends HookWidget {
   final Product product;

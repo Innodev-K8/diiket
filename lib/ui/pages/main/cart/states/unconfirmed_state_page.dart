@@ -6,7 +6,7 @@ import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/cart/alerts/checkout_success.dart';
-import 'package:diiket/ui/widgets/custom_app_bar.dart';
+import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/orders/confirm_order_button.dart';
 import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_item_list.dart';

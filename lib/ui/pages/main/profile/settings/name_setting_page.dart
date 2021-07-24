@@ -1,4 +1,4 @@
-import 'package:diiket/ui/widgets/wip.dart';
+import 'package:diiket/ui/widgets/common/wip.dart';
 import 'package:flutter/material.dart';
 
 class NameSettingPage extends StatelessWidget {

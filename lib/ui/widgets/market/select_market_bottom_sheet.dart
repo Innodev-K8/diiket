@@ -1,3 +1,4 @@
+import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/market/market_selector.dart';
@@ -10,8 +11,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final selectingMarketProvider = StateProvider<bool>((_) => false);
 
 class SelectMarketBottomSheet extends HookWidget {
-  static Future<void> show(BuildContext context,
-      {bool isHomeContext = false}) async {
+  static Future<void> show(
+    BuildContext context, {
+    bool isHomeContext = false,
+    Function(Market)? onSelected,
+    String? message,
+  }) async {
     final isSelectingMarket = context.read(selectingMarketProvider).state;
 
     if (isSelectingMarket) return;
@@ -27,7 +32,11 @@ class SelectMarketBottomSheet extends HookWidget {
       enableDrag: currentMarket != null,
       isDismissible: currentMarket != null,
       builder: (BuildContext context) {
-        return SelectMarketBottomSheet(isHomeContext: isHomeContext);
+        return SelectMarketBottomSheet(
+          message: message,
+          onSelected: onSelected,
+          isHomeContext: isHomeContext,
+        );
       },
     );
 
@@ -38,9 +47,13 @@ class SelectMarketBottomSheet extends HookWidget {
 
   const SelectMarketBottomSheet({
     Key? key,
+    this.message,
+    this.onSelected,
     this.isHomeContext = false,
   }) : super(key: key);
 
+  final String? message;
+  final Function(Market)? onSelected;
   // use smaller bottom padding if showing this BottomSheet in home
   final bool isHomeContext;
 
@@ -73,10 +86,15 @@ class SelectMarketBottomSheet extends HookWidget {
                     'Pilih Pasar',
                     style: kTextTheme.headline1,
                   ),
-                  Text('Pilih pasar terdekat untuk mulai berbelanja!'),
+                  Text(message ??
+                      'Pilih pasar terdekat untuk mulai berbelanja!'),
                   SizedBox(height: 16.0),
                   MarketSelector(
-                    onSelected: (market) => Navigator.of(context).pop(),
+                    onSelected: (market) {
+                      Navigator.of(context).pop();
+
+                      onSelected?.call(market);
+                    },
                   ),
                   SizedBox(height: isHomeContext ? 8 : 38.0),
                 ],

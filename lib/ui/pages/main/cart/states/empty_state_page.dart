@@ -43,6 +43,7 @@ class EmptyStatePage extends HookWidget {
                         Text(
                           'Tambahkan barang ke keranjang untuk melanjutkan',
                           textAlign: TextAlign.center,
+                          style: kTextTheme.caption,
                         ),
                       ],
                     ),

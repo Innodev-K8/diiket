@@ -71,7 +71,7 @@ class MarketSelector extends HookWidget {
         ),
       );
 
-      Widget _buildNoGPS() => Padding(
+  Widget _buildNoGPS() => Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [

@@ -70,7 +70,6 @@ class PaginatedVerticalProductsSliverGrid extends HookWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       sliver: PagedSliverGrid(
         pagingController: controller,
-
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           childAspectRatio: 100 / 165,
           crossAxisSpacing: 15,

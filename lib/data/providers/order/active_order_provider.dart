@@ -8,6 +8,7 @@ import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/order_service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
+import 'package:diiket/data/providers/order/order_history_provider.dart';
 import 'package:diiket/data/providers/pusher_provider.dart';
 import 'package:diiket/helpers/casting_helper.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -84,11 +85,17 @@ class ActiveOrderState extends StateNotifier<Order?> {
       castOrFallback(response['order'], {}),
     );
 
-    if (!order.isProcessing) {
-      disconnectFromPusher(order);
-      state = null;
+    if (order.isProcessing || order.status == 'unconfirmed') {
+      // reload to get all the relations
+      retrieveActiveOrder();
     } else {
-      state = order;
+      disconnectFromPusher(order);
+
+      if (order.status == 'completed') {
+        _read(orderHistoryProvider.notifier).retrieveOrderHistory();
+      }
+
+      state = null;
     }
   }
 

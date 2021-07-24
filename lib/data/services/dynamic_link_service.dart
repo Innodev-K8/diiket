@@ -30,11 +30,9 @@ class DynamicLinkService {
         }
       },
       onError: (OnLinkErrorException exception) async {
-        context.read(crashlyticsProvider).recordError(
-              exception,
-              null,
-              reason: 'dynamic-link-onlink'
-            );
+        context
+            .read(crashlyticsProvider)
+            .recordError(exception, null, reason: 'dynamic-link-onlink');
       },
     );
 

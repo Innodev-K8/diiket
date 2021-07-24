@@ -29,6 +29,13 @@ _$_Order _$_$_OrderFromJson(Map<String, dynamic> json) {
     order_items: (json['order_items'] as List<dynamic>?)
         ?.map((e) => OrderItem.fromJson(e as Map<String, dynamic>))
         .toList(),
+    confirmed_at: dateTimeFromString(json['confirmed_at'] as String?),
+    confirmed_by_driver_at:
+        dateTimeFromString(json['confirmed_by_driver_at'] as String?),
+    purchase_completed_at:
+        dateTimeFromString(json['purchase_completed_at'] as String?),
+    completed_at: dateTimeFromString(json['completed_at'] as String?),
+    canceled_at: dateTimeFromString(json['canceled_at'] as String?),
   );
 }
 
@@ -50,4 +57,11 @@ Map<String, dynamic> _$_$_OrderToJson(_$_Order instance) => <String, dynamic>{
       'service_fee': instance.service_fee,
       'total_price': instance.total_price,
       'order_items': instance.order_items?.map((e) => e.toJson()).toList(),
+      'confirmed_at': instance.confirmed_at?.toIso8601String(),
+      'confirmed_by_driver_at':
+          instance.confirmed_by_driver_at?.toIso8601String(),
+      'purchase_completed_at':
+          instance.purchase_completed_at?.toIso8601String(),
+      'completed_at': instance.completed_at?.toIso8601String(),
+      'canceled_at': instance.canceled_at?.toIso8601String(),
     };

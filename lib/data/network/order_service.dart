@@ -29,6 +29,21 @@ class OrderService {
 
   String _(Object path) => '/user/markets/$_marketId/orders/$path';
 
+  Future<List<Order>> getOrderHistory() async {
+    try {
+      // this one is a bit different, we dont have to specify the market id
+      final response = await _dio.get('/user/orders/history');
+
+      final List<dynamic> results = castOrFallback(response.data['data'], []);
+
+      return results
+          .map((json) => Order.fromJson(castOrFallback(json, {})))
+          .toList();
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
+
   Future<Order?> getActiveOrder() async {
     if (_marketId == null) {
       return null;

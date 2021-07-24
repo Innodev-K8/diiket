@@ -26,6 +26,11 @@ class Order with _$Order {
     int? service_fee,
     int? total_price,
     List<OrderItem>? order_items,
+    @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_at,
+    @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_by_driver_at,
+    @JsonKey(fromJson: dateTimeFromString) DateTime? purchase_completed_at,
+    @JsonKey(fromJson: dateTimeFromString) DateTime? completed_at,
+    @JsonKey(fromJson: dateTimeFromString) DateTime? canceled_at,
   }) = _Order;
 
   Order._();
@@ -38,4 +43,8 @@ class Order with _$Order {
         'purchasing',
         'delivering',
       ].contains(status);
+}
+
+DateTime? dateTimeFromString(String? timestamp) {
+  return timestamp == null ? null : DateTime.parse(timestamp).toLocal();
 }

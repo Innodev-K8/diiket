@@ -64,7 +64,7 @@ class Utils {
     await homeNav.currentState?.pushNamed(
       ProductsByCategoryPage.route,
       arguments: {
-         'product_feed': ProductFeed(
+        'product_feed': ProductFeed(
           title: label ?? category,
           type: ProductSourceType.category,
           query: category,

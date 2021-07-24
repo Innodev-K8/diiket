@@ -1,7 +1,33 @@
+import 'package:diiket/data/models/order.dart';
 import 'package:intl/intl.dart';
 
 // ignore: avoid_classes_with_only_static_members
 abstract class Helper {
+  static final sortDateFormatter = DateFormat("d MMMM yyyy, HH:mm", "id_ID");
+
+  static String getOrderId(Order order) {
+    return '#${order.market_id.toString().padLeft(2, '0')}-${order.id.toString().padLeft(6, '0')}';
+  }
+
+  static String getOrderStatusMessage(Order? order) {
+    switch (order?.status) {
+      case 'unconfirmed':
+        return 'Belum Dikonfirmasi';
+      case 'waiting':
+        return 'Menunggu';
+      case 'purchasing':
+        return 'Membeli';
+      case 'delivering':
+        return 'Diantar';
+      case 'completed':
+        return 'Selesai';
+      case 'cancelled':
+        return 'Dibatalkan';
+      default:
+        return 'Tidak Diketahui';
+    }
+  }
+
   static NumberFormat currencyFormatter = NumberFormat.currency(
     locale: 'id_ID',
     symbol: '',

@@ -14,7 +14,7 @@ class ProductPhoto extends StatelessWidget {
     this.isSquare = false,
   }) : super(key: key);
 
-  final Product product;
+  final Product? product;
   final bool isSquare;
 
   @override
@@ -22,9 +22,9 @@ class ProductPhoto extends StatelessWidget {
     if (!isSquare) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(5),
-        child: product.photo_url != null
+        child: product?.photo_url != null
             ? CachedNetworkImage(
-                imageUrl: product.photo_url!,
+                imageUrl: product!.photo_url!,
                 fit: BoxFit.fitHeight,
                 height: double.infinity,
                 errorWidget: (context, url, error) => placeholderImage,
@@ -38,9 +38,9 @@ class ProductPhoto extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       child: AspectRatio(
         aspectRatio: 1,
-        child: product.photo_url != null
+        child: product?.photo_url != null
             ? CachedNetworkImage(
-                imageUrl: product.photo_url!,
+                imageUrl: product!.photo_url!,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 errorWidget: (context, url, error) => placeholderImage,

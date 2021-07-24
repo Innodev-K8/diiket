@@ -37,7 +37,12 @@ class _$OrderTearOff {
       int? pickup_fee,
       int? service_fee,
       int? total_price,
-      List<OrderItem>? order_items}) {
+      List<OrderItem>? order_items,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_by_driver_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? purchase_completed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? completed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? canceled_at}) {
     return _Order(
       id: id,
       market_id: market_id,
@@ -56,6 +61,11 @@ class _$OrderTearOff {
       service_fee: service_fee,
       total_price: total_price,
       order_items: order_items,
+      confirmed_at: confirmed_at,
+      confirmed_by_driver_at: confirmed_by_driver_at,
+      purchase_completed_at: purchase_completed_at,
+      completed_at: completed_at,
+      canceled_at: canceled_at,
     );
   }
 
@@ -86,6 +96,16 @@ mixin _$Order {
   int? get service_fee => throw _privateConstructorUsedError;
   int? get total_price => throw _privateConstructorUsedError;
   List<OrderItem>? get order_items => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get confirmed_at => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get confirmed_by_driver_at => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get purchase_completed_at => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get completed_at => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get canceled_at => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -113,7 +133,12 @@ abstract class $OrderCopyWith<$Res> {
       int? pickup_fee,
       int? service_fee,
       int? total_price,
-      List<OrderItem>? order_items});
+      List<OrderItem>? order_items,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_by_driver_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? purchase_completed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? completed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? canceled_at});
 
   $UserCopyWith<$Res>? get driver;
 }
@@ -145,6 +170,11 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? service_fee = freezed,
     Object? total_price = freezed,
     Object? order_items = freezed,
+    Object? confirmed_at = freezed,
+    Object? confirmed_by_driver_at = freezed,
+    Object? purchase_completed_at = freezed,
+    Object? completed_at = freezed,
+    Object? canceled_at = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -215,6 +245,26 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
           ? _value.order_items
           : order_items // ignore: cast_nullable_to_non_nullable
               as List<OrderItem>?,
+      confirmed_at: confirmed_at == freezed
+          ? _value.confirmed_at
+          : confirmed_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      confirmed_by_driver_at: confirmed_by_driver_at == freezed
+          ? _value.confirmed_by_driver_at
+          : confirmed_by_driver_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      purchase_completed_at: purchase_completed_at == freezed
+          ? _value.purchase_completed_at
+          : purchase_completed_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      completed_at: completed_at == freezed
+          ? _value.completed_at
+          : completed_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      canceled_at: canceled_at == freezed
+          ? _value.canceled_at
+          : canceled_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 
@@ -252,7 +302,12 @@ abstract class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       int? pickup_fee,
       int? service_fee,
       int? total_price,
-      List<OrderItem>? order_items});
+      List<OrderItem>? order_items,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_by_driver_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? purchase_completed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? completed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? canceled_at});
 
   @override
   $UserCopyWith<$Res>? get driver;
@@ -286,6 +341,11 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? service_fee = freezed,
     Object? total_price = freezed,
     Object? order_items = freezed,
+    Object? confirmed_at = freezed,
+    Object? confirmed_by_driver_at = freezed,
+    Object? purchase_completed_at = freezed,
+    Object? completed_at = freezed,
+    Object? canceled_at = freezed,
   }) {
     return _then(_Order(
       id: id == freezed
@@ -356,6 +416,26 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
           ? _value.order_items
           : order_items // ignore: cast_nullable_to_non_nullable
               as List<OrderItem>?,
+      confirmed_at: confirmed_at == freezed
+          ? _value.confirmed_at
+          : confirmed_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      confirmed_by_driver_at: confirmed_by_driver_at == freezed
+          ? _value.confirmed_by_driver_at
+          : confirmed_by_driver_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      purchase_completed_at: purchase_completed_at == freezed
+          ? _value.purchase_completed_at
+          : purchase_completed_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      completed_at: completed_at == freezed
+          ? _value.completed_at
+          : completed_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      canceled_at: canceled_at == freezed
+          ? _value.canceled_at
+          : canceled_at // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -380,7 +460,12 @@ class _$_Order extends _Order {
       this.pickup_fee,
       this.service_fee,
       this.total_price,
-      this.order_items})
+      this.order_items,
+      @JsonKey(fromJson: dateTimeFromString) this.confirmed_at,
+      @JsonKey(fromJson: dateTimeFromString) this.confirmed_by_driver_at,
+      @JsonKey(fromJson: dateTimeFromString) this.purchase_completed_at,
+      @JsonKey(fromJson: dateTimeFromString) this.completed_at,
+      @JsonKey(fromJson: dateTimeFromString) this.canceled_at})
       : super._();
 
   factory _$_Order.fromJson(Map<String, dynamic> json) =>
@@ -420,10 +505,25 @@ class _$_Order extends _Order {
   final int? total_price;
   @override
   final List<OrderItem>? order_items;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  final DateTime? confirmed_at;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  final DateTime? confirmed_by_driver_at;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  final DateTime? purchase_completed_at;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  final DateTime? completed_at;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  final DateTime? canceled_at;
 
   @override
   String toString() {
-    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, driver: $driver, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, delivery_distance: $delivery_distance, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items)';
+    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, driver: $driver, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, delivery_distance: $delivery_distance, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items, confirmed_at: $confirmed_at, confirmed_by_driver_at: $confirmed_by_driver_at, purchase_completed_at: $purchase_completed_at, completed_at: $completed_at, canceled_at: $canceled_at)';
   }
 
   @override
@@ -477,7 +577,22 @@ class _$_Order extends _Order {
                     .equals(other.total_price, total_price)) &&
             (identical(other.order_items, order_items) ||
                 const DeepCollectionEquality()
-                    .equals(other.order_items, order_items)));
+                    .equals(other.order_items, order_items)) &&
+            (identical(other.confirmed_at, confirmed_at) ||
+                const DeepCollectionEquality()
+                    .equals(other.confirmed_at, confirmed_at)) &&
+            (identical(other.confirmed_by_driver_at, confirmed_by_driver_at) ||
+                const DeepCollectionEquality().equals(
+                    other.confirmed_by_driver_at, confirmed_by_driver_at)) &&
+            (identical(other.purchase_completed_at, purchase_completed_at) ||
+                const DeepCollectionEquality().equals(
+                    other.purchase_completed_at, purchase_completed_at)) &&
+            (identical(other.completed_at, completed_at) ||
+                const DeepCollectionEquality()
+                    .equals(other.completed_at, completed_at)) &&
+            (identical(other.canceled_at, canceled_at) ||
+                const DeepCollectionEquality()
+                    .equals(other.canceled_at, canceled_at)));
   }
 
   @override
@@ -499,7 +614,12 @@ class _$_Order extends _Order {
       const DeepCollectionEquality().hash(pickup_fee) ^
       const DeepCollectionEquality().hash(service_fee) ^
       const DeepCollectionEquality().hash(total_price) ^
-      const DeepCollectionEquality().hash(order_items);
+      const DeepCollectionEquality().hash(order_items) ^
+      const DeepCollectionEquality().hash(confirmed_at) ^
+      const DeepCollectionEquality().hash(confirmed_by_driver_at) ^
+      const DeepCollectionEquality().hash(purchase_completed_at) ^
+      const DeepCollectionEquality().hash(completed_at) ^
+      const DeepCollectionEquality().hash(canceled_at);
 
   @JsonKey(ignore: true)
   @override
@@ -530,7 +650,12 @@ abstract class _Order extends Order {
       int? pickup_fee,
       int? service_fee,
       int? total_price,
-      List<OrderItem>? order_items}) = _$_Order;
+      List<OrderItem>? order_items,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? confirmed_by_driver_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? purchase_completed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? completed_at,
+      @JsonKey(fromJson: dateTimeFromString) DateTime? canceled_at}) = _$_Order;
   _Order._() : super._();
 
   factory _Order.fromJson(Map<String, dynamic> json) = _$_Order.fromJson;
@@ -569,6 +694,21 @@ abstract class _Order extends Order {
   int? get total_price => throw _privateConstructorUsedError;
   @override
   List<OrderItem>? get order_items => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get confirmed_at => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get confirmed_by_driver_at => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get purchase_completed_at => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get completed_at => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(fromJson: dateTimeFromString)
+  DateTime? get canceled_at => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$OrderCopyWith<_Order> get copyWith => throw _privateConstructorUsedError;

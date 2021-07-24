@@ -33,6 +33,8 @@ class UnconfirmedStatePage extends HookWidget {
     final deliveryDetail = useProvider(deliveryDetailProvider);
     final isLoading = useState<bool>(false);
 
+    final isMounted = useIsMounted();
+
     return Column(
       children: [
         CustomAppBar(title: 'Keranjang'),
@@ -112,7 +114,9 @@ class UnconfirmedStatePage extends HookWidget {
                             ),
                           );
                         } finally {
-                          isLoading.value = false;
+                          if (isMounted()) {
+                            isLoading.value = false;
+                          }
                         }
                       },
                     ),

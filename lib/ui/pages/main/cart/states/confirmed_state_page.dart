@@ -25,6 +25,8 @@ class ConfirmedStatePage extends HookWidget {
   Widget build(BuildContext context) {
     final isLoading = useState<bool>(false);
 
+    final isMounted = useIsMounted();
+
     return Column(
       children: [
         CustomAppBar(title: 'Menunggu Driver'),
@@ -80,7 +82,9 @@ class ConfirmedStatePage extends HookWidget {
                               .read(activeOrderProvider.notifier)
                               .cancelActiveOrder();
 
-                          isLoading.value = false;
+                          if (isMounted()) {
+                            isLoading.value = false;
+                          }
                         },
                         child: Text('Batalkan Pesanan'),
                       ),

@@ -2,7 +2,7 @@ import 'package:diiket/ui/common/helper.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
-import 'package:diiket/ui/widgets/auth_wrapper.dart';
+import 'package:diiket/ui/widgets/auth/auth_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class FeedHeader extends StatelessWidget {

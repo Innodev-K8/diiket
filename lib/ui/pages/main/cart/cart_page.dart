@@ -9,7 +9,7 @@ import 'package:diiket/ui/pages/main/cart/states/empty_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/guest_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/purcashing_state_page.dart';
 import 'package:diiket/ui/pages/main/cart/states/unconfirmed_state_page.dart';
-import 'package:diiket/ui/widgets/auth_wrapper.dart';
+import 'package:diiket/ui/widgets/auth/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/orders/order_state_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

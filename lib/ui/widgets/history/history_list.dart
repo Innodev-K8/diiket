@@ -41,7 +41,7 @@ class HistoryList extends StatelessWidget {
                     children: [
                       Text(
                         "Pesanan",
-                        style: kTextTheme.headline2,
+                        style: kTextTheme.headline1,
                       ),
                       Text(
                         Helper.getOrderId(order),

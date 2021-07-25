@@ -111,7 +111,6 @@ class HistoryListItem extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16),
-        Divider(),
         Row(
           children: [
             Row(
@@ -163,7 +162,9 @@ class HistoryListItem extends StatelessWidget {
             HistoryOrderMoreButton(orderItem: orderItem),
           ],
         ),
-        SizedBox(height: 24),
+        SizedBox(height: 8),
+        Divider(),
+        SizedBox(height: 12),
       ],
     );
   }

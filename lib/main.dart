@@ -144,7 +144,8 @@ class _MyAppState extends State<MyApp> {
           ),
           initialRoute: MainPage.route,
           navigatorObservers: [
-            FirebaseAnalyticsObserver(analytics: context.read(analyticsProvider)),
+            FirebaseAnalyticsObserver(
+                analytics: context.read(analyticsProvider)),
           ],
           routes: {
             MainPage.route: (_) => MainPage(),

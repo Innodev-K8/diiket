@@ -25,6 +25,7 @@ class _$OrderTearOff {
       int? market_id,
       int? user_id,
       int? driver_id,
+      String? stream_chat_channel,
       User? driver,
       String? status,
       String? address,
@@ -48,6 +49,7 @@ class _$OrderTearOff {
       market_id: market_id,
       user_id: user_id,
       driver_id: driver_id,
+      stream_chat_channel: stream_chat_channel,
       driver: driver,
       status: status,
       address: address,
@@ -83,6 +85,7 @@ mixin _$Order {
   int? get market_id => throw _privateConstructorUsedError;
   int? get user_id => throw _privateConstructorUsedError;
   int? get driver_id => throw _privateConstructorUsedError;
+  String? get stream_chat_channel => throw _privateConstructorUsedError;
   User? get driver => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
@@ -121,6 +124,7 @@ abstract class $OrderCopyWith<$Res> {
       int? market_id,
       int? user_id,
       int? driver_id,
+      String? stream_chat_channel,
       User? driver,
       String? status,
       String? address,
@@ -157,6 +161,7 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
     Object? market_id = freezed,
     Object? user_id = freezed,
     Object? driver_id = freezed,
+    Object? stream_chat_channel = freezed,
     Object? driver = freezed,
     Object? status = freezed,
     Object? address = freezed,
@@ -193,6 +198,10 @@ class _$OrderCopyWithImpl<$Res> implements $OrderCopyWith<$Res> {
           ? _value.driver_id
           : driver_id // ignore: cast_nullable_to_non_nullable
               as int?,
+      stream_chat_channel: stream_chat_channel == freezed
+          ? _value.stream_chat_channel
+          : stream_chat_channel // ignore: cast_nullable_to_non_nullable
+              as String?,
       driver: driver == freezed
           ? _value.driver
           : driver // ignore: cast_nullable_to_non_nullable
@@ -290,6 +299,7 @@ abstract class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       int? market_id,
       int? user_id,
       int? driver_id,
+      String? stream_chat_channel,
       User? driver,
       String? status,
       String? address,
@@ -328,6 +338,7 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
     Object? market_id = freezed,
     Object? user_id = freezed,
     Object? driver_id = freezed,
+    Object? stream_chat_channel = freezed,
     Object? driver = freezed,
     Object? status = freezed,
     Object? address = freezed,
@@ -364,6 +375,10 @@ class __$OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res>
           ? _value.driver_id
           : driver_id // ignore: cast_nullable_to_non_nullable
               as int?,
+      stream_chat_channel: stream_chat_channel == freezed
+          ? _value.stream_chat_channel
+          : stream_chat_channel // ignore: cast_nullable_to_non_nullable
+              as String?,
       driver: driver == freezed
           ? _value.driver
           : driver // ignore: cast_nullable_to_non_nullable
@@ -448,6 +463,7 @@ class _$_Order extends _Order {
       this.market_id,
       this.user_id,
       this.driver_id,
+      this.stream_chat_channel,
       this.driver,
       this.status,
       this.address,
@@ -479,6 +495,8 @@ class _$_Order extends _Order {
   final int? user_id;
   @override
   final int? driver_id;
+  @override
+  final String? stream_chat_channel;
   @override
   final User? driver;
   @override
@@ -523,7 +541,7 @@ class _$_Order extends _Order {
 
   @override
   String toString() {
-    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, driver: $driver, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, delivery_distance: $delivery_distance, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items, confirmed_at: $confirmed_at, confirmed_by_driver_at: $confirmed_by_driver_at, purchase_completed_at: $purchase_completed_at, completed_at: $completed_at, canceled_at: $canceled_at)';
+    return 'Order(id: $id, market_id: $market_id, user_id: $user_id, driver_id: $driver_id, stream_chat_channel: $stream_chat_channel, driver: $driver, status: $status, address: $address, location_lat: $location_lat, location_lng: $location_lng, delivery_distance: $delivery_distance, total_weight: $total_weight, products_price: $products_price, delivery_fee: $delivery_fee, pickup_fee: $pickup_fee, service_fee: $service_fee, total_price: $total_price, order_items: $order_items, confirmed_at: $confirmed_at, confirmed_by_driver_at: $confirmed_by_driver_at, purchase_completed_at: $purchase_completed_at, completed_at: $completed_at, canceled_at: $canceled_at)';
   }
 
   @override
@@ -541,6 +559,9 @@ class _$_Order extends _Order {
             (identical(other.driver_id, driver_id) ||
                 const DeepCollectionEquality()
                     .equals(other.driver_id, driver_id)) &&
+            (identical(other.stream_chat_channel, stream_chat_channel) ||
+                const DeepCollectionEquality()
+                    .equals(other.stream_chat_channel, stream_chat_channel)) &&
             (identical(other.driver, driver) ||
                 const DeepCollectionEquality().equals(other.driver, driver)) &&
             (identical(other.status, status) ||
@@ -591,8 +612,7 @@ class _$_Order extends _Order {
                 const DeepCollectionEquality()
                     .equals(other.completed_at, completed_at)) &&
             (identical(other.canceled_at, canceled_at) ||
-                const DeepCollectionEquality()
-                    .equals(other.canceled_at, canceled_at)));
+                const DeepCollectionEquality().equals(other.canceled_at, canceled_at)));
   }
 
   @override
@@ -602,6 +622,7 @@ class _$_Order extends _Order {
       const DeepCollectionEquality().hash(market_id) ^
       const DeepCollectionEquality().hash(user_id) ^
       const DeepCollectionEquality().hash(driver_id) ^
+      const DeepCollectionEquality().hash(stream_chat_channel) ^
       const DeepCollectionEquality().hash(driver) ^
       const DeepCollectionEquality().hash(status) ^
       const DeepCollectionEquality().hash(address) ^
@@ -638,6 +659,7 @@ abstract class _Order extends Order {
       int? market_id,
       int? user_id,
       int? driver_id,
+      String? stream_chat_channel,
       User? driver,
       String? status,
       String? address,
@@ -668,6 +690,8 @@ abstract class _Order extends Order {
   int? get user_id => throw _privateConstructorUsedError;
   @override
   int? get driver_id => throw _privateConstructorUsedError;
+  @override
+  String? get stream_chat_channel => throw _privateConstructorUsedError;
   @override
   User? get driver => throw _privateConstructorUsedError;
   @override

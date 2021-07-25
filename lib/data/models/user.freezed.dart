@@ -23,6 +23,7 @@ class _$UserTearOff {
   _User call(
       {int? id,
       String? firebase_uid,
+      String? stream_chat_token,
       String? name,
       String? email,
       String? address,
@@ -34,6 +35,7 @@ class _$UserTearOff {
     return _User(
       id: id,
       firebase_uid: firebase_uid,
+      stream_chat_token: stream_chat_token,
       name: name,
       email: email,
       address: address,
@@ -57,6 +59,7 @@ const $User = _$UserTearOff();
 mixin _$User {
   int? get id => throw _privateConstructorUsedError;
   String? get firebase_uid => throw _privateConstructorUsedError;
+  String? get stream_chat_token => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
@@ -78,6 +81,7 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {int? id,
       String? firebase_uid,
+      String? stream_chat_token,
       String? name,
       String? email,
       String? address,
@@ -102,6 +106,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? firebase_uid = freezed,
+    Object? stream_chat_token = freezed,
     Object? name = freezed,
     Object? email = freezed,
     Object? address = freezed,
@@ -119,6 +124,10 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       firebase_uid: firebase_uid == freezed
           ? _value.firebase_uid
           : firebase_uid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stream_chat_token: stream_chat_token == freezed
+          ? _value.stream_chat_token
+          : stream_chat_token // ignore: cast_nullable_to_non_nullable
               as String?,
       name: name == freezed
           ? _value.name
@@ -175,6 +184,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {int? id,
       String? firebase_uid,
+      String? stream_chat_token,
       String? name,
       String? email,
       String? address,
@@ -201,6 +211,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? firebase_uid = freezed,
+    Object? stream_chat_token = freezed,
     Object? name = freezed,
     Object? email = freezed,
     Object? address = freezed,
@@ -218,6 +229,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       firebase_uid: firebase_uid == freezed
           ? _value.firebase_uid
           : firebase_uid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stream_chat_token: stream_chat_token == freezed
+          ? _value.stream_chat_token
+          : stream_chat_token // ignore: cast_nullable_to_non_nullable
               as String?,
       name: name == freezed
           ? _value.name
@@ -261,6 +276,7 @@ class _$_User implements _User {
   _$_User(
       {this.id,
       this.firebase_uid,
+      this.stream_chat_token,
       this.name,
       this.email,
       this.address,
@@ -277,6 +293,8 @@ class _$_User implements _User {
   final int? id;
   @override
   final String? firebase_uid;
+  @override
+  final String? stream_chat_token;
   @override
   final String? name;
   @override
@@ -296,7 +314,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, firebase_uid: $firebase_uid, name: $name, email: $email, address: $address, phone_number: $phone_number, type: $type, profile_picture: $profile_picture, profile_picture_url: $profile_picture_url, driver_detail: $driver_detail)';
+    return 'User(id: $id, firebase_uid: $firebase_uid, stream_chat_token: $stream_chat_token, name: $name, email: $email, address: $address, phone_number: $phone_number, type: $type, profile_picture: $profile_picture, profile_picture_url: $profile_picture_url, driver_detail: $driver_detail)';
   }
 
   @override
@@ -308,6 +326,9 @@ class _$_User implements _User {
             (identical(other.firebase_uid, firebase_uid) ||
                 const DeepCollectionEquality()
                     .equals(other.firebase_uid, firebase_uid)) &&
+            (identical(other.stream_chat_token, stream_chat_token) ||
+                const DeepCollectionEquality()
+                    .equals(other.stream_chat_token, stream_chat_token)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.email, email) ||
@@ -336,6 +357,7 @@ class _$_User implements _User {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(firebase_uid) ^
+      const DeepCollectionEquality().hash(stream_chat_token) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(address) ^
@@ -360,6 +382,7 @@ abstract class _User implements User {
   factory _User(
       {int? id,
       String? firebase_uid,
+      String? stream_chat_token,
       String? name,
       String? email,
       String? address,
@@ -375,6 +398,8 @@ abstract class _User implements User {
   int? get id => throw _privateConstructorUsedError;
   @override
   String? get firebase_uid => throw _privateConstructorUsedError;
+  @override
+  String? get stream_chat_token => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
   @override

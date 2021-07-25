@@ -9,6 +9,7 @@ class User with _$User {
   factory User({
     int? id,
     String? firebase_uid,
+    String? stream_chat_token,
     String? name,
     String? email,
     String? address,

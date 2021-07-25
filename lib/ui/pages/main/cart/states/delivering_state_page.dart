@@ -3,6 +3,7 @@ import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/pages/main/cart/chat/chat_driver_button.dart';
 import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/orders/driver_detail_banner.dart';
 import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
@@ -55,6 +56,8 @@ class DeliveringStatePage extends HookWidget {
                             OrderDeliveryAddressDetail(),
                             SizedBox(height: 10),
                             OrderPaymentDetail(),
+                            SizedBox(height: 10),
+                            ChatDriverButton(),
                             SizedBox(height: 10),
                             PrimaryButton(
                               onPressed: () async {

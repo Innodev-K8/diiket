@@ -13,6 +13,7 @@ class Order with _$Order {
     int? market_id,
     int? user_id,
     int? driver_id,
+    String? stream_chat_channel,
     User? driver,
     String? status,
     String? address,

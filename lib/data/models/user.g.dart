@@ -10,6 +10,7 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
   return _$_User(
     id: json['id'] as int?,
     firebase_uid: json['firebase_uid'] as String?,
+    stream_chat_token: json['stream_chat_token'] as String?,
     name: json['name'] as String?,
     email: json['email'] as String?,
     address: json['address'] as String?,
@@ -26,6 +27,7 @@ _$_User _$_$_UserFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_UserToJson(_$_User instance) => <String, dynamic>{
       'id': instance.id,
       'firebase_uid': instance.firebase_uid,
+      'stream_chat_token': instance.stream_chat_token,
       'name': instance.name,
       'email': instance.email,
       'address': instance.address,

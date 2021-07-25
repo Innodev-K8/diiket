@@ -66,6 +66,7 @@ dependencies:
   share_plus: ^2.1.4
   shared_preferences: ^2.0.6
   shimmer: ^2.0.0
+  stream_chat_flutter: ^2.0.0
   trust_location: ^2.0.13
   url_launcher: ^6.0.6
 

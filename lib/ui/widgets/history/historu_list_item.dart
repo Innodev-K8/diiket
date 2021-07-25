@@ -9,14 +9,16 @@ import 'package:flutter/material.dart';
 import 'history_order_more_button.dart';
 
 class HistoryListItem extends StatelessWidget {
+  final Order order;
   final OrderItem orderItem;
 
-  final Order order;
+  final bool isLoading;
 
   const HistoryListItem({
     Key? key,
     required this.order,
     required this.orderItem,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -40,13 +42,27 @@ class HistoryListItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${product?.name} ${orderItem.quantity} ${product?.quantity_unit}',
-                      style: kTextTheme.headline5,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    if (isLoading)
+                      Container(
+                        width: 100,
+                        height: 20,
+                        color: Colors.grey,
+                      )
+                    else
+                      Text(
+                        '${product?.name} ${orderItem.quantity} ${product?.quantity_unit}',
+                        style: kTextTheme.headline5,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     SizedBox(height: 5),
+                    if (isLoading)
+                      Container(
+                        width: 150,
+                        height: 10,
+                        color: Colors.grey,
+                      )
+                    else
                     Row(
                       children: [
                         Text(
@@ -77,6 +93,13 @@ class HistoryListItem extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 4),
+                    if (isLoading)
+                      Container(
+                        width: 18,
+                        height: 10,
+                        color: Colors.grey,
+                      )
+                    else
                     Text(
                       product?.stall?.name ?? '-',
                       overflow: TextOverflow.ellipsis,
@@ -93,6 +116,13 @@ class HistoryListItem extends StatelessWidget {
           children: [
             Row(
               children: [
+                if (isLoading)
+                  Container(
+                    width: 50,
+                    height: 10,
+                    color: Colors.grey,
+                  )
+                else
                 Text(
                   '${orderItem.quantity} ${product?.quantity_unit}',
                   style: kTextTheme.headline6,
@@ -109,6 +139,13 @@ class HistoryListItem extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (isLoading)
+                  Container(
+                    width: 20,
+                    height: 10,
+                    color: Colors.grey,
+                  )
+                else
                 Text(
                   Helper.fmtPrice(totalPrice),
                   style: kTextTheme.headline6,
@@ -116,6 +153,13 @@ class HistoryListItem extends StatelessWidget {
               ],
             ),
             Spacer(),
+            if (isLoading)
+              Container(
+                width: 100,
+                height: 30,
+                color: Colors.grey,
+              )
+            else
             HistoryOrderMoreButton(orderItem: orderItem),
           ],
         ),

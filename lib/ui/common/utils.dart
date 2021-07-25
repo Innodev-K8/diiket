@@ -73,8 +73,10 @@ class Utils {
     );
   }
 
-  static Future<PlacePickerResult?> pickLocation(Market market,
-      {LatLng? initialLocation}) async {
+  static Future<PlacePickerResult?> pickLocation(
+    Market market, {
+    LatLng? initialLocation,
+  }) async {
     return await appNav.currentState?.push(
       PageTransition(
         child: PlacePicker(

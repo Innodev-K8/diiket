@@ -1,7 +1,9 @@
+
 import 'package:diiket/data/models/directions.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/network/directions_service.dart';
 import 'package:diiket/data/network/geocode_service.dart';
+import 'package:diiket/data/providers/location/device_location_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:flutter/material.dart';
@@ -39,26 +41,20 @@ class _PlacePickerState extends State<PlacePicker> {
 
   GoogleMapController? _controller;
   Directions? _directions;
+
+  // the center of the map
   LatLng? _lastMapPosition;
 
   bool _isLoading = true;
 
-  BitmapDescriptor? customIcon;
+  BitmapDescriptor? marketIcon;
+  BitmapDescriptor? userIcon;
 
   @override
   void initState() {
     super.initState();
 
-    BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(
-        size: Size(18, 18),
-      ),
-      'assets/images/map/market_map_icon.png',
-    ).then((d) {
-      setState(() {
-        customIcon = d;
-      });
-    });
+    _loadCustomIcons();
 
     _pickedPosition = widget.initialPosition;
 
@@ -68,6 +64,23 @@ class _PlacePickerState extends State<PlacePicker> {
     );
 
     if (_pickedPosition != null) _setPickedPosition();
+  }
+
+  Future<void> _loadCustomIcons() async {
+    marketIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(
+        size: Size(18, 18),
+      ),
+      'assets/images/map/market_map_icon.png',
+    );
+    userIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(
+        size: Size(10, 10),
+      ),
+      'assets/images/map/user_map_icon.png',
+    );
+
+    setState(() {});
   }
 
   @override
@@ -85,24 +98,23 @@ class _PlacePickerState extends State<PlacePicker> {
 
     if (_pickedPosition == null) return;
 
+    // get the services
+    final directionService = context.read(directionsServiceProvider);
+    final gecodingService = context.read(geocodeServiceProvider);
+
     final destinationPosition = _lastMapPosition ?? _pickedPosition!;
 
-    final Directions? directions =
-        await context.read(directionsServiceProvider).getDirections(
-              origin: _marketPosition,
-              destination: destinationPosition,
-            );
+    final Directions? directions = await directionService.getDirections(
+      origin: _marketPosition,
+      destination: destinationPosition,
+    );
 
-    final Placemark? placemark = await context
-        .read(geocodeServiceProvider)
-        .reverseGeocoding(destinationPosition);
+    final Placemark? placemark =
+        await gecodingService.reverseGeocoding(destinationPosition);
 
+    // when we doesn't get anyting from the direction service eg: cant find routes
     if (directions?.bounds == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Terjadi kesalahan, harap coba lagi'),
-        ),
-      );
+      Utils.alert('Terjadi kesalahan, harap coba lagi');
 
       return setState(() {
         _pickedPosition = null;
@@ -111,8 +123,9 @@ class _PlacePickerState extends State<PlacePicker> {
       });
     }
 
-    await _controller
-        ?.animateCamera(CameraUpdate.newLatLngBounds(directions!.bounds!, 80));
+    await _controller?.animateCamera(
+      CameraUpdate.newLatLngBounds(directions!.bounds!, 80),
+    );
 
     setState(() {
       _directions = directions!.copyWith(
@@ -123,166 +136,193 @@ class _PlacePickerState extends State<PlacePicker> {
   }
 
   void _onCameraMove(CameraPosition position) {
+    // track middle position to  consume when user clicks confirm
     _lastMapPosition = position.target;
   }
 
   @override
   Widget build(BuildContext context) {
+    final paceName = _directions?.placemark?.subLocality;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
             _buildAppBar(
-              _directions?.placemark?.subLocality != null
-                  ? _directions!.placemark!.subLocality!
-                  : _directions != null
-                      ? 'Alamat tidak diketahui'
-                      : 'Pilih Alamat Kirim',
+              paceName ??
+                  (_directions == null
+                      ? 'Pilih Alamat Kirim'
+                      : 'Alamat tidak diketahui'),
             ),
             Expanded(
               child: Stack(
                 children: [
                   _buildMap(),
-                  if (_pickedPosition == null)
-                    Center(
-                      child: Transform.translate(
-                        offset: Offset(0, -48 / 2),
-                        child: Icon(
-                          Icons.location_on_outlined,
-                          color: ColorPallete.primaryColor,
-                          size: 48,
-                        ),
-                      ),
-                    ),
-                  if (_isLoading)
-                    Container(
-                      color: Colors.black.withOpacity(0.1),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: ColorPallete.secondaryColor,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  if (_pickedPosition != null &&
-                      _directions?.totalDistance != null) ...[
-                    _buildShipmentInfo(),
-                    SizedBox(height: 8.0),
-                  ],
-                  if (_pickedPosition != null) ...[
-                    SizedBox(
-                      width: double.infinity,
-                      height: 38,
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await _controller?.animateCamera(
-                            CameraUpdate.newLatLng(_pickedPosition!),
-                          );
-
-                          // wait for camera animation
-                          await Future.delayed(Duration(seconds: 1));
-
-                          setState(() {
-                            _pickedPosition = null;
-                            _directions = null;
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: ColorPallete.secondaryColor,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
+                  AnimatedSwitcher(
+                    duration: Duration(milliseconds: 1200),
+                    transitionBuilder: (
+                      Widget child,
+                      Animation<double> animation,
+                    ) {
+                      return FadeTransition(
+                        opacity: Tween<double>(begin: 0.0, end: 1.0).animate(
+                          CurvedAnimation(
+                            parent: animation,
+                            curve: Interval(0.8, 1.0),
                           ),
                         ),
-                        child: Text('Pilih Ulang'),
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
-                  ],
-                  SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_pickedPosition != null) {
-                          Utils.popPlacePicker(PlacePickerResult(
-                            directions: _directions,
-                            target: _pickedPosition,
-                          ));
-                        } else {
-                          _setPickedPosition();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: ColorPallete.primaryColor,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                      ),
-                      child: Text(
-                          _pickedPosition != null ? 'Konfirmasi' : 'Pilih'),
-                    ),
+                        child: child,
+                      );
+                    },
+                    child: _pickedPosition == null
+                        ? _buildMapPointer()
+                        : SizedBox(),
                   ),
+                  if (_isLoading) _buildLoading(),
                 ],
               ),
             ),
+            _buildActions(),
           ],
         ),
       ),
     );
   }
 
-  GoogleMap _buildMap() {
-    return GoogleMap(
-      buildingsEnabled: false,
-      initialCameraPosition: CameraPosition(
-        target: widget.initialPosition ?? LatLng(0.7893, 113.9213),
-        zoom: 16.0,
+  Widget _buildActions() {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        children: [
+          if (_pickedPosition != null &&
+              _directions?.totalDistance != null) ...[
+            _buildShipmentInfo(),
+            SizedBox(height: 8.0),
+          ],
+          if (_pickedPosition != null) ...[
+            SizedBox(
+              width: double.infinity,
+              height: 38,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await _controller?.animateCamera(
+                    CameraUpdate.newLatLng(_pickedPosition!),
+                  );
+
+                  setState(() {
+                    _pickedPosition = null;
+                    _directions = null;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: ColorPallete.secondaryColor,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                ),
+                child: Text('Pilih Ulang'),
+              ),
+            ),
+            SizedBox(height: 8.0),
+          ],
+          SizedBox(
+            width: double.infinity,
+            height: 52,
+            child: ElevatedButton(
+              onPressed: () {
+                if (_pickedPosition != null) {
+                  Utils.popPlacePicker(PlacePickerResult(
+                    directions: _directions,
+                    target: _pickedPosition,
+                  ));
+                } else {
+                  _setPickedPosition();
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                primary: ColorPallete.primaryColor,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+              ),
+              child: Text(_pickedPosition != null ? 'Konfirmasi' : 'Pilih'),
+            ),
+          ),
+        ],
       ),
-      onCameraMove: _onCameraMove,
-      onMapCreated: (controller) => _controller = controller,
-      markers: {
-        if (_pickedPosition != null)
-          Marker(
-            markerId: MarkerId('user-position'),
-            position: _pickedPosition!,
+    );
+  }
+
+  Container _buildLoading() {
+    return Container(
+      color: Colors.black.withOpacity(0.1),
+      child: Center(
+        child: CircularProgressIndicator(
+          color: ColorPallete.secondaryColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMap() {
+    return Consumer(
+      builder: (context, watch, child) {
+        final userPosition = watch(deviceLocationProvider);
+
+        return GoogleMap(
+          buildingsEnabled: false,
+          initialCameraPosition: CameraPosition(
+            target: widget.initialPosition ?? LatLng(0.7893, 113.9213),
+            zoom: 16.0,
           ),
-        if (customIcon == null)
-          Marker(
-            markerId: MarkerId('market-position'),
-            position: _marketPosition,
-            anchor: Offset(0.5, 0.5),
-          )
-        else
-          Marker(
-            markerId: MarkerId('market-position'),
-            position: _marketPosition,
-            anchor: Offset(0.5, 0.5),
-            icon: customIcon!,
-          )
+          onCameraMove: _onCameraMove,
+          onMapCreated: (controller) => _controller = controller,
+          markers: {
+            if (_pickedPosition != null)
+              Marker(
+                markerId: MarkerId('picked-position'),
+                position: _pickedPosition!,
+              ),
+            if (userIcon != null)
+              Marker(
+                markerId: MarkerId('user-position'),
+                position: userPosition,
+                anchor: Offset(0.5, 0.5),
+                icon: userIcon!,
+              ),
+            if (marketIcon == null)
+              Marker(
+                markerId: MarkerId('market-position'),
+                position: _marketPosition,
+                anchor: Offset(0.5, 0.5),
+              )
+            else
+              Marker(
+                markerId: MarkerId('market-position'),
+                position: _marketPosition,
+                anchor: Offset(0.5, 0.5),
+                icon: marketIcon!,
+              )
+          },
+          polylines: {
+            if (_directions != null)
+              Polyline(
+                polylineId: PolylineId('shipment-route'),
+                color: ColorPallete.primaryColor,
+                width: 6,
+                endCap: Cap.roundCap,
+                points: _directions!.polylinePoints
+                        ?.map((e) => LatLng(e.latitude, e.longitude))
+                        .toList() ??
+                    [],
+              ),
+          },
+          zoomControlsEnabled: false,
+        );
       },
-      polylines: {
-        if (_directions != null)
-          Polyline(
-            polylineId: PolylineId('shipment-route'),
-            color: ColorPallete.primaryColor,
-            width: 6,
-            endCap: Cap.roundCap,
-            points: _directions!.polylinePoints
-                    ?.map((e) => LatLng(e.latitude, e.longitude))
-                    .toList() ??
-                [],
-          ),
-      },
-      zoomControlsEnabled: false,
     );
   }
 
@@ -352,6 +392,19 @@ class _PlacePickerState extends State<PlacePicker> {
           labelText,
           style: kTextTheme.headline2,
           textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMapPointer() {
+    return Center(
+      child: Transform.translate(
+        offset: Offset(0, -48 / 2),
+        child: Icon(
+          Icons.location_on_outlined,
+          color: ColorPallete.primaryColor,
+          size: 48,
         ),
       ),
     );

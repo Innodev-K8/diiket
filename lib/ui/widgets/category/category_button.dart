@@ -27,19 +27,16 @@ class CategoryButton extends StatelessWidget {
             padding: const EdgeInsets.all(24.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
-              border: Border.all(
-                color: ColorPallete.lightGray.withOpacity(0.5),
-              ),
             ),
             child: Image.asset(
               'assets/images/categories/$fileName.png',
-              width: 24,
-              height: 24,
+              width: 26,
+              height: 26,
               color: ColorPallete.primaryColor,
             ),
           ),
         ),
-        SizedBox(height: 8),
+        // SizedBox(height: 8),
         Text(
           text,
           style: TextStyle(fontSize: 12.0),

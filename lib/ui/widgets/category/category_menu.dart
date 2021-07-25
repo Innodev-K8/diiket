@@ -8,16 +8,12 @@ class CategoryMenu extends HookWidget {
   Widget build(BuildContext context) {
     final categories = useProvider(productCategoryMenuItemsProvider);
 
-    return SizedBox(
-      height: 100.0,
-      child: ListView.separated(
-        itemCount: categories.length,
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        itemBuilder: (context, index) => categories[index],
-        separatorBuilder: (context, index) => SizedBox(width: 10),
-      ),
+    return SliverGrid.count(
+      crossAxisCount: 4,
+      childAspectRatio: 0.99,
+      // physics: const BouncingScrollPhysics(),
+      // padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      children: categories,
     );
   }
 }

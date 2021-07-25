@@ -46,7 +46,7 @@ class _CampaignBannerState extends State<CampaignBanner> {
             options: CarouselOptions(
               height: 160,
               autoPlay: true,
-              autoPlayInterval: Duration(seconds: 8),
+              autoPlayInterval: Duration(seconds: 5),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
               onPageChanged: (index, reason) {
                 setState(() {

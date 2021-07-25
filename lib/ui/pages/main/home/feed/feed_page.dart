@@ -56,11 +56,13 @@ class FeedPage extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(
+            child: _buildSectionTitle('Atau butuh sesuatu?'),
+          ),
+          CategoryMenu(),
+          SliverToBoxAdapter(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildSectionTitle('Atau butuh sesuatu?'),
-                CategoryMenu(),
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: MarketSelectorButton(),

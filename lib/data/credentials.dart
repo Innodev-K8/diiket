@@ -6,6 +6,11 @@ class Credentials {
   // force use production token
   static const bool _forceProd = true;
 
+  static String apiEndpoint = set(
+    prod: 'https://diiket.rejoin.id/api/v1',
+    dev: 'https://82144c857d4f.ngrok.io/api/v1',
+  );
+
   static String pusherToken = set(
     prod: '4144774926a400dddc07',
     dev: 'd244fbd9f96cbf4f69ba',

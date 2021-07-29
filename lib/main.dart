@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:diiket/data/credentials.dart';
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/models/product.dart';
@@ -23,6 +25,7 @@ import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page.dart';
 import 'package:diiket/ui/widgets/market/select_market_bottom_sheet.dart';
+import 'package:diiket/ui/widgets/modals/no_internet_bottom_sheet.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -80,6 +83,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    // first thing to do is to check network connectivity
+    _checkConnection();
+
     // setup selected market
     _initializeSelectedMarket();
 
@@ -89,6 +95,18 @@ class _MyAppState extends State<MyApp> {
         .then((streamSubscription) => notificationStream = streamSubscription);
 
     DynamicLinkService().initializeHandler(context);
+
+  }
+
+  Future<void> _checkConnection() async {
+    try {
+      await Future.delayed(Duration(seconds: 2));
+      await InternetAddress.lookup(
+        Uri.parse(Credentials.apiEndpoint).host,
+      );
+    } on SocketException catch (_) {
+      NoInternetBottomSheet.show(Utils.appNav.currentContext!);
+    }
   }
 
   Future<void> _initializeSelectedMarket() async {

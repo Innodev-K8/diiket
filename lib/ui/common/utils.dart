@@ -5,6 +5,7 @@ import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
 import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:diiket/ui/pages/utils/place_picker.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -93,10 +94,25 @@ class Utils {
   }
 
   static void alert(String message) {
+    late SnackBarBehavior behavior;
+    final String behaviorConfig = RemoteConfig.instance.getString(
+      'alert_snackbar_behavior',
+    );
+
+    switch (behaviorConfig) {
+      case 'floating':
+        behavior = SnackBarBehavior.floating;
+        break;
+      case 'fixed':
+      default:
+        behavior = SnackBarBehavior.fixed;
+        break;
+    }
+
     appScaffoldMessager.currentState?.showSnackBar(
       SnackBar(
         content: Text(message),
-        behavior: SnackBarBehavior.floating,
+        behavior: behavior,
       ),
     );
   }

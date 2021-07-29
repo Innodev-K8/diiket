@@ -96,6 +96,7 @@ class Utils {
     appScaffoldMessager.currentState?.showSnackBar(
       SnackBar(
         content: Text(message),
+        behavior: SnackBarBehavior.floating,
       ),
     );
   }

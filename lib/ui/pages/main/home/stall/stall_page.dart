@@ -11,6 +11,7 @@ import 'package:diiket/data/services/dynamic_link_generators.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
+import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/large_product_item.dart';
 import 'package:diiket/ui/widgets/products/product_detail_bottom_sheet.dart';
@@ -250,21 +251,7 @@ class StallPage extends HookWidget {
         onPressed: () => Utils.homeNav.currentState?.pop(),
       ),
       actions: [
-        IconButton(
-          onPressed: () async {
-            final uri = await DynamicLinkGenerators.generateStallDeepLink(
-              stall,
-              referrer: context.read(authProvider),
-            );
-
-            Share.share(uri.toString());
-          },
-          icon: Icon(
-            Icons.share,
-            size: 18.0,
-            color: Colors.white,
-          ),
-        ),
+        ShareStallButton(stall: stall),
         SizedBox(width: 8),
       ],
       expandedHeight: _headerHeight + 8,
@@ -320,6 +307,43 @@ class StallPage extends HookWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class ShareStallButton extends HookWidget {
+  final Stall stall;
+
+  const ShareStallButton({
+    Key? key,
+    required this.stall,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final isLoading = useState<bool>(false);
+    final isMounted = useIsMounted();
+
+    return IconButton(
+      onPressed: () async {
+        if (isMounted()) isLoading.value = true;
+
+        final uri = await DynamicLinkGenerators.generateStallDeepLink(
+          stall,
+          referrer: context.read(authProvider),
+        );
+
+        await Share.share(uri.toString());
+
+        if (isMounted()) isLoading.value = false;
+      },
+      icon: isLoading.value
+          ? SmallLoading()
+          : Icon(
+              Icons.share,
+              size: 18.0,
+              color: Colors.white,
+            ),
     );
   }
 }

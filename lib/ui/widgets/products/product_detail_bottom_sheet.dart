@@ -5,6 +5,7 @@ import 'package:diiket/data/providers/recombee_provider.dart';
 import 'package:diiket/data/services/dynamic_link_generators.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/auth/auth_wrapper.dart';
+import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
 import 'package:diiket/ui/widgets/products/product_in_cart_information.dart';
 import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
@@ -101,28 +102,7 @@ class ProductDetailBottomSheet extends HookWidget {
                       ),
                     ),
                     SizedBox(width: 8),
-                    InkWell(
-                      onTap: () async {
-                        if (product.stall == null) return;
-
-                        final uri =
-                            await DynamicLinkGenerators.generateStallDeepLink(
-                          product.stall!,
-                          product: product,
-                          referrer: context.read(authProvider),
-                        );
-
-                        Share.share(uri.toString());
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Icon(
-                          Icons.share,
-                          size: 18.0,
-                          color: ColorPallete.darkGray,
-                        ),
-                      ),
-                    ),
+                    ProductShareButton(product: product),
                   ],
                 ),
                 SizedBox(height: 8.0),
@@ -158,6 +138,49 @@ class ProductDetailBottomSheet extends HookWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ProductShareButton extends HookWidget {
+  const ProductShareButton({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    final isLoading = useState<bool>(false);
+    final isMounted = useIsMounted();
+
+    return InkWell(
+      onTap: () async {
+        if (product.stall == null) return;
+
+        if (isMounted()) isLoading.value = true;
+
+        final uri = await DynamicLinkGenerators.generateStallDeepLink(
+          product.stall!,
+          product: product,
+          referrer: context.read(authProvider),
+        );
+
+        await Share.share(uri.toString());
+
+        if (isMounted()) isLoading.value = false;
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: isLoading.value
+            ? SmallLoading()
+            : Icon(
+                Icons.share,
+                size: 18.0,
+                color: ColorPallete.darkGray,
+              ),
       ),
     );
   }

@@ -11,6 +11,10 @@ class Credentials {
     dev: 'https://82144c857d4f.ngrok.io/api/v1',
   );
 
+  static String googleMapsApiKey = set(
+    prod: 'AIzaSyAtRv3aJE1s6JWKPNxEY5Xsc8I1M1Baayw',
+  );
+
   static String pusherToken = set(
     prod: '4144774926a400dddc07',
     dev: 'd244fbd9f96cbf4f69ba',

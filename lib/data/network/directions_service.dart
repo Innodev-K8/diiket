@@ -1,3 +1,4 @@
+import 'package:diiket/data/credentials.dart';
 import 'package:diiket/data/models/directions.dart';
 import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/helpers/casting_helper.dart';
@@ -26,7 +27,7 @@ class DirectionsService {
       queryParameters: {
         'origin': '${origin.latitude},${origin.longitude}',
         'destination': '${destination.latitude},${destination.longitude}',
-        'key': 'AIzaSyAtRv3aJE1s6JWKPNxEY5Xsc8I1M1Baayw',
+        'key': Credentials.googleMapsApiKey,
       },
     );
 

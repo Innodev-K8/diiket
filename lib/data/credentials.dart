@@ -31,7 +31,7 @@ class Credentials {
     prod: 'diiket-prod',
   );
 
-  static String set({required String prod, String? dev}) {
+  static T set<T>({required T prod, T? dev}) {
     return _forceProd ? prod : (kReleaseMode ? prod : dev ?? prod);
   }
 }

@@ -30,6 +30,7 @@ class HistoryPage extends HookWidget {
                     // add height constraint when error so that the error message can be centered
                     height: historyState.maybeWhen(
                       error: (_, __) => true,
+                      loading: () => true,
                       orElse: () => false,
                     )
                         ? constraints.minHeight

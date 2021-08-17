@@ -17,8 +17,9 @@ class LocationService {
   static late bool? _serviceEnabled;
   static PermissionStatus? _permissionStatus;
 
-  static Future<LatLng?> getUserPosition(
-      {bool allowMockLocation = false}) async {
+  static Future<LatLng?> getUserPosition({
+    bool allowMockLocation = false,
+  }) async {
     try {
       _serviceEnabled = await _instance.serviceEnabled();
 

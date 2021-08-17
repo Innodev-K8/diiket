@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _checkConnection() async {
     try {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 1));
       await InternetAddress.lookup(
         Uri.parse(Credentials.apiEndpoint).host,
       );

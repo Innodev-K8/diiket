@@ -76,6 +76,8 @@ class AuthState extends StateNotifier<User?> {
       await refreshProfile();
     } on CustomException catch (error) {
       _read(authExceptionProvider).state = error;
+
+      rethrow;
     }
   }
 

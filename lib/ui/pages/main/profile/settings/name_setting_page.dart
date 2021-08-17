@@ -75,15 +75,19 @@ class NameSettingPage extends HookWidget {
 
                                 isLoading.value = true;
 
-                                await authNotifier
-                                    .updateUserName(controller.text);
-
-                                if (isMounted()) {
-                                  isLoading.value = false;
+                                try {
+                                  await authNotifier
+                                      .updateUserName(controller.text);
 
                                   Utils.alert('Nama berhasil diperbarui');
 
                                   Navigator.of(context).pop();
+
+                                // exception is already handled by the provider and being listened by the listener on main.dart
+                                } finally {
+                                  if (isMounted()) {
+                                    isLoading.value = false;
+                                  }
                                 }
                               },
                               child: isLoading.value

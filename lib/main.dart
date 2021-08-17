@@ -10,6 +10,7 @@ import 'package:diiket/data/models/seller.dart';
 import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/notification/background_fcm.dart';
 import 'package:diiket/data/notification/service.dart';
+import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/global_exception_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
@@ -92,7 +93,6 @@ class _MyAppState extends State<MyApp> {
         .then((streamSubscription) => notificationStream = streamSubscription);
 
     DynamicLinkService().initializeHandler(context);
-
   }
 
   Future<void> _checkConnection() async {
@@ -134,50 +134,67 @@ class _MyAppState extends State<MyApp> {
       provider: exceptionProvider,
       onChange: _handleException,
       child: ProviderListener(
-        provider: currentMarketProvider,
-        onChange: _handleCurrentMarketChange,
-        child: MaterialApp(
-          title: 'Diiket',
-          debugShowCheckedModeBanner: false,
-          navigatorKey: Utils.appNav,
-          scaffoldMessengerKey: Utils.appScaffoldMessager,
-          // TODO: uncomment this
-          // builder: (context, child) => StreamChat(
-          //   client: context.read(chatClientProvider),
-          //   streamChatThemeData: StreamChatThemeData.fromTheme(
-          //     ThemeData(
-          //       primaryColor: ColorPallete.primaryColor,
-          //       accentColor: ColorPallete.secondaryColor,
-          //       textTheme: kTextTheme,
-          //     ),
-          //   ),
-          //   child: child,
-          // ),
-          theme: ThemeData(
-            primaryColor: ColorPallete.primaryColor,
-            accentColor: ColorPallete.secondaryColor,
-            textTheme: kTextTheme,
-          ),
-          initialRoute: MainPage.route,
-          navigatorObservers: [
-            FirebaseAnalyticsObserver(
-                analytics: context.read(analyticsProvider)),
-          ],
-          routes: {
-            MainPage.route: (_) => MainPage(),
-            RegisterPage.route: (_) => RegisterPage(),
-            PhoneNumberSettingPage.route: (_) => PhoneNumberSettingPage(),
-            PhotoSettingPage.route: (_) => PhotoSettingPage(),
-            NameSettingPage.route: (_) => NameSettingPage(),
+        provider: authExceptionProvider,
+        onChange: _handleAuthException,
+        child: ProviderListener(
+          provider: currentMarketProvider,
+          onChange: _handleCurrentMarketChange,
+          child: MaterialApp(
+            title: 'Diiket',
+            debugShowCheckedModeBanner: false,
+            navigatorKey: Utils.appNav,
+            scaffoldMessengerKey: Utils.appScaffoldMessager,
             // TODO: uncomment this
-            // ChatPage.route: (_) => ChatPage(),
-          },
+            // builder: (context, child) => StreamChat(
+            //   client: context.read(chatClientProvider),
+            //   streamChatThemeData: StreamChatThemeData.fromTheme(
+            //     ThemeData(
+            //       primaryColor: ColorPallete.primaryColor,
+            //       accentColor: ColorPallete.secondaryColor,
+            //       textTheme: kTextTheme,
+            //     ),
+            //   ),
+            //   child: child,
+            // ),
+            theme: ThemeData(
+              primaryColor: ColorPallete.primaryColor,
+              accentColor: ColorPallete.secondaryColor,
+              textTheme: kTextTheme,
+            ),
+            initialRoute: MainPage.route,
+            navigatorObservers: [
+              FirebaseAnalyticsObserver(
+                  analytics: context.read(analyticsProvider)),
+            ],
+            routes: {
+              MainPage.route: (_) => MainPage(),
+              RegisterPage.route: (_) => RegisterPage(),
+              PhoneNumberSettingPage.route: (_) => PhoneNumberSettingPage(),
+              PhotoSettingPage.route: (_) => PhotoSettingPage(),
+              NameSettingPage.route: (_) => NameSettingPage(),
+              // TODO: uncomment this
+              // ChatPage.route: (_) => ChatPage(),
+            },
+          ),
         ),
       ),
     );
   }
 
   void _handleException(context, Exception? exception) {
+    if (exception == null) return;
+
+    Utils.alert(
+      exception is CustomException && exception.message != null
+          ? exception.message!
+          : 'Terjadi Kesalahan...',
+    );
+  }
+
+  void _handleAuthException(
+      BuildContext context, StateController<CustomException?> value) {
+    final exception = value.state;
+
     if (exception == null) return;
 
     Utils.alert(

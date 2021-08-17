@@ -50,7 +50,7 @@ class PhotoPickerBottomSheet extends HookWidget {
         toolbarColor: ColorPallete.primaryColor,
         toolbarWidgetColor: Colors.white,
         initAspectRatio: CropAspectRatioPreset.square,
-        lockAspectRatio: false,
+        lockAspectRatio: true,
       ),
       iosUiSettings: IOSUiSettings(
         minimumAspectRatio: 1.0,

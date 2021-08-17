@@ -1,4 +1,5 @@
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/widgets/inputs/primary_button.dart';
 import 'package:flutter/material.dart';
 
 class Wip extends StatelessWidget {
@@ -23,6 +24,17 @@ class Wip extends StatelessWidget {
         Text(
           'Fitur ini masih belum tersedia, tunggu update-update berikutnya ya!',
           textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 12),
+        SizedBox(
+          width: 120,
+          height: 43,
+          child: PrimaryButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Kembali'),
+          ),
         ),
       ],
     );

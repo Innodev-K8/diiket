@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/auth_response.dart';
 import 'package:diiket/data/models/user.dart';
@@ -56,6 +58,18 @@ class AuthService {
       data.putIfAbsent('_method', () => 'PATCH');
 
       await _dio.post(_('me'), data: data);
+    } on DioError catch (error) {
+      throw CustomException.fromDioError(error);
+    }
+  }
+
+  Future<void> updateProfilePicture(File image) async {
+    try {
+      final FormData formData = FormData.fromMap({
+        "picture": await MultipartFile.fromFile(image.path),
+      });
+
+      await _dio.post(_('me/update/picture'), data: formData);
     } on DioError catch (error) {
       throw CustomException.fromDioError(error);
     }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/auth_response.dart';
 import 'package:diiket/data/models/user.dart';
@@ -57,7 +58,16 @@ class AuthState extends StateNotifier<User?> {
     }
   }
 
-  Future<void> updateUserName(String name) async {
+  // Komunikasi ke laravel
+  Future<void> refreshProfile() async {
+    try {
+      state = await _authService.me();
+    } on CustomException catch (error) {
+      _read(authExceptionProvider).state = error;
+    }
+  }
+
+   Future<void> updateUserName(String name) async {
     try {
       await _authService.updateProfile({
         'name': name,
@@ -69,10 +79,11 @@ class AuthState extends StateNotifier<User?> {
     }
   }
 
-  // Komunikasi ke laravel
-  Future<void> refreshProfile() async {
+  Future<void> updateProfilePicture(File file) async {
     try {
-      state = await _authService.me();
+      await _authService.updateProfilePicture(file);
+
+      await refreshProfile();
     } on CustomException catch (error) {
       _read(authExceptionProvider).state = error;
     }

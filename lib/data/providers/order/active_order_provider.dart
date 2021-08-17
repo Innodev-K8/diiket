@@ -50,13 +50,16 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
     _read(authProvider.notifier).addListener(
       (User? user) {
-        if (user == null) {
+        if (user == null && state != null) {
           state = null;
 
           return;
         }
 
-        retrieveActiveOrder();
+        // refresh order if user changed
+        if (user?.id != state?.id) {
+          retrieveActiveOrder();
+        }
       },
       fireImmediately: false,
     );

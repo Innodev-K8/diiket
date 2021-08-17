@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
@@ -7,8 +8,10 @@ import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page.dart';
 import 'package:diiket/ui/widgets/auth/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/auth/login_to_continue_screen.dart';
+import 'package:diiket/ui/widgets/common/photo_picker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProfilePage extends HookWidget {
   @override
@@ -88,10 +91,7 @@ class ProfilePage extends HookWidget {
                           ),
                           contentPadding: const EdgeInsets.all(0),
                           horizontalTitleGap: 0.0,
-                          onTap: () {
-                            Utils.appNav.currentState
-                                ?.pushNamed(PhotoSettingPage.route);
-                          },
+                          onTap: () => _changeProfilePicture(context),
                         ),
                         ListTile(
                           leading: Icon(Icons.mode_edit_outline_rounded),
@@ -128,5 +128,17 @@ class ProfilePage extends HookWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _changeProfilePicture(BuildContext context) async {
+    final result = await PhotoPickerBottomSheet.pickAndCrop(
+      context,
+    );
+
+    if (result?.isDelete == false && result?.image != null) {
+      final authNotifier = context.read(authProvider.notifier);
+
+      authNotifier.updateProfilePicture(result!.image!);
+    }
   }
 }

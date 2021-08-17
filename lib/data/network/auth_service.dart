@@ -63,10 +63,11 @@ class AuthService {
     }
   }
 
-  Future<void> updateProfilePicture(File image) async {
+  Future<void> updateProfilePicture(File? image) async {
     try {
       final FormData formData = FormData.fromMap({
-        "picture": await MultipartFile.fromFile(image.path),
+        "picture":
+            image != null ? await MultipartFile.fromFile(image.path) : null,
       });
 
       await _dio.post(_('me/update/picture'), data: formData);

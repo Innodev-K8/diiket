@@ -79,7 +79,7 @@ class AuthState extends StateNotifier<User?> {
     }
   }
 
-  Future<void> updateProfilePicture(File file) async {
+  Future<void> updateProfilePicture(File? file) async {
     try {
       await _authService.updateProfilePicture(file);
 

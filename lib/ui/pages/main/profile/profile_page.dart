@@ -135,10 +135,14 @@ class ProfilePage extends HookWidget {
       context,
     );
 
-    if (result?.isDelete == false && result?.image != null) {
-      final authNotifier = context.read(authProvider.notifier);
+    if (result == null) return;
 
-      authNotifier.updateProfilePicture(result!.image!);
+    final authNotifier = context.read(authProvider.notifier);
+
+    if (result.isDelete) {
+      authNotifier.updateProfilePicture(null);
+    } else if (result.image != null) {
+      authNotifier.updateProfilePicture(result.image);
     }
   }
 }

@@ -38,10 +38,11 @@ class PhotoPickerBottomSheet extends HookWidget {
   ) async {
     final result = await pick(context);
 
-    if (result?.image == null) return null;
+    if (result == null) return null;
+    if (result.isDelete) return result;
 
     final File? croppedFile = await ImageCropper.cropImage(
-      sourcePath: result!.image!.path,
+      sourcePath: result.image!.path,
       aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
       maxWidth: 300,
       maxHeight: 300,

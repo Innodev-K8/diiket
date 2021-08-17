@@ -196,7 +196,10 @@ class PaymentDetailRecord extends StatelessWidget {
 class SmallLoading extends StatelessWidget {
   const SmallLoading({
     Key? key,
+    this.color = ColorPallete.secondaryColor,
   }) : super(key: key);
+
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +207,7 @@ class SmallLoading extends StatelessWidget {
       width: 18,
       height: 18,
       child: CircularProgressIndicator(
-        color: ColorPallete.secondaryColor,
+        color: color,
         strokeWidth: 2,
       ),
     );

@@ -4,7 +4,6 @@ import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page.dart';
-import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page.dart';
 import 'package:diiket/ui/widgets/auth/auth_wrapper.dart';
 import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/auth/login_to_continue_screen.dart';

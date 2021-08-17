@@ -8,7 +8,6 @@ import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/order_service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
-import 'package:diiket/data/providers/order/chat/chat_channel_provider.dart';
 import 'package:diiket/data/providers/order/order_history_provider.dart';
 import 'package:diiket/data/providers/pusher_provider.dart';
 import 'package:diiket/helpers/casting_helper.dart';

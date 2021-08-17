@@ -18,7 +18,6 @@ import 'package:diiket/data/services/dynamic_link_service.dart';
 import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
-import 'package:diiket/ui/pages/main/cart/chat/chat_page.dart';
 import 'package:diiket/ui/pages/main/main_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page.dart';

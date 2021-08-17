@@ -21,11 +21,6 @@ environment:
   sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-  pusher_client:
-    git:
-      url: https://github.com/Innodev-K8/pusher_client.git
   badges: ^2.0.1
   cached_network_image: ^3.0.0
   carousel_slider: ^4.0.0
@@ -45,6 +40,8 @@ dependencies:
   firebase_messaging: ^10.0.1
   firebase_performance: ^0.7.0+7
   firebase_remote_config: ^0.10.0+1
+  flutter:
+    sdk: flutter
   flutter_hooks: ^0.17.0
   flutter_local_notifications: ^6.0.0
   flutter_polyline_points: ^1.0.0
@@ -55,6 +52,7 @@ dependencies:
   hive: ^2.0.4
   hive_flutter: ^1.0.0
   hooks_riverpod: ^0.14.0+4
+  image_picker: ^0.8.3+2
   infinite_scroll_pagination: ^3.1.0
   json_annotation: ^4.0.1
   location: 4.1.1
@@ -62,20 +60,24 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   page_transition: ^2.0.2
   pin_code_fields: ^7.1.0
+  pusher_client:
+    git:
+      url: https://github.com/Innodev-K8/pusher_client.git
   recombee_client: ^0.0.2
   share_plus: ^2.1.4
   shared_preferences: ^2.0.6
   shimmer: ^2.0.0
-  stream_chat_flutter: ^2.0.0
+  # TODO: uncomment this
+  # stream_chat_flutter: ^2.0.0
   trust_location: ^2.0.13
   url_launcher: ^6.0.6
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   build_runner: ^2.0.3
   fake_cloud_firestore: ^1.1.2
   flutter_native_splash: ^1.1.8+4
+  flutter_test:
+    sdk: flutter
   freezed: ^0.14.2
   hive_generator: ^1.1.0
   json_serializable: ^4.1.1

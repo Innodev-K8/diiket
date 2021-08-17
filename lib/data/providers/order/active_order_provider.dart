@@ -98,7 +98,8 @@ class ActiveOrderState extends StateNotifier<Order?> {
       }
 
       if (['unconfirmed', 'completed'].contains(order.status)) {
-        _read(orderChatChannelProvider.notifier).disconnect();
+        // TODO: uncomment this
+        // _read(orderChatChannelProvider.notifier).disconnect();
       }
     }
   }

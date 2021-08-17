@@ -57,7 +57,8 @@ class DeliveringStatePage extends HookWidget {
                             SizedBox(height: 10),
                             OrderPaymentDetail(),
                             SizedBox(height: 10),
-                            ChatDriverButton(),
+                            // TODO: uncomment this
+                            // ChatDriverButton(),
                             SizedBox(height: 10),
                             PrimaryButton(
                               onPressed: () async {

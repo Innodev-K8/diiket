@@ -22,6 +22,8 @@ class HistoryList extends StatelessWidget {
 
   ListView _buildList() {
     return ListView.separated(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       itemCount: orders.length,
       itemBuilder: (context, index) {
         final Order order = orders[index];

@@ -26,13 +26,13 @@ class AddProductToCartAction extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    useProvider(activeOrderProvider);
+    final activeOrder = useProvider(activeOrderProvider);
+    final activeOrderNotifier = useProvider(activeOrderProvider.notifier);
 
-    final bool isProductInOrder =
-        context.read(activeOrderProvider.notifier).isProductInOrder(product);
+    final bool isProductInOrder = activeOrderNotifier.isProductInOrder(product);
 
-    final isAnyProcessedOrder = context.read(activeOrderProvider) != null &&
-        context.read(activeOrderProvider)!.status != 'unconfirmed';
+    final isAnyProcessedOrder =
+        activeOrder != null && activeOrder.status != 'unconfirmed';
 
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 250),
@@ -54,15 +54,19 @@ class AddProductToCartAction extends HookWidget {
               child: ProductInCartInformation(product: product),
             )
           : (isProductInOrder
-              ? _buildNumberSpinner(context)
+              ? _buildNumberSpinner(context, activeOrderNotifier)
               : _buildAddToCart(context)),
     );
   }
 
-  Widget _buildNumberSpinner(BuildContext context) {
-    final OrderItem? orderItem = context
-        .read(activeOrderProvider.notifier)
-        .getOrderItemByProduct(product);
+  Widget _buildNumberSpinner(
+    BuildContext context,
+    ActiveOrderState activeOrderNotifier,
+  ) {
+    final isMounted = useIsMounted();
+
+    final OrderItem? orderItem =
+        activeOrderNotifier.getOrderItemByProduct(product);
 
     return SizedBox(
       // width:
@@ -77,9 +81,7 @@ class AddProductToCartAction extends HookWidget {
               onTap: () {
                 if (orderItem == null) return;
 
-                context
-                    .read(activeOrderProvider.notifier)
-                    .deleteOrderItem(orderItem);
+                activeOrderNotifier.deleteOrderItem(orderItem);
               },
               child: Text(
                 'Batal',
@@ -98,19 +100,19 @@ class AddProductToCartAction extends HookWidget {
               if (orderItem == null) return;
 
               if (value <= 0) {
-                context
-                    .read(activeOrderProvider.notifier)
-                    .deleteOrderItem(orderItem);
+                activeOrderNotifier.deleteOrderItem(orderItem);
               } else {
                 // debounce tiap 1 detik biar server nggak overload
                 EasyDebounce.debounce(
                   '${product.id}-order-item-debouncer',
                   Duration(seconds: 1),
                   () {
-                    context.read(activeOrderProvider.notifier).updateOrderItem(
-                          orderItem,
-                          quantity: value,
-                        );
+                    if (isMounted()) {
+                      activeOrderNotifier.updateOrderItem(
+                        orderItem,
+                        quantity: value,
+                      );
+                    }
                   },
                 );
               }

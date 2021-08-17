@@ -20,14 +20,12 @@ class _$DeliveryDetailTearOff {
       {LatLng? position,
       String? geocodedPosition,
       String? address,
-      Directions? directions,
-      AsyncValue<Fee>? fee}) {
+      Directions? directions}) {
     return _DeliveryDetail(
       position: position,
       geocodedPosition: geocodedPosition,
       address: address,
       directions: directions,
-      fee: fee,
     );
   }
 }
@@ -41,7 +39,6 @@ mixin _$DeliveryDetail {
   String? get geocodedPosition => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
   Directions? get directions => throw _privateConstructorUsedError;
-  AsyncValue<Fee>? get fee => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DeliveryDetailCopyWith<DeliveryDetail> get copyWith =>
@@ -57,11 +54,9 @@ abstract class $DeliveryDetailCopyWith<$Res> {
       {LatLng? position,
       String? geocodedPosition,
       String? address,
-      Directions? directions,
-      AsyncValue<Fee>? fee});
+      Directions? directions});
 
   $DirectionsCopyWith<$Res>? get directions;
-  $AsyncValueCopyWith<Fee, $Res>? get fee;
 }
 
 /// @nodoc
@@ -79,7 +74,6 @@ class _$DeliveryDetailCopyWithImpl<$Res>
     Object? geocodedPosition = freezed,
     Object? address = freezed,
     Object? directions = freezed,
-    Object? fee = freezed,
   }) {
     return _then(_value.copyWith(
       position: position == freezed
@@ -98,10 +92,6 @@ class _$DeliveryDetailCopyWithImpl<$Res>
           ? _value.directions
           : directions // ignore: cast_nullable_to_non_nullable
               as Directions?,
-      fee: fee == freezed
-          ? _value.fee
-          : fee // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<Fee>?,
     ));
   }
 
@@ -113,17 +103,6 @@ class _$DeliveryDetailCopyWithImpl<$Res>
 
     return $DirectionsCopyWith<$Res>(_value.directions!, (value) {
       return _then(_value.copyWith(directions: value));
-    });
-  }
-
-  @override
-  $AsyncValueCopyWith<Fee, $Res>? get fee {
-    if (_value.fee == null) {
-      return null;
-    }
-
-    return $AsyncValueCopyWith<Fee, $Res>(_value.fee!, (value) {
-      return _then(_value.copyWith(fee: value));
     });
   }
 }
@@ -139,13 +118,10 @@ abstract class _$DeliveryDetailCopyWith<$Res>
       {LatLng? position,
       String? geocodedPosition,
       String? address,
-      Directions? directions,
-      AsyncValue<Fee>? fee});
+      Directions? directions});
 
   @override
   $DirectionsCopyWith<$Res>? get directions;
-  @override
-  $AsyncValueCopyWith<Fee, $Res>? get fee;
 }
 
 /// @nodoc
@@ -165,7 +141,6 @@ class __$DeliveryDetailCopyWithImpl<$Res>
     Object? geocodedPosition = freezed,
     Object? address = freezed,
     Object? directions = freezed,
-    Object? fee = freezed,
   }) {
     return _then(_DeliveryDetail(
       position: position == freezed
@@ -184,10 +159,6 @@ class __$DeliveryDetailCopyWithImpl<$Res>
           ? _value.directions
           : directions // ignore: cast_nullable_to_non_nullable
               as Directions?,
-      fee: fee == freezed
-          ? _value.fee
-          : fee // ignore: cast_nullable_to_non_nullable
-              as AsyncValue<Fee>?,
     ));
   }
 }
@@ -196,11 +167,7 @@ class __$DeliveryDetailCopyWithImpl<$Res>
 
 class _$_DeliveryDetail extends _DeliveryDetail {
   _$_DeliveryDetail(
-      {this.position,
-      this.geocodedPosition,
-      this.address,
-      this.directions,
-      this.fee})
+      {this.position, this.geocodedPosition, this.address, this.directions})
       : super._();
 
   @override
@@ -211,12 +178,10 @@ class _$_DeliveryDetail extends _DeliveryDetail {
   final String? address;
   @override
   final Directions? directions;
-  @override
-  final AsyncValue<Fee>? fee;
 
   @override
   String toString() {
-    return 'DeliveryDetail(position: $position, geocodedPosition: $geocodedPosition, address: $address, directions: $directions, fee: $fee)';
+    return 'DeliveryDetail(position: $position, geocodedPosition: $geocodedPosition, address: $address, directions: $directions)';
   }
 
   @override
@@ -234,9 +199,7 @@ class _$_DeliveryDetail extends _DeliveryDetail {
                     .equals(other.address, address)) &&
             (identical(other.directions, directions) ||
                 const DeepCollectionEquality()
-                    .equals(other.directions, directions)) &&
-            (identical(other.fee, fee) ||
-                const DeepCollectionEquality().equals(other.fee, fee)));
+                    .equals(other.directions, directions)));
   }
 
   @override
@@ -245,8 +208,7 @@ class _$_DeliveryDetail extends _DeliveryDetail {
       const DeepCollectionEquality().hash(position) ^
       const DeepCollectionEquality().hash(geocodedPosition) ^
       const DeepCollectionEquality().hash(address) ^
-      const DeepCollectionEquality().hash(directions) ^
-      const DeepCollectionEquality().hash(fee);
+      const DeepCollectionEquality().hash(directions);
 
   @JsonKey(ignore: true)
   @override
@@ -259,8 +221,7 @@ abstract class _DeliveryDetail extends DeliveryDetail {
       {LatLng? position,
       String? geocodedPosition,
       String? address,
-      Directions? directions,
-      AsyncValue<Fee>? fee}) = _$_DeliveryDetail;
+      Directions? directions}) = _$_DeliveryDetail;
   _DeliveryDetail._() : super._();
 
   @override
@@ -271,8 +232,6 @@ abstract class _DeliveryDetail extends DeliveryDetail {
   String? get address => throw _privateConstructorUsedError;
   @override
   Directions? get directions => throw _privateConstructorUsedError;
-  @override
-  AsyncValue<Fee>? get fee => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$DeliveryDetailCopyWith<_DeliveryDetail> get copyWith =>

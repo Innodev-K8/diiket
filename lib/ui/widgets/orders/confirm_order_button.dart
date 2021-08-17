@@ -1,3 +1,4 @@
+import 'package:diiket/data/providers/order/active_order_fee_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/helper.dart';
@@ -23,12 +24,12 @@ class ConfirmOrderButton extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final orderNotifier = useProvider(activeOrderProvider.notifier);
-    final deliveryDetail = useProvider(deliveryDetailProvider);
+    final activeOrderFee = useProvider(activeOrderFeeProvider);
 
     return PrimaryButton(
-      trailing: deliveryDetail.fee?.when(
+      trailing: activeOrderFee.when(
             data: (value) => Text(
-              'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value.total_fee ?? 0))}',
+              'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value?.total_fee ?? 0))}',
               style: kTextTheme.button!.copyWith(
                 color: ColorPallete.backgroundColor,
               ),

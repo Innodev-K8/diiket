@@ -1,6 +1,7 @@
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,8 +13,16 @@ class OrderDeliveryAddressDetail extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final order = useProvider(activeOrderProvider);
-    final deliveryDetail = useProvider(deliveryDetailProvider);
+    final activeOrder = useProvider(activeOrderProvider);
+    final deliveryDetail = useProvider(deliveryDetailProvider).state;
+    final addressController =
+        useTextEditingController(text: deliveryDetail?.address);
+
+    useEffect(() {
+      addressController.text = deliveryDetail?.address ?? '';
+    }, [deliveryDetail]);
+
+    final editable = activeOrder?.status == 'unconfirmed';
 
     return Container(
       decoration: BoxDecoration(
@@ -24,45 +33,64 @@ class OrderDeliveryAddressDetail extends HookWidget {
       ),
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  'Titik Antar',
-                  style: kTextTheme.subtitle2!.copyWith(
-                    color: ColorPallete.darkGray,
-                  ),
-                ),
+          if (editable) ...[
+            _buildItem(
+              'Titik Antar',
+              deliveryDetail?.geocodedPosition ?? '-',
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Alamat',
+              style: kTextTheme.subtitle2!.copyWith(
+                color: ColorPallete.darkGray,
               ),
-              Expanded(
-                child: Text(
-                  order?.address ?? deliveryDetail.geocodedPosition ?? '-',
-                  textAlign: TextAlign.end,
-                ),
+            ),
+            SizedBox(height: 8),
+            CustomTextFormField(
+              controller: addressController,
+              minLines: 1,
+              maxLines: 5,
+            ),
+            SizedBox(height: 2),
+            Text(
+              'Tuliskan alamat lengkap untuk memudahkan Driver menemukan lokasi Anda.',
+              style: kTextTheme.overline!.copyWith(
+                color: ColorPallete.darkGray,
               ),
-            ],
-          ),
-          // SizedBox(height: 16),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Text(
-          //       'Catatan Alamat',
-          //       style: kTextTheme.subtitle2!.copyWith(
-          //         color: ColorPallete.darkGray,
-          //       ),
-          //     ),
-          //     Text(
-          //       order?.address ?? '-',
-          //       textAlign: TextAlign.end,
-          //     ),
-          //   ],
-          // ),
+            ),
+          ] else ...[
+            _buildItem(
+              'Alamat Antar',
+              activeOrder?.address ?? '-',
+            ),
+          ],
         ],
       ),
+    );
+  }
+
+  Widget _buildItem(String title, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Text(
+            title,
+            style: kTextTheme.subtitle2!.copyWith(
+              color: ColorPallete.darkGray,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+          ),
+        ),
+      ],
     );
   }
 }

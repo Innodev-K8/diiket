@@ -1,3 +1,4 @@
+import 'package:diiket/data/providers/order/active_order_fee_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/helper.dart';
@@ -13,7 +14,8 @@ class OrderPaymentDetail extends HookWidget {
   Widget build(BuildContext context) {
     final order = useProvider(activeOrderProvider);
     final orderNotifier = useProvider(activeOrderProvider.notifier);
-    final deliveryDetail = useProvider(deliveryDetailProvider);
+    final activeOrderFee = useProvider(activeOrderFeeProvider);
+
 
     final bool isOrderProceed = order != null && order.status != 'unconfirmed';
 
@@ -46,10 +48,10 @@ class OrderPaymentDetail extends HookWidget {
                     'Rp. ${Helper.fmtPrice(order.delivery_fee)}',
                     textAlign: TextAlign.end,
                   )
-                : deliveryDetail.fee?.when(
+                : activeOrderFee.when(
                       data: (value) => Text(
-                        value.delivery_fee != null
-                            ? 'Rp. ${Helper.fmtPrice(value.delivery_fee)}'
+                        value?.delivery_fee != null
+                            ? 'Rp. ${Helper.fmtPrice(value?.delivery_fee)}'
                             : '-',
                         textAlign: TextAlign.end,
                       ),
@@ -70,10 +72,10 @@ class OrderPaymentDetail extends HookWidget {
                     'Rp. ${Helper.fmtPrice(order.pickup_fee)}',
                     textAlign: TextAlign.end,
                   )
-                : deliveryDetail.fee?.when(
+                : activeOrderFee.when(
                       data: (value) => Text(
-                        value.pickup_fee != null
-                            ? 'Rp. ${Helper.fmtPrice(value.pickup_fee)}'
+                        value?.pickup_fee != null
+                            ? 'Rp. ${Helper.fmtPrice(value?.pickup_fee)}'
                             : '-',
                         textAlign: TextAlign.end,
                       ),
@@ -94,10 +96,10 @@ class OrderPaymentDetail extends HookWidget {
                     'Rp. ${Helper.fmtPrice(order.service_fee)}',
                     textAlign: TextAlign.end,
                   )
-                : deliveryDetail.fee?.when(
+                : activeOrderFee.when(
                       data: (value) => Text(
-                        value.service_fee != null
-                            ? 'Rp. ${Helper.fmtPrice(value.service_fee)}'
+                        value?.service_fee != null
+                            ? 'Rp. ${Helper.fmtPrice(value?.service_fee)}'
                             : '-',
                         textAlign: TextAlign.end,
                       ),
@@ -134,9 +136,9 @@ class OrderPaymentDetail extends HookWidget {
                   ),
                 )
               else
-                deliveryDetail.fee?.when(
+                activeOrderFee.when(
                       data: (value) => Text(
-                        'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value.total_fee ?? 0))}',
+                        'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value?.total_fee ?? 0))}',
                         textAlign: TextAlign.end,
                         style: kTextTheme.subtitle1!.copyWith(
                           color: ColorPallete.primaryColor,

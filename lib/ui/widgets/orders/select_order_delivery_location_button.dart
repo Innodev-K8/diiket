@@ -1,3 +1,4 @@
+import 'package:diiket/data/models/delivery_detail.dart';
 import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
@@ -21,15 +22,15 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deliveryDetail = useProvider(deliveryDetailProvider);
+    final deliveryDetail = useProvider(deliveryDetailProvider).state;
 
     return SizedBox(
       height: 42.0,
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: deliveryDetail.position != null
-              ? ColorPallete.blueishGray
+          primary: deliveryDetail?.position != null
+              ? ColorPallete.secondaryColor
               : ColorPallete.primaryColor,
           elevation: 0,
         ),
@@ -44,7 +45,7 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
               return;
             }
 
-            final LatLng? initialLocation = deliveryDetail.position ??
+            final LatLng? initialLocation = deliveryDetail?.position ??
                 await LocationService.getUserPosition();
 
             if (initialLocation != null) {
@@ -54,13 +55,29 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
               );
 
               if (result != null) {
-                context
-                    .read(deliveryDetailProvider.notifier)
-                    .setDeliveryDirections(result.target, result.directions);
+                final placeMark = result.directions?.placemark;
 
-                await context
-                    .read(deliveryDetailProvider.notifier)
-                    .calculateFee();
+                final String? subLocality = placeMark?.subLocality;
+                final String? locality = placeMark?.locality;
+                final String? administrativeArea =
+                    placeMark?.administrativeArea;
+                final String? postalCode = placeMark?.postalCode;
+
+                final String geocodedPosition =
+                    "${subLocality ?? '-'}, ${locality ?? '-'}, ${administrativeArea ?? '-'} ${postalCode ?? '-'}";
+                final String address =
+                    placeMark?.street?.toLowerCase().startsWith('jl') == true
+                        ? placeMark!.street!
+                        : geocodedPosition;
+
+                final deliveryDetail = DeliveryDetail(
+                  position: result.target,
+                  directions: result.directions,
+                  geocodedPosition: geocodedPosition,
+                  address: address,
+                );
+
+                context.read(deliveryDetailProvider).state = deliveryDetail;
               }
             }
           } finally {
@@ -68,11 +85,9 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
           }
         },
         child: Text(
-          'Pilih Lokasi Antar',
+          'Pilih ${deliveryDetail?.position != null ? 'Ulang ' : ''}Lokasi Antar',
           style: kTextTheme.caption!.copyWith(
-            color: deliveryDetail.position != null
-                ? ColorPallete.darkGray
-                : ColorPallete.backgroundColor,
+            color: ColorPallete.backgroundColor,
           ),
         ),
       ),

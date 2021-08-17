@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:diiket/data/custom_exception.dart';
+import 'package:diiket/data/models/delivery_detail.dart';
 import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/models/order.dart';
 import 'package:diiket/data/models/order_item.dart';
@@ -162,10 +163,8 @@ class ActiveOrderState extends StateNotifier<Order?> {
   }
 
   Future<void> confirmActiveOrder({
-    required LatLng location,
+    required DeliveryDetail deliveryDetail,
     required Fee fee,
-    required int deliveryDistance,
-    String? address,
     String? notificationToken,
     // dipanggil sebelum ngubah state, biar bisa nampilin alert sebelum OrderStateWrapper ganti state
     Function? onConfirmed,
@@ -175,11 +174,9 @@ class ActiveOrderState extends StateNotifier<Order?> {
 
       final Order? result =
           await _read(orderServiceProvider).state.confirmActiveOrder(
-                location: location,
-                deliveryDistance: deliveryDistance,
-                notificationToken: notificationToken,
+                deliveryDetail: deliveryDetail,
                 fee: fee,
-                address: address,
+                notificationToken: notificationToken,
               );
 
       if (result == null) return;

@@ -1,6 +1,7 @@
 import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/models/order.dart';
+import 'package:diiket/data/providers/order/active_order_fee_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/ui/common/styles.dart';
@@ -30,7 +31,9 @@ class UnconfirmedStatePage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deliveryDetail = useProvider(deliveryDetailProvider);
+    final deliveryDetail = useProvider(deliveryDetailProvider).state;
+    final activeOrderFee = useProvider(activeOrderFeeProvider);
+
     final isLoading = useState<bool>(false);
 
     final isMounted = useIsMounted();
@@ -70,7 +73,7 @@ class UnconfirmedStatePage extends HookWidget {
                   ),
                 ),
               ),
-              if (deliveryDetail.position != null)
+              if (deliveryDetail?.position != null)
                 Positioned(
                   bottom: 0,
                   left: 0,
@@ -79,16 +82,19 @@ class UnconfirmedStatePage extends HookWidget {
                     padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
                     child: ConfirmOrderButton(
                       onPressed: () async {
-                        final Fee? fee = deliveryDetail.fee?.data?.value;
-                        final LatLng? location = deliveryDetail.position;
-                        final int? deliveryDistance =
-                            deliveryDetail.directions?.totalDistance;
+                        final fee = activeOrderFee.maybeWhen(
+                          data: (fee) => fee,
+                          orElse: () => null,
+                        );
+
+                        // TODO: remove this when implementing user notification
                         final String? notificationToken =
                             await FirebaseMessaging.instance.getToken();
 
-                        if (fee == null ||
-                            location == null ||
-                            deliveryDistance == null) return;
+                        // stop if delivery detail and fee is null
+                        if (deliveryDetail == null || fee == null) {
+                          return;
+                        }
 
                         isLoading.value = true;
 
@@ -98,21 +104,11 @@ class UnconfirmedStatePage extends HookWidget {
                           await context
                               .read(activeOrderProvider.notifier)
                               .confirmActiveOrder(
-                                location: location,
+                                deliveryDetail: deliveryDetail,
                                 fee: fee,
-                                deliveryDistance: deliveryDistance,
-                                address: deliveryDetail.geocodedPosition,
                                 notificationToken: notificationToken,
                                 onConfirmed: _onOrderConfirmed,
                               );
-                        } on CustomException catch (e) {
-                          // I don't think this will be executed.
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(e.message ?? 'Terjadi kesalahan'),
-                              duration: Duration(seconds: 4),
-                            ),
-                          );
                         } finally {
                           if (isMounted()) {
                             isLoading.value = false;

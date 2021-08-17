@@ -51,6 +51,11 @@ class NameSettingPage extends HookWidget {
                       CustomTextFormField(
                         labelText: 'Nama Anda',
                         hintText: 'Contoh: Daniel Putri',
+                        icon: Icon(
+                          Icons.person_outline_rounded,
+                          color: ColorPallete.darkGray,
+                          size: 22.0,
+                        ),
                         controller: controller,
                         keyboardType: TextInputType.name,
                         textCapitalization: TextCapitalization.words,
@@ -83,7 +88,7 @@ class NameSettingPage extends HookWidget {
 
                                   Navigator.of(context).pop();
 
-                                // exception is already handled by the provider and being listened by the listener on main.dart
+                                  // exception is already handled by the provider and being listened by the listener on main.dart
                                 } finally {
                                   if (isMounted()) {
                                     isLoading.value = false;
@@ -114,21 +119,29 @@ class NameSettingPage extends HookWidget {
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     Key? key,
-    required this.hintText,
+    this.hintText,
     this.labelText,
+    this.icon,
     this.controller,
+    this.initialValue,
     this.keyboardType,
     this.textCapitalization,
     this.validator,
+    this.minLines,
+    this.maxLines,
   }) : super(key: key);
 
-  final String hintText;
+  final String? hintText;
   final String? labelText;
+  final Widget? icon;
 
   final TextEditingController? controller;
+  final String? initialValue;
   final TextInputType? keyboardType;
   final TextCapitalization? textCapitalization;
   final String? Function(String?)? validator;
+  final int? minLines;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -144,29 +157,33 @@ class CustomTextFormField extends StatelessWidget {
           SizedBox(height: 10),
         ],
         Container(
-          height: 52,
+          // height: 52,
           decoration: kBorderedDecoration,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12.0,
-            vertical: 14.0,
-          ),
+          padding: (maxLines ?? 0) > 1
+              ? const EdgeInsets.symmetric(
+                  horizontal: 6.0,
+                  vertical: 8.0,
+                )
+              : const EdgeInsets.symmetric(
+                  horizontal: 12.0,
+                  vertical: 14.0,
+                ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(
-                Icons.person_outline_rounded,
-                color: ColorPallete.darkGray,
-                size: 22.0,
-              ),
+              if (icon != null) icon!,
               SizedBox(width: 8),
               Expanded(
                 child: TextFormField(
                   controller: controller,
+                  initialValue: initialValue,
                   keyboardType: keyboardType,
                   textCapitalization:
                       textCapitalization ?? TextCapitalization.none,
                   validator: validator,
                   decoration: InputDecoration.collapsed(hintText: hintText),
+                  minLines: minLines,
+                  maxLines: maxLines,
                 ),
               ),
             ],

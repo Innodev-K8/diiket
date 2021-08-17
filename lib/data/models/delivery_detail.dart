@@ -13,14 +13,11 @@ class DeliveryDetail with _$DeliveryDetail {
     String? geocodedPosition,
     String? address,
     Directions? directions,
-    AsyncValue<Fee>? fee,
   }) = _DeliveryDetail;
 
   const DeliveryDetail._();
 
   bool fullfiled() {
-    if (position == null || fee?.data?.value.total_fee == null) return false;
-
-    return true;
+    return position != null;
   }
 }

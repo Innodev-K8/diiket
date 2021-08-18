@@ -38,6 +38,9 @@ class UnconfirmedStatePage extends HookWidget {
 
     final isMounted = useIsMounted();
 
+    // make sure that the LatLng position is not null before proceeding
+    final isOrderButtonVisible = deliveryDetail?.position != null;
+
     return Column(
       children: [
         CustomAppBar(title: 'Keranjang'),
@@ -53,9 +56,7 @@ class UnconfirmedStatePage extends HookWidget {
                     24.0,
                     10.0,
                     24.0,
-                    deliveryDetail?.position != null
-                        ? ConfirmOrderButton.height + 20
-                        : 10,
+                    isOrderButtonVisible ? ConfirmOrderButton.height + 20 : 10,
                   ),
                   header: Column(
                     children: [
@@ -77,7 +78,7 @@ class UnconfirmedStatePage extends HookWidget {
                   ),
                 ),
               ),
-              if (deliveryDetail?.position != null)
+              if (isOrderButtonVisible)
                 Positioned(
                   bottom: 0,
                   left: 0,

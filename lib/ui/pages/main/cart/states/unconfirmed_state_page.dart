@@ -49,11 +49,13 @@ class UnconfirmedStatePage extends HookWidget {
                     .read(activeOrderProvider.notifier)
                     .retrieveActiveOrder(),
                 child: OrderItemList(
-                  padding: const EdgeInsets.fromLTRB(
+                  padding: EdgeInsets.fromLTRB(
                     24.0,
                     10.0,
                     24.0,
-                    ConfirmOrderButton.height + 20,
+                    deliveryDetail?.position != null
+                        ? ConfirmOrderButton.height + 20
+                        : 10,
                   ),
                   header: Column(
                     children: [

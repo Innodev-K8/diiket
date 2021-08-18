@@ -63,8 +63,6 @@ class AddProductToCartAction extends HookWidget {
     BuildContext context,
     ActiveOrderState activeOrderNotifier,
   ) {
-    final isMounted = useIsMounted();
-
     final OrderItem? orderItem =
         activeOrderNotifier.getOrderItemByProduct(product);
 
@@ -107,12 +105,10 @@ class AddProductToCartAction extends HookWidget {
                   '${product.id}-order-item-debouncer',
                   Duration(seconds: 1),
                   () {
-                    if (isMounted()) {
-                      activeOrderNotifier.updateOrderItem(
-                        orderItem,
-                        quantity: value,
-                      );
-                    }
+                    activeOrderNotifier.updateOrderItem(
+                      orderItem,
+                      quantity: value,
+                    );
                   },
                 );
               }

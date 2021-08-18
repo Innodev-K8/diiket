@@ -94,9 +94,10 @@ class AuthState extends StateNotifier<User?> {
   Future<void> _signInWithFirebaseUser(FirebaseUser user) async {
     try {
       final String firebaseToken = await user.getIdToken();
+      final String? fcmToken = await _read(messagingProvider).getToken();
 
       final AuthResponse response =
-          await _authService.loginWithFirebaseToken(firebaseToken);
+          await _authService.loginWithFirebaseToken(firebaseToken, fcmToken);
 
       if (response.token != null && response.user != null) {
         await _read(tokenProvider.notifier).setToken(response.token!);

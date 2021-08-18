@@ -1,9 +1,6 @@
-import 'package:diiket/data/models/order.dart';
-import 'package:diiket/data/models/order_item.dart';
-import 'package:diiket/ui/common/helper.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/painters/circle_painter.dart';
 import 'package:diiket/ui/widgets/products/product_photo.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
 import 'history_order_more_button.dart';
@@ -68,7 +65,7 @@ class HistoryListItem extends StatelessWidget {
                         Text(
                           order.purchase_completed_at == null
                               ? '-'
-                              : Helper.sortDateFormatter
+                              : FormattingHelper.sortDate
                                   .format(order.purchase_completed_at!),
                           style: kTextTheme.overline,
                         ),
@@ -85,7 +82,7 @@ class HistoryListItem extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          Helper.getOrderStatusMessage(order),
+                          MessageHelper.getOrderStatusMessage(order),
                           style: kTextTheme.overline!.copyWith(
                             color: ColorPallete.primaryColor,
                           ),
@@ -146,7 +143,7 @@ class HistoryListItem extends StatelessWidget {
                   )
                 else
                 Text(
-                  Helper.fmtPrice(totalPrice),
+                  FormattingHelper.formatPrice(totalPrice),
                   style: kTextTheme.headline6,
                 ),
               ],

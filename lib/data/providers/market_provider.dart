@@ -1,6 +1,6 @@
-import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/network/market_service.dart';
 import 'package:diiket/data/services/location_service.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:diiket/data/models/product.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
 class ProductPhoto extends StatelessWidget {

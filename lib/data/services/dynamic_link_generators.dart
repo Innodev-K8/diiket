@@ -1,7 +1,4 @@
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/product.dart';
-import 'package:diiket/data/models/stall.dart';
-import 'package:diiket/data/models/user.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class DynamicLinkGenerators {

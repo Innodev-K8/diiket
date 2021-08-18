@@ -1,7 +1,7 @@
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,7 +22,7 @@ class OrderDeliveryAddressDetail extends HookWidget {
       addressController.text = deliveryDetail?.address ?? '';
     }, [deliveryDetail]);
 
-    final editable = activeOrder?.status == 'unconfirmed';
+    final editable = activeOrder?.status == OrderStatus.unconfirmed;
 
     return Container(
       decoration: BoxDecoration(
@@ -48,7 +48,7 @@ class OrderDeliveryAddressDetail extends HookWidget {
               ),
             ),
             SizedBox(height: 8),
-            CustomTextFormField(
+            BorderedCustomTextFormField(
               controller: addressController,
               minLines: 1,
               maxLines: 5,

@@ -1,10 +1,7 @@
 import 'dart:io';
 
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/auth_response.dart';
-import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/api_service.dart';
-import 'package:diiket/helpers/casting_helper.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

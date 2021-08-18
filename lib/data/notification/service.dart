@@ -46,6 +46,7 @@ class NotificationService {
         await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
+      // ignore: use_build_context_synchronously
       _handleBackgroundFCMNotification(context, initialMessage);
     }
 

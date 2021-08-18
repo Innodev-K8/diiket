@@ -1,8 +1,5 @@
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/paginated/paginated_products.dart';
-import 'package:diiket/data/models/product_feed.dart';
-import 'package:diiket/data/models/product_provider_detail.dart';
 import 'package:diiket/data/network/product_service.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // predefined category

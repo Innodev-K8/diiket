@@ -2,12 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:diiket/data/credentials.dart';
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/market.dart';
-import 'package:diiket/data/models/product.dart';
-import 'package:diiket/data/models/product_category.dart';
-import 'package:diiket/data/models/seller.dart';
-import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/notification/background_fcm.dart';
 import 'package:diiket/data/notification/service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
@@ -16,7 +10,6 @@ import 'package:diiket/data/providers/global_exception_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/secure_storage.dart';
 import 'package:diiket/data/services/dynamic_link_service.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
 import 'package:diiket/ui/pages/main/main_page.dart';
@@ -25,6 +18,7 @@ import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page.
 import 'package:diiket/ui/pages/main/profile/settings/photo_setting_page.dart';
 import 'package:diiket/ui/widgets/market/select_market_bottom_sheet.dart';
 import 'package:diiket/ui/widgets/modals/no_internet_bottom_sheet.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -156,11 +150,7 @@ class _MyAppState extends State<MyApp> {
             //   ),
             //   child: child,
             // ),
-            theme: ThemeData(
-              primaryColor: ColorPallete.primaryColor,
-              accentColor: ColorPallete.secondaryColor,
-              textTheme: kTextTheme,
-            ),
+            theme: kTheme,
             initialRoute: MainPage.route,
             navigatorObservers: [
               FirebaseAnalyticsObserver(

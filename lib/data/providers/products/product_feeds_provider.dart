@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:diiket/data/models/product_feed.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/products/products_provider.dart';
-import 'package:diiket/helpers/casting_helper.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final productFeedProvider =

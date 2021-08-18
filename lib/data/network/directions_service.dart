@@ -1,7 +1,6 @@
 import 'package:diiket/data/credentials.dart';
-import 'package:diiket/data/models/directions.dart';
 import 'package:diiket/data/network/api_service.dart';
-import 'package:diiket/helpers/casting_helper.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

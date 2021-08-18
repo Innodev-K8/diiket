@@ -1,7 +1,7 @@
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/select_order_delivery_location_button.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 

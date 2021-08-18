@@ -1,5 +1,5 @@
 import 'package:diiket/data/providers/products/products_search_history_provider.dart';
-import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -49,7 +49,8 @@ class SearchHistory extends HookWidget {
             physics: NeverScrollableScrollPhysics(),
             itemCount: searchHistories.length,
             itemBuilder: (context, index) => ListTile(
-              contentPadding: const EdgeInsets.all(0),
+              // ignore: use_named_constants
+              contentPadding: const EdgeInsets.only(),
               onTap: () => onSelect?.call(searchHistories[index]),
               title: Text(searchHistories[index]),
               trailing: IconButton(

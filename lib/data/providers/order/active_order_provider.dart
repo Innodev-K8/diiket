@@ -1,18 +1,10 @@
 import 'dart:convert';
 
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/delivery_detail.dart';
-import 'package:diiket/data/models/fee.dart';
-import 'package:diiket/data/models/order.dart';
-import 'package:diiket/data/models/order_item.dart';
-import 'package:diiket/data/models/product.dart';
-import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/order_service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/order/order_history_provider.dart';
 import 'package:diiket/data/providers/pusher_provider.dart';
-import 'package:diiket/helpers/casting_helper.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pusher_client/pusher_client.dart';
 
@@ -89,18 +81,21 @@ class ActiveOrderState extends StateNotifier<Order?> {
       castOrFallback(response['order'], {}),
     );
 
-    if (order.isProcessing || order.status == 'unconfirmed') {
+    if (order.isProcessing || order.status == OrderStatus.unconfirmed) {
       // reload to get all the relations
       retrieveActiveOrder();
     } else {
       disconnectFromPusher(order);
       state = null;
 
-      if (order.status == 'completed') {
+      if (order.status == OrderStatus.completed) {
         _read(orderHistoryProvider.notifier).retrieveOrderHistory();
       }
 
-      if (['unconfirmed', 'completed'].contains(order.status)) {
+      if ([
+        OrderStatus.unconfirmed,
+        OrderStatus.completed,
+      ].contains(order.status)) {
         // TODO: uncomment this
         // _read(orderChatChannelProvider.notifier).disconnect();
       }

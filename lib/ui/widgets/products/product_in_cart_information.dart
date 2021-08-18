@@ -1,7 +1,5 @@
-import 'package:diiket/data/models/order_item.dart';
-import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
-import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

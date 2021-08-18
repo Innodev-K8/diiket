@@ -1,16 +1,8 @@
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/delivery_detail.dart';
-import 'package:diiket/data/models/fee.dart';
-import 'package:diiket/data/models/market.dart';
-import 'package:diiket/data/models/order.dart';
-import 'package:diiket/data/models/order_item.dart';
-import 'package:diiket/data/models/product.dart';
 import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
-import 'package:diiket/helpers/casting_helper.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final orderServiceProvider = StateProvider<OrderService>((ref) {

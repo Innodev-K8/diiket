@@ -1,8 +1,7 @@
-import 'package:diiket/data/models/product.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
 class MediumProductItem extends StatelessWidget {

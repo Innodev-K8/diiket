@@ -1,6 +1,6 @@
-import 'package:diiket/data/models/directions.dart';
 import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/network/directions_service.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';

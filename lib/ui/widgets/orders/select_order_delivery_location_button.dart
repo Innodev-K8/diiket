@@ -1,11 +1,9 @@
-import 'package:diiket/data/models/delivery_detail.dart';
-import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
 import 'package:diiket/data/services/location_service.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/utils/place_picker.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

@@ -1,6 +1,5 @@
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/network/stall_service.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final stallDetailProvider =

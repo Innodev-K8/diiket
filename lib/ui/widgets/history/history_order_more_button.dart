@@ -1,10 +1,9 @@
-import 'package:diiket/data/models/order_item.dart';
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/market/select_market_bottom_sheet.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,7 +20,7 @@ class HistoryOrderMoreButton extends HookWidget {
   Widget build(BuildContext context) {
     final activeOrder = useProvider(activeOrderProvider);
 
-    if (activeOrder != null && activeOrder.status != 'unconfirmed') {
+    if (activeOrder != null && activeOrder.status != OrderStatus.unconfirmed) {
       return SizedBox();
     }
 

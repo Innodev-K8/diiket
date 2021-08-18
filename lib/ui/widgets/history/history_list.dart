@@ -1,9 +1,5 @@
-// TODO: move this  to widget/history
-import 'package:diiket/data/models/order.dart';
-import 'package:diiket/data/models/order_item.dart';
-import 'package:diiket/ui/common/helper.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/history/historu_list_item.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +42,7 @@ class HistoryList extends StatelessWidget {
                         style: kTextTheme.headline1,
                       ),
                       Text(
-                        Helper.getOrderId(order),
+                        MessageHelper.getOrderId(order),
                         style: kTextTheme.caption,
                       ),
                     ],
@@ -54,7 +50,7 @@ class HistoryList extends StatelessWidget {
                   Text(
                     order.confirmed_at == null
                         ? '-'
-                        : Helper.sortDateFormatter.format(order.confirmed_at!),
+                        : FormattingHelper.sortDate.format(order.confirmed_at!),
                   ),
                 ],
               ),

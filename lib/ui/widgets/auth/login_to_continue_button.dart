@@ -1,6 +1,6 @@
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/auth/register_page.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
 class LoginToContinueButton extends StatelessWidget {

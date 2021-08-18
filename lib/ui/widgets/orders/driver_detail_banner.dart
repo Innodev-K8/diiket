@@ -1,5 +1,4 @@
-import 'package:diiket/data/models/user.dart';
-import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
 class DriverDetailBanner extends StatelessWidget {

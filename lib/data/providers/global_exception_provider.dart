@@ -1,5 +1,5 @@
-import 'package:diiket/data/custom_exception.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // If we want to show error to the user, we can use this

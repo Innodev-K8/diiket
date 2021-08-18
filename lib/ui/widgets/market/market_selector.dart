@@ -1,11 +1,9 @@
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/secure_storage.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
 import 'package:diiket/ui/widgets/common/small_loading_indicator.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

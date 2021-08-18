@@ -11,3 +11,6 @@ linter:
     non_constant_identifier_names: false
     prefer_const_constructors: false
     sort_pub_dependencies: false
+    # EdgeInsets.zero not  available
+    use_named_constants: false
+    use_build_context_synchronously: false

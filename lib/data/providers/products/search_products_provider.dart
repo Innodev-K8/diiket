@@ -1,8 +1,7 @@
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/paginated/paginated_products.dart';
 import 'package:diiket/data/network/product_service.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/products/products_search_history_provider.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final searchProductsProvider =

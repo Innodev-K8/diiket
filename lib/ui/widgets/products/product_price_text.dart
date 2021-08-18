@@ -1,6 +1,4 @@
-import 'package:diiket/data/models/product.dart';
-import 'package:diiket/ui/common/helper.dart';
-import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
 class ProductPiceText extends StatelessWidget {
@@ -19,7 +17,9 @@ class ProductPiceText extends StatelessWidget {
         style: DefaultTextStyle.of(context).style,
         children: <TextSpan>[
           TextSpan(
-            text: product.price != null ? Helper.fmtPrice(product.price) : '-',
+            text: product.price != null
+                ? FormattingHelper.formatPrice(product.price)
+                : '-',
             style: kTextTheme.subtitle2!.copyWith(
               color: ColorPallete.primaryColor,
               fontWeight: FontWeight.w600,

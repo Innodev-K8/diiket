@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:diiket/data/credentials.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
-import 'package:diiket/ui/widgets/inputs/primary_button.dart';
-import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

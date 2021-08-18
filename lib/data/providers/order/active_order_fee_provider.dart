@@ -1,8 +1,7 @@
-import 'package:diiket/data/models/delivery_detail.dart';
-import 'package:diiket/data/models/fee.dart';
 import 'package:diiket/data/network/fee_service.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final activeOrderFeeProvider =

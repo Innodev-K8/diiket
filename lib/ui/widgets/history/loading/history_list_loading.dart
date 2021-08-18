@@ -1,9 +1,6 @@
-// TODO: move this  to widget/history
-import 'package:diiket/data/models/order.dart';
-import 'package:diiket/data/models/order_item.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/common/loading.dart';
 import 'package:diiket/ui/widgets/history/historu_list_item.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 

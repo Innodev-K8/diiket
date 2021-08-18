@@ -1,22 +1,18 @@
 import 'dart:async';
 
-import 'package:diiket/data/models/market.dart';
-import 'package:diiket/data/models/product.dart';
-import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket/data/providers/stall/favorite_stall_provider.dart';
 import 'package:diiket/data/providers/stall/stall_detail_provider.dart';
 import 'package:diiket/data/services/dynamic_link_generators.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
-import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/large_product_item.dart';
 import 'package:diiket/ui/widgets/products/product_detail_bottom_sheet.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:diiket/ui/widgets/stall/stall_photo.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

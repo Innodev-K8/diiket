@@ -1,10 +1,7 @@
 import 'package:diiket/data/providers/auth/auth_provider.dart';
-import 'package:diiket/helpers/validation_helper.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
-import 'package:diiket/ui/widgets/inputs/primary_button.dart';
-import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -48,7 +45,7 @@ class NameSettingPage extends HookWidget {
                   child: Column(
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomTextFormField(
+                      BorderedCustomTextFormField(
                         labelText: 'Nama Anda',
                         hintText: 'Contoh: Daniel Putri',
                         icon: Icon(
@@ -116,8 +113,8 @@ class NameSettingPage extends HookWidget {
   }
 }
 
-class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({
+class BorderedCustomTextFormField extends StatelessWidget {
+  const BorderedCustomTextFormField({
     Key? key,
     this.hintText,
     this.labelText,

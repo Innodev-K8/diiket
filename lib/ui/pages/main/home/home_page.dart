@@ -1,9 +1,8 @@
-import 'package:diiket/data/models/product_feed.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
-import 'package:diiket/helpers/casting_helper.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

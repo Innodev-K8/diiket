@@ -1,7 +1,6 @@
-import 'package:diiket/data/models/paginated/paginated_stalls.dart';
-import 'package:diiket/data/models/stall.dart';
 import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/network/stall_service.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,9 +1,7 @@
 import 'package:diiket/data/providers/order/active_order_fee_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
-import 'package:diiket/data/providers/order/delivery_detail_provider.dart';
-import 'package:diiket/ui/common/helper.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -16,8 +14,8 @@ class OrderPaymentDetail extends HookWidget {
     final orderNotifier = useProvider(activeOrderProvider.notifier);
     final activeOrderFee = useProvider(activeOrderFeeProvider);
 
-
-    final bool isOrderProceed = order != null && order.status != 'unconfirmed';
+    final bool isOrderProceed =
+        order != null && order.status != OrderStatus.unconfirmed;
 
     final productWeight = (isOrderProceed
             ? order.total_weight!
@@ -38,20 +36,20 @@ class OrderPaymentDetail extends HookWidget {
           SizedBox(height: 16.0),
           PaymentDetailRecord(
             title: 'Total harga produk',
-            value: Text('Rp. ${Helper.fmtPrice(productPrice)}'),
+            value: Text('Rp. ${FormattingHelper.formatPrice(productPrice)}'),
           ),
           SizedBox(height: 16.0),
           PaymentDetailRecord(
             title: 'Ongkos kirim',
             value: isOrderProceed
                 ? Text(
-                    'Rp. ${Helper.fmtPrice(order.delivery_fee)}',
+                    'Rp. ${FormattingHelper.formatPrice(order.delivery_fee)}',
                     textAlign: TextAlign.end,
                   )
                 : activeOrderFee.when(
                       data: (value) => Text(
                         value?.delivery_fee != null
-                            ? 'Rp. ${Helper.fmtPrice(value?.delivery_fee)}'
+                            ? 'Rp. ${FormattingHelper.formatPrice(value?.delivery_fee)}'
                             : '-',
                         textAlign: TextAlign.end,
                       ),
@@ -69,13 +67,13 @@ class OrderPaymentDetail extends HookWidget {
             title: 'Ongkos belanja',
             value: isOrderProceed
                 ? Text(
-                    'Rp. ${Helper.fmtPrice(order.pickup_fee)}',
+                    'Rp. ${FormattingHelper.formatPrice(order.pickup_fee)}',
                     textAlign: TextAlign.end,
                   )
                 : activeOrderFee.when(
                       data: (value) => Text(
                         value?.pickup_fee != null
-                            ? 'Rp. ${Helper.fmtPrice(value?.pickup_fee)}'
+                            ? 'Rp. ${FormattingHelper.formatPrice(value?.pickup_fee)}'
                             : '-',
                         textAlign: TextAlign.end,
                       ),
@@ -93,13 +91,13 @@ class OrderPaymentDetail extends HookWidget {
             title: 'Biaya Layanan*',
             value: isOrderProceed
                 ? Text(
-                    'Rp. ${Helper.fmtPrice(order.service_fee)}',
+                    'Rp. ${FormattingHelper.formatPrice(order.service_fee)}',
                     textAlign: TextAlign.end,
                   )
                 : activeOrderFee.when(
                       data: (value) => Text(
                         value?.service_fee != null
-                            ? 'Rp. ${Helper.fmtPrice(value?.service_fee)}'
+                            ? 'Rp. ${FormattingHelper.formatPrice(value?.service_fee)}'
                             : '-',
                         textAlign: TextAlign.end,
                       ),
@@ -128,7 +126,7 @@ class OrderPaymentDetail extends HookWidget {
               ),
               if (isOrderProceed)
                 Text(
-                  'Rp. ${Helper.fmtPrice(order.total_price)}',
+                  'Rp. ${FormattingHelper.formatPrice(order.total_price)}',
                   textAlign: TextAlign.end,
                   style: kTextTheme.subtitle1!.copyWith(
                     color: ColorPallete.primaryColor,
@@ -138,7 +136,7 @@ class OrderPaymentDetail extends HookWidget {
               else
                 activeOrderFee.when(
                       data: (value) => Text(
-                        'Rp. ${Helper.fmtPrice((orderNotifier.totalProductPrice) + (value?.total_fee ?? 0))}',
+                        'Rp. ${FormattingHelper.formatPrice((orderNotifier.totalProductPrice) + (value?.total_fee ?? 0))}',
                         textAlign: TextAlign.end,
                         style: kTextTheme.subtitle1!.copyWith(
                           color: ColorPallete.primaryColor,
@@ -191,27 +189,6 @@ class PaymentDetailRecord extends StatelessWidget {
         else
           value
       ],
-    );
-  }
-}
-
-class SmallLoading extends StatelessWidget {
-  const SmallLoading({
-    Key? key,
-    this.color = ColorPallete.secondaryColor,
-  }) : super(key: key);
-
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 18,
-      height: 18,
-      child: CircularProgressIndicator(
-        color: color,
-        strokeWidth: 2,
-      ),
     );
   }
 }

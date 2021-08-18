@@ -1,12 +1,8 @@
 import 'dart:convert';
 
-import 'package:diiket/data/models/product_feed.dart';
-import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/products/product_feeds_provider.dart';
-import 'package:diiket/helpers/casting_helper.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/search/search_page.dart';
 import 'package:diiket/ui/widgets/campaign/campaign_banner_carousel.dart';
@@ -17,6 +13,7 @@ import 'package:diiket/ui/widgets/products/product_feed_banner.dart';
 import 'package:diiket/ui/widgets/products/product_list_section.dart';
 import 'package:diiket/ui/widgets/inputs/search_field.dart';
 import 'package:diiket/ui/widgets/stall/favorite_stalls.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

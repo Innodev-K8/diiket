@@ -1,6 +1,4 @@
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/fee.dart';
-import 'package:diiket/helpers/casting_helper.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

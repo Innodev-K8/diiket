@@ -1,11 +1,9 @@
 
-import 'package:diiket/data/models/directions.dart';
-import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/network/directions_service.dart';
 import 'package:diiket/data/network/geocode_service.dart';
 import 'package:diiket/data/providers/location/device_location_provider.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

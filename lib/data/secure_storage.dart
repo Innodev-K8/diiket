@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:diiket/data/models/market.dart';
-import 'package:diiket/helpers/casting_helper.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SecureStorage {

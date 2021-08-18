@@ -1,6 +1,5 @@
-import 'package:diiket/data/models/order.dart';
-import 'package:diiket/data/models/product.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
 class OrderItemList extends StatelessWidget {

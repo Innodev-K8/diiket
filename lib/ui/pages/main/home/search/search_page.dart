@@ -1,5 +1,4 @@
 import 'package:diiket/data/providers/products/search_products_provider.dart';
-import 'package:diiket/ui/common/styles.dart';
 import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/search/search_history.dart';
 import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
@@ -7,6 +6,7 @@ import 'package:diiket/ui/widgets/orders/order_preview_panel.dart';
 import 'package:diiket/ui/widgets/products/loading/vertical_scroll_product_list_loading.dart';
 import 'package:diiket/ui/widgets/products/vertical_scroll_product_list.dart';
 import 'package:diiket/ui/widgets/inputs/search_field.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';

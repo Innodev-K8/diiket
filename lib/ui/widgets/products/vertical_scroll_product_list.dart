@@ -1,5 +1,5 @@
-import 'package:diiket/data/models/product.dart';
 import 'package:diiket/ui/widgets/products/large_product_item.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 

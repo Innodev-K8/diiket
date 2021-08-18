@@ -1,4 +1,4 @@
-import 'package:diiket/helpers/casting_helper.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 

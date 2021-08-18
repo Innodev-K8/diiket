@@ -1,4 +1,4 @@
-import 'package:diiket/ui/common/styles.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
 class CategoryButton extends StatelessWidget {

@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:diiket/data/custom_exception.dart';
-import 'package:diiket/data/models/auth_response.dart';
-import 'package:diiket/data/models/user.dart';
 import 'package:diiket/data/network/auth_service.dart';
 import 'package:diiket/data/providers/auth/token_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:diiket/data/repositories/firebase_auth_repository.dart';
@@ -91,7 +89,7 @@ class AuthState extends StateNotifier<User?> {
     }
   }
 
-  Future<void> _signInWithFirebaseUser(FirebaseUser user) async {
+  Future<void> _signInWithFirebaseUser(firebase_auth.User user) async {
     try {
       final String firebaseToken = await user.getIdToken();
       final String? fcmToken = await _read(messagingProvider).getToken();

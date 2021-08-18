@@ -1,4 +1,4 @@
-import 'package:diiket/data/custom_exception.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

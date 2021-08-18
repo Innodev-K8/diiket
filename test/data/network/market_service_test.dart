@@ -1,6 +1,6 @@
-import 'package:diiket/data/models/market.dart';
 import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/network/market_service.dart';
+import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

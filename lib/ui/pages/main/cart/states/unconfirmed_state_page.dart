@@ -62,8 +62,10 @@ class UnconfirmedStatePage extends HookWidget {
                         onDone: () => isLoading.value = false,
                       ),
                       SizedBox(height: 10),
-                      OrderDeliveryAddressDetail(),
-                      SizedBox(height: 20.0),
+                      if (deliveryDetail != null) ...[
+                        OrderDeliveryAddressDetail(),
+                        SizedBox(height: 20.0),
+                      ],
                     ],
                   ),
                   order: order,

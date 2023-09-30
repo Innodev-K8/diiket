@@ -7,10 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'cart/cart_page.dart';
-import 'history/history_page.dart';
-import 'home/home_page.dart';
-import 'profile/profile_page.dart';
+import 'package:diiket/ui/pages/main/cart/cart_page.dart';
+import 'package:diiket/ui/pages/main/history/history_page.dart';
+import 'package:diiket/ui/pages/main/home/home_page.dart';
+import 'package:diiket/ui/pages/main/profile/profile_page.dart';
 
 class MainPage extends HookWidget {
   static const route = '/';

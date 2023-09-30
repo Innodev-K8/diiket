@@ -4,12 +4,12 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/product/products_by_category_page.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:page_transition/page_transition.dart';
 
-import 'feed/feed_page.dart';
-import 'search/search_page.dart';
-import 'stall/stall_page.dart';
+import 'package:diiket/ui/pages/main/home/feed/feed_page.dart';
+import 'package:diiket/ui/pages/main/home/search/search_page.dart';
+import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 
 class HomePage extends StatefulWidget {
   @override

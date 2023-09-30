@@ -7,17 +7,17 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/home/search/search_page.dart';
 import 'package:diiket/ui/widgets/campaign/campaign_banner_carousel.dart';
 import 'package:diiket/ui/widgets/category/category_menu.dart';
+import 'package:diiket/ui/widgets/inputs/search_field.dart';
 import 'package:diiket/ui/widgets/market/market_selector_button.dart';
 import 'package:diiket/ui/widgets/products/paginated_vertical_products_sliver_grid.dart';
 import 'package:diiket/ui/widgets/products/product_feed_banner.dart';
 import 'package:diiket/ui/widgets/products/product_list_section.dart';
-import 'package:diiket/ui/widgets/inputs/search_field.dart';
 import 'package:diiket/ui/widgets/stall/favorite_stalls.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'feed_header.dart';
+import 'package:diiket/ui/pages/main/home/feed/feed_header.dart';
 
 class FeedPage extends StatelessWidget {
   static const String route = '/home';
@@ -94,7 +94,7 @@ class FeedPage extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(child: _buildInfiniteListBanner(context)),
-          PaginatedVerticalProductsSliverGrid()
+          PaginatedVerticalProductsSliverGrid(),
         ],
       ),
     );
@@ -138,7 +138,7 @@ class FeedPage extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: kTextTheme.headline2,
+        style: kTextTheme.displayMedium,
       ),
     );
   }

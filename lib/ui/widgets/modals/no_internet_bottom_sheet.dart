@@ -6,11 +6,11 @@ import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class NoInternetBottomSheet extends HookWidget {
   static Future<void> show(BuildContext context) {
-    return showMaterialModalBottomSheet(
+    return showModalBottomSheet(
       context: context,
       isDismissible: false,
       enableDrag: false,
@@ -36,7 +36,7 @@ class NoInternetBottomSheet extends HookWidget {
       },
       child: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8),
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
             color: ColorPallete.backgroundColor,
             borderRadius: BorderRadius.only(
@@ -68,7 +68,7 @@ class NoInternetBottomSheet extends HookWidget {
                         Text(
                           'Tidak dapat terhubung',
                           textAlign: TextAlign.center,
-                          style: kTextTheme.headline4,
+                          style: kTextTheme.headlineMedium,
                         ),
                         SizedBox(height: 4),
                         Text(

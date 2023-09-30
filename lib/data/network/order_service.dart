@@ -128,7 +128,7 @@ class OrderService {
   }
 
   Future<OrderItem> placeOrderItem(Product product, int quantity,
-      [String? notes]) async {
+      [String? notes,]) async {
     if (_marketId == null) {
       return OrderItem.fromJson({});
     }

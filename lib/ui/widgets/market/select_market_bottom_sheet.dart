@@ -4,8 +4,8 @@ import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 final selectingMarketProvider = StateProvider<bool>((_) => false);
 
@@ -25,7 +25,7 @@ class SelectMarketBottomSheet extends HookWidget {
     context.read(selectingMarketProvider).state = true;
 
     // disable close when we havent select any market
-    final result = await showMaterialModalBottomSheet(
+    final result = await showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       enableDrag: currentMarket != null,
@@ -62,7 +62,7 @@ class SelectMarketBottomSheet extends HookWidget {
       onWillPop: () => _onWillPop(context),
       child: Padding(
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8),
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
             color: ColorPallete.backgroundColor,
             borderRadius: BorderRadius.only(
@@ -83,10 +83,11 @@ class SelectMarketBottomSheet extends HookWidget {
                   SizedBox(height: 8.0),
                   Text(
                     'Pilih Pasar',
-                    style: kTextTheme.headline1,
+                    style: kTextTheme.displayLarge,
                   ),
                   Text(message ??
-                      'Pilih pasar terdekat untuk mulai berbelanja!'),
+                      'Pilih pasar terdekat untuk mulai berbelanja!',
+                  ),
                   SizedBox(height: 16.0),
                   MarketSelector(
                     onSelected: (market) {

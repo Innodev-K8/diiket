@@ -51,7 +51,7 @@ class FavoriteStalls extends HookWidget {
         children: [
           Text(
             'Langganan',
-            style: kTextTheme.headline2,
+            style: kTextTheme.displayMedium,
           ),
         ],
       ),

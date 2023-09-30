@@ -4,8 +4,8 @@ import 'package:diiket/ui/common/utils.dart';
 import 'package:diiket/ui/pages/main/profile/settings/name_setting_page.dart';
 import 'package:diiket/ui/pages/main/profile/settings/phone_number_setting_page.dart';
 import 'package:diiket/ui/widgets/auth/auth_wrapper.dart';
-import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/auth/login_to_continue_screen.dart';
+import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
 import 'package:diiket/ui/widgets/common/photo_picker_bottom_sheet.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
@@ -49,13 +49,13 @@ class ProfilePage extends HookWidget {
                                 children: [
                                   Text(
                                     user.name ?? '-',
-                                    style: kTextTheme.headline2,
+                                    style: kTextTheme.displayMedium,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   SizedBox(height: 5),
                                   Text(
                                     user.phone_number ?? '-',
-                                    style: kTextTheme.subtitle2,
+                                    style: kTextTheme.titleSmall,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ],
@@ -66,14 +66,14 @@ class ProfilePage extends HookWidget {
                         SizedBox(height: 40.0),
                         Text(
                           'Pengaturan',
-                          style: kTextTheme.headline2,
+                          style: kTextTheme.displayMedium,
                         ),
                         SizedBox(height: 10.0),
                         ListTile(
                           leading: Icon(Icons.phone_android_rounded),
                           title: Text(
                             'Nomor Ponsel',
-                            style: kTextTheme.headline6,
+                            style: kTextTheme.titleLarge,
                           ),
                           contentPadding: const EdgeInsets.all(0),
                           horizontalTitleGap: 0.0,
@@ -86,7 +86,7 @@ class ProfilePage extends HookWidget {
                           leading: Icon(Icons.camera_alt_outlined),
                           title: Text(
                             'Ubah foto',
-                            style: kTextTheme.headline6,
+                            style: kTextTheme.titleLarge,
                           ),
                           contentPadding: const EdgeInsets.all(0),
                           horizontalTitleGap: 0.0,
@@ -96,7 +96,7 @@ class ProfilePage extends HookWidget {
                           leading: Icon(Icons.mode_edit_outline_rounded),
                           title: Text(
                             'Ubah nama',
-                            style: kTextTheme.headline6,
+                            style: kTextTheme.titleLarge,
                           ),
                           contentPadding: const EdgeInsets.all(0),
                           horizontalTitleGap: 0.0,
@@ -109,7 +109,7 @@ class ProfilePage extends HookWidget {
                           leading: Icon(Icons.exit_to_app_rounded),
                           title: Text(
                             'Logout',
-                            style: kTextTheme.headline6,
+                            style: kTextTheme.titleLarge,
                           ),
                           contentPadding: const EdgeInsets.all(0),
                           horizontalTitleGap: 0.0,

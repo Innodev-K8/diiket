@@ -26,7 +26,7 @@ class SearchHistory extends HookWidget {
             children: [
               Text(
                 'Pencarian terakhir',
-                style: kTextTheme.headline6!.copyWith(
+                style: kTextTheme.titleLarge!.copyWith(
                   color: ColorPallete.lightGray,
                 ),
               ),
@@ -36,7 +36,7 @@ class SearchHistory extends HookWidget {
                 },
                 child: Text(
                   'Hapus semua',
-                  style: kTextTheme.button!.copyWith(
+                  style: kTextTheme.labelLarge!.copyWith(
                     fontWeight: FontWeight.normal,
                     color: ColorPallete.darkGray,
                   ),

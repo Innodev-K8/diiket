@@ -20,7 +20,8 @@ class OrderDeliveryAddressDetail extends HookWidget {
 
     useEffect(() {
       addressController.text = deliveryDetail?.address ?? '';
-    }, [deliveryDetail]);
+      return null;
+    }, [deliveryDetail],);
 
     final editable = activeOrder?.status == OrderStatus.unconfirmed;
 
@@ -43,7 +44,7 @@ class OrderDeliveryAddressDetail extends HookWidget {
             SizedBox(height: 16),
             Text(
               'Alamat',
-              style: kTextTheme.subtitle2!.copyWith(
+              style: kTextTheme.titleSmall!.copyWith(
                 color: ColorPallete.darkGray,
               ),
             ),
@@ -56,7 +57,7 @@ class OrderDeliveryAddressDetail extends HookWidget {
             SizedBox(height: 2),
             Text(
               'Tuliskan alamat lengkap untuk memudahkan Driver menemukan lokasi Anda.',
-              style: kTextTheme.overline!.copyWith(
+              style: kTextTheme.labelSmall!.copyWith(
                 color: ColorPallete.darkGray,
               ),
             ),
@@ -79,7 +80,7 @@ class OrderDeliveryAddressDetail extends HookWidget {
         Expanded(
           child: Text(
             title,
-            style: kTextTheme.subtitle2!.copyWith(
+            style: kTextTheme.titleSmall!.copyWith(
               color: ColorPallete.darkGray,
             ),
           ),

@@ -1,9 +1,9 @@
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/widgets/common/custom_app_bar.dart';
+import 'package:diiket/ui/widgets/common/small_loading_indicator.dart';
 import 'package:diiket/ui/widgets/orders/order_delivery_address_detail.dart';
 import 'package:diiket/ui/widgets/orders/order_item_list.dart';
 import 'package:diiket/ui/widgets/orders/order_payment_detail.dart';
-import 'package:diiket/ui/widgets/common/small_loading_indicator.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -55,7 +55,7 @@ class ConfirmedStatePage extends HookWidget {
                       Expanded(
                           child: Text(
                         'Menunggu driver',
-                      )),
+                      ),),
                       SizedBox(width: 20),
                       Container(
                         decoration: kBorderedDecoration,

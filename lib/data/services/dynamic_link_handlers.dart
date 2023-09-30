@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // implementations for link handlers, initialization on DynamicLinkService
+// ignore: avoid_classes_with_only_static_members
 class DynamicLinkHandlers {
   static Future<void> handleStallLink(
-      BuildContext context, Uri deepLink) async {
+      BuildContext context, Uri deepLink,) async {
     final int? stallId = int.tryParse(
       deepLink.queryParameters['stallId'] ?? '',
     );

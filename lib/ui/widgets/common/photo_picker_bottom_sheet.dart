@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class PhotoPickerResult {
   final bool isDelete;
@@ -21,7 +21,7 @@ class PhotoPickerBottomSheet extends HookWidget {
   static Future<PhotoPickerResult?> pick(
     BuildContext context,
   ) async {
-    final result = await showMaterialModalBottomSheet(
+    final result = await showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
@@ -40,7 +40,7 @@ class PhotoPickerBottomSheet extends HookWidget {
     if (result == null) return null;
     if (result.isDelete) return result;
 
-    final File? croppedFile = await ImageCropper.cropImage(
+    final File? croppedFile = await ImageCropper().cropImage(
       sourcePath: result.image!.path,
       aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
       maxWidth: 300,
@@ -73,7 +73,7 @@ class PhotoPickerBottomSheet extends HookWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8),
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: ColorPallete.backgroundColor,
           borderRadius: BorderRadius.only(
@@ -183,7 +183,7 @@ class PhotoPickerBottomSheet extends HookWidget {
               SizedBox(width: 20.0),
               Text(
                 title,
-                style: kTextTheme.headline4,
+                style: kTextTheme.headlineMedium,
               ),
             ],
           ),

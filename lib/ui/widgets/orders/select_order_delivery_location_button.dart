@@ -27,7 +27,7 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: deliveryDetail?.position != null
+          backgroundColor: deliveryDetail?.position != null
               ? ColorPallete.secondaryColor
               : ColorPallete.primaryColor,
           elevation: 0,
@@ -84,7 +84,7 @@ class SelectOrderDeliveryLocationButton extends HookWidget {
         },
         child: Text(
           'Pilih ${deliveryDetail?.position != null ? 'Ulang ' : ''}Lokasi Antar',
-          style: kTextTheme.caption!.copyWith(
+          style: kTextTheme.bodySmall!.copyWith(
             color: ColorPallete.backgroundColor,
           ),
         ),

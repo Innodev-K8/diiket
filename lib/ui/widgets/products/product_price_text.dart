@@ -20,14 +20,14 @@ class ProductPiceText extends StatelessWidget {
             text: product.price != null
                 ? FormattingHelper.formatPrice(product.price)
                 : '-',
-            style: kTextTheme.subtitle2!.copyWith(
+            style: kTextTheme.titleSmall!.copyWith(
               color: ColorPallete.primaryColor,
               fontWeight: FontWeight.w600,
             ),
           ),
           TextSpan(
             text: '/${product.quantity_unit}',
-            style: kTextTheme.overline,
+            style: kTextTheme.labelSmall,
           ),
         ],
       ),

@@ -59,7 +59,9 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
   }
 
   Future<PaginatedProducts> _getProductByScenario(String scenario, int page,
-      [int? limit]) {
+      [
+    int? limit,
+  ]) {
     return _productService.getProductScenario(scenario, page, limit);
   }
 
@@ -103,7 +105,9 @@ class ProductState extends StateNotifier<AsyncValue<PaginatedProducts>> {
         state = AsyncValue.data(result.copyWith(data: [
           ...?currentState!.data,
           ...?result.data,
-        ]));
+            ],
+          ),
+        );
       }
     } on CustomException catch (error) {
       state = AsyncValue.error(error);

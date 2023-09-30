@@ -3,7 +3,7 @@ import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
-import 'history_order_more_button.dart';
+import 'package:diiket/ui/widgets/history/history_order_more_button.dart';
 
 class HistoryListItem extends StatelessWidget {
   final Order order;
@@ -48,7 +48,7 @@ class HistoryListItem extends StatelessWidget {
                     else
                       Text(
                         '${product?.name} ${orderItem.quantity} ${product?.quantity_unit}',
-                        style: kTextTheme.headline5,
+                        style: kTextTheme.headlineSmall,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -67,7 +67,7 @@ class HistoryListItem extends StatelessWidget {
                               ? '-'
                               : FormattingHelper.sortDate
                                   .format(order.purchase_completed_at!),
-                          style: kTextTheme.overline,
+                          style: kTextTheme.labelSmall,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -83,7 +83,7 @@ class HistoryListItem extends StatelessWidget {
                         ),
                         Text(
                           MessageHelper.getOrderStatusMessage(order),
-                          style: kTextTheme.overline!.copyWith(
+                          style: kTextTheme.labelSmall!.copyWith(
                             color: ColorPallete.primaryColor,
                           ),
                         ),
@@ -121,7 +121,7 @@ class HistoryListItem extends StatelessWidget {
                 else
                 Text(
                   '${orderItem.quantity} ${product?.quantity_unit}',
-                  style: kTextTheme.headline6,
+                  style: kTextTheme.titleLarge,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6.0),
@@ -144,7 +144,7 @@ class HistoryListItem extends StatelessWidget {
                 else
                 Text(
                   FormattingHelper.formatPrice(totalPrice),
-                  style: kTextTheme.headline6,
+                  style: kTextTheme.titleLarge,
                 ),
               ],
             ),

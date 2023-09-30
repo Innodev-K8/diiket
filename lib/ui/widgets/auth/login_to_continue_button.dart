@@ -27,15 +27,14 @@ class LoginToContinueButton extends StatelessWidget {
         ),
         label: Text(
           text,
-          style: kTextTheme.button!.copyWith(
+          style: kTextTheme.labelLarge!.copyWith(
             fontSize: isLarge ? 14.0 : 10.0,
             color: Colors.white,
           ),
         ),
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+          padding: const EdgeInsets.only(right: 8.0, left: 8.0), backgroundColor: ColorPallete.primaryColor,
           elevation: 0,
-          primary: ColorPallete.primaryColor,
         ),
       ),
     );

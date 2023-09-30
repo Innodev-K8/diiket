@@ -90,7 +90,7 @@ class ProductCategoryMenuItemsState
                     castOrNull(item['pageLabel']),
                   );
                 },
-              ))
+              ),)
           .toList();
     } on Exception catch (_) {
       // set to default

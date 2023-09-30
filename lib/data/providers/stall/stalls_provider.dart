@@ -57,7 +57,7 @@ class StallsState extends StateNotifier<AsyncValue<PaginatedStalls>> {
         state = AsyncValue.data(result.copyWith(data: [
           ...?currentState!.data,
           ...?result.data,
-        ]));
+        ],),);
       }
     } on CustomException catch (error) {
       state = AsyncValue.error(error);

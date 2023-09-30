@@ -27,7 +27,6 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -50,16 +49,18 @@ Future<void> main() async {
 
   if (kDebugMode) {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-    await RemoteConfig.instance.setConfigSettings(RemoteConfigSettings(
+    await FirebaseRemoteConfig.instance.setConfigSettings(
+      RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 10),
       minimumFetchInterval: const Duration(minutes: 1),
-    ));
+      ),
+    );
   } else {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   }
 
-  await RemoteConfig.instance.fetchAndActivate();
+  await FirebaseRemoteConfig.instance.fetchAndActivate();
 
   runApp(ProviderScope(child: MyApp()));
 }
@@ -154,7 +155,8 @@ class _MyAppState extends State<MyApp> {
             initialRoute: MainPage.route,
             navigatorObservers: [
               FirebaseAnalyticsObserver(
-                  analytics: context.read(analyticsProvider)),
+                analytics: context.read(analyticsProvider),
+              ),
             ],
             routes: {
               MainPage.route: (_) => MainPage(),
@@ -182,20 +184,24 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _handleAuthException(
-      BuildContext context, StateController<CustomException?> value) {
+    BuildContext context,
+    StateController<CustomException?> value,
+  ) {
     final exception = value.state;
 
     if (exception == null) return;
 
     Utils.alert(
-      exception is CustomException && exception.message != null
+      exception.message != null
           ? exception.message!
           : 'Terjadi Kesalahan...',
     );
   }
 
   Future<void> _handleCurrentMarketChange(
-      BuildContext context, StateController<Market?> market) async {
+    BuildContext context,
+    StateController<Market?> market,
+  ) async {
     if (market.state == null) {
       await SelectMarketBottomSheet.show(Utils.appNav.currentContext!);
     }

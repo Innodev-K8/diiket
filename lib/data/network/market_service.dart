@@ -2,7 +2,7 @@ import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'api_service.dart';
+import 'package:diiket/data/network/api_service.dart';
 
 final marketServiceProvider = Provider<MarketService>((ref) {
   return MarketService(ref.read(apiProvider));
@@ -23,7 +23,7 @@ class MarketService {
       final response = await _dio.get(_('nearby'), queryParameters: {
         'latitude': latitude,
         'longitude': longitude,
-      });
+      },);
 
       final List<dynamic> results = castOrFallback(response.data['data'], []);
 

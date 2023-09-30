@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../common/custom_exception_message.dart';
-import 'horizontal_scroll_product_list.dart';
+import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
+import 'package:diiket/ui/widgets/products/horizontal_scroll_product_list.dart';
 
 class ProductListSection extends HookWidget {
   final ProductFeed productFeed;
@@ -83,7 +83,7 @@ class ProductListSection extends HookWidget {
           Expanded(
             child: Text(
               productFeed.title,
-              style: kTextTheme.headline2,
+              style: kTextTheme.displayMedium,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -93,8 +93,7 @@ class ProductListSection extends HookWidget {
               Utils.navigateToProductByCategory(productFeed);
             },
             style: TextButton.styleFrom(
-              padding: const EdgeInsets.all(4),
-              primary: ColorPallete.primaryColor,
+              foregroundColor: ColorPallete.primaryColor, padding: const EdgeInsets.all(4),
             ),
             child: Text('Lihat Semua'),
           ),

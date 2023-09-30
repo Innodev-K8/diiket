@@ -51,7 +51,7 @@ class CustomAppBar extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               title,
-              style: kTextTheme.headline2,
+              style: kTextTheme.displayMedium,
               textAlign: TextAlign.center,
             ),
           ),

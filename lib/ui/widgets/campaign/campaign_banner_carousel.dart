@@ -1,9 +1,8 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
-import 'banner_image.dart';
+import 'package:diiket/ui/widgets/campaign/banner_image.dart';
 
 class CampaignBanner extends StatefulWidget {
   final bool showIndicator;

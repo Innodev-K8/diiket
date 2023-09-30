@@ -1,7 +1,7 @@
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 
-import 'medium_product_item.dart';
+import 'package:diiket/ui/widgets/products/medium_product_item.dart';
 
 class HorizontalScrollProductList extends StatefulWidget {
   final List<Product> products;

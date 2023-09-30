@@ -1,8 +1,7 @@
+import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'api_service.dart';
 
 final feeServiceProvider = Provider<FeeService>((ref) {
   return FeeService(ref.read(apiProvider));

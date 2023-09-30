@@ -9,7 +9,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:recombee_client/recombee_client.dart';
 
-import '../inputs/number_spinner.dart';
+import 'package:diiket/ui/widgets/inputs/number_spinner.dart';
 
 class AddProductToCartAction extends HookWidget {
   final Product product;
@@ -80,7 +80,7 @@ class AddProductToCartAction extends HookWidget {
               },
               child: Text(
                 'Batal',
-                style: kTextTheme.button!.copyWith(
+                style: kTextTheme.labelLarge!.copyWith(
                   fontSize: 11.0,
                   color: ColorPallete.darkGray,
                 ),
@@ -131,7 +131,7 @@ class AddProductToCartAction extends HookWidget {
         recombee.send(AddCartAddition(
           userId: user.id,
           itemId: product.id,
-        ));
+        ),);
       }
 
       context
@@ -147,11 +147,10 @@ class AddProductToCartAction extends HookWidget {
     }
 
     final buttonStyle = ElevatedButton.styleFrom(
-      padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-      elevation: 0,
-      primary: product.stall?.is_open == true
+      padding: const EdgeInsets.only(right: 8.0, left: 8.0), backgroundColor: product.stall?.is_open == true
           ? ColorPallete.primaryColor
           : ColorPallete.lightGray,
+      elevation: 0,
     );
 
     late Widget button;
@@ -179,7 +178,7 @@ class AddProductToCartAction extends HookWidget {
         ),
         label: Text(
           'Keranjang',
-          style: kTextTheme.button!.copyWith(
+          style: kTextTheme.labelLarge!.copyWith(
             fontSize: isLarge ? 16.0 : 10.0,
           ),
         ),

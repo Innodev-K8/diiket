@@ -43,25 +43,30 @@ class StallPage extends HookWidget {
     final market = useProvider(currentMarketProvider).state;
     final scrollController = useScrollController();
 
-    useEffect(() {
-      stallState.whenData((value) {
-        Timer(Duration(milliseconds: 250), () {
-          if (_autofocusProductKey.currentWidget != null &&
-              _autofocusProductKey.currentWidget != null) {
-            Scrollable.ensureVisible(
-              _autofocusProductKey.currentContext!,
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-            );
+    useEffect(
+      () {
+        stallState.whenData((value) {
+          Timer(Duration(milliseconds: 250), () {
+            if (_autofocusProductKey.currentWidget != null &&
+                _autofocusProductKey.currentWidget != null) {
+              Scrollable.ensureVisible(
+                _autofocusProductKey.currentContext!,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+              );
 
-            ProductDetailBottomSheet.show(
-              context,
-              (_autofocusProductKey.currentWidget! as LargeProductItem).product,
-            );
-          }
+              ProductDetailBottomSheet.show(
+                context,
+                (_autofocusProductKey.currentWidget! as LargeProductItem)
+                    .product,
+              );
+            }
+          });
         });
-      });
-    }, [stallState]);
+        return null;
+      },
+      [stallState],
+    );
 
     return Container(
       color: ColorPallete.backgroundColor,
@@ -92,7 +97,10 @@ class StallPage extends HookWidget {
   }
 
   SliverToBoxAdapter _buildContent(
-      BuildContext context, Stall stall, Market? market) {
+    BuildContext context,
+    Stall stall,
+    Market? market,
+  ) {
     return SliverToBoxAdapter(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +116,7 @@ class StallPage extends HookWidget {
                     Expanded(
                       child: Text(
                         stall.name ?? '-',
-                        style: kTextTheme.headline3,
+                        style: kTextTheme.displaySmall,
                       ),
                     ),
                     SizedBox(width: 8),
@@ -118,12 +126,12 @@ class StallPage extends HookWidget {
                 SizedBox(height: 5),
                 Text(
                   stall.seller?.name ?? '-',
-                  style: kTextTheme.subtitle1,
+                  style: kTextTheme.titleMedium,
                 ),
                 SizedBox(height: 5),
                 Text(
                   stall.is_open == true ? 'Buka' : 'Tutup',
-                  style: kTextTheme.subtitle1!.copyWith(
+                  style: kTextTheme.titleMedium!.copyWith(
                     color: stall.is_open == true
                         ? ColorPallete.successColor
                         : ColorPallete.infoColor,
@@ -142,7 +150,7 @@ class StallPage extends HookWidget {
                     Expanded(
                       child: Text(
                         '${market?.name}, Lt. ${stall.location_floor} Blok ${stall.location_block} No. ${stall.location_number}',
-                        style: kTextTheme.subtitle1!.copyWith(
+                        style: kTextTheme.titleMedium!.copyWith(
                           color: ColorPallete.darkGray,
                         ),
                       ),
@@ -152,7 +160,7 @@ class StallPage extends HookWidget {
                 SizedBox(height: 20),
                 Text(
                   'Deskripsi toko',
-                  style: kTextTheme.headline2,
+                  style: kTextTheme.displayMedium,
                 ),
                 SizedBox(height: 5),
                 Text(
@@ -164,7 +172,7 @@ class StallPage extends HookWidget {
                   physics: NeverScrollableScrollPhysics(),
                   header: Text(
                     'Produk',
-                    style: kTextTheme.headline2,
+                    style: kTextTheme.displayMedium,
                   ),
                   products: (stall.products ?? [])
                       .map((p) => p.copyWith(stall: stall))
@@ -211,7 +219,7 @@ class StallPage extends HookWidget {
                 },
                 child: Text(
                   'Langanan',
-                  style: kTextTheme.button!.copyWith(
+                  style: kTextTheme.labelLarge!.copyWith(
                     color: ColorPallete.primaryColor,
                   ),
                 ),
@@ -222,7 +230,7 @@ class StallPage extends HookWidget {
               width: 110,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: ColorPallete.primaryColor,
+                  backgroundColor: ColorPallete.primaryColor,
                   elevation: 0,
                 ),
                 onPressed: () {
@@ -284,7 +292,7 @@ class StallPage extends HookWidget {
           Positioned(
             left: 24.0,
             bottom: 8,
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
@@ -300,7 +308,7 @@ class StallPage extends HookWidget {
                 radius: _avatarSize / 2,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -319,12 +327,13 @@ class ShareStallButton extends HookWidget {
   Widget build(BuildContext context) {
     final isLoading = useState<bool>(false);
     final isMounted = useIsMounted();
+    final dlGenerator = useProvider(dynamicLinkGeneratorProvider);
 
     return IconButton(
       onPressed: () async {
         if (isMounted()) isLoading.value = true;
 
-        final uri = await DynamicLinkGenerators.generateStallDeepLink(
+        final uri = await dlGenerator.generateStallDeepLink(
           stall,
           referrer: context.read(authProvider),
         );

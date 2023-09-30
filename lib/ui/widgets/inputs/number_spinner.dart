@@ -35,7 +35,7 @@ class NumberSpinner extends HookWidget {
 
                 onChanged?.call(number.value);
               },
-              child: Container(
+              child: const DecoratedBox(
                 decoration: BoxDecoration(
                   color: ColorPallete.backgroundColor,
                   borderRadius: BorderRadius.only(
@@ -56,7 +56,7 @@ class NumberSpinner extends HookWidget {
             child: Center(
               child: Text(
                 '${number.value}',
-                style: kTextTheme.caption!.copyWith(
+                style: kTextTheme.bodySmall!.copyWith(
                   color: ColorPallete.backgroundColor,
                 ),
                 textAlign: TextAlign.center,
@@ -72,7 +72,7 @@ class NumberSpinner extends HookWidget {
 
                 onChanged?.call(number.value);
               },
-              child: Container(
+              child: const DecoratedBox(
                 decoration: BoxDecoration(
                   color: ColorPallete.backgroundColor,
                   borderRadius: BorderRadius.only(

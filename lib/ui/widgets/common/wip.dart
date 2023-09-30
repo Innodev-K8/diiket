@@ -17,7 +17,7 @@ class Wip extends StatelessWidget {
         SizedBox(height: 18),
         Text(
           'Akan Datang',
-          style: kTextTheme.headline4,
+          style: kTextTheme.headlineMedium,
         ),
         SizedBox(height: 6),
         Text(

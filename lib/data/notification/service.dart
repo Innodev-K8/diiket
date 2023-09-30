@@ -41,7 +41,7 @@ class NotificationService {
   }
 
   Future<StreamSubscription<RemoteMessage>> initializeNotificationHandler(
-      BuildContext context) async {
+      BuildContext context,) async {
     final RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
 
@@ -69,11 +69,11 @@ class NotificationService {
     });
 
     return FirebaseMessaging.onMessageOpenedApp.listen(
-        (message) => _handleBackgroundFCMNotification(context, message));
+        (message) => _handleBackgroundFCMNotification(context, message),);
   }
 
   void _handleBackgroundFCMNotification(
-      BuildContext context, RemoteMessage message) {
+      BuildContext context, RemoteMessage message,) {
     if (message.data['type'] == 'order') {
       context.read(mainPageController.notifier).setPage(1);
     }

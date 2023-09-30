@@ -3,19 +3,18 @@ import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/data/providers/recombee_provider.dart';
 import 'package:diiket/data/services/dynamic_link_generators.dart';
 import 'package:diiket/ui/widgets/auth/auth_wrapper.dart';
+import 'package:diiket/ui/widgets/auth/login_to_continue_button.dart';
+import 'package:diiket/ui/widgets/products/add_product_to_cart_action.dart';
 import 'package:diiket/ui/widgets/products/product_in_cart_information.dart';
 import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:recombee_client/recombee_client.dart';
 import 'package:share_plus/share_plus.dart';
-
-import '../auth/login_to_continue_button.dart';
-import 'add_product_to_cart_action.dart';
 
 class ProductDetailBottomSheet extends HookWidget {
   static Future<void> show(BuildContext context, Product product) {
@@ -27,10 +26,11 @@ class ProductDetailBottomSheet extends HookWidget {
       recombee.send(AddDetailView(
         userId: user.id,
         itemId: product.id,
-      ));
+        ),
+      );
     }
 
-    return showMaterialModalBottomSheet(
+    return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
@@ -56,7 +56,7 @@ class ProductDetailBottomSheet extends HookWidget {
 
     return Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 8),
-      child: Container(
+      child: DecoratedBox(
         decoration: BoxDecoration(
           color: ColorPallete.backgroundColor,
           borderRadius: BorderRadius.only(
@@ -96,7 +96,7 @@ class ProductDetailBottomSheet extends HookWidget {
                     Expanded(
                       child: Text(
                         product.name ?? '-',
-                        style: kTextTheme.headline2,
+                        style: kTextTheme.displayMedium,
                       ),
                     ),
                     SizedBox(width: 8),
@@ -106,7 +106,7 @@ class ProductDetailBottomSheet extends HookWidget {
                 SizedBox(height: 8.0),
                 Text(
                   product.description ?? '-',
-                  style: kTextTheme.overline!.copyWith(
+                  style: kTextTheme.labelSmall!.copyWith(
                     // fontWeight: FontWeight.bold,
                     color: ColorPallete.darkGray,
                     fontSize: 12.0,
@@ -153,6 +153,8 @@ class ProductShareButton extends HookWidget {
   Widget build(BuildContext context) {
     final isLoading = useState<bool>(false);
     final isMounted = useIsMounted();
+    final dlGenerator = useProvider(dynamicLinkGeneratorProvider);
+
 
     return InkWell(
       onTap: () async {
@@ -160,7 +162,7 @@ class ProductShareButton extends HookWidget {
 
         if (isMounted()) isLoading.value = true;
 
-        final uri = await DynamicLinkGenerators.generateStallDeepLink(
+        final uri = await dlGenerator.generateStallDeepLink(
           product.stall!,
           product: product,
           referrer: context.read(authProvider),

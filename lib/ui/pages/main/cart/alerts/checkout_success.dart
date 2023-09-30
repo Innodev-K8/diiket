@@ -24,7 +24,7 @@ class CheckoutSuccessPage extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(
                     'Berhasil',
-                    style: kTextTheme.headline3,
+                    style: kTextTheme.displaySmall,
                   ),
                   SizedBox(height: 5),
                   Text(

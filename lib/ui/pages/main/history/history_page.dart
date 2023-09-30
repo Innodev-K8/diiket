@@ -55,7 +55,7 @@ class HistoryPage extends HookWidget {
                               Text(
                                 'Terjadi kesalahan, tarik untuk memuat ulang...',
                                 textAlign: TextAlign.center,
-                                style: kTextTheme.headline6,
+                                style: kTextTheme.titleLarge,
                               ),
                             ],
                           ),

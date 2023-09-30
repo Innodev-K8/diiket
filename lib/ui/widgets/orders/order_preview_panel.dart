@@ -41,13 +41,13 @@ class OrderPreviewPanel extends HookWidget {
               children: [
                 Text(
                   'Jumlah Barang',
-                  style: kTextTheme.subtitle1!.copyWith(
+                  style: kTextTheme.titleMedium!.copyWith(
                     color: ColorPallete.darkGray.withOpacity(0.6),
                   ),
                 ),
                 Text(
                   '${activeOrderNotifier.orderCount} Barang',
-                  style: kTextTheme.subtitle1!.copyWith(
+                  style: kTextTheme.titleMedium!.copyWith(
                     color: ColorPallete.darkGray,
                     fontSize: 14.0,
                   ),
@@ -64,13 +64,13 @@ class OrderPreviewPanel extends HookWidget {
               children: [
                 Text(
                   'Total Harga',
-                  style: kTextTheme.headline6!.copyWith(
+                  style: kTextTheme.titleLarge!.copyWith(
                     color: ColorPallete.darkGray,
                   ),
                 ),
                 Text(
                   'Rp. ${FormattingHelper.formatPrice(activeOrderNotifier.totalProductPrice)}',
-                  style: kTextTheme.subtitle1!.copyWith(
+                  style: kTextTheme.titleMedium!.copyWith(
                     color: ColorPallete.secondaryColor,
                     fontSize: 18.0,
                   ),

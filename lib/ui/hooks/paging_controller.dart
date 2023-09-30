@@ -9,7 +9,7 @@ PagingController<T, Y> usePagingController<T, Y>({
   return use(_PagingController<T, Y>(
     firstPageKey: firstPageKey,
     invisibleItemsThreshold: invisibleItemsThreshold,
-  ));
+  ),);
 }
 
 class _PagingController<T, Y> extends Hook<PagingController<T, Y>> {

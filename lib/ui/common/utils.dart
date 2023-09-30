@@ -4,11 +4,10 @@ import 'package:diiket/ui/pages/main/home/stall/stall_page.dart';
 import 'package:diiket/ui/pages/utils/place_picker.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:page_transition/page_transition.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class Utils {
@@ -65,7 +64,6 @@ class Utils {
       arguments: {
         'product_feed': ProductFeed(
           title: label ?? category,
-          type: ProductSourceType.category,
           query: category,
         ),
       },
@@ -93,7 +91,7 @@ class Utils {
 
   static void alert(String message) {
     late SnackBarBehavior behavior;
-    final String behaviorConfig = RemoteConfig.instance.getString(
+    final String behaviorConfig = FirebaseRemoteConfig.instance.getString(
       'alert_snackbar_behavior',
     );
 

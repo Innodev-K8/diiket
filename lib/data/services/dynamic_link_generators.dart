@@ -1,8 +1,19 @@
+import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+final dynamicLinkGeneratorProvider = Provider<DynamicLinkGenerators>((ref) {
+  return DynamicLinkGenerators(ref.watch(dynamicLinkProvider));
+});
+
+// ignore: avoid_classes_with_only_static_members
 class DynamicLinkGenerators {
-  static Future<Uri> generateStallDeepLink(
+  final FirebaseDynamicLinks _dynamicLinkService;
+
+  DynamicLinkGenerators(this._dynamicLinkService);
+
+  Future<Uri> generateStallDeepLink(
     Stall stall, {
     Product? product,
     User? referrer,
@@ -70,7 +81,8 @@ class DynamicLinkGenerators {
       socialMetaTagParameters: metaTagParameters,
     );
 
-    final ShortDynamicLink shortDynamicLink = await parameters.buildShortLink();
+    final ShortDynamicLink shortDynamicLink =
+        await _dynamicLinkService.buildShortLink(parameters);
     final Uri shortUrl = shortDynamicLink.shortUrl;
 
     return shortUrl;

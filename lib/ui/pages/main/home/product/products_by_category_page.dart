@@ -100,7 +100,7 @@ class ProductsByCategoryPage extends HookWidget {
             child: Text(
               labelText,
               overflow: TextOverflow.ellipsis,
-              style: kTextTheme.headline2,
+              style: kTextTheme.displayMedium,
             ),
           ),
         ],

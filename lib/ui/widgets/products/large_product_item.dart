@@ -6,7 +6,7 @@ import 'package:diiket/ui/widgets/products/product_photo.dart';
 import 'package:diiket/ui/widgets/products/product_price_text.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
-import 'product_in_cart_information.dart';
+import 'package:diiket/ui/widgets/products/product_in_cart_information.dart';
 
 class LargeProductItem extends StatelessWidget {
   final Product product;
@@ -63,13 +63,13 @@ class LargeProductItem extends StatelessWidget {
                         children: [
                           Text(
                             product.name ?? '-',
-                            style: kTextTheme.headline6,
+                            style: kTextTheme.titleLarge,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
                           Text(
                             product.description ?? '-',
-                            style: kTextTheme.overline!.copyWith(
+                            style: kTextTheme.labelSmall!.copyWith(
                               // fontWeight: FontWeight.bold,
                               color: ColorPallete.darkGray,
                             ),
@@ -99,7 +99,7 @@ class LargeProductItem extends StatelessWidget {
                   ],
                 ),
               ),
-              if (!isStoreOpen) _buildStoreClosedBanner()
+              if (!isStoreOpen) _buildStoreClosedBanner(),
             ],
           ),
         ),
@@ -130,7 +130,7 @@ class LargeProductItem extends StatelessWidget {
             SizedBox(width: 6),
             Text(
               'Toko Tutup',
-              style: kTextTheme.button!.copyWith(
+              style: kTextTheme.labelLarge!.copyWith(
                 color: ColorPallete.secondaryColor,
                 fontSize: 12,
               ),

@@ -40,7 +40,7 @@ class HistoryOrderMoreButton extends HookWidget {
                 // recheck if market is not the same as market stall id
                 if (market.id != orderItem.product?.stall?.market_id) {
                   return Utils.alert(
-                      'Pasar masih belum sesuai dengan produk yang dipilih.');
+                      'Pasar masih belum sesuai dengan produk yang dipilih.',);
                 }
 
                 await context.read(mainPageController.notifier).setPage(0);
@@ -65,8 +65,7 @@ class HistoryOrderMoreButton extends HookWidget {
           );
         },
         style: OutlinedButton.styleFrom(
-          primary: ColorPallete.primaryColor,
-          side: BorderSide(color: ColorPallete.primaryColor),
+          foregroundColor: ColorPallete.primaryColor, side: BorderSide(color: ColorPallete.primaryColor),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

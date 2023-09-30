@@ -10,7 +10,7 @@ final firebaseAuthRepositoryProvider = Provider<FirebaseAuthRepository>((ref) {
 abstract class BaseFirebaseAuthRepository {
   Stream<firebase_auth.User?> get authStateChanges;
   Future<void> signInWithPhoneCredential(
-      firebase_auth.PhoneAuthCredential credential);
+      firebase_auth.PhoneAuthCredential credential,);
   firebase_auth.User? getCurrentFirebaseUser();
   Future<void> signOut();
 }
@@ -30,7 +30,7 @@ class FirebaseAuthRepository extends BaseFirebaseAuthRepository {
 
   @override
   Future<void> signInWithPhoneCredential(
-      firebase_auth.PhoneAuthCredential credential) async {
+      firebase_auth.PhoneAuthCredential credential,) async {
     try {
       await _auth.signInWithCredential(credential);
     } on firebase_auth.FirebaseAuthException catch (error) {

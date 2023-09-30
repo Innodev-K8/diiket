@@ -214,7 +214,7 @@ class _PlacePickerState extends State<PlacePicker> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: ColorPallete.secondaryColor,
+                  backgroundColor: ColorPallete.secondaryColor,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0),
@@ -234,13 +234,13 @@ class _PlacePickerState extends State<PlacePicker> {
                   Utils.popPlacePicker(PlacePickerResult(
                     directions: _directions,
                     target: _pickedPosition,
-                  ));
+                  ),);
                 } else {
                   _setPickedPosition();
                 }
               },
               style: ElevatedButton.styleFrom(
-                primary: ColorPallete.primaryColor,
+                backgroundColor: ColorPallete.primaryColor,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
@@ -303,7 +303,7 @@ class _PlacePickerState extends State<PlacePicker> {
                 position: _marketPosition,
                 anchor: Offset(0.5, 0.5),
                 icon: marketIcon!,
-              )
+              ),
           },
           polylines: {
             if (_directions != null)
@@ -340,7 +340,7 @@ class _PlacePickerState extends State<PlacePicker> {
             children: [
               Text(
                 'Jarak',
-                style: kTextTheme.subtitle2!.copyWith(
+                style: kTextTheme.titleSmall!.copyWith(
                   color: ColorPallete.darkGray,
                 ),
               ),
@@ -356,7 +356,7 @@ class _PlacePickerState extends State<PlacePicker> {
             children: [
               Text(
                 'Estimasi Pengiriman',
-                style: kTextTheme.subtitle2!.copyWith(
+                style: kTextTheme.titleSmall!.copyWith(
                   color: ColorPallete.darkGray,
                 ),
               ),
@@ -388,7 +388,7 @@ class _PlacePickerState extends State<PlacePicker> {
         alignment: Alignment.centerLeft,
         child: Text(
           labelText,
-          style: kTextTheme.headline2,
+          style: kTextTheme.displayMedium,
           textAlign: TextAlign.center,
         ),
       ),

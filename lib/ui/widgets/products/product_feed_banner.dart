@@ -43,7 +43,7 @@ class ProductFeedBanner extends StatelessWidget {
           : null,
       child: Text(
         productFeed.description ?? '',
-        style: kTextTheme.bodyText2!.copyWith(
+        style: kTextTheme.bodyMedium!.copyWith(
           color: isBannerImage
               ? ColorPallete.backgroundColor
               : ColorPallete.textColor,

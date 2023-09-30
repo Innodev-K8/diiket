@@ -120,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _onAuthException(
-      BuildContext context, StateController<CustomException?> e) {
+      BuildContext context, StateController<CustomException?> e,) {
     if (e.state != null) {
       final CustomException exception = e.state!;
 
@@ -179,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.15),
                 const DiiketLogo(),
                 const SizedBox(height: 30),
-                Text('Selamat Datang', style: kTextTheme.headline1),
+                Text('Selamat Datang', style: kTextTheme.displayLarge),
                 const SizedBox(height: 5),
                 const Text('Masukan nomor telepon anda untuk melanjutkan'),
                 const SizedBox(height: 37),
@@ -201,7 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
                           '+62',
-                          style: kTextTheme.bodyText2!.copyWith(
+                          style: kTextTheme.bodyMedium!.copyWith(
                             fontSize: 15.0,
                           ),
                         ),
@@ -251,7 +251,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             child: Text(
               'Selanjutnya, Anda akan menerima SMS untuk verifikasi. Tarif pesan dan data mungkin berlaku.',
-              style: kTextTheme.overline,
+              style: kTextTheme.labelSmall,
             ),
           ),
         ],
@@ -288,7 +288,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 30),
                 Text(
                   'Verifikasi',
-                  style: kTextTheme.headline1,
+                  style: kTextTheme.displayLarge,
                 ),
                 const SizedBox(
                   height: 5,
@@ -365,7 +365,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       );
                     },
                     style: TextButton.styleFrom(
-                      primary: ColorPallete.primaryColor,
+                      foregroundColor: ColorPallete.primaryColor,
                     ),
                     child: Text('Kirim ulang kode verifikasi'),
                   )
@@ -376,7 +376,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     child: Text(
                       'Kirim ulang kode dalam 0:$resendTimeoutCounter',
-                      style: kTextTheme.overline,
+                      style: kTextTheme.labelSmall,
                     ),
                   ),
           ),
@@ -410,7 +410,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: 30),
                 Text(
                   'Pengguna Baru',
-                  style: kTextTheme.headline1,
+                  style: kTextTheme.displayLarge,
                 ),
                 SizedBox(
                   height: 5,
@@ -490,7 +490,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _sendSmsVerificationCode(
-      {int? forceResendingToken, Function? onCodeSent}) {
+      {int? forceResendingToken, Function? onCodeSent,}) {
     setState(() {
       isLoading = true;
     });
@@ -556,7 +556,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> _signInWithPhoneCredential(
-      firebase_auth.PhoneAuthCredential phoneAuthCredential) async {
+      firebase_auth.PhoneAuthCredential phoneAuthCredential,) async {
     setState(() {
       isLoading = true;
     });

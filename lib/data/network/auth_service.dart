@@ -17,7 +17,7 @@ class AuthService {
   String _(Object path) => '/auth/$path';
 
   Future<AuthResponse> loginWithFirebaseToken(String token,
-      [String? fcmToken]) async {
+      [String? fcmToken,]) async {
     try {
       final response = await _dio.post(
         _('login/firebase'),

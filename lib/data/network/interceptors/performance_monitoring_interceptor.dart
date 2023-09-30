@@ -13,7 +13,7 @@ class PerformanceMonitoringInterceptor extends Interceptor {
 
   @override
   Future onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+      RequestOptions options, RequestInterceptorHandler handler,) async {
     try {
       final metric = FirebasePerformance.instance.newHttpMetric(
         options.uri.normalized(),
@@ -40,7 +40,7 @@ class PerformanceMonitoringInterceptor extends Interceptor {
 
   @override
   Future onResponse(
-      Response response, ResponseInterceptorHandler handler) async {
+      Response response, ResponseInterceptorHandler handler,) async {
     try {
       final requestKey = response.requestOptions.extra.hashCode;
 
@@ -106,7 +106,7 @@ extension _UriHttpMethod on Uri {
 
 extension _ResponseHttpMetric on HttpMetric {
   void setResponse(Response? value,
-      ResponseContentLengthMethod responseContentLengthMethod) {
+      ResponseContentLengthMethod responseContentLengthMethod,) {
     if (value == null) {
       return;
     }

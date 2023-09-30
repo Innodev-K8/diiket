@@ -21,15 +21,14 @@ class DynamicLinkService {
   }
 
   Future initializeHandler(BuildContext context) async {
-    instance.onLink(
-      onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-        final Uri? deepLink = dynamicLink?.link;
+    instance.onLink.listen((PendingDynamicLinkData? dynamicLink) async {
+      final Uri? deepLink = dynamicLink?.link;
 
-        if (deepLink != null) {
-          _handleLink(context, deepLink);
-        }
-      },
-      onError: (OnLinkErrorException exception) async {
+      if (deepLink != null) {
+        _handleLink(context, deepLink);
+      }
+    }).onError(
+      (exception) async {
         context
             .read(crashlyticsProvider)
             .recordError(exception, null, reason: 'dynamic-link-onlink');

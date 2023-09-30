@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 class AuthInterceptor extends Interceptor {
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+      RequestOptions options, RequestInterceptorHandler handler,) async {
     final String? token = await SecureStorage().getToken();
 
     if (token != null) {
@@ -16,7 +16,7 @@ class AuthInterceptor extends Interceptor {
 
   @override
   Future<void> onResponse(
-      Response response, ResponseInterceptorHandler handler) async {
+      Response response, ResponseInterceptorHandler handler,) async {
     return super.onResponse(response, handler);
   }
 

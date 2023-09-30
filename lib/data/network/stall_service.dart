@@ -3,7 +3,7 @@ import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'api_service.dart';
+import 'package:diiket/data/network/api_service.dart';
 
 final stallServiceProvider = StateProvider<StallService>((ref) {
   final Market? currentMarket = ref.watch(currentMarketProvider).state;

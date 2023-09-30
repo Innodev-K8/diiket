@@ -2,7 +2,6 @@ import 'package:diiket/data/providers/order/active_order_fee_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/widgets/common/custom_exception_message.dart';
 import 'package:diiket_core/diiket_core.dart';
-import 'package:diiket_core/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,7 +25,7 @@ class ConfirmOrderButton extends HookWidget {
       trailing: activeOrderFee.when(
             data: (value) => Text(
               'Rp. ${FormattingHelper.formatPrice((orderNotifier.totalProductPrice) + (value?.total_fee ?? 0))}',
-              style: kTextTheme.button!.copyWith(
+              style: kTextTheme.labelLarge!.copyWith(
                 color: ColorPallete.backgroundColor,
               ),
             ),
@@ -37,7 +36,7 @@ class ConfirmOrderButton extends HookWidget {
       onPressed: onPressed,
       child: Text(
         'Pesan',
-        style: kTextTheme.headline6!.copyWith(
+        style: kTextTheme.titleLarge!.copyWith(
           color: ColorPallete.backgroundColor,
         ),
       ),

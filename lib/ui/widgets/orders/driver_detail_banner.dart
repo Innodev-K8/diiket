@@ -7,7 +7,7 @@ class DriverDetailBanner extends StatelessWidget {
   final Color? backgroundColor;
 
   const DriverDetailBanner(
-      {Key? key, required this.driver, this.title, this.backgroundColor})
+      {Key? key, required this.driver, this.title, this.backgroundColor,})
       : super(key: key);
 
   @override
@@ -34,16 +34,16 @@ class DriverDetailBanner extends StatelessWidget {
                     children: [
                       Text(
                         driver.driver_detail?.vehicle_name ?? '-',
-                        style: kTextTheme.overline,
+                        style: kTextTheme.labelSmall,
                       ),
                       Text(
                         driver.driver_detail?.vehicle_number ?? '-',
-                        style: kTextTheme.headline3,
+                        style: kTextTheme.displaySmall,
                       ),
                       SizedBox(height: 8),
                       Text(
                         driver.name ?? '-',
-                        style: kTextTheme.bodyText2!.copyWith(
+                        style: kTextTheme.bodyMedium!.copyWith(
                           color: backgroundColor ?? ColorPallete.secondaryColor,
                         ),
                       ),
@@ -59,7 +59,7 @@ class DriverDetailBanner extends StatelessWidget {
             color: backgroundColor ?? ColorPallete.secondaryColor,
             child: Text(
               title ?? '',
-              style: kTextTheme.bodyText2!.copyWith(color: Colors.white),
+              style: kTextTheme.bodyMedium!.copyWith(color: Colors.white),
               textAlign: TextAlign.center,
             ),
           ),

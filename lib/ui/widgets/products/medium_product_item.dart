@@ -18,7 +18,7 @@ class MediumProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
@@ -57,7 +57,7 @@ class MediumProductItem extends StatelessWidget {
                       children: [
                         Text(
                           product.name ?? '-',
-                          style: kTextTheme.headline6,
+                          style: kTextTheme.titleLarge,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),
@@ -66,7 +66,7 @@ class MediumProductItem extends StatelessWidget {
                         Spacer(),
                         Text(
                           product.stall?.name ?? '-',
-                          style: kTextTheme.caption,
+                          style: kTextTheme.bodySmall,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],

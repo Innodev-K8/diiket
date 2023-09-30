@@ -1,5 +1,4 @@
 import 'package:diiket_core/diiket_core.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

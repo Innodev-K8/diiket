@@ -39,11 +39,11 @@ class HistoryList extends StatelessWidget {
                     children: [
                       Text(
                         "Pesanan",
-                        style: kTextTheme.headline1,
+                        style: kTextTheme.displayLarge,
                       ),
                       Text(
                         MessageHelper.getOrderId(order),
-                        style: kTextTheme.caption,
+                        style: kTextTheme.bodySmall,
                       ),
                     ],
                   ),
@@ -88,7 +88,7 @@ class HistoryList extends StatelessWidget {
           SizedBox(height: 18),
           Text(
             'Riwayat Kosong',
-            style: kTextTheme.headline2,
+            style: kTextTheme.displayMedium,
           ),
           SizedBox(height: 6),
           Padding(
@@ -96,7 +96,7 @@ class HistoryList extends StatelessWidget {
             child: Text(
               'Anda belum pernah melakukan pemesanan apapun',
               textAlign: TextAlign.center,
-              style: kTextTheme.caption,
+              style: kTextTheme.bodySmall,
             ),
           ),
         ],

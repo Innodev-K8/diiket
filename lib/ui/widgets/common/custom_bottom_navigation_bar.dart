@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:diiket/data/providers/main_page_controller_provider.dart';
 import 'package:diiket/data/providers/order/active_order_provider.dart';
 import 'package:diiket/ui/common/utils.dart';
@@ -55,7 +55,7 @@ class CustomBottomNavigationBar extends HookWidget {
               showBadge: itemCount >= 1,
               badgeContent: Text(
                 '$itemCount',
-                style: kTextTheme.caption!.copyWith(
+                style: kTextTheme.bodySmall!.copyWith(
                   color: ColorPallete.backgroundColor,
                   fontSize: 8.0,
                 ),
@@ -68,7 +68,7 @@ class CustomBottomNavigationBar extends HookWidget {
                 pageController.setPage(1);
               },
             );
-          }),
+          },),
           BottomBarButton(
             isSelected: pageControllerState == 2,
             image: 'assets/images/bottom_bar/history.png',
@@ -121,7 +121,7 @@ class BottomBarButton extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Badge(
+            badges.Badge(
               showBadge: showBadge,
               badgeContent: badgeContent,
               elevation: 0,

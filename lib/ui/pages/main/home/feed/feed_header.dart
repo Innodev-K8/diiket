@@ -33,7 +33,7 @@ class FeedHeader extends StatelessWidget {
                 ),
                 Text(
                   'Cari Sesuatu?',
-                  style: kTextTheme.headline2,
+                  style: kTextTheme.displayMedium,
                 ),
               ],
             ),
@@ -49,7 +49,7 @@ class FeedHeader extends StatelessWidget {
               },
               child: Text(
                 'Masuk',
-                style: kTextTheme.button!.copyWith(
+                style: kTextTheme.labelLarge!.copyWith(
                   color: ColorPallete.primaryColor,
                 ),
               ),

@@ -18,7 +18,7 @@ class LoginToContinueScreen extends StatelessWidget {
             Utils.appNav.currentState?.pushNamed(RegisterPage.route);
           },
           style: ElevatedButton.styleFrom(
-            primary: ColorPallete.primaryColor,
+            backgroundColor: ColorPallete.primaryColor,
             shadowColor: ColorPallete.primaryColor.withOpacity(0.5),
             elevation: 6,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
@@ -31,7 +31,7 @@ class LoginToContinueScreen extends StatelessWidget {
         SizedBox(height: 5),
         Text(
           'Masuk untuk melanjutkan',
-          style: kTextTheme.caption,
+          style: kTextTheme.bodySmall,
         ),
       ],
     );

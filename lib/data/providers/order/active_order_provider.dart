@@ -188,7 +188,7 @@ class ActiveOrderState extends StateNotifier<Order?> {
   }
 
   Future<void> placeOrderItem(Product product, int quantity,
-      [String? notes]) async {
+      [String? notes,]) async {
     try {
       final OrderItem orderItem = await _read(orderServiceProvider)
           .state

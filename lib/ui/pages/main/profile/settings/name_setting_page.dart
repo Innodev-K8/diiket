@@ -148,7 +148,7 @@ class BorderedCustomTextFormField extends StatelessWidget {
         if (labelText != null) ...[
           Text(
             labelText!,
-            style: kTextTheme.headline5,
+            style: kTextTheme.headlineSmall,
             overflow: TextOverflow.ellipsis,
           ),
           SizedBox(height: 10),

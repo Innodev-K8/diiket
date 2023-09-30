@@ -63,7 +63,7 @@ class MarketSelector extends HookWidget {
             Text(
               'Mohon maaf, saat ini belum terdapat pasar yang terdaftar di daerah Anda.',
               textAlign: TextAlign.center,
-              style: kTextTheme.headline6,
+              style: kTextTheme.titleLarge,
             ),
           ],
         ),
@@ -82,7 +82,7 @@ class MarketSelector extends HookWidget {
             Text(
               'Gagal mendapatkan pasar terdekat, harap pastikan layanan lokasi/GPS Anda menyala.',
               textAlign: TextAlign.center,
-              style: kTextTheme.headline6,
+              style: kTextTheme.titleLarge,
             ),
           ],
         ),
@@ -101,7 +101,7 @@ class MarketSelector extends HookWidget {
             Text(
               'Anda tidak dapat mengganti pasar jika terdapat barang di keranjang.',
               textAlign: TextAlign.center,
-              style: kTextTheme.headline6,
+              style: kTextTheme.titleLarge,
             ),
           ],
         ),
@@ -113,41 +113,48 @@ class MarketSelector extends HookWidget {
     List<Market> markets,
   ) {
     return DropdownSearch<Market>(
-      mode: Mode.MENU,
-      showSelectedItem: true,
-      compareFn: (item, selectedItem) => item.id == selectedItem?.id,
+      // mode: Mode.MENU,
+      // showSelectedItem: true,
+      compareFn: (item, selectedItem) => item.id == selectedItem.id,
       selectedItem: currentMarket,
       items: markets,
-      label: "Pasar",
-      popupShape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
+      // label: "Pasar",
+      // popupShape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(10.0),
+      // ),
       itemAsString: (Market m) => m.name ?? '-',
-      dropdownBuilder: (context, selectedItem, itemAsString) =>
-          selectedItem == null ? Text('Pilih pasar') : _buildItem(selectedItem),
-      popupItemBuilder: (context, item, isSelected) => _buildItem(item),
-      hint: "Pilih pasar tempat Anda ingin berbelanja.",
-      showSearchBox: true,
-      dropdownSearchDecoration: InputDecoration(
-        contentPadding: const EdgeInsets.only(left: 16),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: ColorPallete.lightGray.withOpacity(0.5),
+      // dropdownBuilder: (context, selectedItem, itemAsString) =>
+      //     selectedItem == null ? Text('Pilih pasar') : _buildItem(selectedItem),
+      // popupItemBuilder: (context, item, isSelected) => _buildItem(item),
+      // hint: "Pilih pasar tempat Anda ingin berbelanja.",
+      popupProps: PopupProps.menu(
+        showSearchBox: true,
+        
+        showSelectedItems: true,
+        itemBuilder: (context, item, isSelected) => _buildItem(item),
+      ),
+      dropdownDecoratorProps: DropDownDecoratorProps(
+        dropdownSearchDecoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(left: 16),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: ColorPallete.lightGray.withOpacity(0.5),
+            ),
           ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            width: 2.0,
-            color: ColorPallete.primaryColor,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              width: 2.0,
+              color: ColorPallete.primaryColor,
+            ),
           ),
-        ),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        labelText: 'Bumbu, Daging Sapi',
-        suffixIconConstraints: BoxConstraints(
-          minHeight: 24,
-          minWidth: 24,
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          labelText: 'Bumbu, Daging Sapi',
+          suffixIconConstraints: BoxConstraints(
+            minHeight: 24,
+            minWidth: 24,
+          ),
         ),
       ),
       onChanged: (Market? market) async {
@@ -171,13 +178,13 @@ class MarketSelector extends HookWidget {
           Expanded(
             child: Text(
               item.name ?? '-',
-              style: kTextTheme.headline6,
+              style: kTextTheme.titleLarge,
             ),
           ),
           SizedBox(width: 8),
           Text(
             '${item.distance?.toStringAsFixed(1) ?? '-'}km',
-            style: kTextTheme.caption,
+            style: kTextTheme.bodySmall,
           ),
         ],
       ),

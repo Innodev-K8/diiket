@@ -19,7 +19,7 @@ class LoggingInterceptors extends Interceptor {
 
   @override
   Future<void> onResponse(
-      Response response, ResponseInterceptorHandler handler) async {
+      Response response, ResponseInterceptorHandler handler,) async {
     _log.v(
       'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}\nRESPONSE: $response',
     );

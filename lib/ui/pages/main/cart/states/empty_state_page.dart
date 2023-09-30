@@ -37,13 +37,13 @@ class EmptyStatePage extends HookWidget {
                         SizedBox(height: 18),
                         Text(
                           'Keranjang Kosong',
-                          style: kTextTheme.headline4,
+                          style: kTextTheme.headlineMedium,
                         ),
                         SizedBox(height: 6),
                         Text(
                           'Tambahkan barang ke keranjang untuk melanjutkan',
                           textAlign: TextAlign.center,
-                          style: kTextTheme.caption,
+                          style: kTextTheme.bodySmall,
                         ),
                       ],
                     ),

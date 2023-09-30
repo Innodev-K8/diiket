@@ -29,7 +29,7 @@ class MarketSelectorButton extends HookWidget {
               child: Text(
                 // ignore: unnecessary_string_interpolations
                 market == null ? 'Pilih pasar dulu' : '${market.name}',
-                style: kTextTheme.headline6!.copyWith(
+                style: kTextTheme.titleLarge!.copyWith(
                   color: ColorPallete.darkGray,
                 ),
               ),

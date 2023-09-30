@@ -120,7 +120,7 @@ class OrderPaymentDetail extends HookWidget {
             children: [
               Text(
                 'Total harga',
-                style: kTextTheme.headline6!.copyWith(
+                style: kTextTheme.titleLarge!.copyWith(
                   color: ColorPallete.darkGray,
                 ),
               ),
@@ -128,7 +128,7 @@ class OrderPaymentDetail extends HookWidget {
                 Text(
                   'Rp. ${FormattingHelper.formatPrice(order.total_price)}',
                   textAlign: TextAlign.end,
-                  style: kTextTheme.subtitle1!.copyWith(
+                  style: kTextTheme.titleMedium!.copyWith(
                     color: ColorPallete.primaryColor,
                     fontSize: 18.0,
                   ),
@@ -138,7 +138,7 @@ class OrderPaymentDetail extends HookWidget {
                       data: (value) => Text(
                         'Rp. ${FormattingHelper.formatPrice((orderNotifier.totalProductPrice) + (value?.total_fee ?? 0))}',
                         textAlign: TextAlign.end,
-                        style: kTextTheme.subtitle1!.copyWith(
+                        style: kTextTheme.titleMedium!.copyWith(
                           color: ColorPallete.primaryColor,
                           fontSize: 18.0,
                         ),
@@ -176,7 +176,7 @@ class PaymentDetailRecord extends StatelessWidget {
       children: [
         Text(
           title,
-          style: kTextTheme.subtitle2!.copyWith(
+          style: kTextTheme.titleSmall!.copyWith(
             color: ColorPallete.darkGray,
           ),
         ),
@@ -187,7 +187,7 @@ class PaymentDetailRecord extends StatelessWidget {
             textAlign: TextAlign.end,
           )
         else
-          value
+          value,
       ],
     );
   }

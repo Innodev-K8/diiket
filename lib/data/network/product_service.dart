@@ -3,7 +3,7 @@ import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'api_service.dart';
+import 'package:diiket/data/network/api_service.dart';
 
 final productServiceProvider = StateProvider<ProductService>((ref) {
   final Market? currentMarket = ref.watch(currentMarketProvider).state;
@@ -66,7 +66,7 @@ class ProductService {
 
   // Product section endpoint: /user/markets/$_marketId/products/${section}
   Future<PaginatedProducts> getProductSection(String section,
-      [int page = 1]) async {
+      [int page = 1,]) async {
     if (_marketId == null) {
       return PaginatedProducts.fromJson({});
     }
@@ -87,7 +87,7 @@ class ProductService {
 
 // Product scenario endpoint: /user/markets/$_marketId/products/scenario/${scenario}
   Future<PaginatedProducts> getProductScenario(String scenario,
-      [int page = 1, int? limit]) async {
+      [int page = 1, int? limit,]) async {
     if (_marketId == null) {
       return PaginatedProducts.fromJson({});
     }

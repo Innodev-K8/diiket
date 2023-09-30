@@ -15,7 +15,7 @@ class MediumStallItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final BorderRadius radius = BorderRadius.circular(15);
 
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: radius,
         boxShadow: [
@@ -64,11 +64,11 @@ class MediumStallItem extends StatelessWidget {
                 SizedBox(height: 10),
                 Text(
                   stall.name ?? '-',
-                  style: kTextTheme.headline5,
+                  style: kTextTheme.headlineSmall,
                 ),
                 Text(
                   stall.is_open == true ? 'Buka' : 'Tutup',
-                  style: kTextTheme.subtitle2,
+                  style: kTextTheme.titleSmall,
                 ),
               ],
             ),

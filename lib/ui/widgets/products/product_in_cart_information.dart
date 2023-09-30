@@ -23,7 +23,7 @@ class ProductInCartInformation extends HookWidget {
     if (orderItem != null) {
       return Text(
         '${orderItem.quantity} ${product.quantity_unit}',
-        style: kTextTheme.caption!.copyWith(
+        style: kTextTheme.bodySmall!.copyWith(
           color: ColorPallete.primaryColor,
         ),
         textAlign: TextAlign.end,

@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:diiket/data/network/auth_service.dart';
 import 'package:diiket/data/providers/auth/token_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
+import 'package:diiket/data/repositories/firebase_auth_repository.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:diiket/data/repositories/firebase_auth_repository.dart';
 
 final authProvider = StateNotifierProvider<AuthState, User?>((ref) {
   return AuthState(
@@ -32,7 +33,8 @@ class AuthState extends StateNotifier<User?> {
   }
 
   Future<void> signInWithPhoneCredential(
-      firebase_auth.PhoneAuthCredential credential) async {
+    firebase_auth.PhoneAuthCredential credential,
+  ) async {
     try {
       if (_firebaseAuthRepository.getCurrentFirebaseUser() != null) {
         await signOut();
@@ -91,7 +93,13 @@ class AuthState extends StateNotifier<User?> {
 
   Future<void> _signInWithFirebaseUser(firebase_auth.User user) async {
     try {
-      final String firebaseToken = await user.getIdToken();
+      final String? firebaseToken = await user.getIdToken();
+
+      if (firebaseToken == null) {
+        await signOut();
+        return;
+      }
+      
       final String? fcmToken = await _read(messagingProvider).getToken();
 
       final AuthResponse response =
@@ -104,7 +112,7 @@ class AuthState extends StateNotifier<User?> {
         _read(crashlyticsProvider)
             .setUserIdentifier(response.user!.firebase_uid ?? user.uid);
         _read(analyticsProvider)
-            .setUserId(response.user!.firebase_uid ?? user.uid);
+            .setUserId(id: response.user!.firebase_uid ?? user.uid);
 
         state = response.user;
       } else {

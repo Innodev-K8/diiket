@@ -4,6 +4,7 @@ import 'package:diiket/data/providers/auth/auth_provider.dart';
 import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:diiket/data/providers/products/product_feeds_provider.dart';
 import 'package:diiket/ui/common/utils.dart';
+import 'package:diiket/ui/pages/main/home/feed/feed_header.dart';
 import 'package:diiket/ui/pages/main/home/search/search_page.dart';
 import 'package:diiket/ui/widgets/campaign/campaign_banner_carousel.dart';
 import 'package:diiket/ui/widgets/category/category_menu.dart';
@@ -17,85 +18,87 @@ import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:diiket/ui/pages/main/home/feed/feed_header.dart';
-
 class FeedPage extends StatelessWidget {
   static const String route = '/home';
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(child: FeedHeader()),
-          SliverAppBar(
-            backgroundColor: ColorPallete.backgroundColor,
-            elevation: 1,
-            pinned: true,
-            toolbarHeight: 45 + 16,
-            automaticallyImplyLeading: false,
-            flexibleSpace: Padding(
-              padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
-              child: GestureDetector(
-                onTap: () => Utils.homeNav.currentState!.pushNamed(
-                  SearchPage.route,
-                  arguments: {
-                    'search_autofocus': true,
-                  },
-                ),
-                child: Hero(
-                  tag: 'search-field',
-                  child: SearchField(
-                    enabled: false,
+      child: ColoredBox(
+        // to fix windows xp-like bug
+        color: ColorPallete.backgroundColor,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(child: FeedHeader()),
+            SliverAppBar(
+              backgroundColor: ColorPallete.backgroundColor,
+              elevation: 1,
+              pinned: true,
+              toolbarHeight: 45 + 16,
+              automaticallyImplyLeading: false,
+              flexibleSpace: Padding(
+                padding: const EdgeInsets.fromLTRB(24.0, 8.0, 24.0, 8.0),
+                child: GestureDetector(
+                  onTap: () => Utils.homeNav.currentState!.pushNamed(
+                    SearchPage.route,
+                    arguments: {
+                      'search_autofocus': true,
+                    },
+                  ),
+                  child: Hero(
+                    tag: 'search-field',
+                    child: SearchField(
+                      enabled: false,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSectionTitle('Atau butuh sesuatu?'),
-                CategoryMenu(),
-                Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: MarketSelectorButton(),
-                ),
-                CampaignBanner(),
-                FavoriteStalls(),
-              ],
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(bottom: 24),
-            sliver: Consumer(
-              builder: (_, watch, child) {
-                final List<ProductFeed> feeds = watch(productFeedProvider);
-                final bool isLoggedIn = watch(authProvider) is User;
-
-                return SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final ProductFeed feed = feeds[index];
-
-                      if (feed.require_auth == true && !isLoggedIn) {
-                        return SizedBox();
-                      }
-
-                      return ProductListSection(
-                        productFeed: feed,
-                      );
-                    },
-                    childCount: feeds.length,
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSectionTitle('Atau butuh sesuatu?'),
+                  CategoryMenu(),
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: MarketSelectorButton(),
                   ),
-                );
-              },
+                  CampaignBanner(),
+                  FavoriteStalls(),
+                ],
+              ),
             ),
-          ),
-          SliverToBoxAdapter(child: _buildInfiniteListBanner(context)),
-          PaginatedVerticalProductsSliverGrid(),
-        ],
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 24),
+              sliver: Consumer(
+                builder: (_, watch, child) {
+                  final List<ProductFeed> feeds = watch(productFeedProvider);
+                  final bool isLoggedIn = watch(authProvider) is User;
+
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final ProductFeed feed = feeds[index];
+
+                        if (feed.require_auth == true && !isLoggedIn) {
+                          return SizedBox();
+                        }
+
+                        return ProductListSection(
+                          productFeed: feed,
+                        );
+                      },
+                      childCount: feeds.length,
+                    ),
+                  );
+                },
+              ),
+            ),
+            SliverToBoxAdapter(child: _buildInfiniteListBanner(context)),
+            PaginatedVerticalProductsSliverGrid(),
+          ],
+        ),
       ),
     );
   }

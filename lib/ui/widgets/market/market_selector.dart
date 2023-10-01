@@ -113,25 +113,19 @@ class MarketSelector extends HookWidget {
     List<Market> markets,
   ) {
     return DropdownSearch<Market>(
-      // mode: Mode.MENU,
-      // showSelectedItem: true,
       compareFn: (item, selectedItem) => item.id == selectedItem.id,
       selectedItem: currentMarket,
       items: markets,
-      // label: "Pasar",
-      // popupShape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(10.0),
-      // ),
       itemAsString: (Market m) => m.name ?? '-',
-      // dropdownBuilder: (context, selectedItem, itemAsString) =>
-      //     selectedItem == null ? Text('Pilih pasar') : _buildItem(selectedItem),
-      // popupItemBuilder: (context, item, isSelected) => _buildItem(item),
-      // hint: "Pilih pasar tempat Anda ingin berbelanja.",
       popupProps: PopupProps.menu(
-        showSearchBox: true,
-        
+        showSearchBox: true,  
         showSelectedItems: true,
         itemBuilder: (context, item, isSelected) => _buildItem(item),
+        menuProps: MenuProps(
+          backgroundColor: ColorPallete.backgroundColor,
+          borderRadius: BorderRadius.circular(10.0),
+          elevation: 1,
+        ),
       ),
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
@@ -150,7 +144,7 @@ class MarketSelector extends HookWidget {
             ),
           ),
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          labelText: 'Bumbu, Daging Sapi',
+          labelText: 'Pasar',
           suffixIconConstraints: BoxConstraints(
             minHeight: 24,
             minWidth: 24,

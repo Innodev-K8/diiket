@@ -1,9 +1,8 @@
+import 'package:diiket/data/network/api_service.dart';
 import 'package:diiket/data/providers/market_provider.dart';
 import 'package:diiket_core/diiket_core.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:diiket/data/network/api_service.dart';
 
 final productServiceProvider = StateProvider<ProductService>((ref) {
   final Market? currentMarket = ref.watch(currentMarketProvider).state;

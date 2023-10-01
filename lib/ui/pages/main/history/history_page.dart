@@ -19,26 +19,26 @@ class HistoryPage extends HookWidget {
         children: [
           CustomAppBar(title: 'Riwayat'),
           Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraints) => RefreshIndicator(
-                onRefresh: () => context
-                    .read(orderHistoryProvider.notifier)
-                    .retrieveOrderHistory(),
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: SizedBox(
-                    // add height constraint when error so that the error message can be centered
-                    height: historyState.maybeWhen(
-                      error: (_, __) => true,
-                      loading: () => true,
-                      orElse: () => false,
-                    )
-                        ? constraints.minHeight
-                        : null,
-                    child: AuthWrapper(
-                      isAnimated: false,
-                      guest: () => LoginToContinueScreen(),
-                      auth: (_) => historyState.when(
+            child: AuthWrapper(
+              isAnimated: false,
+              guest: () => LoginToContinueScreen(),
+              auth: (_) => LayoutBuilder(
+                builder: (context, constraints) => RefreshIndicator(
+                  onRefresh: () => context
+                      .read(orderHistoryProvider.notifier)
+                      .retrieveOrderHistory(),
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    child: SizedBox(
+                      // add height constraint when error so that the error message can be centered
+                      height: historyState.maybeWhen(
+                        error: (_, __) => true,
+                        loading: () => true,
+                        orElse: () => false,
+                      )
+                          ? constraints.minHeight
+                          : null,
+                      child: historyState.when(
                         data: (orders) => HistoryList(orders: orders),
                         loading: () => HistoryListLoading(),
                         error: (error, stackTrace) => Padding(

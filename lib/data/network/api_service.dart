@@ -4,15 +4,17 @@ import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final apiProvider = Provider<Dio>((ref) {
-  return ApiService.create();
+  final credentials = ref.watch(credentialsProvider);
+
+  return ApiService.create(credentials.apiEndpoint);
 });
 
 // ignore: avoid_classes_with_only_static_members
 abstract class ApiService {
-  static Dio create() {
+  static Dio create(String apiEndpoint) {
     final dio = Dio(
       BaseOptions(
-        baseUrl: Credentials.apiEndpoint,
+        baseUrl: apiEndpoint,
         headers: {
           'Accept': 'application/json',
         },

@@ -92,9 +92,11 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _checkConnection() async {
     try {
+      final credentials = context.read(credentialsProvider);
+
       await Future.delayed(Duration(seconds: 1));
       await InternetAddress.lookup(
-        Uri.parse(Credentials.apiEndpoint).host,
+        Uri.parse(credentials.apiEndpoint).host,
       );
     } on SocketException catch (_) {
       NoInternetBottomSheet.show(Utils.appNav.currentContext!);

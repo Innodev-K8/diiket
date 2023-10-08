@@ -6,7 +6,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final directionsServiceProvider = Provider<DirectionsService>((ref) {
-  return DirectionsService(ref.read(apiProvider));
+  final credentials = ref.watch(credentialsProvider);
+
+  return DirectionsService(ref.read(apiProvider), credentials.googleMapsApiKey);
 });
 
 class DirectionsService {
@@ -14,8 +16,9 @@ class DirectionsService {
       'https://maps.googleapis.com/maps/api/directions/json?';
 
   final Dio _dio;
+  final String _apiKey;
 
-  DirectionsService(this._dio);
+  DirectionsService(this._dio, this._apiKey);
 
   Future<Directions?> getDirections({
     required LatLng origin,
@@ -26,7 +29,7 @@ class DirectionsService {
       queryParameters: {
         'origin': '${origin.latitude},${origin.longitude}',
         'destination': '${destination.latitude},${destination.longitude}',
-        'key': Credentials.googleMapsApiKey,
+        'key': _apiKey,
       },
     );
 

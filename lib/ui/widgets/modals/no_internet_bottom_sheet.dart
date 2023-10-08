@@ -6,6 +6,7 @@ import 'package:diiket_core/diiket_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class NoInternetBottomSheet extends HookWidget {
@@ -27,6 +28,7 @@ class NoInternetBottomSheet extends HookWidget {
   Widget build(BuildContext context) {
     final isLoading = useState<bool>(false);
     final isMounted = useIsMounted();
+    final credentials = useProvider(credentialsProvider);
 
     return WillPopScope(
       onWillPop: () async {
@@ -86,7 +88,7 @@ class NoInternetBottomSheet extends HookWidget {
                                 isLoading.value = true;
 
                                 final result = await InternetAddress.lookup(
-                                  Uri.parse(Credentials.apiEndpoint).host,
+                                  Uri.parse(credentials.apiEndpoint).host,
                                 );
 
                                 if (result.isNotEmpty &&

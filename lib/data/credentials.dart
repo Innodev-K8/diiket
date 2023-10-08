@@ -1,37 +1,91 @@
+import 'package:diiket/data/providers/firebase_provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// hold api tokens
-// ignore: avoid_classes_with_only_static_members
 class Credentials {
-  // force use production token
-  static const bool _forceProd = true;
+  late String apiEndpoint;
+  late String googleMapsApiKey;
+  late String pusherToken;
+  late String streamToken;
+  late String recombeeToken;
+  late String recombeeDbId;
 
-  static String apiEndpoint = set(
-    prod: 'https://diiket.rejoin.id/api/v1',
-    dev: 'https://82144c857d4f.ngrok.io/api/v1',
-  );
+  bool forceProd;
 
-  static String googleMapsApiKey = set(
-    prod: 'AIzaSyAtRv3aJE1s6JWKPNxEY5Xsc8I1M1Baayw',
-  );
+  Credentials({
+    required String prodApiEndpoint,
+    String? devApiEndpoint,
+    required String prodGoogleMapsApiKey,
+    String? devGoogleMapsApiKey,
+    required String prodPusherToken,
+    String? devPusherToken,
+    required String prodStreamToken,
+    String? devStreamToken,
+    required String prodRecombeeToken,
+    String? devRecombeeToken,
+    required String prodRecombeeDbId,
+    String? devRecombeeDbId,
+    this.forceProd = false,
+  }) {
+    apiEndpoint = set(
+      prod: prodApiEndpoint,
+      dev: devApiEndpoint,
+    );
+    googleMapsApiKey = set(
+      prod: prodGoogleMapsApiKey,
+      dev: devGoogleMapsApiKey,
+    );
+    pusherToken = set(
+      prod: prodPusherToken,
+      dev: devPusherToken,
+    );
+    streamToken = set(
+      prod: prodStreamToken,
+      dev: devStreamToken,
+    );
+    recombeeToken = set(
+      prod: prodRecombeeToken,
+      dev: devRecombeeToken,
+    );
+    recombeeDbId = set(
+      prod: prodRecombeeDbId,
+      dev: devRecombeeDbId,
+    );
 
-  static String pusherToken = set(
-    prod: '4144774926a400dddc07',
-    dev: 'd244fbd9f96cbf4f69ba',
-  );
+    final bool isProd = forceProd || kReleaseMode;
 
-  static String streamToken = set(
-    prod: 'vs32uae8f493',
-  );
+    debugPrint("[CONFIG] apiEndpoint: $apiEndpoint");
+    debugPrint("[CONFIG] forceProd: $forceProd");
+    debugPrint("[CONFIG] isProd: $isProd");
+  }
 
-  static String recombeeToken = set(
-    prod: '9OUEC0BhaWxGyc6JqlSSdVOqlm6zqaQ1NMdcZv2fiL5NrskO3G3Oef7MyWimq4sJ',
-  );
-  static String recombeeDbId = set(
-    prod: 'diiket-prod',
-  );
+  T set<T>({required T prod, T? dev}) {
+    if (dev is String && dev.isEmpty) {
+      dev = null;
+    }
 
-  static T set<T>({required T prod, T? dev}) {
-    return _forceProd ? prod : (kReleaseMode ? prod : dev ?? prod);
+    final bool isProd = forceProd || kReleaseMode;
+
+    return isProd ? prod : (dev ?? prod);
   }
 }
+
+final credentialsProvider = Provider<Credentials>((ref) {
+  final remoteConfig = ref.watch(remoteConfigProvider);
+
+  return Credentials(
+    prodApiEndpoint: remoteConfig.getString('prod_api_endpoint'),
+    devApiEndpoint: remoteConfig.getString('dev_api_endpoint'),
+    prodGoogleMapsApiKey: remoteConfig.getString('prod_google_maps_api_key'),
+    devGoogleMapsApiKey: remoteConfig.getString('dev_google_maps_api_key'),
+    prodPusherToken: remoteConfig.getString('prod_pusher_token'),
+    devPusherToken: remoteConfig.getString('dev_pusher_token'),
+    prodStreamToken: remoteConfig.getString('prod_stream_token'),
+    devStreamToken: remoteConfig.getString('dev_stream_token'),
+    prodRecombeeToken: remoteConfig.getString('prod_recombee_token'),
+    devRecombeeToken: remoteConfig.getString('dev_recombee_token'),
+    prodRecombeeDbId: remoteConfig.getString('prod_recombee_db_id'),
+    devRecombeeDbId: remoteConfig.getString('dev_recombee_db_id'),
+    forceProd: remoteConfig.getBool('force_prod'),
+  );
+});
